@@ -106,6 +106,12 @@ export class LineDiagram {
       } else if (o.board === "speed") {
         ctx.fillStyle = C.chalk; ctx.font = `10px ${MONO}`; ctx.textAlign = "center";
         ctx.fillText(String(o.value), x, y + side * 12 + 3);
+      } else if (o.board === "speedAdvance") {
+        const yy = y + side * 12;
+        ctx.strokeStyle = C.chalk; ctx.lineWidth = 1; ctx.lineJoin = "round";
+        ctx.beginPath(); ctx.moveTo(x, yy - 5); ctx.lineTo(x + 4.5, yy + 3); ctx.lineTo(x - 4.5, yy + 3); ctx.closePath(); ctx.stroke();
+        ctx.fillStyle = C.chalk; ctx.font = `8px ${MONO}`; ctx.textAlign = "center";
+        ctx.fillText(String(o.value), x, yy + side * 12 + 3);
       } else if (o.board === "buffer") {
         ctx.strokeStyle = C.red; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x, y - 5); ctx.lineTo(x, y + 5); ctx.stroke();
       }

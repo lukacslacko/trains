@@ -219,6 +219,20 @@ figcaption .fig { color: var(--brass); font-weight: 600; margin-right: 8px; }
 }
 .back-cover .mark { width: 40px; height: 40px; margin-bottom: 14px; opacity: .9; }
 
+/* ---------- Amendment slips ---------- */
+.slip .entry { border: 1px solid var(--chalk); border-left: 4px solid var(--brass); padding: 12px 16px 10px; margin: 0 0 16px; page-break-inside: avoid; }
+.slip .entry h3 { margin: 0 0 4px; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.slip .entry h3 a { border: 0; }
+.slip .kind { font-family: var(--display); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--brass); font-weight: 600; }
+.slip .reason { font-style: italic; color: var(--slate); margin: 0 0 8px; }
+.slip .was, .slip .now { position: relative; padding: 8px 12px 8px 52px; margin: 6px 0; font-size: 14px; }
+.slip .was::before, .slip .now::before { position: absolute; left: 12px; top: 9px; font-family: var(--display); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+.slip .was { background: var(--ivory); color: var(--slate); border-left: 3px solid var(--chalk); }
+.slip .was::before { content: "Was"; color: var(--slate); }
+.slip .now { background: rgba(46,158,91,.08); border-left: 3px solid var(--lamp); }
+.slip .now::before { content: "Now"; color: var(--green); }
+.slip .now p:last-child, .slip .was p:last-child { margin-bottom: 0; }
+
 /* ---------- Screen-only chrome ---------- */
 .desk-bar {
   max-width: 760px; margin: 0 auto; padding: 14px 18px 0; display: flex; gap: 14px; align-items: center;

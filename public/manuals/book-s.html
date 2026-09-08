@@ -18,7 +18,7 @@
 <nav class="desk-bar">
   <a href="index.html">← Library</a>
   <span class="spacer"></span>
-  <span>Book S · First edition · September 2026</span>
+  <span>Book S · Second edition · September 2026</span>
   <a href="#" onclick="window.print();return false;">Print booklet</a>
 </nav>
 
@@ -32,7 +32,7 @@
   <div class="book-letter"><small>Book</small>S</div>
   <h1 class="title">Signalling Manual</h1>
   <p class="subtitle">Signals, boards and hand signals of the Meridian Railway, and the routes they protect.</p>
-  <div class="edition">First edition · September 2026 · Issued by the Signal Engineer's Office</div>
+  <div class="edition">Second edition · September 2026 · Issued by the Signal Engineer's Office</div>
   <div class="motto">On the line, on time.</div>
 </section>
 
@@ -47,7 +47,8 @@
     <li><span class="num">3</span><a href="#c3">Ground signals</a><span class="dots"></span><span class="pg">8</span></li>
     <li><span class="num">4</span><a href="#c4">Boards</a><span class="dots"></span><span class="pg">10</span></li>
     <li class="sub"><span class="num">4.1</span><a href="#c4-1">Where boards stand</a><span class="dots"></span><span class="pg">11</span></li>
-    <li class="sub"><span class="num">4.2</span><a href="#c4-2">Posts</a><span class="dots"></span><span class="pg">11</span></li>
+    <li class="sub"><span class="num">4.2</span><a href="#c4-2">Speed boards and advance speed boards</a><span class="dots"></span><span class="pg">11</span></li>
+    <li class="sub"><span class="num">4.3</span><a href="#c4-3">Posts</a><span class="dots"></span><span class="pg">12</span></li>
     <li><span class="num">5</span><a href="#c5">Hand signals and the baton</a><span class="dots"></span><span class="pg">12</span></li>
     <li><span class="num">6</span><a href="#c6">Station layouts and numbering</a><span class="dots"></span><span class="pg">14</span></li>
     <li class="sub"><span class="num">6.1</span><a href="#c6-1">The numbering rule</a><span class="dots"></span><span class="pg">14</span></li>
@@ -268,8 +269,8 @@
 
   <figure class="sig-fig">
     <div class="figure-frame">
-      <svg viewBox="0 0 640 200" width="640" height="200" role="img" aria-label="Stop board, Limit of Shunt board, speed board and buffer stop">
-        <line x1="10" y1="172" x2="630" y2="172" stroke="#D9D2C0" stroke-width="2"/>
+      <svg viewBox="0 0 800 200" width="800" height="200" role="img" aria-label="Stop board, Limit of Shunt board, speed board, advance speed board and buffer stop">
+        <line x1="10" y1="172" x2="790" y2="172" stroke="#D9D2C0" stroke-width="2"/>
         <!-- Stop board -->
         <g transform="translate(80,0)">
           <rect x="-3" y="106" width="6" height="66" fill="#4A5560"/>
@@ -296,8 +297,15 @@
           <text x="0" y="66" text-anchor="middle" fill="#1A1A1A" font-size="40" font-weight="700">25</text>
           <text x="0" y="192" text-anchor="middle" fill="#1F4B3F" font-size="13" font-weight="700" letter-spacing="2">SPEED BOARD</text>
         </g>
-        <!-- Buffer stop -->
+        <!-- Advance speed board -->
         <g transform="translate(560,0)">
+          <rect x="-3" y="90" width="6" height="82" fill="#4A5560"/>
+          <polygon points="0,10 40,86 -40,86" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="6" stroke-linejoin="round"/>
+          <text x="0" y="79" text-anchor="middle" fill="#1A1A1A" font-size="30" font-weight="700">25</text>
+          <text x="0" y="192" text-anchor="middle" fill="#1F4B3F" font-size="13" font-weight="700" letter-spacing="2">ADVANCE SPEED BOARD</text>
+        </g>
+        <!-- Buffer stop -->
+        <g transform="translate(720,0)">
           <rect x="-30" y="100" width="9" height="72" fill="#4A5560"/>
           <rect x="21" y="100" width="9" height="72" fill="#4A5560"/>
           <rect x="-36" y="118" width="72" height="16" fill="#1A1A1A"/>
@@ -308,7 +316,7 @@
         </g>
       </svg>
     </div>
-    <figcaption><span class="fig">Fig. 4.1</span> The four boards of the present Railway, and the lamp on a buffer stop.</figcaption>
+    <figcaption><span class="fig">Fig. 4.1</span> The five boards of the present Railway, and the lamp on a buffer stop.</figcaption>
   </figure>
 
   <table>
@@ -316,9 +324,10 @@
     <tbody>
       <tr><td><strong>Stop board</strong></td><td>ivory board, thick black horizontal bar, station name on a plate beneath</td><td>Stop with the front of the train level with the board. Within 3 m short of it is a correct stop (<a href="book-r.html#R12">Rule R 12</a>).</td></tr>
       <tr><td><strong>Limit of Shunt</strong></td><td>ivory board with a red diagonal band, "LIMIT OF SHUNT" beneath</td><td>Shunting movements must not pass. Rule S 12.</td></tr>
-      <tr><td><strong>Speed board</strong></td><td>black numeral on an ivory disc with a black rim</td><td>Speed limit in km/h from the board onward, until the next speed board facing you.</td></tr>
+      <tr><td><strong>Speed board</strong></td><td>black numeral on an ivory disc with a black rim</td><td>Speed limit in km/h from the board onward, until the next speed board facing you. A lower limit applies from the moment the front of the train reaches the board; a higher limit only once the rear has passed it (<a href="book-r.html#R10">Rule R 10</a>).</td></tr>
+      <tr><td><strong>Advance speed board</strong></td><td>black numeral on an ivory triangle, point up, black rim</td><td>A lower limit lies ahead: the speed board with this numeral stands one warning distance beyond, 200 m on this line. Be at that speed when the front reaches it. See § 4.2.</td></tr>
       <tr><td><strong>Buffer stop</strong></td><td>red lamp on the stop</td><td>End of track. Do not strike it (<a href="book-d.html#D16">Rule D 16</a>).</td></tr>
-      <tr><td><strong>Hectometre post, Kilometre post</strong></td><td>ivory plate on a slate post, black figures (1.4) or a green numeral under KM (2)</td><td>Position reference only. No instruction; see § 4.2.</td></tr>
+      <tr><td><strong>Hectometre post, Kilometre post</strong></td><td>ivory plate on a slate post, black figures (1.4) or a green numeral under KM (2)</td><td>Position reference only. No instruction; see § 4.3.</td></tr>
     </tbody>
   </table>
 
@@ -330,11 +339,17 @@
   <h2 id="c4-1"><span class="num">4.1</span> Where boards stand</h2>
   <p>A <strong>stop board</strong> stands at the end of each platform in the direction of arrival, placed so that a train stopped at it has its doors along the platform. The Up stop board at Ashgrove is at km 0.135; the Down stop board at Wending is at km 3.165. A stop board faces the trains that stop at it and is invisible, in effect, to trains leaving.</p>
   <p>A <strong>Limit of Shunt</strong> board stands on the single line a short way outside the outer switch of each station, facing the station: at Ashgrove at km 0.400 facing Down, at Wending at km 2.900 facing Up. The stretch between the outer switch and the board is called the <span class="term">stub</span>, and it is exactly long enough for a locomotive to stand clear of the switch while it runs round.</p>
-  <p><strong>Speed boards</strong> stand in pairs at the edge of station limits, back to back: a 25 facing the arriving train and a 50 facing the departing one. At Ashgrove the pair stands at km 0.450, at Wending at km 2.850. Between them, on the single line, the speed is 50 km/h; inside them, 25 km/h; shunting, 15 km/h, whatever the boards say.</p>
+  <p><strong>Speed boards</strong> stand in pairs at the edge of station limits, back to back: a 25 facing the arriving train and a 50 facing the departing one. At Ashgrove the pair stands at km 0.450, at Wending at km 2.850. Each 25 is announced by an <strong>advance speed board</strong> one warning distance out on the single line: at km 0.650 facing Up for Ashgrove, at km 2.650 facing Down for Wending. Between the pairs, on the single line, the speed is 50 km/h; inside them, 25 km/h; shunting, 15 km/h, whatever the boards say.</p>
 
   <div class="note"><p>A board is never lit and never changes. If a board seems to be wrong, missing or turned, do what the board would have said if it were there, report it to the box, and let the Signal Engineer sort it out.</p></div>
 
-  <h2 id="c4-2"><span class="num">4.2</span> Posts</h2>
+  <h2 id="c4-2"><span class="num">4.2</span> Speed boards and advance speed boards</h2>
+  <p>A <strong>speed board</strong> says what the speed is from where it stands. It is read against the whole train, not the cab: <em>a train's limit is the lowest limit under any part of it</em>. So a lower limit applies from the moment the front of the train reaches its board, and a higher limit applies only once the rear of the train has passed its board, because until then the tail is still on the slower stretch (<a href="book-r.html#R10">Rule R 10</a>). Leaving station limits, the driver waits for the last vehicle to clear the 50 board before notching up.</p>
+  <p>An <strong>advance speed board</strong> says that a lower limit lies ahead. It carries the numeral of the speed board it announces, on a triangle so that it cannot be mistaken for the board itself, and it stands one <span class="term">warning distance</span> before that board: on the Ashgrove–Wending line, 200 m. The driver must be at the announced speed when the front of the train reaches the speed board. Higher limits are not announced; there is nothing to prepare for.</p>
+  <div class="why"><p>We put the advance board 200 m out because a train at 50 km/h loses the 25 km/h down to 25 in about 145 m at a service deceleration of 0.5 m/s². The rest of the distance is the driver's allowance for reaction, and for the days when the speed board itself is lost in fog or snow. On such a day the driver brakes at the advance board and does not wait to see the board it announces. The distance is the same for the whole line, so that one habit serves everywhere.</p></div>
+  <div class="note"><p>Read with the posts: the Down advance board at 2.650 stands between posts 2.6 and 2.7 and its speed board at 2.850 between 2.8 and 2.9; the Up advance board at 0.650 between 0.6 and 0.7 and its speed board at 0.450 between 0.4 and 0.5.</p></div>
+
+  <h2 id="c4-3"><span class="num">4.3</span> Posts</h2>
   <p>Every hundred metres from the Ashgrove buffer stop to the end of the line at km 3.300 stands a <strong>hectometre post</strong>: an ivory plate on a slate post, carrying in black figures the distance from the origin in kilometres, a point, and the hectometre digit. The post at 1.4 km reads <span class="mono">1.4</span>. At every full kilometre the plate is larger, bordered in green, and carries the kilometre alone in a green numeral under the small word KM: the post at 2 km reads <span class="mono">2</span>. The posts stand on the left of the line in the Down direction; within the loops they are moved outward past track 2 so that they stay clear of every track.</p>
 
   <figure class="sig-fig">
@@ -569,6 +584,7 @@
       <tr><td>Limit of Shunt</td><td class="mono">0.400</td><td>Down</td><td>single line</td><td>Shunting movements stop short.</td></tr>
       <tr><td>AG 2</td><td class="mono">0.420</td><td>Up</td><td>single line</td><td>Home signal: entry to Ashgrove.</td></tr>
       <tr><td>Speed boards</td><td class="mono">0.450</td><td>25 Up · 50 Down</td><td>single line</td><td>Edge of station limits.</td></tr>
+      <tr><td>Advance speed board</td><td class="mono">0.650</td><td>Up</td><td>single line</td><td>Announces the 25 board at 0.450, 200 m ahead.</td></tr>
     </tbody>
   </table>
 
@@ -683,6 +699,7 @@
   <table class="signals">
     <thead><tr><th>Signal or board</th><th class="mono">km</th><th>Faces</th><th>Stands on</th><th>Governs</th></tr></thead>
     <tbody>
+      <tr><td>Advance speed board</td><td class="mono">2.650</td><td>Down</td><td>single line</td><td>Announces the 25 board at 2.850, 200 m ahead.</td></tr>
       <tr><td>Speed boards</td><td class="mono">2.850</td><td>25 Down · 50 Up</td><td>single line</td><td>Edge of station limits.</td></tr>
       <tr><td>WD 1</td><td class="mono">2.880</td><td>Down</td><td>single line</td><td>Home signal: entry to Wending.</td></tr>
       <tr><td>Limit of Shunt</td><td class="mono">2.900</td><td>Up</td><td>single line</td><td>Shunting movements stop short.</td></tr>
@@ -743,7 +760,7 @@
   <p>Service 201 is a Class 4 locomotive with one Type C4 coach. It arrives at Wending from Ashgrove, locomotive leading, and must leave for Ashgrove with the locomotive leading again. Here is what the driver sees and does, signal by signal. The driver's side of it, cab by cab, is in <a href="book-d.html">Book D</a>.</p>
 
   <ol class="steps">
-    <li><strong>Arrival.</strong> Passing the 25 speed board at km 2.850 the train is already down to 25 km/h. WD 1 shows CAUTION: the platform is cleared for the train, and the track ends. The train passes WD 5 at SHUNT STOP without regard to it (§ 3.2), runs through WD A set normal onto track 1, and stops with its front level with the WENDING stop board at km 3.165. The locomotive now stands at the Down end of the coach, facing the headshunt.</li>
+    <li><strong>Arrival.</strong> Having begun to brake at the advance speed board at km 2.650, the train passes the 25 speed board at km 2.850 already down to 25 km/h. WD 1 shows CAUTION: the platform is cleared for the train, and the track ends. The train passes WD 5 at SHUNT STOP without regard to it (§ 3.2), runs through WD A set normal onto track 1, and stops with its front level with the WENDING stop board at km 3.165. The locomotive now stands at the Down end of the coach, facing the headshunt.</li>
     <li><strong>Station work.</strong> Doors open, passengers alight. The driver secures the locomotive, walks to the coupling, disconnects the brake pipe (both parts' brakes apply of their own accord) and parts the coupler (<a href="book-d.html#D12">Rule D 12</a>), then returns to the cab facing the headshunt.</li>
     <li><strong>Into the headshunt.</strong> Wending Box sets <span class="mono">1 → Headshunt</span>: WD B is already normal; WD 3 changes to SHUNT. The locomotive draws forward at shunting speed through WD B into the headshunt and stops clear of the switch, well short of the buffer stop. WD 3 returns to SHUNT STOP behind it.</li>
     <li><strong>Round the loop.</strong> The driver changes ends. The box sets <span class="mono">Headshunt → 2 → Stub</span>: WD B reverse, WD A reverse, both locked; WD 6 and WD 4 change to SHUNT. The locomotive runs Up through WD B onto track 2, along track 2 past the standing coach, passes WD 4 at SHUNT, through WD A onto the stub, and stops short of the Limit of Shunt board at km 2.900 (Rule S 12). It is now clear of WD A. Both ground signals return to SHUNT STOP.</li>
@@ -759,7 +776,7 @@
 <!-- 8 ONE TRAIN WORKING -->
 <section class="page chapter" id="c8" data-folio="Book S · 8 One Train Working">
   <h1><span class="num">§ 8</span> One Train Working</h1>
-  <p class="lead">Before the loops and the signals were built, the Ashgrove–Wending line was worked by one motor car, back and forth, with nothing between the buffer stops but two stop boards and four speed boards. The Railway still works it that way when the loops are out of use. This is how it is safe.</p>
+  <p class="lead">Before the loops and the signals were built, the Ashgrove–Wending line was worked by one motor car, back and forth, with nothing between the buffer stops but two stop boards, four speed boards and two advance speed boards. The Railway still works it that way when the loops are out of use. This is how it is safe.</p>
 
   <p>Under <span class="term">One Train Working</span> the whole line, buffer to buffer, is one block section, and one vehicle holds it. There is no other train to collide with, so there is nothing for a signal to protect, and the line has none. The driver departs each station on their own authority at the booked time (<a href="book-r.html#R24">Rule R 24</a>), stops at the stop boards, and obeys the speed boards. The only thing that can go wrong is a second vehicle, and the rule is simply that there is none: no locomotive is allowed onto the line until the motor car is stabled and the working is formally changed.</p>
 
@@ -769,7 +786,7 @@
       <tr><td>One vehicle on the whole line.</td><td>One train per block section; shunting within station limits alongside.</td></tr>
       <tr><td>No main signals; no ground signals.</td><td>Home and starting signals; ground signals for the loop.</td></tr>
       <tr><td>Departure on the driver's authority at the booked time.</td><td>Departure on starting signal and baton (Rule S 18, <a href="book-r.html#R20">Rule R 20</a>).</td></tr>
-      <tr><td>Stop boards, speed boards.</td><td>Stop boards, speed boards, Limit of Shunt boards.</td></tr>
+      <tr><td>Stop boards, speed boards, advance speed boards.</td><td>Stop boards, speed boards, advance speed boards, Limit of Shunt boards.</td></tr>
       <tr><td>No station master required.</td><td>Station master works the box and holds the baton.</td></tr>
     </tbody>
   </table>
@@ -812,6 +829,7 @@
   <h1><span class="num">§ 10</span> Glossary</h1>
   <p class="lead">Words used in this book with a particular meaning. Book R holds the Railway's general vocabulary.</p>
   <dl class="dl">
+    <dt>Advance speed board</dt><dd>A black numeral on an ivory triangle, announcing a lower limit one warning distance ahead. Be at that speed when the front of the train reaches the speed board it announces.</dd>
     <dt>Aspect</dt><dd>What a main signal shows: STOP, CAUTION or CLEAR. Ground signals show <em>indications</em>: SHUNT STOP or SHUNT.</dd>
     <dt>Baton</dt><dd>The station master's hand-held disc, green one side and red the other, with a lamp. Green held steady means <em>Ready to start</em>.</dd>
     <dt>Block section</dt><dd>The single line between one station's starting signal and the next station's home signal. One train at a time.</dd>
@@ -838,15 +856,16 @@
     <dt>Stub</dt><dd>The short length of single line between a station's outer switch and its Limit of Shunt board.</dd>
     <dt>Track section</dt><dd>A length of track, or a switch, that reports to the frame whether a vehicle stands on it.</dd>
     <dt>Train movement</dt><dd>A movement made under main signals, from station to station.</dd>
+    <dt>Warning distance</dt><dd>The distance between an advance speed board and the speed board it announces: 200 m on the Ashgrove–Wending line.</dd>
   </dl>
 </section>
 
 <!-- COLOPHON -->
 <section class="page colophon" id="colophon" data-folio="Book S · Colophon">
   <img class="mark" src="../brand/mark-green.svg" alt="">
-  <p><strong>Book S — Signalling Manual.</strong> First edition, September 2026. Issued by the Signal Engineer's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
-  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes nothing; it is the first.</p>
-  <p>Amendments are issued as numbered slips; paste them in at the page indicated. Rules S 10 to S 18 are cited by number in Books R and D and must not be renumbered without a general amendment.</p>
+  <p><strong>Book S — Signalling Manual.</strong> Second edition, September 2026. Issued by the Signal Engineer's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
+  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes the first edition of September 2026. What changed is listed in <a href="amendments/book-s-ed2.html">Amendment Slip S-2</a>.</p>
+  <p>Amendments are issued as numbered slips; paste them in at the page indicated. Rules S 10 to S 20 are cited by number in Books R and D and must not be renumbered without a general amendment.</p>
   <p>Companion volumes: <a href="book-i.html">Book I, Identity</a> · <a href="book-r.html">Book R, Rules of Operation</a> · <a href="book-d.html">Book D, Driving</a>.</p>
 </section>
 

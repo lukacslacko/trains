@@ -33,7 +33,7 @@
 <nav class="desk-bar">
   <a href="index.html">← Library</a>
   <span class="spacer"></span>
-  <span>Book D · First edition · September 2026</span>
+  <span>Book D · Second edition · September 2026</span>
   <a href="#" onclick="window.print();return false;">Print booklet</a>
 </nav>
 
@@ -47,7 +47,7 @@
   <div class="book-letter"><small>Book</small>D</div>
   <h1 class="title">Driving Manual</h1>
   <p class="subtitle">The cab, the procedures, and the handbooks of the Class 1 car, the Class 4 locomotive and the Type C4 coach.</p>
-  <div class="edition">First edition · September 2026 · Issued by the Locomotive Superintendent's Office</div>
+  <div class="edition">Second edition · September 2026 · Issued by the Locomotive Superintendent's Office</div>
   <div class="motto">On the line, on time.</div>
 </section>
 
@@ -234,7 +234,7 @@
       <tr><td>Line</td><td>lamp</td><td>Lit when the pantograph is on a live wire.</td></tr>
       <tr><td>Doors</td><td>lamp</td><td>Amber while any door is open. Traction is held off until it goes out.</td></tr>
       <tr><td>Ahead</td><td>text</td><td>The next signal or board in your direction, its aspect, and the distance to it.</td></tr>
-      <tr><td>Limit</td><td class="mono">km/h</td><td>The speed limit that applies where you are now.</td></tr>
+      <tr><td>Limit</td><td class="mono">km/h</td><td>The lowest limit under any part of the train. It falls as the front reaches a lower board and rises only once the rear has passed a higher one.</td></tr>
       <tr><td>Kilometre</td><td class="mono">km</td><td>Where the front of the train stands, to the metre. It agrees with the hectometre posts beside the line; report a position to the Box by the last post passed, as in "stopped at 2.7".</td></tr>
       <tr><td>Clock</td><td class="mono">hh:mm</td><td>Railway time. Compare it with the duty sheet.</td></tr>
       <tr><td>Where you are</td><td>text</td><td>Cab A, Cab B, on the ground, or at a coupling.</td></tr>
@@ -303,13 +303,24 @@
   <table>
     <thead><tr><th>Where</th><th class="mono">km/h</th><th>From where to where</th></tr></thead>
     <tbody>
-      <tr><td>Line speed</td><td class="mono">50</td><td>Between the stations, from the speed board that says 50 to the one that says 25.</td></tr>
+      <tr><td>Line speed</td><td class="mono">50</td><td>Between the stations. Yours once the whole train has passed the board that says 50; over for the front of the train at the board that says 25.</td></tr>
       <tr><td>Station limits</td><td class="mono">25</td><td>From the speed board or home signal to the buffer stop, on every track of the station.</td></tr>
       <tr><td>Shunting</td><td class="mono">15</td><td>Any move under a ground signal, anywhere.</td></tr>
       <tr><td>Coupling approach</td><td class="mono">5</td><td>The last twenty metres before a vehicle you intend to couple to. Contact at 2 or less.</td></tr>
     </tbody>
   </table>
-  <p>The <span class="term">Limit</span> indicator shows the figure in force. The limit changes at the board, not before it, so a train may not pass a 25 board at 40 on the grounds that it is slowing down. Begin braking early enough to be at the new speed when you reach the board.</p>
+  <p>A limit applies to the whole train, and <strong>a train's limit is the lowest limit under any part of it</strong> (<a href="book-r.html#R10">Rule R 10</a>). A lower limit is yours from the moment the front reaches its board: a train may not pass a 25 board at 40 on the grounds that it is slowing down. A higher limit is yours only once the rear of the train has passed its board: leaving station limits, the whole train must be past the 50 board before you notch up. The <span class="term">Limit</span> indicator keeps this account for you; it falls as the front reaches a lower board and rises only when the last vehicle has cleared a higher one.</p>
+  <div class="why"><p>The tail of the train is still in the slow section until it has passed the board. A locomotive that opens up the moment its cab passes the 50 board drags its coach through station limits at forty. Reductions are announced ahead, so that the front can be at the new speed when it arrives; rises are not, because nothing is lost by waiting a train-length.</p></div>
+
+  <h3 id="c4-2-reduction">Braking for a reduction</h3>
+  <p>A reduction is announced one <span class="term">warning distance</span> ahead by an <span class="term">advance speed board</span>: the same black numeral, on an ivory triangle with its point up (<a href="book-s.html">Book S</a>, § 4). On the Ashgrove–Wending line the warning distance is <strong>200 metres</strong>. The advance board for the 25 at 2.85 stands at 2.65 running Down, fifty metres beyond post <span class="mono">2.6</span>; the one for the 25 at 0.45 stands at 0.65 running Up, fifty metres beyond post <span class="mono">0.7</span>. Rises get no advance board: a 50 board simply stands where the 50 begins.</p>
+  <ol class="steps">
+    <li><strong>At the advance board, step 2.</strong> On the Class 1 car, and on the Class 4 with one coach, step 2 gives about 0.5 m/s² on the level.</li>
+    <li><strong>Count the distance.</strong> At that rate a train loses the twenty-five between 50 and 25 in about 145 metres. You reach the speed board with some fifty metres in hand. That margin is the allowance for reaction, for fog and for snow; it is not an invitation to apply later.</li>
+    <li><strong>Check at the speed board.</strong> Be at 25 as the front reaches it. If you are above, step 3 at once and note it; if you are well under, ease to step 1, but do not release before the board.</li>
+    <li><strong>Hold it.</strong> Release once at 25 and keep 25: the Limit indicator shows 25 through station limits and will not show 50 again until the rear of the train has cleared the 50 board on the way out.</li>
+  </ol>
+  <div class="note"><p>In fog or falling snow, brake at the advance board without waiting to see the speed board. The board will arrive when the count says it will, and the posts confirm the count: running Down, <span class="mono">2.7</span> and <span class="mono">2.8</span> pass while you brake and the board is fifty metres beyond <span class="mono">2.8</span>; running Up, <span class="mono">0.6</span> and <span class="mono">0.5</span> pass and the board is fifty metres beyond <span class="mono">0.5</span>.</p></div>
 
   <h2 id="c4-3"><span class="num">4.3</span> Braking to a stop board</h2>
   <p>Every platform has a stop board: an ivory board with a thick black bar, the station's name beneath. <a href="book-r.html#R12">Rule R 12</a> asks you to stop with the front of the train level with it; anywhere within three metres short of the board is a correct stop. Passing the board is an overrun and is recorded. Stopping more than three metres short is recorded too, though nobody will think worse of you for it.</p>
@@ -324,13 +335,15 @@
 
   <h3>Judging distance by the posts</h3>
   <p>The Ahead indicator is a courtesy; the posts are the railway. A <span class="term">hectometre post</span> stands every hundred metres along the line, on your left as you run Down, an ivory plate on a slate post reading the distance from the Ashgrove buffer stop: the post at 1.4 km reads <span class="mono">1.4</span>. Every full kilometre has a larger <span class="term">kilometre post</span>, a green numeral under the word KM, reading simply <span class="mono">2</span>. Within the loops the posts stand outward of track 2. They carry no instruction; they tell you where you are, and from that, how far you have to go.</p>
-  <p>The Wending stop board stands at 3.165 and the Ashgrove board at 0.135. Running Down, the post reading <span class="mono">3.0</span> is 165 metres from the board: pass it, make your step-2 application, and you will be settling to a stop as <span class="mono">3.1</span> goes by, sixty-five metres out. Running Up, <span class="mono">0.3</span> does the same office, 165 metres from the board, and <span class="mono">0.2</span> is the last post before it. A post and a half, either way. The 25 km/h boards stand at 2.85 and 0.45, between posts: running Down you should be at 25 before <span class="mono">2.9</span>, running Up before <span class="mono">0.4</span>.</p>
+  <p>The Wending stop board stands at 3.165 and the Ashgrove board at 0.135. Running Down, the post reading <span class="mono">3.0</span> is 165 metres from the board: pass it, make your step-2 application, and you will be settling to a stop as <span class="mono">3.1</span> goes by, sixty-five metres out. Running Up, <span class="mono">0.3</span> does the same office, 165 metres from the board, and <span class="mono">0.2</span> is the last post before it. A post and a half, either way. The 25 km/h boards stand at 2.85 and 0.45, between posts, and their advance boards two hundred metres earlier at 2.65 and 0.65. Running Down, make your application fifty metres past <span class="mono">2.6</span> and be at 25 before <span class="mono">2.9</span>; running Up, make it fifty metres past <span class="mono">0.7</span> and be at 25 before <span class="mono">0.4</span>. The 50 boards at the same places are yours once the rear of the train has passed them.</p>
   <table>
     <thead><tr><th>Post</th><th>What stands near it</th></tr></thead>
     <tbody>
       <tr><td class="mono">0.1</td><td>Ashgrove stop board 35 m on the Down side. Up trains come to rest between 0.2 and 0.1.</td></tr>
-      <tr><td class="mono">0.4</td><td>Home signal AG 2 20 m on the Down side; speed boards 25 and 50 at 0.45.</td></tr>
-      <tr><td class="mono">2.8</td><td>Speed boards 25 and 50 at 2.85; home signal WD 1 at 2.88, twenty metres short of 2.9.</td></tr>
+      <tr><td class="mono">0.4</td><td>Home signal AG 2 20 m on the Down side; speed boards 25 (Up) and 50 (Down) at 0.45. The 50 is yours once the rear has passed it.</td></tr>
+      <tr><td class="mono">0.7</td><td>Running Up, the advance speed board 25 stands 50 m beyond, at 0.65: make your application there. The 25 board is 200 m further on, at 0.45.</td></tr>
+      <tr><td class="mono">2.6</td><td>Running Down, the advance speed board 25 stands 50 m beyond, at 2.65: make your application there. The 25 board is 200 m further on, at 2.85.</td></tr>
+      <tr><td class="mono">2.8</td><td>Speed boards 25 (Down) and 50 (Up) at 2.85, the 50 yours once the rear has passed it; home signal WD 1 at 2.88, twenty metres short of 2.9.</td></tr>
       <tr><td class="mono">3</td><td>Kilometre post. 165 m to the Wending stop board: brake here running Down.</td></tr>
       <tr><td class="mono">3.1</td><td>Wending stop board 65 m on the Down side. Down trains come to rest between 3.1 and 3.2.</td></tr>
     </tbody>
@@ -740,6 +753,7 @@
 <section class="page chapter" id="c12" data-folio="Book D · 12 Glossary">
   <h1><span class="num">§ 12</span> Glossary</h1>
   <dl class="dl">
+    <dt>Advance speed board</dt><dd>A black numeral on an ivory triangle, point up, announcing a lower limit one warning distance ahead. It gives the figure; the speed board beyond it gives the place.</dd>
     <dt>Baton</dt><dd>The station master's hand-held disc, green on one face and red on the other. Green shown steadily means <em>ready to start</em>.</dd>
     <dt>Brake pipe</dt><dd>The air pipe running the length of the train. Charged, the brakes release; vented, they apply.</dd>
     <dt>Cab A, Cab B</dt><dd>The two driving positions of a two-cab vehicle. Forward is always away from the cab you occupy.</dd>
@@ -763,13 +777,15 @@
     <dt>Station limits</dt><dd>The area from the speed board or home signal to the buffer stop, where 25 km/h applies.</dd>
     <dt>Stop board</dt><dd>The board at which a train stops at a platform, front of the train level with the bar.</dd>
     <dt>Tail, Head</dt><dd>Red lamps at the rear of a train; white lamps at its front.</dd>
+    <dt>Warning distance</dt><dd>The distance from an advance speed board to the speed board it announces: 200 m on the Ashgrove–Wending line, enough to lose 25 km/h at 0.5 m/s² with fifty metres to spare.</dd>
   </dl>
 </section>
 
 <!-- COLOPHON -->
 <section class="page colophon" id="colophon" data-folio="Book D · Colophon">
   <img class="mark" src="../brand/mark-green.svg" alt="">
-  <p><strong>Book D — Driving Manual.</strong> First edition, September 2026. Issued by the Locomotive Superintendent's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
+  <p><strong>Book D — Driving Manual.</strong> Second edition, September 2026, superseding the first edition of September 2026. Issued by the Locomotive Superintendent's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
+  <p>Changes since the first edition are listed on <a href="amendments/book-d-ed2.html">Amendment Slip D-2</a>: advance speed boards, the whole-train rule for limits, and braking for a reduction.</p>
   <p>This Book cites Book R (Rules of Operation) and Book S (Signalling Manual). Where they differ, Book R governs. Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5.</p>
   <p>The handbooks in § 8 to § 10 are to be amended whenever a class is altered. Amendments are issued as numbered slips; paste them in at the page indicated. Drivers are asked to report any paragraph they had to read twice.</p>
 </section>

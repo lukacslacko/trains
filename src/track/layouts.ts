@@ -14,7 +14,7 @@ export interface Signal {
 export interface Board {
   kind: "board";
   id: string;
-  board: "stop" | "limitOfShunt" | "speed" | "buffer";
+  board: "stop" | "limitOfShunt" | "speed" | "speedAdvance" | "buffer";
   pos: Position;
   label?: string;
   value?: number;
@@ -57,8 +57,12 @@ export interface Layout {
   kmMax: number;
   /** hectometre and kilometre posts along the line */
   posts: Post[];
-  /** speed limit in km/h for a train whose front is at km */
+  /** speed zones [kmFrom, kmTo, limit km/h] covering the whole line */
+  speedZones: [number, number, number][];
+  /** speed limit in km/h at a point */
   limitAt(km: number): number;
+  /** the lowest limit anywhere under a train standing from kmA to kmB */
+  limitOver(kmA: number, kmB: number): number;
   /** diagram zones for the line diagram: [kmFrom, kmTo, share of width] */
   zones: [number, number, number][];
 }
@@ -67,10 +71,21 @@ const LINE_SPEED = 50, STATION_SPEED = 25;
 const AG_LIMIT = 0.45, WD_LIMIT = 2.85;
 const KM_MAX = 3.3;
 
+/** Advance speed boards stand this far before the speed board they announce (Book S). */
+export const WARNING_DISTANCE_KM = 0.2;
+
+const speedZones: [number, number, number][] = [[0, AG_LIMIT, STATION_SPEED], [AG_LIMIT, WD_LIMIT, LINE_SPEED], [WD_LIMIT, KM_MAX, STATION_SPEED]];
+
 function limitAt(km: number) {
-  if (km < AG_LIMIT) return STATION_SPEED;
-  if (km < WD_LIMIT) return LINE_SPEED;
+  for (const [a, b, lim] of speedZones) if (km >= a && km < b) return lim;
   return STATION_SPEED;
+}
+/** A train's limit is the lowest limit under any part of it: a reduction applies to its front, a rise waits for its rear. */
+function limitOver(kmA: number, kmB: number) {
+  const lo = Math.min(kmA, kmB), hi = Math.max(kmA, kmB);
+  let lim = Infinity;
+  for (const [a, b, l] of speedZones) if (hi > a && lo < b) lim = Math.min(lim, l);
+  return lim === Infinity ? limitAt(lo) : lim;
 }
 
 const zones: [number, number, number][] = [[0, AG_LIMIT + 0.05, 0.3], [AG_LIMIT + 0.05, WD_LIMIT - 0.05, 0.4], [WD_LIMIT - 0.05, KM_MAX, 0.3]];
@@ -89,8 +104,11 @@ function signal(g: TrackGraph, id: string, type: Signal["type"], track: string, 
 
 function speedBoards(g: TrackGraph): Board[] {
   return [
+    // reductions to 25 are announced one warning distance ahead; the rises to 50 are not
+    board(g, "SBA-AG25", "speedAdvance", "main", AG_LIMIT + WARNING_DISTANCE_KM, -1, { value: 25 }),
     board(g, "SB-AG25", "speed", "main", AG_LIMIT, -1, { value: 25 }),
     board(g, "SB-AG50", "speed", "main", AG_LIMIT, 1, { value: 50 }),
+    board(g, "SBA-WD25", "speedAdvance", "main", WD_LIMIT - WARNING_DISTANCE_KM, 1, { value: 25 }),
     board(g, "SB-WD25", "speed", "main", WD_LIMIT, 1, { value: 25 }),
     board(g, "SB-WD50", "speed", "main", WD_LIMIT, -1, { value: 50 }),
   ];
@@ -117,7 +135,7 @@ export function shuttleLayout(): Layout {
   ];
   return {
     name: "Ashgrove–Wending (single line)",
-    graph: g, objects, platforms, kmMax: KM_MAX, limitAt, zones,
+    graph: g, objects, platforms, kmMax: KM_MAX, speedZones, limitAt, limitOver, zones,
     posts: hectometrePosts(KM_MAX, () => -3.6),
     stations: [
       { code: "AG", name: "Ashgrove", stopBoardKm: 0.135, platform: platforms[0], arriveDir: -1 },
@@ -233,7 +251,7 @@ export function loopLayout(): Layout & { loops: Record<string, LoopStation> } {
   const inLoop = (km: number) => (km > 0.08 && km < 0.34) || (km > 2.96 && km < 3.22);
   return {
     name: "Ashgrove–Wending (loops and signals)",
-    graph: g, objects, platforms, kmMax: KM_MAX, limitAt, zones, loops,
+    graph: g, objects, platforms, kmMax: KM_MAX, speedZones, limitAt, limitOver, zones, loops,
     posts: hectometrePosts(KM_MAX, (km) => (inLoop(km) ? T2 - 3.6 : -3.6)),
     stations: [
       { code: "AG", name: "Ashgrove", master: "Marrow", stopBoardKm: 0.135, platform: platforms[0], arriveDir: -1 },

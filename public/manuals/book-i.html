@@ -65,7 +65,7 @@
 <nav class="desk-bar">
   <a href="index.html">← Library</a>
   <span class="spacer"></span>
-  <span>Book I · First edition · September 2026</span>
+  <span>Book I · Second edition · September 2026</span>
   <a href="#" onclick="window.print();return false;">Print booklet</a>
 </nav>
 
@@ -79,7 +79,7 @@
   <div class="book-letter"><small>Book</small>I</div>
   <h1 class="title">Identity Manual</h1>
   <p class="subtitle">The name, the mark, the colours and the voice of the Meridian Railway, and how to use them.</p>
-  <div class="edition">First edition · September 2026 · Issued by the General Manager's Office</div>
+  <div class="edition">Second edition · September 2026 · Issued by the General Manager's Office</div>
   <div class="motto">On the line, on time.</div>
 </section>
 
@@ -547,8 +547,8 @@
     <figcaption><span class="fig">Fig. 7.2</span> Signal name plates. Odd numbers face Down, even numbers face Up (Book S).</figcaption>
   </figure>
 
-  <h2><span class="num">7.3</span> Boards</h2>
-  <p>Three fixed boards are in use, drawn here so that the Works and Book S agree. Their meanings are Book S's business; their looks are ours.</p>
+  <h2 id="c7-3"><span class="num">7.3</span> Boards</h2>
+  <p>Four fixed boards are in use, drawn here so that the Works and Book S agree. Their meanings are Book S's business; their looks are ours.</p>
   <figure>
     <div class="figure-frame" style="display:flex;justify-content:space-around;align-items:flex-end;flex-wrap:wrap;gap:16px">
       <svg viewBox="0 0 150 230" width="150" height="230" font-family="Barlow Condensed, Arial Narrow, sans-serif">
@@ -574,14 +574,22 @@
         <text x="75" y="108" text-anchor="middle" font-size="66" font-weight="700" fill="#1A1A1A">25</text>
         <text x="75" y="13" text-anchor="middle" font-size="11" fill="#4A5560" letter-spacing="1.5">SPEED BOARD</text>
       </svg>
+      <svg viewBox="0 0 150 230" width="150" height="230" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+        <rect x="70" y="140" width="10" height="90" fill="#4A5560"/>
+        <polygon points="75,30 13.2,137 136.8,137" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="7" stroke-linejoin="round"/>
+        <text x="75" y="124" text-anchor="middle" font-size="50" font-weight="700" fill="#1A1A1A">25</text>
+        <text x="75" y="13" text-anchor="middle" font-size="11" fill="#4A5560" letter-spacing="1.5">ADVANCE SPEED BOARD</text>
+      </svg>
     </div>
-    <figcaption><span class="fig">Fig. 7.3</span> Stop board, Limit of Shunt board and Speed board. All on Slate posts, board centres 2.0 m above rail.</figcaption>
+    <figcaption><span class="fig">Fig. 7.3</span> Stop board, Limit of Shunt board, Speed board and Advance speed board. All on Slate posts, board centres 2.0 m above rail.</figcaption>
   </figure>
   <dl class="dl">
     <dt>Stop board</dt><dd>Ivory board with an Ink border, a thick Ink bar across the upper half, the station name beneath in Barlow Condensed 600.</dd>
     <dt>Limit of Shunt</dt><dd>Ivory board with an Ink border and a Signal Red band rising diagonally to the right; the words LIMIT OF SHUNT on an Ivory strip along the foot.</dd>
-    <dt>Speed board</dt><dd>Ivory disc with a thick Ink rim and the limit in km/h in Barlow Condensed 700.</dd>
+    <dt>Speed board</dt><dd>Ivory disc 600 mm across with an Ink rim 40 mm wide and the limit in km/h in Ink, Barlow Condensed 700, figures 260 mm high.</dd>
+    <dt>Advance speed board</dt><dd>Ivory equilateral triangle, point up, 700 mm on a side, with an Ink rim 40 mm wide and the coming limit in Ink, Barlow Condensed 700, figures 220 mm high, set low in the triangle.</dd>
   </dl>
+  <p>The two speed shapes are two tenses of the same word. The disc says <em>now</em>: the limit on it applies from the board. The triangle says <em>ahead</em>: the limit on it applies at a speed board one warning distance further on, 200 m on this line, and the driver has that distance in which to come down to it. Only reductions are announced; a higher limit gets a disc and nothing before it. An advance speed board stands on the same side of the line as the disc it announces, facing the trains that will meet them both, so that a driver reads triangle then disc, always in that order and never one without the other. In fog or snow the triangle is the one that matters, because the disc may not be seen in time.</p>
 
   <h2><span class="num">7.4</span> Hectometre and kilometre posts</h2>
   <p>The line is measured from the Ashgrove buffer stop, and every hundred metres of it is named by a post. A <strong>hectometre post</strong> is an Ivory plate 320 × 180 mm on a Slate post, with the distance in Ink figures in Barlow Condensed 600, 120 mm high: the kilometre, a point, and the hectometre digit, so that the post at 1.4 km reads <span class="mono">1.4</span>. At every full kilometre the plate is a <strong>kilometre post</strong> instead: Ivory, 360 × 240 mm, with a Meridian Green border 12 mm wide, the word KM in green 40 mm high, and the kilometre alone beneath it in green figures 150 mm high, so that the post at 2 km reads <span class="mono">2</span>. Posts are a position reference and nothing more. They are not signals and carry no instruction; Book S says what they are for.</p>
@@ -652,7 +660,7 @@
 
   <div class="rule" id="I30">
     <span class="rule-num">Rule I 30</span><span class="rule-title">Signage</span>
-    <p>Make name boards, plates, boards, posts and batons to the drawings in this chapter. Hectometre and kilometre posts stand at every hundred metres and every kilometre without exception, and are the only lineside plates that carry a distance. Do not add a sign that is not in Book S, and do not vary a drawing to suit a site; move the post instead.</p>
+    <p>Make name boards, plates, boards, posts and batons to the drawings in this chapter. Hectometre and kilometre posts stand at every hundred metres and every kilometre without exception, and are the only lineside plates that carry a distance. Every speed board that lowers the limit has an advance speed board of the same figures 200 m before it; a speed board that raises the limit has none. Do not add a sign that is not in Book S, and do not vary a drawing to suit a site; move the post instead.</p>
   </div>
 </section>
 
@@ -741,17 +749,17 @@
   <p>Chapters are numbered § 1, § 2 and so on; sections within them § 3.2. Rules are numbered in tens within each Book, <strong>Rule S 10</strong>, <strong>Rule S 12</strong>, leaving room for a rule to be inserted between two others without renumbering the rest. Figures are numbered by chapter, Fig. 6.1. A rule is cited from any Book, including its own, by its full name: "see Rule R 20". Never "see above" and never "rule 20".</p>
   <p>Each Book has a contents page, a running footer with the Book letter and chapter, a colophon and a back cover. Page size is A5. The running footer is set in Display, upper case, tracked, in Slate.</p>
 
-  <h2><span class="num">9.4</span> Editions and amendments</h2>
-  <p>A Book is reissued as a new edition when it changes substantially. Between editions it is corrected by <strong>amendment slips</strong>: small Ivory slips, numbered, naming the Book, the section and the page, which the holder pastes in at the place indicated. A Book with its slips in is current; a Book without is not, and the colophon says how many slips it should carry.</p>
+  <h2 id="c9-4"><span class="num">9.4</span> Editions and amendments</h2>
+  <p>A Book is reissued as a new edition whenever its text or its figures change; a change to the shared stylesheet alone is not an edition. Every new edition is accompanied by an <strong>amendment slip</strong>, numbered by Book letter and edition, so that Amendment Slip I-2 takes Book I from its first edition to its second. The slip lists every change in Book order: the section, a line on why, and the wording before and after, or the new text in full. It is a small Book page in its own right, kept with the Book at <span class="mono">amendments/book-i-ed2.html</span>, linked from the Book's colophon and from the Library, and linking back to the sections it amends. A holder of the previous edition reads the slip, or pastes it inside the back cover, and is current; the colophon of every edition names the slips that lead to it.</p>
   <figure>
     <div style="display:flex;justify-content:center">
       <div class="slip">
-        <div class="h">Amendment Slip No. 3 · Book S</div>
-        <div class="m">§ 4.2 · paste in at page 14 · issued 2026-09-15</div>
-        <p style="margin:8px 0 0">In Rule S 12, after "stop short of the board" add: "A move authorised by the station master in writing may pass it at walking pace."</p>
+        <div class="h">Amendment Slip I-2 · Book I</div>
+        <div class="m">First edition → second edition · issued 2026-09-08</div>
+        <p style="margin:8px 0 0"><strong>§ 7.3 Boards</strong> · New figure. <em>Now:</em> Fig. 7.3 gains the advance speed board, an Ivory triangle, point up, 700 mm on a side, with an Ink rim and the coming limit in Ink figures.</p>
       </div>
     </div>
-    <figcaption style="text-align:center"><span class="fig">Fig. 9.2</span> An amendment slip. Illustrative; no such slip has been issued.</figcaption>
+    <figcaption style="text-align:center"><span class="fig">Fig. 9.2</span> The head of an amendment slip, with its first entry. This one is real: it is the slip for this edition.</figcaption>
   </figure>
 
   <div class="rule" id="I36">
@@ -760,16 +768,16 @@
   </div>
   <div class="rule" id="I38">
     <span class="rule-num">Rule I 38</span><span class="rule-title">Amendments</span>
-    <p>Correct a Book between editions only by numbered amendment slip. Paste slips in where the slip says. Do not annotate a Book by hand except to initial a pasted slip.</p>
+    <p>Change a Book only by issuing a new edition, and issue no edition without its amendment slip listing every change. Link the slip from the colophon and from the Library. Do not annotate a Book by hand except to initial a pasted slip.</p>
   </div>
-  <div class="why"><p>A Book that everyone has, in the same edition with the same slips, is a Book everyone can quote to each other over a bad telephone line. That is worth the paste.</p></div>
+  <div class="why"><p>A Book that everyone has, in the same edition, is a Book everyone can quote to each other over a bad telephone line. The slip is for the one who read the last edition and has five minutes: it tells them exactly what moved, and nothing else.</p></div>
 </section>
 
 <!-- COLOPHON -->
 <section class="page colophon" id="colophon" data-folio="Book I · Colophon">
   <img class="mark" src="../brand/mark-green.svg" alt="">
-  <p><strong>Book I — Identity Manual.</strong> First edition, September 2026. Issued by the General Manager's Office of the Meridian Railway, drawn in the Drawing Office at Ashgrove, and printed at the Ashgrove Works press on Ivory stock, Works Standard 2.</p>
-  <p>Set in Barlow Condensed, Source Serif 4 and IBM Plex Mono. Page size A5. Colours are given as the Drawing Office values; the Works keeps the paint and glass standards. This edition supersedes nothing and should carry no amendment slips.</p>
+  <p><strong>Book I — Identity Manual.</strong> Second edition, September 2026. Issued by the General Manager's Office of the Meridian Railway, drawn in the Drawing Office at Ashgrove, and printed at the Ashgrove Works press on Ivory stock, Works Standard 2.</p>
+  <p>Set in Barlow Condensed, Source Serif 4 and IBM Plex Mono. Page size A5. Colours are given as the Drawing Office values; the Works keeps the paint and glass standards. This edition supersedes the first edition of September 2026; the changes are listed in <a href="amendments/book-i-ed2.html">Amendment Slip I-2</a>, which a first-edition copy should carry inside its back cover.</p>
   <p>The Valley Survey's original stake is said to be under the Ashgrove buffer stop. Nobody has looked.</p>
 </section>
 

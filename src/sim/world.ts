@@ -166,7 +166,7 @@ export class World {
           const applies = o.type === "main" ? c.isTrain : !c.isTrain;
           items.push({ kind: "signal", label: o.id, dist: d, obj: o, aspect: o.aspect, applies });
         } else {
-          const label = o.board === "stop" ? `Stop board ${o.label}` : o.board === "limitOfShunt" ? "Limit of Shunt" : o.board === "speed" ? `Speed ${o.value}` : "Buffer stop";
+          const label = o.board === "stop" ? `Stop board ${o.label}` : o.board === "limitOfShunt" ? "Limit of Shunt" : o.board === "speed" ? `Speed ${o.value}` : o.board === "speedAdvance" ? `Speed ${o.value} ahead` : "Buffer stop";
           const applies = o.board === "stop" ? c.isTrain : o.board === "limitOfShunt" ? !c.isTrain : true;
           items.push({ kind: o.board === "buffer" ? "buffer" : "board", label, dist: d, obj: o, applies });
         }
@@ -188,10 +188,10 @@ export class World {
     return items.filter((i) => { if (i.kind !== "vehicle") return true; if (seenVehicle) return false; seenVehicle = true; return true; });
   }
 
-  /** speed limit for a consist right now */
+  /** Speed limit for a consist right now: the lowest limit under any part of it (Rule R 10). */
   limitFor(c: Consist): number {
-    const lead = c.leadingPos(c.v >= 0 ? 1 : -1);
-    let lim = this.layout.limitAt(kmOf(lead));
+    const f = c.frontEnd(), r = c.rearEnd();
+    let lim = this.layout.limitOver(kmOf(f.vehicle.endPos(f.end)), kmOf(r.vehicle.endPos(r.end)));
     if (!c.isTrain) lim = Math.min(lim, 15);
     return lim;
   }

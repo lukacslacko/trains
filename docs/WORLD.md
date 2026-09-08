@@ -113,7 +113,9 @@ Plain single track from buffer to buffer, no switches, no signals.
 | 0.130–0.290 | Ashgrove platform | – | |
 | 0.135 | Stop board "ASHGROVE" | Up | Up trains stop here |
 | 0.450 | Speed board 25 | Up | station limit begins for Up trains |
-| 0.450 | Speed board 50 | Down | line speed resumes for Down trains |
+| 0.450 | Speed board 50 | Down | line speed resumes for Down trains, once the rear has passed |
+| 0.650 | Advance speed board 25 | Up | announces the 25 board 200 m ahead |
+| 2.650 | Advance speed board 25 | Down | announces the 25 board 200 m ahead |
 | 2.850 | Speed board 25 | Down | |
 | 2.850 | Speed board 50 | Up | |
 | 3.010–3.170 | Wending platform | – | |
@@ -148,11 +150,13 @@ Ashgrove (headshunt at the Up/buffer end, main line at the Down end):
 | 0.400 | Limit of Shunt board | Down | single line | shunting moves stop short of it |
 | 0.420 | Home signal **AG 2** | Up | single line | main signal, governs entry |
 | 0.450 | Speed boards 25 (Up) / 50 (Down) | | | |
+| 0.650 | Advance speed board 25 | Up | single line | 200 m before the 25 board |
 
 Wending (mirror; headshunt at the Down/buffer end):
 
 | km | object | faces | on | note |
 |----|--------|-------|----|------|
+| 2.650 | Advance speed board 25 | Down | single line | 200 m before the 25 board |
 | 2.850 | Speed boards 25 (Down) / 50 (Up) | | | |
 | 2.880 | Home signal **WD 1** | Down | single line | |
 | 2.900 | Limit of Shunt board | Up | single line | |
@@ -211,7 +215,8 @@ obstruction. Ground signals govern shunting moves only.
 |-------|------|---------|
 | Stop board | ivory board, thick black horizontal bar, station name beneath | Stop with the front of the train level with the board. Within 3 m short is a correct stop. |
 | Limit of Shunt | ivory board with a red diagonal band, "LIMIT OF SHUNT" | Shunting moves must not pass. |
-| Speed board | black numeral on an ivory disc with a black rim | Speed limit in km/h from the board onward. |
+| Speed board | black numeral on an ivory disc with a black rim | Speed limit in km/h from the board onward. A lower limit applies to the front of the train as it passes; a higher limit applies only once the rear of the train has passed. |
+| Advance speed board | black numeral on an ivory triangle, point up, black rim | A lower limit lies ahead: the speed board with this numeral stands one warning distance beyond (200 m on this line). Be at that speed when the front reaches the speed board. Higher limits are not announced. |
 | Buffer stop | red lamp on the stop | End of track. |
 
 Future: whistle board, pantograph down/up boards, end of wire, distant
@@ -239,7 +244,14 @@ authority.
 ## 6. Rules summary (the sim enforces these; Books give them numbers)
 
 - **R 10 Speeds.** 50 line, 25 within station limits (from the speed board
-  or home signal to the buffer), 15 shunting, 5 coupling approach.
+  or home signal to the buffer), 15 shunting, 5 coupling approach. A limit
+  applies to the whole train: a train's limit is the lowest limit under any
+  part of it, so a reduction applies from the moment the front reaches its
+  board and a rise only once the rear has passed its board. Reductions are
+  announced by an advance speed board one warning distance (200 m on this
+  line) before the speed board; at a service deceleration of 0.5 m/s² a train
+  loses the 25 km/h between 50 and 25 in about 145 m, the rest is the
+  driver's allowance for reaction, fog and snow.
 - **R 12 Stop boards.** Stop with the front within 3 m short of the board.
   Overrunning the board is an incident.
 - **R 14 Doors.** Open only when stopped at a platform. Close before moving.

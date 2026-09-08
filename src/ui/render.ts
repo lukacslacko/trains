@@ -231,9 +231,16 @@ export class WorldRenderer {
       ctx.rotate(-Math.atan2(t.y, t.x));
       ctx.fillStyle = C.ink; ctx.font = `700 2px ${DISPLAY}`; ctx.textAlign = "center";
       ctx.fillText(String(b.value), 0, 0.7);
+    } else if (b.board === "speedAdvance") {
+      // an ivory triangle, point up: a lower limit lies one warning distance ahead
+      ctx.rotate(-Math.atan2(t.y, t.x));
+      ctx.fillStyle = C.white; ctx.strokeStyle = C.ink; ctx.lineWidth = 0.3; ctx.lineJoin = "round";
+      ctx.beginPath(); ctx.moveTo(0, -1.9); ctx.lineTo(1.75, 1.2); ctx.lineTo(-1.75, 1.2); ctx.closePath(); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = C.ink; ctx.font = `700 1.7px ${DISPLAY}`; ctx.textAlign = "center";
+      ctx.fillText(String(b.value), 0, 1.0);
     }
     ctx.restore();
-    if (s >= 2.5 && b.board !== "speed") {
+    if (s >= 2.5 && b.board !== "speed" && b.board !== "speedAdvance") {
       ctx.fillStyle = C.slate; ctx.font = `600 2px ${DISPLAY}`; ctx.textAlign = "center";
       const label = b.board === "stop" ? `STOP · ${b.label}` : "LIMIT OF SHUNT";
       ctx.fillText(label, cx + n.x * 3.4, cy + n.y * 3.4 + 0.7);
