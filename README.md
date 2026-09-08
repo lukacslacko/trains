@@ -15,7 +15,13 @@ npm install
 npm run dev        # http://127.0.0.1:5173/
 npm run typecheck
 npm run dev:test   # a second server on port 5174, for testing while playing on 5173
+npm run play       # play a frozen snapshot of the latest commit on port 4173
 ```
+
+`npm run play` checks the latest commit out into a separate worktree
+(`.play/`, ignored by git) and serves that, so edits to the working tree
+never reload a duty in progress. Re-run it to move the snapshot to the
+newest commit; set `PORT=...` for another port.
 
 Headless playthroughs (a scripted driver runs a whole duty and prints the
 Incident Book and the station masters' messages):
