@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Library · The Meridian Railway</title>
+<link rel="stylesheet" href="book.css">
+<style>
+  .shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 8px; }
+  .spine { display: block; background: var(--green); color: var(--ivory); padding: 26px 26px 22px; min-height: 250px; border: 0; position: relative; box-shadow: 0 12px 30px -18px rgba(26,26,26,.6); transition: transform .12s; }
+  .spine:hover { transform: translateY(-3px); }
+  .spine .company { font-family: var(--display); font-weight: 600; font-size: 12px; letter-spacing: .28em; text-transform: uppercase; opacity: .85; }
+  .spine .letter { font-family: var(--display); font-weight: 700; font-size: 96px; line-height: .9; margin: 12px 0 4px; }
+  .spine .letter small { display: block; font-size: 12px; letter-spacing: .3em; font-weight: 600; text-transform: uppercase; margin-bottom: 6px; opacity: .8; }
+  .spine .t { font-family: var(--display); font-weight: 600; font-size: 26px; line-height: 1; letter-spacing: .04em; text-transform: uppercase; margin: 6px 0 8px; }
+  .spine .s { font-style: italic; font-size: 14px; opacity: .9; }
+  .spine .mark { position: absolute; right: 22px; top: 24px; width: 34px; height: 34px; opacity: .9; }
+  .spine.soon { background: var(--chalk); color: var(--slate); box-shadow: none; }
+  .spine.soon .t { color: var(--slate); }
+  .intro { margin-bottom: 18px; }
+</style>
+</head>
+<body>
+<nav class="desk-bar">
+  <a href="/#home" target="_top">← Meridian Railway</a>
+  <span class="spacer"></span>
+  <span>The Library · September 2026</span>
+</nav>
+<div class="book">
+  <section class="page" data-folio="The Library">
+    <h1 style="font-family:var(--display);font-weight:600;font-size:34px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px">The Library</h1>
+    <p class="lead intro">The Company's manuals, lettered by subject. Each opens as a booklet you may read on screen or print on A5 paper. Every rule the Railway enforces is written in one of these; every control in the cab has its paragraph.</p>
+    <div class="shelf">
+      <a class="spine" href="book-i.html"><img class="mark" src="../brand/mark-ivory.svg" alt=""><div class="company">The Meridian Railway</div><div class="letter"><small>Book</small>I</div><div class="t">Identity Manual</div><div class="s">The name, the mark, the colours and the voice, and how to use them.</div></a>
+      <a class="spine" href="book-r.html"><img class="mark" src="../brand/mark-ivory.svg" alt=""><div class="company">The Meridian Railway</div><div class="letter"><small>Book</small>R</div><div class="t">Rules of Operation</div><div class="s">The general rules by which the Railway is worked, and the Incident Book.</div></a>
+      <a class="spine" href="book-s.html"><img class="mark" src="../brand/mark-ivory.svg" alt=""><div class="company">The Meridian Railway</div><div class="letter"><small>Book</small>S</div><div class="t">Signalling Manual</div><div class="s">Signals, boards and hand signals, and the routes they protect.</div></a>
+      <a class="spine" href="book-d.html"><img class="mark" src="../brand/mark-ivory.svg" alt=""><div class="company">The Meridian Railway</div><div class="letter"><small>Book</small>D</div><div class="t">Driving Manual</div><div class="s">The cab, the procedures, and the handbooks of the Class 1, the Class 4 and the Type C4.</div></a>
+      <div class="spine soon"><div class="company">In preparation</div><div class="letter"><small>Book</small>P</div><div class="t">Permanent Way</div><div class="s">Track, inspection, maintenance and possessions. Issued with a later milestone.</div></div>
+      <div class="spine soon"><div class="company">In preparation</div><div class="letter"><small>Book</small>W</div><div class="t">Workshop Manual</div><div class="s">Examination and repair of rolling stock, down to the last screw, in time.</div></div>
+    </div>
+  </section>
+  <section class="page colophon" data-folio="The Library · Colophon">
+    <img class="mark" src="../brand/mark-green.svg" alt="">
+    <p><strong>The Library.</strong> Issued by the General Manager's Office. Books are printed at the Ashgrove Works press on ivory stock, A5, and amended by numbered slips. Use the “Print booklet” link on any Book's desk bar.</p>
+  </section>
+</div>
+</body>
+</html>

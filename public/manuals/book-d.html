@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book D — Driving Manual · The Meridian Railway</title>
+<link rel="stylesheet" href="book.css">
+<style>
+  /* Book D only: timetable cards and the position ledger */
+  .card {
+    border: 1px solid var(--chalk); background: #fff; padding: 14px 18px 10px; margin: 12px 0 18px;
+    page-break-inside: avoid;
+  }
+  .card .card-head {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+    font-family: var(--display); font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--green); border-bottom: 2px solid var(--green); padding-bottom: 6px; margin-bottom: 8px;
+  }
+  .card .card-head .mono { color: var(--slate); font-weight: 400; letter-spacing: .04em; text-transform: none; }
+  .card table { margin: 0 0 6px; }
+  .card td, .card th { padding: 5px 8px; }
+  .card td.mono { font-size: 13.5px; }
+  .card .foot { font-size: 12.5px; color: var(--slate); margin: 6px 0 0; }
+  .card td.act { color: var(--slate); font-style: italic; }
+  .where { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 22px; margin: 6px 0 14px; }
+  .where div { border-left: 3px solid var(--chalk); padding: 2px 0 2px 12px; }
+  .where div b { font-family: var(--display); font-weight: 600; letter-spacing: .04em; color: var(--green); display: block; }
+  .spec { grid-template-columns: 150px 1fr; }
+  @media print { .where { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<nav class="desk-bar">
+  <a href="index.html">← Library</a>
+  <span class="spacer"></span>
+  <span>Book D · First edition · September 2026</span>
+  <a href="#" onclick="window.print();return false;">Print booklet</a>
+</nav>
+
+<div class="book">
+
+<!-- COVER -->
+<section class="cover">
+  <div class="rule-line"></div>
+  <img class="mark" src="../brand/mark-ivory.svg" alt="">
+  <div class="company">The Meridian Railway</div>
+  <div class="book-letter"><small>Book</small>D</div>
+  <h1 class="title">Driving Manual</h1>
+  <p class="subtitle">The cab, the procedures, and the handbooks of the Class 1 car, the Class 4 locomotive and the Type C4 coach.</p>
+  <div class="edition">First edition · September 2026 · Issued by the Locomotive Superintendent's Office</div>
+  <div class="motto">On the line, on time.</div>
+</section>
+
+<!-- CONTENTS -->
+<section class="page toc" data-folio="Book D · Contents">
+  <h1>Contents</h1>
+  <ol>
+    <li><span class="num">1</span><a href="#c1">The driver</a><span class="dots"></span><span class="pg">3</span></li>
+    <li class="sub"><span class="num">1.1</span><a href="#c1-1">Where you are</a><span class="dots"></span><span class="pg">3</span></li>
+    <li class="sub"><span class="num">1.2</span><a href="#c1-2">Leaving a cab</a><span class="dots"></span><span class="pg">4</span></li>
+    <li><span class="num">2</span><a href="#c2">The cab</a><span class="dots"></span><span class="pg">5</span></li>
+    <li class="sub"><span class="num">2.1</span><a href="#c2-1">Controls</a><span class="dots"></span><span class="pg">5</span></li>
+    <li class="sub"><span class="num">2.2</span><a href="#c2-2">Indicators</a><span class="dots"></span><span class="pg">8</span></li>
+    <li class="sub"><span class="num">2.3</span><a href="#c2-3">The keys</a><span class="dots"></span><span class="pg">9</span></li>
+    <li><span class="num">3</span><a href="#c3">Preparing a stabled vehicle</a><span class="dots"></span><span class="pg">10</span></li>
+    <li><span class="num">4</span><a href="#c4">Running</a><span class="dots"></span><span class="pg">11</span></li>
+    <li class="sub"><span class="num">4.1</span><a href="#c4-1">Starting</a><span class="dots"></span><span class="pg">11</span></li>
+    <li class="sub"><span class="num">4.2</span><a href="#c4-2">Speeds</a><span class="dots"></span><span class="pg">12</span></li>
+    <li class="sub"><span class="num">4.3</span><a href="#c4-3">Braking to a stop board</a><span class="dots"></span><span class="pg">12</span></li>
+    <li class="sub"><span class="num">4.4</span><a href="#c4-4">The emergency brake and the buffer stop</a><span class="dots"></span><span class="pg">13</span></li>
+    <li><span class="num">5</span><a href="#c5">Changing ends</a><span class="dots"></span><span class="pg">14</span></li>
+    <li><span class="num">6</span><a href="#c6">Coupling, uncoupling and the brake test</a><span class="dots"></span><span class="pg">15</span></li>
+    <li><span class="num">7</span><a href="#c7">Stabling</a><span class="dots"></span><span class="pg">18</span></li>
+    <li><span class="num">8</span><a href="#c8">Handbook: the Class 1 motor car</a><span class="dots"></span><span class="pg">19</span></li>
+    <li><span class="num">9</span><a href="#c9">Handbook: the Class 4 locomotive</a><span class="dots"></span><span class="pg">22</span></li>
+    <li><span class="num">10</span><a href="#c10">Handbook: the Type C4 coach</a><span class="dots"></span><span class="pg">24</span></li>
+    <li><span class="num">11</span><a href="#c11">Duty sheets</a><span class="dots"></span><span class="pg">25</span></li>
+    <li><span class="num">12</span><a href="#c12">Glossary</a><span class="dots"></span><span class="pg">27</span></li>
+    <li><span class="num">—</span><a href="#colophon">Colophon</a><span class="dots"></span><span class="pg">28</span></li>
+  </ol>
+</section>
+
+<!-- 1 THE DRIVER -->
+<section class="page chapter" id="c1" data-folio="Book D · 1 The driver">
+  <h1><span class="num">§ 1</span> The driver</h1>
+  <p class="lead">This Book is addressed to you. It tells you where you stand, what is in front of you, and what to do with it, in the order you will need it. Read it once from the beginning; afterwards you will only need the procedures and the handbooks.</p>
+  <blockquote class="epigraph">A train does nothing by itself. Everything it does, somebody did first.<span class="who">Locomotive Superintendent's preface, first edition</span></blockquote>
+
+  <h2 id="c1-1"><span class="num">1.1</span> Where you are</h2>
+  <p>The Railway keeps account of where you are, because most things that matter can be done from one place only. You cannot raise the pantograph from the platform, and you cannot connect a brake pipe from the driving seat. At any moment you are in one of four places:</p>
+
+  <div class="where">
+    <div><b>In Cab A</b>Seated at the desk at the A end. The controls before you act on the whole train; <span class="term">forward</span> means away from this cab.</div>
+    <div><b>In Cab B</b>The same desk at the other end. Everything is mirrored: <span class="term">forward</span> now means the opposite direction along the track.</div>
+    <div><b>On the ground</b>Beside your vehicle, on the platform or the ballast. From here you can walk to either cab or to a coupling.</div>
+    <div><b>At a coupling</b>Standing between two vehicles, or at the free end of one. Here you connect and disconnect the brake pipe and part the coupler.</div>
+  </div>
+
+  <p>Walking takes time. A person walks at about 1.2 metres a second, so the length of a Class 1 car, twenty-two metres, is nearly twenty seconds of your day, and the steps up and down add a few more. A change of ends on a locomotive and coach is a longer walk still, and you will do it twice on Duty 201. Allow for it in the dwell.</p>
+
+  <table>
+    <thead><tr><th>To do this</th><th>You must be</th></tr></thead>
+    <tbody>
+      <tr><td>Drive, brake, raise or lower the pantograph, set the lights at this end, work the doors, sound the horn, run the brake test</td><td>in the cab at that end</td></tr>
+      <tr><td>Set the lights at the other end</td><td>in the cab at the other end</td></tr>
+      <tr><td>Walk to the other cab or to a coupling</td><td>on the ground</td></tr>
+      <tr><td>Connect or disconnect a brake pipe, part a coupler</td><td>at that coupling</td></tr>
+    </tbody>
+  </table>
+
+  <div class="why"><p>We could have given every cab a switch for every lamp on the train, and a lever that couples at a distance. We did not, because a driver who has to walk the length of the train sees the train. A brake pipe that is connected by hand is a brake pipe that somebody has looked at.</p></div>
+
+  <h2 id="c1-2"><span class="num">1.2</span> Leaving a cab</h2>
+  <p>Whenever you leave a driving cab, for any reason, secure the train first. The rule is in Book R and it is short enough to learn by heart.</p>
+
+  <div class="rule" id="R22-cited">
+    <span class="rule-num">Rule R 22</span><span class="rule-title">Securing (cited)</span>
+    <p>Before leaving the cab: power controller to 0, train brake to <span class="term">Full</span>, reverser to <span class="term">Neutral</span>. The pantograph may stay up. See <a href="book-r.html#R22">Book R, Rule R 22</a>.</p>
+  </div>
+
+  <p>The cab will not let you out of the door while the train can move: the <span class="kbd">C</span> key does nothing until the three conditions are met, and the message panel tells you which one is missing. Leaving a cab that is not secured is entered in the Incident Book, so treat it as a habit rather than a check.</p>
+  <div class="note"><p>You may leave the pantograph up when you go to the other cab. On a cold morning the heating is on the traction supply and the passengers will thank you for it.</p></div>
+</section>
+
+<!-- 2 THE CAB -->
+<section class="page chapter" id="c2" data-folio="Book D · 2 The cab">
+  <h1><span class="num">§ 2</span> The cab</h1>
+  <p class="lead">Every driving cab on the Railway has the same desk. The Class 1 car and the Class 4 locomotive differ in size, weight and strength, but the levers fall under the same hands in the same order, so that a driver who knows one cab knows them all.</p>
+
+  <figure>
+    <div class="figure-frame">
+      <svg viewBox="0 0 520 230" width="520" height="230" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+        <!-- windscreen -->
+        <rect x="20" y="10" width="480" height="34" fill="#F4EFE3" stroke="#D9D2C0"/>
+        <text x="260" y="32" text-anchor="middle" font-size="13" fill="#4A5560" letter-spacing="3">WINDSCREEN</text>
+        <!-- desk -->
+        <path d="M30 60 L490 60 L510 210 L10 210 Z" fill="#fff" stroke="#1A1A1A" stroke-width="2"/>
+        <!-- left cluster: reverser and power -->
+        <g>
+          <rect x="40" y="80" width="18" height="70" rx="4" fill="#F4EFE3" stroke="#4A5560"/>
+          <line x1="49" y1="90" x2="49" y2="140" stroke="#1A1A1A" stroke-width="3"/>
+          <circle cx="49" cy="115" r="6" fill="#1F4B3F"/>
+          <text x="66" y="92" font-size="11" fill="#4A5560">F</text>
+          <text x="66" y="118" font-size="11" fill="#4A5560">N</text>
+          <text x="66" y="144" font-size="11" fill="#4A5560">R</text>
+          <text x="49" y="168" text-anchor="middle" font-size="11" fill="#1F4B3F" letter-spacing="1.5">REVERSER</text>
+
+          <path d="M100 150 A50 50 0 0 1 200 150" fill="none" stroke="#4A5560" stroke-width="1.5"/>
+          <line x1="150" y1="150" x2="118" y2="112" stroke="#1A1A1A" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="150" cy="150" r="7" fill="#1F4B3F"/>
+          <text x="98" y="146" font-size="10" fill="#4A5560">0</text>
+          <text x="112" y="118" font-size="10" fill="#4A5560">1</text>
+          <text x="146" y="100" font-size="10" fill="#4A5560">2</text>
+          <text x="182" y="118" font-size="10" fill="#4A5560">3</text>
+          <text x="198" y="146" font-size="10" fill="#4A5560">4</text>
+          <text x="150" y="168" text-anchor="middle" font-size="11" fill="#1F4B3F" letter-spacing="1.5">POWER CONTROLLER</text>
+        </g>
+        <!-- centre: gauges -->
+        <g>
+          <circle cx="235" cy="110" r="30" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="2"/>
+          <line x1="235" y1="110" x2="220" y2="90" stroke="#C6321E" stroke-width="2"/>
+          <text x="235" y="152" text-anchor="middle" font-size="11" fill="#1F4B3F" letter-spacing="1.5">KM/H</text>
+          <circle cx="305" cy="110" r="24" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="2"/>
+          <line x1="305" y1="110" x2="322" y2="98" stroke="#1F4B3F" stroke-width="2"/>
+          <text x="305" y="152" text-anchor="middle" font-size="11" fill="#1F4B3F" letter-spacing="1.5">PIPE BAR</text>
+          <!-- lamps -->
+          <circle cx="222" cy="182" r="6" fill="#2E9E5B"/><text x="222" y="200" text-anchor="middle" font-size="9" fill="#4A5560">LINE</text>
+          <circle cx="252" cy="182" r="6" fill="#D9A21B"/><text x="252" y="200" text-anchor="middle" font-size="9" fill="#4A5560">DOORS</text>
+          <circle cx="282" cy="182" r="6" fill="#2E9E5B"/><text x="282" y="200" text-anchor="middle" font-size="9" fill="#4A5560">PANTO</text>
+          <circle cx="312" cy="182" r="6" fill="#D9D2C0"/><text x="312" y="200" text-anchor="middle" font-size="9" fill="#4A5560">TEST</text>
+        </g>
+        <!-- right cluster: brake and buttons -->
+        <g>
+          <rect x="360" y="76" width="18" height="90" rx="4" fill="#F4EFE3" stroke="#4A5560"/>
+          <line x1="369" y1="84" x2="369" y2="158" stroke="#1A1A1A" stroke-width="3"/>
+          <circle cx="369" cy="146" r="6" fill="#C6321E"/>
+          <text x="384" y="88" font-size="10" fill="#4A5560">REL</text>
+          <text x="384" y="102" font-size="10" fill="#4A5560">1</text>
+          <text x="384" y="116" font-size="10" fill="#4A5560">2</text>
+          <text x="384" y="130" font-size="10" fill="#4A5560">3</text>
+          <text x="384" y="144" font-size="10" fill="#4A5560">FULL</text>
+          <text x="384" y="160" font-size="10" fill="#C6321E">EMERG</text>
+          <text x="369" y="184" text-anchor="middle" font-size="11" fill="#1F4B3F" letter-spacing="1.5">TRAIN BRAKE</text>
+
+          <rect x="420" y="80" width="30" height="18" rx="3" fill="#fff" stroke="#4A5560"/><text x="435" y="110" text-anchor="middle" font-size="9" fill="#4A5560">PANTO</text>
+          <circle cx="470" cy="90" r="9" fill="#fff" stroke="#4A5560"/><line x1="470" y1="90" x2="476" y2="83" stroke="#1A1A1A" stroke-width="2"/><text x="470" y="110" text-anchor="middle" font-size="9" fill="#4A5560">LIGHTS</text>
+          <rect x="420" y="122" width="30" height="18" rx="3" fill="#fff" stroke="#4A5560"/><text x="435" y="152" text-anchor="middle" font-size="9" fill="#4A5560">DOORS</text>
+          <circle cx="470" cy="131" r="9" fill="#1F4B3F"/><text x="470" y="152" text-anchor="middle" font-size="9" fill="#4A5560">HORN</text>
+          <rect x="426" y="166" width="52" height="18" rx="3" fill="#fff" stroke="#4A5560"/><text x="452" y="196" text-anchor="middle" font-size="9" fill="#4A5560">BRAKE TEST</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 2.1</span> The standard desk. Left hand: reverser and power. Right hand: brake and switches. Between them, the two gauges you watch most.</figcaption>
+  </figure>
+
+  <h2 id="c2-1"><span class="num">2.1</span> Controls</h2>
+
+  <h3>Reverser <span class="kbd">R</span> <span class="kbd">N</span> <span class="kbd">F</span></h3>
+  <p>Three positions: <span class="term">Reverse</span>, <span class="term">Neutral</span>, <span class="term">Forward</span>. They are relative to the cab you are sitting in: Forward drives the train away from your cab, Reverse pulls it towards you. The reverser will not move unless the power controller is at 0. In Neutral the motors are disconnected and the controller does nothing.</p>
+  <div class="why"><p>A reverser that could be thrown under power would be a reverser that one day is thrown under power, with the motors still turning. We interlock it so that the question never arises.</p></div>
+
+  <h3>Power controller <span class="kbd">W</span> up · <span class="kbd">S</span> down</h3>
+  <p>Five notches, 0 to 4. Each notch asks the motors for a further quarter of the tractive effort available at the present speed. The controller has effect only when all of the following are true: the reverser is in Forward or Reverse, the pantograph is up and the line is live, and the doors are closed. Otherwise the notch is recorded and nothing happens; the train will start as soon as the missing condition is met, so do not leave a notch on the controller while you wait.</p>
+
+  <h3>Train brake <span class="kbd">A</span> release · <span class="kbd">D</span> apply · <span class="kbd">Space</span> emergency</h3>
+  <p>Six positions: <span class="term">Release</span>, <span class="term">1</span>, <span class="term">2</span>, <span class="term">3</span>, <span class="term">Full</span>, <span class="term">Emergency</span>. The <span class="kbd">D</span> key moves the handle one step towards apply, the <span class="kbd">A</span> key one step towards release. <span class="kbd">Space</span> throws it straight to Emergency from anywhere.</p>
+  <p>The brake is an automatic air brake, and it repays a moment's understanding. A pipe runs the length of the train, joined at every coupling. When you place the handle in Release, the pipe is charged to 5.0 bar and every brake on the train releases. Each step towards apply drops the pipe pressure, and each vehicle answers the drop by applying its own brakes in proportion; at 3.5 bar, the Full position, every brake is fully applied. Emergency vents the pipe to nothing, as fast as air can leave it. The important consequence is this: if the pipe is parted anywhere, by uncoupling or by accident, the air escapes and the brakes apply themselves on both parts of the train. The brake fails safe. It cannot be forgotten, only released.</p>
+  <div class="note"><p>Releasing takes longer than applying. The pipe recharges at about half a bar a second, so a full release from Full takes three seconds or so, and from Emergency the better part of ten. Plan your starts accordingly.</p></div>
+
+  <h3>Pantograph <span class="kbd">P</span></h3>
+  <p>Two positions, <span class="term">Down</span> and <span class="term">Up</span>. Raising takes a few seconds; the <span class="term">Line</span> lamp lights when the pantograph is touching a live wire. Without it there is no traction, no heating and no lights. The whole line, headshunts included, is wired at 1.5 kV, so on the Ashgrove–Wending line you may raise it where you stand.</p>
+
+  <h3>Lights, this end <span class="kbd">L</span> cycles</h3>
+  <p>Three positions: <span class="term">Off</span>, <span class="term">Tail</span>, <span class="term">Head</span>. The switch in a cab controls the lamps at that end only. Head shows two white lamps, Tail two red ones. On the main line the leading end of a train shows Head, the rear of the train shows Tail, and a coupled end shows nothing (<a href="book-r.html#R16">Rule R 16</a>). The Type C4 coach looks after its own tail lamps; see § 10.</p>
+
+  <h3>Doors <span class="kbd">O</span></h3>
+  <p>Two positions, <span class="term">Closed</span> and <span class="term">Open</span>. Open them only when stopped at a platform, and close them before you move (<a href="book-r.html#R14">Rule R 14</a>). Traction is inhibited while any door is open; the <span class="term">Doors</span> lamp shows amber until they are all closed and locked.</p>
+
+  <h3>Horn <span class="kbd">H</span></h3>
+  <p>One press, one short blast. Sound it before every movement from rest (<a href="book-r.html#R18">Rule R 18</a>), including shunting moves and including the second half of a change of ends. Nobody on the platform has to guess.</p>
+
+  <h3>Brake test <span class="kbd">button</span></h3>
+  <p>Runs the brake continuity test described in § 6. It takes about twenty seconds; do not touch the brake handle while the <span class="term">Test</span> lamp is lit.</p>
+
+  <h3>Leave cab / enter cab <span class="kbd">C</span></h3>
+  <p>From a secured cab, puts you on the ground beside it. From the ground beside a cab, seats you at its desk. Walking between places is done from the ground with the walk buttons on the panel.</p>
+
+  <h2 id="c2-2"><span class="num">2.2</span> Indicators</h2>
+  <table>
+    <thead><tr><th>Indicator</th><th>Reads</th><th>Watch it for</th></tr></thead>
+    <tbody>
+      <tr><td>Speed</td><td class="mono">km/h</td><td>The limit in force. Fifty on the line, twenty-five in station limits, fifteen when shunting, five in the last twenty metres before a coupling.</td></tr>
+      <tr><td>Pipe pressure</td><td class="mono">bar</td><td>5.0 released, 3.5 full service, 0 emergency. It tells you what the brakes are doing, not what the handle says.</td></tr>
+      <tr><td>Line</td><td>lamp</td><td>Lit when the pantograph is on a live wire.</td></tr>
+      <tr><td>Doors</td><td>lamp</td><td>Amber while any door is open. Traction is held off until it goes out.</td></tr>
+      <tr><td>Ahead</td><td>text</td><td>The next signal or board in your direction, its aspect, and the distance to it.</td></tr>
+      <tr><td>Limit</td><td class="mono">km/h</td><td>The speed limit that applies where you are now.</td></tr>
+      <tr><td>Kilometre</td><td class="mono">km</td><td>Where the front of the train stands, to the metre. It agrees with the hectometre posts beside the line; report a position to the Box by the last post passed, as in "stopped at 2.7".</td></tr>
+      <tr><td>Clock</td><td class="mono">hh:mm</td><td>Railway time. Compare it with the duty sheet.</td></tr>
+      <tr><td>Where you are</td><td>text</td><td>Cab A, Cab B, on the ground, or at a coupling.</td></tr>
+    </tbody>
+  </table>
+  <div class="note"><p>The <span class="term">Ahead</span> indicator is a courtesy of the schematic view, which is not what a driver sees from a real cab window. Use it, but form the habit of knowing which signal comes next without it. Book S lists them all.</p></div>
+
+  <h2 id="c2-3"><span class="num">2.3</span> The keys</h2>
+  <table>
+    <thead><tr><th>Control</th><th>Positions</th><th>Keys</th></tr></thead>
+    <tbody>
+      <tr><td>Reverser</td><td>Reverse · Neutral · Forward</td><td><span class="kbd">R</span> <span class="kbd">N</span> <span class="kbd">F</span></td></tr>
+      <tr><td>Power controller</td><td>0 – 4</td><td><span class="kbd">W</span> up, <span class="kbd">S</span> down</td></tr>
+      <tr><td>Train brake</td><td>Release · 1 · 2 · 3 · Full · Emergency</td><td><span class="kbd">A</span> release, <span class="kbd">D</span> apply, <span class="kbd">Space</span> emergency</td></tr>
+      <tr><td>Pantograph</td><td>Down · Up</td><td><span class="kbd">P</span></td></tr>
+      <tr><td>Lights (this end)</td><td>Off · Tail · Head</td><td><span class="kbd">L</span> cycles</td></tr>
+      <tr><td>Doors</td><td>Closed · Open</td><td><span class="kbd">O</span></td></tr>
+      <tr><td>Horn</td><td>one short blast</td><td><span class="kbd">H</span></td></tr>
+      <tr><td>Brake test</td><td>run continuity test</td><td>button on the panel</td></tr>
+      <tr><td>Leave / enter cab</td><td>—</td><td><span class="kbd">C</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 3 PREPARING -->
+<section class="page chapter" id="c3" data-folio="Book D · 3 Preparing a stabled vehicle">
+  <h1><span class="num">§ 3</span> Preparing a stabled vehicle</h1>
+  <p class="lead">A stabled vehicle stands with its pantograph down, its lights off, its doors closed and its brake applied. You arrive on the ground beside it with fifteen minutes in hand. This is how those fifteen minutes go.</p>
+
+  <ol class="steps">
+    <li>Decide which end will lead. On the duty sheet the first departure has a direction; the cab facing that way is the leading cab, the other is the rear cab.</li>
+    <li>Walk to the <strong>rear</strong> cab and enter it. Set the lights at this end to <span class="term">Tail</span>. Leave the cab; it is already secured because nothing has been touched.</li>
+    <li>Walk to the <strong>leading</strong> cab and enter it.</li>
+    <li>Pantograph <span class="term">Up</span>. Wait for the <span class="term">Line</span> lamp. Nothing else in the cab is alive until it lights.</li>
+    <li>Lights at this end to <span class="term">Head</span>.</li>
+    <li>Brake handle to <span class="term">Release</span> and watch the pipe rise to 5.0 bar, then back to <span class="term">Full</span>. You have just proved that the brake on your own vehicle answers the handle.</li>
+    <li>If you are coupled to anything, run the <span class="term">Brake test</span> (§ 6.3). The lamp goes out when the pipe has been proved to the far end.</li>
+    <li>Check the <span class="term">Doors</span> lamp is out. If passengers are to board, open the doors now, on the platform side, and close them before departure.</li>
+    <li>Reverser to <span class="term">Forward</span>. The train is prepared. Sit with the brake in Full until the departure procedure in § 4.1 lets you go.</li>
+  </ol>
+
+  <div class="why"><p>We put the walk to the rear cab first, before the pantograph goes up, so that you are never on the ground beside a live train that you have already made ready to move. It also means the rear lamps are lit before anybody has to remember them.</p></div>
+  <div class="note"><p>On a locomotive coupled to a coach, the rear of the <em>train</em> is the coach, and the coach lights its own tail lamps. The locomotive's coupled end stays at <span class="term">Off</span>. Steps 2 and 5 then apply only to the locomotive's leading cab.</p></div>
+</section>
+
+<!-- 4 RUNNING -->
+<section class="page chapter" id="c4" data-folio="Book D · 4 Running">
+  <h1><span class="num">§ 4</span> Running</h1>
+  <p class="lead">Driving on the Meridian Railway is mostly waiting for the right moment and then doing a small thing gently. The rules below say when the moment has come. The handbooks in § 8 and § 9 say how gently.</p>
+
+  <h2 id="c4-1"><span class="num">4.1</span> Starting</h2>
+  <p>A passenger train leaves a station when, and only when, all of the conditions in <a href="book-r.html#R20">Rule R 20</a> are met. In the order you will check them:</p>
+  <ol class="steps">
+    <li><strong>Doors closed.</strong> The Doors lamp is out.</li>
+    <li><strong>Booked time reached.</strong> The clock shows the departure time on the duty sheet, or later. Never earlier; an early departure is an Incident Book entry, and a passenger left on the platform.</li>
+    <li><strong>Starting signal cleared</strong>, where there are signals. The starter for your platform shows Clear or Caution. On a line worked by one train with no signals, this condition does not exist (<a href="book-r.html#R24">Rule R 24</a>) and you go on your own authority at the booked time.</li>
+    <li><strong>Baton shown</strong>, where a station master is on duty. The station master stands on the platform and shows you the green face of the baton, steadily. Until then you wait, whatever the signal says. Where there is no station master there is no baton.</li>
+    <li><strong>Horn.</strong> One short blast.</li>
+    <li>Brake to <span class="term">Release</span>. Watch the pipe reach 5.0 bar.</li>
+    <li>Controller to notch 1, and as the train begins to move, notch 2. Notch up further only once the platform is behind you.</li>
+  </ol>
+  <div class="note"><p>Steps 3 and 4 are separate on purpose. The signal tells you the line is yours; the baton tells you the platform is done with you. A cleared signal and a station master still helping a passenger with a bicycle are not a departure.</p></div>
+
+  <h2 id="c4-2"><span class="num">4.2</span> Speeds</h2>
+  <p><a href="book-r.html#R10">Rule R 10</a> gives four speeds, and you will use all four on most duties.</p>
+  <table>
+    <thead><tr><th>Where</th><th class="mono">km/h</th><th>From where to where</th></tr></thead>
+    <tbody>
+      <tr><td>Line speed</td><td class="mono">50</td><td>Between the stations, from the speed board that says 50 to the one that says 25.</td></tr>
+      <tr><td>Station limits</td><td class="mono">25</td><td>From the speed board or home signal to the buffer stop, on every track of the station.</td></tr>
+      <tr><td>Shunting</td><td class="mono">15</td><td>Any move under a ground signal, anywhere.</td></tr>
+      <tr><td>Coupling approach</td><td class="mono">5</td><td>The last twenty metres before a vehicle you intend to couple to. Contact at 2 or less.</td></tr>
+    </tbody>
+  </table>
+  <p>The <span class="term">Limit</span> indicator shows the figure in force. The limit changes at the board, not before it, so a train may not pass a 25 board at 40 on the grounds that it is slowing down. Begin braking early enough to be at the new speed when you reach the board.</p>
+
+  <h2 id="c4-3"><span class="num">4.3</span> Braking to a stop board</h2>
+  <p>Every platform has a stop board: an ivory board with a thick black bar, the station's name beneath. <a href="book-r.html#R12">Rule R 12</a> asks you to stop with the front of the train level with it; anywhere within three metres short of the board is a correct stop. Passing the board is an overrun and is recorded. Stopping more than three metres short is recorded too, though nobody will think worse of you for it.</p>
+  <p>A working rule of thumb for the Class 1 car on the level:</p>
+  <ol class="steps">
+    <li>At 50 km/h, place the handle in step <strong>2</strong> at about <strong>150 metres</strong> from the board. The Ahead indicator gives the distance; so do the posts beside the line, below.</li>
+    <li>Watch the speed fall. If the board is coming up faster than the speed is falling, go to step 3; if you are going to stop short, come back to step 1. Do not saw between Release and Full.</li>
+    <li>In the last few metres, ease to step <strong>1</strong>. The train settles to a stop without a jolt and the front comes to rest a metre or two short of the bar.</li>
+    <li>Handle to <span class="term">Full</span> before you touch the doors.</li>
+  </ol>
+  <p>A locomotive with one coach is heavier but has more brake for its weight; you will find step 2 from about 120 metres is enough. Do not be proud about it: a smooth stop three metres short is worth more than a perfect one that spills the tea.</p>
+
+  <h3>Judging distance by the posts</h3>
+  <p>The Ahead indicator is a courtesy; the posts are the railway. A <span class="term">hectometre post</span> stands every hundred metres along the line, on your left as you run Down, an ivory plate on a slate post reading the distance from the Ashgrove buffer stop: the post at 1.4 km reads <span class="mono">1.4</span>. Every full kilometre has a larger <span class="term">kilometre post</span>, a green numeral under the word KM, reading simply <span class="mono">2</span>. Within the loops the posts stand outward of track 2. They carry no instruction; they tell you where you are, and from that, how far you have to go.</p>
+  <p>The Wending stop board stands at 3.165 and the Ashgrove board at 0.135. Running Down, the post reading <span class="mono">3.0</span> is 165 metres from the board: pass it, make your step-2 application, and you will be settling to a stop as <span class="mono">3.1</span> goes by, sixty-five metres out. Running Up, <span class="mono">0.3</span> does the same office, 165 metres from the board, and <span class="mono">0.2</span> is the last post before it. A post and a half, either way. The 25 km/h boards stand at 2.85 and 0.45, between posts: running Down you should be at 25 before <span class="mono">2.9</span>, running Up before <span class="mono">0.4</span>.</p>
+  <table>
+    <thead><tr><th>Post</th><th>What stands near it</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">0.1</td><td>Ashgrove stop board 35 m on the Down side. Up trains come to rest between 0.2 and 0.1.</td></tr>
+      <tr><td class="mono">0.4</td><td>Home signal AG 2 20 m on the Down side; speed boards 25 and 50 at 0.45.</td></tr>
+      <tr><td class="mono">2.8</td><td>Speed boards 25 and 50 at 2.85; home signal WD 1 at 2.88, twenty metres short of 2.9.</td></tr>
+      <tr><td class="mono">3</td><td>Kilometre post. 165 m to the Wending stop board: brake here running Down.</td></tr>
+      <tr><td class="mono">3.1</td><td>Wending stop board 65 m on the Down side. Down trains come to rest between 3.1 and 3.2.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Coasting</h3>
+  <p>Between stations there is no virtue in power for its own sake. Once at line speed, come back to notch 0 and let the train run; on the level it loses about a kilometre an hour every few seconds, which is slower than you would think. Power again only if the speed falls below what the timetable needs. The 25 board is a good place to be coasting already.</p>
+
+  <h2 id="c4-4"><span class="num">4.4</span> The emergency brake and the buffer stop</h2>
+  <div class="rule" id="D18">
+    <span class="rule-num">Rule D 18</span><span class="rule-title">Emergency brake</span>
+    <p>When in doubt, use it. The Emergency position vents the pipe and applies every brake on the train as hard as it will go. Its use is recorded in the Incident Book as a note, not as a fault.</p>
+  </div>
+  <div class="why"><p>A driver who fears the emergency brake will hesitate. We write down every use so that we can learn why it was needed, and we say plainly that using it is never the wrong answer. The wrong answer is the collision.</p></div>
+  <div class="rule" id="D16">
+    <span class="rule-num">Rule D 16</span><span class="rule-title">Buffer stops</span>
+    <p>Do not strike them. Every headshunt and platform on the line ends at a buffer stop carrying a fixed red lamp. Treat the lamp as a signal at Stop that will never clear.</p>
+  </div>
+  <div class="danger"><p>The buffer stop at the end of a headshunt is close behind the inner switch, eighty metres at Ashgrove and Wending. A locomotive drawing forward from the platform must be at shunting speed and braking as soon as its rear end is clear of the switch.</p></div>
+</section>
+
+<!-- 5 CHANGING ENDS -->
+<section class="page chapter" id="c5" data-folio="Book D · 5 Changing ends">
+  <h1><span class="num">§ 5</span> Changing ends</h1>
+  <p class="lead">At the end of the line the train does not turn round; you do. The ritual is the same on the Class 1 car and on a light locomotive, and once it is in your hands you will do it without thinking. Until then, do it in this order.</p>
+
+  <ol class="steps">
+    <li>Stop at the board. Handle to <span class="term">Full</span>. If there are passengers, work the doors now and close them again.</li>
+    <li>Secure the cab: controller to 0, brake Full, reverser <span class="term">Neutral</span> (<a href="book-r.html#R22">Rule R 22</a>).</li>
+    <li>Lights at this end to <span class="term">Tail</span>. This end is about to become the rear of the train.</li>
+    <li>Leave the cab <span class="kbd">C</span>. You are on the ground.</li>
+    <li>Walk to the other cab. This is the twenty seconds we spoke of in § 1.</li>
+    <li>Enter the cab <span class="kbd">C</span>. The desk is dark except for the pipe gauge and the Line lamp, because the reverser is in Neutral.</li>
+    <li>Lights at this end to <span class="term">Head</span>.</li>
+    <li>Reverser to <span class="term">Forward</span>. Remember that Forward is away from the cab you are now sitting in, which is the direction you came from. The train has not turned; your idea of forward has.</li>
+    <li>Wait for the departure conditions (§ 4.1), horn, and go.</li>
+  </ol>
+
+  <div class="note"><p>If you forget step 3 you will discover it at the far end, when the Incident Book shows <em>Incorrect lights on the main line</em> and you are looking at a white lamp on the back of your own train. Set the tail lamps before you leave the cab, every time, and the thought will never trouble you.</p></div>
+  <div class="why"><p>Forward is relative to the cab and not to the track because a driver's body knows which way it is facing better than it knows which way is Down. When you sit at a desk and push the reverser to Forward, the train goes where you are looking. That is the only convention that survives a tired crew at the end of a long turn.</p></div>
+</section>
+
+<!-- 6 COUPLING -->
+<section class="page chapter" id="c6" data-folio="Book D · 6 Coupling, uncoupling and the brake test">
+  <h1><span class="num">§ 6</span> Coupling, uncoupling and the brake test</h1>
+  <p class="lead">The Meridian automatic coupler engages by itself when two vehicles touch. Everything else about joining and parting a train is done by a person standing at the coupling, deliberately, with the train held still.</p>
+
+  <h2><span class="num">6.1</span> Coupling</h2>
+  <div class="rule" id="D10">
+    <span class="rule-num">Rule D 10</span><span class="rule-title">Coupling</span>
+    <p>Approach the standing vehicle at 5 km/h or less over the last twenty metres. Make contact at 2 km/h or less. The coupler engages mechanically on contact. Then go to the coupling and connect the brake pipe.</p>
+  </div>
+  <ol class="steps">
+    <li>You will be under a ground signal showing <span class="term">Shunt</span>, on a route into an occupied track; the station master has cleared it for you to couple. Shunting speed is 15 km/h until the last twenty metres. The coach you are making for stands at the platform between posts 3.1 and 3.2 at Wending, between 0.1 and 0.2 at Ashgrove.</li>
+    <li>At twenty metres, be at 5 km/h or under. Handle between step 1 and Release, controller at 0. The Ahead indicator counts the metres down.</li>
+    <li>Let the train roll the last few metres at a walking pace and touch at 2 km/h or less. You will feel the coupler take.</li>
+    <li>Handle to <span class="term">Full</span>. Secure the cab and leave it.</li>
+    <li>Walk to the coupling. Connect the brake pipe. The panel shows the pipe joined through.</li>
+    <li>Walk back to the cab, enter it, and run the brake test (§ 6.3) before anything else.</li>
+  </ol>
+  <div class="note"><p>Contact between 2 and 5 km/h is a <em>rough coupling</em> and goes in the Incident Book. Contact above 5 km/h damages the coupler faces and the passengers' opinion of you. If you are coming in too fast, a step-3 application at ten metres will stop the train short; couple again from rest with a notch 1 nudge.</p></div>
+
+  <h2><span class="num">6.2</span> Uncoupling</h2>
+  <div class="rule" id="D12">
+    <span class="rule-num">Rule D 12</span><span class="rule-title">Uncoupling</span>
+    <p>Only when stationary with the train brake applied. At the coupling, first disconnect the brake pipe; the brakes on both parts apply themselves. Then part the coupler.</p>
+  </div>
+  <ol class="steps">
+    <li>Stop with the handle in <span class="term">Full</span>. Secure the cab and leave it.</li>
+    <li>Walk to the coupling between the vehicles you mean to part.</li>
+    <li>Disconnect the brake pipe. The pipe vents on both sides; you will hear it. The coach is now held by its own brake and will stay where it is.</li>
+    <li>Part the coupler. The two vehicles are separate.</li>
+    <li>Walk to the cab of the vehicle that is to move. From here on you are a light locomotive under the station master's ground signals, described in Book S.</li>
+  </ol>
+  <div class="note"><p>Where the headshunts are: at Wending beyond post 3.2, ending at the buffer stop at 3.3; at Ashgrove before post 0.1, ending at 0.0. Eighty metres each, and a locomotive is sixteen.</p></div>
+  <div class="why"><p>The pipe comes off before the coupler because a coach parted with its pipe still charged is a coach with its brakes released and nothing holding it. The order is not a preference; it is what keeps a coach on the platform.</p></div>
+
+  <h2><span class="num">6.3</span> The brake continuity test</h2>
+  <div class="rule" id="D14">
+    <span class="rule-num">Rule D 14</span><span class="rule-title">Brake continuity</span>
+    <p>After coupling, before departure, prove the brake through the train from the cab. Do not depart until the test reports the pipe continuous to the far end.</p>
+  </div>
+  <p>Press <span class="term">Brake test</span> with the train stationary and the handle in Full. The test releases the pipe, confirms that pressure rises at the far end of the train, applies again, and confirms that it falls there too. It takes about twenty seconds and the <span class="term">Test</span> lamp burns until it is done. If the pipe is connected at every coupling, the panel reports <em>brake continuity proved</em>. If it is not, the report names the coupling, and you have a walk ahead of you.</p>
+  <div class="note"><p>A brake test is required after <em>every</em> coupling, including the second coupling of a run-round at the far end of the line, even though you connected the same pipe to the same coach an hour ago. Departing without one is recorded.</p></div>
+</section>
+
+<!-- 7 STABLING -->
+<section class="page chapter" id="c7" data-folio="Book D · 7 Stabling">
+  <h1><span class="num">§ 7</span> Stabling</h1>
+  <p class="lead">A duty ends the way it began, with a vehicle standing quiet at a platform, ready for the next driver to find it exactly as this Book describes in § 3.</p>
+  <ol class="steps">
+    <li>Stop at the board and hold the train in <span class="term">Full</span>.</li>
+    <li>Doors: open for the passengers, then <span class="term">Closed</span>.</li>
+    <li>Controller 0, reverser <span class="term">Neutral</span>. The cab is secured.</li>
+    <li>Lights at this end <span class="term">Off</span>.</li>
+    <li>Pantograph <span class="term">Down</span>. The Line lamp goes out and the cab goes dark.</li>
+    <li>Leave the cab, walk to the other end, enter it, lights <span class="term">Off</span>. On a locomotive and coach the coach's lamps go out with the pantograph; only the locomotive's own ends need you.</li>
+    <li>Leave the cab. The duty is complete.</li>
+  </ol>
+  <div class="note"><p>The brake is left applied, and the pipe will hold its air for hours. The next driver's first act is to prove it, which is why § 3 begins with the rear cab and not with the pantograph.</p></div>
+</section>
+
+<!-- 8 CLASS 1 -->
+<section class="page chapter" id="c8" data-folio="Book D · 8 The Class 1 motor car">
+  <h1><span class="num">§ 8</span> Handbook: the Class 1 motor car</h1>
+  <p class="lead">The Class 1, called the Lark since before it was delivered, is a single electric motor car with a cab at each end and a pantograph in the middle. It is the vehicle every driver on the Railway learns on, because there is nothing on it that is not needed.</p>
+
+  <figure>
+    <div class="figure-frame">
+      <svg viewBox="0 0 520 165" width="520" height="165" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+        <!-- contact wire -->
+        <line x1="0" y1="10" x2="520" y2="10" stroke="#4A5560" stroke-width="1.5" stroke-dasharray="6 4"/>
+        <!-- pantograph (single arm) -->
+        <g stroke="#1A1A1A" stroke-width="2.5" fill="none" stroke-linecap="round">
+          <line x1="262" y1="40" x2="246" y2="22"/>
+          <line x1="246" y1="22" x2="282" y2="11"/>
+          <line x1="270" y1="11" x2="296" y2="11"/>
+          <line x1="254" y1="40" x2="270" y2="40"/>
+        </g>
+        <!-- body -->
+        <rect x="29" y="40" width="462" height="74" rx="6" fill="#1F4B3F"/>
+        <!-- red ends below waist -->
+        <path d="M29 76 V108 a6 6 0 0 0 6 6 H47 V76 Z" fill="#C6321E"/>
+        <path d="M473 76 H491 V108 a6 6 0 0 1 -6 6 H473 Z" fill="#C6321E"/>
+        <!-- buffer beams -->
+        <rect x="24" y="104" width="10" height="10" fill="#C6321E"/>
+        <rect x="486" y="104" width="10" height="10" fill="#C6321E"/>
+        <!-- ivory waist band with brass lining -->
+        <rect x="53" y="68" width="414" height="8" fill="#F4EFE3"/>
+        <line x1="53" y1="66.5" x2="467" y2="66.5" stroke="#B5913F" stroke-width="1"/>
+        <line x1="53" y1="77.5" x2="467" y2="77.5" stroke="#B5913F" stroke-width="1"/>
+        <!-- cab windows -->
+        <rect x="35" y="47" width="22" height="16" rx="2" fill="#D6DBD6" stroke="#1A1A1A" stroke-width="1"/>
+        <rect x="463" y="47" width="22" height="16" rx="2" fill="#D6DBD6" stroke="#1A1A1A" stroke-width="1"/>
+        <!-- doors -->
+        <g fill="#1F4B3F" stroke="#F4EFE3" stroke-width="1.2">
+          <rect x="66" y="46" width="22" height="66"/>
+          <rect x="432" y="46" width="22" height="66"/>
+        </g>
+        <rect x="70" y="49" width="14" height="14" fill="#D6DBD6"/>
+        <rect x="436" y="49" width="14" height="14" fill="#D6DBD6"/>
+        <!-- saloon windows -->
+        <g fill="#D6DBD6" stroke="#1A1A1A" stroke-width="1">
+          <rect x="100" y="47" width="26" height="16" rx="2"/>
+          <rect x="134" y="47" width="26" height="16" rx="2"/>
+          <rect x="168" y="47" width="26" height="16" rx="2"/>
+          <rect x="202" y="47" width="26" height="16" rx="2"/>
+          <rect x="236" y="47" width="26" height="16" rx="2"/>
+          <rect x="270" y="47" width="26" height="16" rx="2"/>
+          <rect x="304" y="47" width="26" height="16" rx="2"/>
+          <rect x="338" y="47" width="26" height="16" rx="2"/>
+          <rect x="372" y="47" width="26" height="16" rx="2"/>
+          <rect x="406" y="47" width="18" height="16" rx="2"/>
+        </g>
+        <!-- number and mark -->
+        <text x="260" y="101" text-anchor="middle" font-size="18" font-weight="700" fill="#B5913F" letter-spacing="3">1002</text>
+        <g fill="none" stroke="#B5913F" stroke-width="1.6" stroke-linecap="round">
+          <circle cx="200" cy="95" r="7"/><line x1="200" y1="87" x2="200" y2="103"/><line x1="197" y1="95" x2="203" y2="95"/>
+        </g>
+        <text x="350" y="100" text-anchor="middle" font-size="9.5" fill="#F4EFE3" letter-spacing="1.5" opacity=".85">MERIDIAN RAILWAY</text>
+        <!-- headlamps / tail lamps -->
+        <circle cx="31" cy="88" r="2.5" fill="#F4EFE3"/><circle cx="31" cy="98" r="2.5" fill="#F4EFE3"/>
+        <circle cx="489" cy="88" r="2.5" fill="#C6321E"/><circle cx="489" cy="98" r="2.5" fill="#C6321E"/>
+        <!-- bogies -->
+        <g fill="#1A1A1A">
+          <rect x="82" y="112" width="74" height="7" rx="2"/>
+          <rect x="364" y="112" width="74" height="7" rx="2"/>
+          <circle cx="96" cy="126" r="9"/><circle cx="142" cy="126" r="9"/>
+          <circle cx="378" cy="126" r="9"/><circle cx="424" cy="126" r="9"/>
+        </g>
+        <!-- rail -->
+        <line x1="0" y1="136" x2="520" y2="136" stroke="#1A1A1A" stroke-width="3"/>
+        <!-- labels -->
+        <text x="32" y="158" text-anchor="middle" font-size="13" font-weight="600" fill="#4A5560" letter-spacing="1">CAB A</text>
+        <text x="488" y="158" text-anchor="middle" font-size="13" font-weight="600" fill="#4A5560" letter-spacing="1">CAB B</text>
+        <line x1="120" y1="153" x2="400" y2="153" stroke="#D9D2C0" stroke-width="1"/>
+        <text x="260" y="158" text-anchor="middle" font-size="11" fill="#4A5560" letter-spacing="2">22 M OVER BUFFERS</text>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 8.1</span> Class 1 motor car No. 1002 in service livery: Meridian Green, ivory waist band lined in brass, red ends. Head lamps at A, tail lamps at B.</figcaption>
+  </figure>
+
+  <dl class="dl spec">
+    <dt>Class</dt><dd>1, "Lark". Fleet numbers 1001 to 1004. Duty 101 is worked by 1002.</dd>
+    <dt>Length</dt><dd>22 m over buffers.</dd>
+    <dt>Mass</dt><dd>38 t tare.</dd>
+    <dt>Cabs</dt><dd>Two, A and B, identical.</dd>
+    <dt>Doors</dt><dd>Two double doors each side, one behind each cab.</dd>
+    <dt>Pantograph</dt><dd>One, at the centre of the roof.</dd>
+    <dt>Traction</dt><dd>Two motors of 150 kW, 300 kW in all. Maximum tractive effort 45 kN.</dd>
+    <dt>Maximum speed</dt><dd>60 km/h. Line speed is 50, so you will never be near it.</dd>
+    <dt>Brake</dt><dd>Automatic air brake. Full service gives about 1.0 m/s² on dry rail.</dd>
+    <dt>Lights</dt><dd>Head and tail lamps at each end, switched from that end's cab.</dd>
+  </dl>
+
+  <h2><span class="num">8.1</span> Performance</h2>
+  <p>The Lark is light and willing. From rest, notch 2 gets it rolling; notch 4 will take it to 50 km/h in roughly twenty-five seconds on the level, which is quicker than the timetable needs. A gentle start in notch 1 and 2 to the end of the platform, then notch 3, is comfortable and only a few seconds slower.</p>
+  <p>From 50 km/h a Full application stops it in about a hundred metres. Step 2 takes nearer two hundred. Those two figures are the whole of the braking arithmetic on this line: with the Ahead indicator reading 150 metres to the board, step 2 is right and step 3 is a little early.</p>
+  <p>The car is short enough that a change of ends is quick, twenty seconds of walking and a few more for the steps. On Duty 101 the six-minute dwell is generous; use the spare for the doors.</p>
+
+  <h2><span class="num">8.2</span> The cab</h2>
+  <p>The desk is the standard desk of Fig. 2.1, set across the full width of the cab with the driver's seat on the left. The lights switch on the Class 1 controls the two lamps in the cab front below the windscreen. The doors key opens both doors on both sides; on a platform, only the platform side will actually open.</p>
+  <div class="note"><p>The pantograph is in the middle of the car, and its lamp shows in both cabs. If you lower it from one cab and walk to the other, you will find it down when you get there. There is one pantograph and one state.</p></div>
+</section>
+
+<!-- 9 CLASS 4 -->
+<section class="page chapter" id="c9" data-folio="Book D · 9 The Class 4 locomotive">
+  <h1><span class="num">§ 9</span> Handbook: the Class 4 locomotive</h1>
+  <p class="lead">The Class 4, the Heron, is a short, double-cabbed electric locomotive built to pull anything the Railway owns. On Duty 201 it pulls one coach, which it barely notices.</p>
+
+  <figure>
+    <div class="figure-frame">
+      <svg viewBox="0 0 520 165" width="520" height="165" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+        <line x1="0" y1="10" x2="520" y2="10" stroke="#4A5560" stroke-width="1.5" stroke-dasharray="6 4"/>
+        <g stroke="#1A1A1A" stroke-width="2.5" fill="none" stroke-linecap="round">
+          <line x1="262" y1="36" x2="246" y2="20"/>
+          <line x1="246" y1="20" x2="282" y2="11"/>
+          <line x1="270" y1="11" x2="296" y2="11"/>
+          <line x1="254" y1="36" x2="270" y2="36"/>
+        </g>
+        <!-- body 16 m at 21 px/m = 336 -->
+        <rect x="92" y="36" width="336" height="78" rx="7" fill="#1F4B3F"/>
+        <!-- red ends -->
+        <path d="M92 78 h16 v36 h-9 a7 7 0 0 1 -7 -7 z" fill="#C6321E"/>
+        <path d="M412 78 h16 v29 a7 7 0 0 1 -7 7 h-9 z" fill="#C6321E"/>
+        <rect x="86" y="104" width="10" height="10" fill="#C6321E"/>
+        <rect x="424" y="104" width="10" height="10" fill="#C6321E"/>
+        <!-- waist band -->
+        <rect x="112" y="70" width="296" height="8" fill="#F4EFE3"/>
+        <line x1="112" y1="68.5" x2="408" y2="68.5" stroke="#B5913F"/>
+        <line x1="112" y1="79.5" x2="408" y2="79.5" stroke="#B5913F"/>
+        <!-- cab windows both ends -->
+        <g fill="#D6DBD6" stroke="#1A1A1A">
+          <rect x="98" y="44" width="20" height="16" rx="2"/><rect x="124" y="44" width="16" height="16" rx="2"/>
+          <rect x="380" y="44" width="16" height="16" rx="2"/><rect x="402" y="44" width="20" height="16" rx="2"/>
+        </g>
+        <!-- cab doors -->
+        <rect x="146" y="44" width="16" height="68" fill="#1F4B3F" stroke="#F4EFE3" stroke-width="1.2"/>
+        <rect x="358" y="44" width="16" height="68" fill="#1F4B3F" stroke="#F4EFE3" stroke-width="1.2"/>
+        <!-- louvres on machine room -->
+        <g stroke="#15362E" stroke-width="2">
+          <line x1="180" y1="48" x2="340" y2="48"/><line x1="180" y1="53" x2="340" y2="53"/>
+          <line x1="180" y1="58" x2="340" y2="58"/><line x1="180" y1="63" x2="340" y2="63"/>
+        </g>
+        <text x="260" y="102" text-anchor="middle" font-size="18" font-weight="700" fill="#B5913F" letter-spacing="3">4003</text>
+        <g fill="none" stroke="#B5913F" stroke-width="1.6" stroke-linecap="round">
+          <circle cx="200" cy="96" r="7"/><line x1="200" y1="88" x2="200" y2="104"/><line x1="197" y1="96" x2="203" y2="96"/>
+        </g>
+        <text x="330" y="101" text-anchor="middle" font-size="11" fill="#F4EFE3" letter-spacing="2" opacity=".85">HERON</text>
+        <circle cx="94" cy="90" r="2.5" fill="#F4EFE3"/><circle cx="94" cy="99" r="2.5" fill="#F4EFE3"/>
+        <circle cx="426" cy="90" r="2.5" fill="#D9D2C0"/><circle cx="426" cy="99" r="2.5" fill="#D9D2C0"/>
+        <g fill="#1A1A1A">
+          <rect x="112" y="112" width="86" height="8" rx="2"/>
+          <rect x="322" y="112" width="86" height="8" rx="2"/>
+          <circle cx="128" cy="127" r="10"/><circle cx="182" cy="127" r="10"/>
+          <circle cx="338" cy="127" r="10"/><circle cx="392" cy="127" r="10"/>
+        </g>
+        <line x1="0" y1="137" x2="520" y2="137" stroke="#1A1A1A" stroke-width="3"/>
+        <text x="96" y="158" text-anchor="middle" font-size="13" font-weight="600" fill="#4A5560" letter-spacing="1">CAB A</text>
+        <text x="424" y="158" text-anchor="middle" font-size="13" font-weight="600" fill="#4A5560" letter-spacing="1">CAB B</text>
+        <line x1="170" y1="153" x2="350" y2="153" stroke="#D9D2C0"/>
+        <text x="260" y="158" text-anchor="middle" font-size="11" fill="#4A5560" letter-spacing="2">16 M OVER BUFFERS</text>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 9.1</span> Class 4 locomotive No. 4003. The lamps at B are shown dark, as they would be with a coach coupled there.</figcaption>
+  </figure>
+
+  <dl class="dl spec">
+    <dt>Class</dt><dd>4, "Heron". Fleet numbers 4001 to 4006. Duty 201 is worked by 4003.</dd>
+    <dt>Length</dt><dd>16 m over buffers.</dd>
+    <dt>Mass</dt><dd>64 t.</dd>
+    <dt>Cabs</dt><dd>Two, A and B, identical, each with a side door to the ground.</dd>
+    <dt>Pantograph</dt><dd>One, at the centre of the roof.</dd>
+    <dt>Traction</dt><dd>1200 kW. Maximum tractive effort 140 kN.</dd>
+    <dt>Maximum speed</dt><dd>90 km/h. Line speed is 50.</dd>
+    <dt>Brake</dt><dd>Automatic air brake, through pipe to the train.</dd>
+    <dt>Couplers</dt><dd>Meridian automatic coupler at both ends, with brake pipe connection.</dd>
+  </dl>
+
+  <h2><span class="num">9.1</span> Performance</h2>
+  <p>The Heron is strong and light on its feet. Running alone during a run-round it will reach shunting speed in a couple of seconds on notch 1; treat notch 2 as the ceiling for a light engine inside station limits, and brake early, because sixty-four tonnes have their own opinion about stopping. With one Type C4 coach behind it, notch 2 is plenty for the line: it will reach 50 km/h before the 50 board and hold it on the level in notch 1. Notch 3 and 4 exist for the day it has ten coaches.</p>
+  <p>Braking: from 50 km/h with one coach, step 2 at about 120 metres from the board. Alone, step 2 from 80 metres at shunting speed is more than enough; step 1 at 15 km/h will stop it within a car length.</p>
+  <div class="note"><p>A light locomotive approaching a coach to couple should be in notch 0 with the brake between step 1 and Release from twenty metres out. The last two metres it does on its own weight. If it stops a metre short, notch 1 for one second and Release.</p></div>
+
+  <h2><span class="num">9.2</span> The cab</h2>
+  <p>The standard desk, with a side door to the ground so that a run-round does not mean climbing through the machine room. The lights switch controls the lamps at this end; when a coach is coupled at the other end, that end is left at <span class="term">Off</span>, and the coach shows the tail.</p>
+</section>
+
+<!-- 10 TYPE C4 -->
+<section class="page chapter" id="c10" data-folio="Book D · 10 The Type C4 coach">
+  <h1><span class="num">§ 10</span> Handbook: the Type C4 coach</h1>
+  <p class="lead">The Type C4 is the Railway's standard saloon coach: sixty-four seats, a door at each end on each side, and nothing for a driver to operate except the brake pipe at its ends.</p>
+
+  <figure>
+    <div class="figure-frame">
+      <svg viewBox="0 0 520 150" width="520" height="150" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+        <!-- body 20 m at 21 px/m = 420 -->
+        <rect x="50" y="30" width="420" height="78" rx="6" fill="#1F4B3F"/>
+        <rect x="44" y="98" width="10" height="10" fill="#C6321E"/>
+        <rect x="466" y="98" width="10" height="10" fill="#C6321E"/>
+        <rect x="56" y="62" width="408" height="8" fill="#F4EFE3"/>
+        <line x1="56" y1="60.5" x2="464" y2="60.5" stroke="#B5913F"/>
+        <line x1="56" y1="71.5" x2="464" y2="71.5" stroke="#B5913F"/>
+        <!-- end doors -->
+        <g fill="#1F4B3F" stroke="#F4EFE3" stroke-width="1.2">
+          <rect x="60" y="38" width="20" height="68"/>
+          <rect x="440" y="38" width="20" height="68"/>
+        </g>
+        <rect x="64" y="41" width="12" height="14" fill="#D6DBD6"/>
+        <rect x="444" y="41" width="12" height="14" fill="#D6DBD6"/>
+        <!-- windows -->
+        <g fill="#D6DBD6" stroke="#1A1A1A">
+          <rect x="92" y="39" width="28" height="16" rx="2"/><rect x="128" y="39" width="28" height="16" rx="2"/>
+          <rect x="164" y="39" width="28" height="16" rx="2"/><rect x="200" y="39" width="28" height="16" rx="2"/>
+          <rect x="236" y="39" width="28" height="16" rx="2"/><rect x="272" y="39" width="28" height="16" rx="2"/>
+          <rect x="308" y="39" width="28" height="16" rx="2"/><rect x="344" y="39" width="28" height="16" rx="2"/>
+          <rect x="380" y="39" width="28" height="16" rx="2"/><rect x="416" y="39" width="16" height="16" rx="2"/>
+        </g>
+        <text x="260" y="95" text-anchor="middle" font-size="18" font-weight="700" fill="#B5913F" letter-spacing="3">5107</text>
+        <g fill="none" stroke="#B5913F" stroke-width="1.6" stroke-linecap="round">
+          <circle cx="200" cy="89" r="7"/><line x1="200" y1="81" x2="200" y2="97"/><line x1="197" y1="89" x2="203" y2="89"/>
+        </g>
+        <text x="330" y="94" text-anchor="middle" font-size="11" fill="#F4EFE3" letter-spacing="2" opacity=".85">64 SEATS</text>
+        <!-- end lamps -->
+        <circle cx="52" cy="84" r="2.5" fill="#D9D2C0"/><circle cx="52" cy="92" r="2.5" fill="#D9D2C0"/>
+        <circle cx="468" cy="84" r="2.5" fill="#C6321E"/><circle cx="468" cy="92" r="2.5" fill="#C6321E"/>
+        <g fill="#1A1A1A">
+          <rect x="88" y="106" width="76" height="7" rx="2"/>
+          <rect x="356" y="106" width="76" height="7" rx="2"/>
+          <circle cx="102" cy="120" r="9"/><circle cx="150" cy="120" r="9"/>
+          <circle cx="370" cy="120" r="9"/><circle cx="418" cy="120" r="9"/>
+        </g>
+        <line x1="0" y1="130" x2="520" y2="130" stroke="#1A1A1A" stroke-width="3"/>
+        <text x="52" y="147" text-anchor="middle" font-size="12" font-weight="600" fill="#4A5560" letter-spacing="1">END A</text>
+        <text x="468" y="147" text-anchor="middle" font-size="12" font-weight="600" fill="#4A5560" letter-spacing="1">END B</text>
+        <line x1="130" y1="142" x2="390" y2="142" stroke="#D9D2C0"/>
+        <text x="260" y="147" text-anchor="middle" font-size="11" fill="#4A5560" letter-spacing="2">20 M OVER BUFFERS</text>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 10.1</span> Type C4 coach No. 5107. End A coupled and dark; end B free and showing tail.</figcaption>
+  </figure>
+
+  <dl class="dl spec">
+    <dt>Type</dt><dd>C4 standard saloon. Fleet numbers 5101 to 5120. Duty 201 is worked with 5107.</dd>
+    <dt>Length</dt><dd>20 m over buffers.</dd>
+    <dt>Mass</dt><dd>30 t tare.</dd>
+    <dt>Seats</dt><dd>64, in one saloon.</dd>
+    <dt>Doors</dt><dd>One at each end on each side, worked from the locomotive cab through the control line.</dd>
+    <dt>Cab</dt><dd>None. It goes where it is taken.</dd>
+    <dt>Brake</dt><dd>Automatic air brake, through pipe, coupler connection at each end.</dd>
+    <dt>End lights</dt><dd>Automatic. A free end shows Tail whenever the coach is part of a train whose locomotive has its lights on. A coupled end shows nothing.</dd>
+  </dl>
+
+  <p>There are three things to know about the coach. First, it has no cab, so during a run-round it stays on the platform with its brake applied by the parted pipe, and it will wait there for as long as you need. Second, its tail lamps are automatic: once the locomotive is coupled and lit, the coach's free end shows red without anybody walking to it. Third, its doors are worked from your cab through the control line, which is connected at the coupling with the brake pipe; a coach whose pipe you have not connected is a coach whose doors you cannot open.</p>
+  <div class="note"><p>The coach's brake pipe connection is at each end, at the coupler. When you couple to end A, connect at end A. When the locomotive stands at end B after a run-round, connect at end B. The panel names the coupling you are standing at.</p></div>
+</section>
+
+<!-- 11 DUTY SHEETS -->
+<section class="page chapter" id="c11" data-folio="Book D · 11 Duty sheets">
+  <h1><span class="num">§ 11</span> Duty sheets</h1>
+  <p class="lead">A duty sheet is a card that fits in a breast pocket. It gives the vehicle, the stabling, the booked times and nothing else, because everything else is in this Book.</p>
+
+  <div class="card">
+    <div class="card-head"><span>Duty 101 · Ashgrove–Wending shuttle</span><span class="mono">Car 1002 · Class 1</span></div>
+    <table>
+      <thead><tr><th class="mono">Time</th><th>Station</th><th>Event</th><th>Direction</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">05:45</td><td>Ashgrove</td><td class="act">on duty; car stabled at platform, pantograph down</td><td></td></tr>
+        <tr><td class="mono">06:00</td><td>Ashgrove</td><td>depart</td><td>Down</td></tr>
+        <tr><td class="mono">06:06</td><td>Wending</td><td>arrive</td><td></td></tr>
+        <tr><td class="mono">06:12</td><td>Wending</td><td>depart</td><td>Up</td></tr>
+        <tr><td class="mono">06:18</td><td>Ashgrove</td><td>arrive</td><td></td></tr>
+        <tr><td class="mono">06:24</td><td>Ashgrove</td><td>depart</td><td>Down</td></tr>
+        <tr><td class="mono">06:30</td><td>Wending</td><td>arrive</td><td></td></tr>
+        <tr><td class="mono">06:36</td><td>Wending</td><td>depart</td><td>Up</td></tr>
+        <tr><td class="mono">06:42</td><td>Ashgrove</td><td>arrive</td><td></td></tr>
+        <tr><td class="mono">—</td><td>Ashgrove</td><td class="act">stable: lights off, pantograph down</td><td></td></tr>
+      </tbody>
+    </table>
+    <p class="foot">One Train Working, Rule R 24. No signals; stop boards at each platform; speed boards 25 and 50 at the station limits. Departures on the driver's own authority at the booked time.</p>
+  </div>
+
+  <p><strong>What to expect.</strong> The car stands at Ashgrove platform with Cab A facing Down, towards Wending. Prepare it as in § 3, with Cab B's lights at Tail and Cab A's at Head. At 06:00, doors closed and horn, and away. Six minutes is comfortable for the 3.2 kilometres at line speed; the 25 board comes at km 2.850 and the Wending stop board at km 3.165. Change ends (§ 5), and at 06:12 do it all again the other way. Four runs, two changes of ends at Wending, one at Ashgrove, and then stable the car where you found it. The dwells are six minutes; a change of ends takes about one. Nothing on this duty is hard, and everything on it is a habit you will keep.</p>
+
+  <div class="card">
+    <div class="card-head"><span>Duty 201 · Ashgrove–Wending with run-round</span><span class="mono">Loco 4003 · Class 4 + coach 5107</span></div>
+    <table>
+      <thead><tr><th class="mono">Time</th><th>Station</th><th>Event</th><th>Direction</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">06:45</td><td>Ashgrove</td><td class="act">on duty; train stabled on track 1, loco at the Down end</td><td></td></tr>
+        <tr><td class="mono">07:00</td><td>Ashgrove</td><td>depart, signal AG 1 and baton</td><td>Down</td></tr>
+        <tr><td class="mono">07:07</td><td>Wending</td><td>arrive track 1 under WD 1</td><td></td></tr>
+        <tr><td class="mono">—</td><td>Wending</td><td class="act">run round via track 2, under Wending Box</td><td></td></tr>
+        <tr><td class="mono">07:30</td><td>Wending</td><td>depart, signal WD 2 and baton</td><td>Up</td></tr>
+        <tr><td class="mono">07:37</td><td>Ashgrove</td><td>arrive track 1 under AG 2</td><td></td></tr>
+        <tr><td class="mono">—</td><td>Ashgrove</td><td class="act">run round via track 2, under Ashgrove Box</td><td></td></tr>
+        <tr><td class="mono">by 08:00</td><td>Ashgrove</td><td class="act">coupled at the Down end, brake proved, stabled</td><td></td></tr>
+      </tbody>
+    </table>
+    <p class="foot">Signalled stations, Book S. Station masters: T. Marrow at Ashgrove, J. Pell at Wending. Depart only on a cleared starter and the green baton, Rule R 20.</p>
+  </div>
+
+  <p><strong>What to expect.</strong> The train is coupled and stabled on Ashgrove track 1 with the locomotive at the Down end, its Cab A facing Wending. Prepare the locomotive only; the coach lights itself. Wait for AG 1 to clear and for Mr Marrow's baton, and go at 07:00. At Wending the home signal WD 1 shows Caution because track 1 ends at a buffer; stop at the board. Then the run-round, which is the whole point of the duty: uncouple (§ 6.2), draw forward into the headshunt under WD 3, change ends, run back along track 2 under WD 6 and WD 4 and stop short of the Limit of Shunt board, change ends again, and come onto track 1 under WD 5 to couple to the coach's other end at walking pace (§ 6.1). Connect the pipe, prove the brake, and wait for WD 2 and Mr Pell. Each move is offered to you by Wending Box in a message; the ground signals are its word made visible. The worked example in <a href="book-s.html">Book S</a> walks through every signal of this run-round in order. At Ashgrove the same again in mirror, under Mr Marrow, and then stable the train coupled and proved before 08:00 so that the next driver finds it ready.</p>
+</section>
+
+<!-- 12 GLOSSARY -->
+<section class="page chapter" id="c12" data-folio="Book D · 12 Glossary">
+  <h1><span class="num">§ 12</span> Glossary</h1>
+  <dl class="dl">
+    <dt>Baton</dt><dd>The station master's hand-held disc, green on one face and red on the other. Green shown steadily means <em>ready to start</em>.</dd>
+    <dt>Brake pipe</dt><dd>The air pipe running the length of the train. Charged, the brakes release; vented, they apply.</dd>
+    <dt>Cab A, Cab B</dt><dd>The two driving positions of a two-cab vehicle. Forward is always away from the cab you occupy.</dd>
+    <dt>Continuity</dt><dd>The condition of the brake pipe being connected from the cab to the far end of the train, proved by the brake test.</dd>
+    <dt>Down, Up</dt><dd>Down is the direction of increasing kilometrage, Ashgrove towards Wending. Up is the opposite.</dd>
+    <dt>Dwell</dt><dd>The time a train stands at a station between arrival and departure.</dd>
+    <dt>Headshunt</dt><dd>The short dead-end track beyond the inner switch of a station loop, into which a locomotive draws to begin a run-round.</dd>
+    <dt>Hectometre post</dt><dd>A post every hundred metres on the left of the line in the Down direction, its ivory plate reading the distance from the Ashgrove buffer stop in kilometres and tenths, as <span class="mono">1.4</span>. A position reference, not a signal.</dd>
+    <dt>Home signal</dt><dd>The main signal that governs entry to a station from the line.</dd>
+    <dt>Kilometre post</dt><dd>The larger post at every full kilometre, a green numeral under the word KM. Kilometrage counts from the Ashgrove buffer stop, km 0.0, to the Wending buffer stop, km 3.3.</dd>
+    <dt>Light locomotive</dt><dd>A locomotive running without vehicles attached.</dd>
+    <dt>Limit of Shunt</dt><dd>A board beyond which shunting moves do not go. Book S, Rule S 12.</dd>
+    <dt>Line speed</dt><dd>50 km/h, the highest speed permitted between stations.</dd>
+    <dt>Notch</dt><dd>One position of the power controller. There are four above 0.</dd>
+    <dt>One Train Working</dt><dd>Working a line that carries a single train and no signals. Rule R 24.</dd>
+    <dt>Run-round</dt><dd>The moves by which a locomotive is taken from one end of its train to the other at a terminus, by way of the loop.</dd>
+    <dt>Securing</dt><dd>Controller 0, brake Full, reverser Neutral, before leaving a cab. Rule R 22.</dd>
+    <dt>Shunting move</dt><dd>Any movement made under a ground signal within station limits, at 15 km/h or less.</dd>
+    <dt>Stabled</dt><dd>Standing out of service: pantograph down, lights off, doors closed, brake applied.</dd>
+    <dt>Starting signal</dt><dd>The main signal at the departure end of a platform that governs leaving the station.</dd>
+    <dt>Station limits</dt><dd>The area from the speed board or home signal to the buffer stop, where 25 km/h applies.</dd>
+    <dt>Stop board</dt><dd>The board at which a train stops at a platform, front of the train level with the bar.</dd>
+    <dt>Tail, Head</dt><dd>Red lamps at the rear of a train; white lamps at its front.</dd>
+  </dl>
+</section>
+
+<!-- COLOPHON -->
+<section class="page colophon" id="colophon" data-folio="Book D · Colophon">
+  <img class="mark" src="../brand/mark-green.svg" alt="">
+  <p><strong>Book D — Driving Manual.</strong> First edition, September 2026. Issued by the Locomotive Superintendent's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
+  <p>This Book cites Book R (Rules of Operation) and Book S (Signalling Manual). Where they differ, Book R governs. Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5.</p>
+  <p>The handbooks in § 8 to § 10 are to be amended whenever a class is altered. Amendments are issued as numbered slips; paste them in at the page indicated. Drivers are asked to report any paragraph they had to read twice.</p>
+</section>
+
+<section class="back-cover">
+  <img class="mark" src="../brand/mark-ivory.svg" alt="">
+  <div>The Meridian Railway · On the line, on time</div>
+</section>
+
+</div>
+</body>
+</html>

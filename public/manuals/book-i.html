@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book I — Identity Manual · The Meridian Railway</title>
+<link rel="stylesheet" href="book.css">
+<style>
+/* Book I carries its own specimen styles. */
+.wordmark { display:inline-flex; flex-direction:column; align-items:center; line-height:1; }
+.wordmark .wm-1 { font-family:var(--display); font-weight:600; font-size:66px; letter-spacing:.22em; text-transform:uppercase; margin-right:-.22em; }
+.wordmark .wm-2 { font-family:var(--display); font-weight:500; font-size:19px; letter-spacing:.56em; text-transform:uppercase; margin-top:8px; margin-right:-.56em; }
+.wordmark.sm .wm-1 { font-size:34px; } .wordmark.sm .wm-2 { font-size:11px; margin-top:4px; }
+.specimen { padding:34px 24px; margin:12px 0 18px; display:flex; justify-content:center; align-items:center; gap:28px; flex-wrap:wrap; page-break-inside:avoid; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+.specimen.on-ivory { background:var(--ivory); color:var(--green); border:1px solid var(--chalk); }
+.specimen.on-green { background:var(--green); color:var(--ivory); }
+.specimen.on-white { background:#fff; color:var(--ink); border:1px solid var(--chalk); }
+.tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:12px 0 18px; }
+.tile { border:1px solid var(--chalk); background:#fff; padding:8px; text-align:center; page-break-inside:avoid; }
+.tile .box { height:96px; display:flex; align-items:center; justify-content:center; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+.tile .cap { font-family:var(--display); font-size:11.5px; letter-spacing:.12em; text-transform:uppercase; margin-top:8px; line-height:1.2; }
+.tile.do .cap { color:var(--green); } .tile.do .cap::before { content:"✓ "; }
+.tile.dont .cap { color:var(--red); } .tile.dont .cap::before { content:"✕ "; }
+.swatches { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:12px 0 18px; }
+.swatch-card { border:1px solid var(--chalk); background:#fff; page-break-inside:avoid; }
+.swatch-card .chip { height:78px; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+.swatch-card .meta { padding:8px 10px 10px; }
+.swatch-card .name { font-family:var(--display); font-weight:600; font-size:15px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink); }
+.swatch-card .hex { font-family:var(--mono); font-size:12px; color:var(--slate); }
+.swatch-card .paint { font-size:12.5px; color:var(--slate); line-height:1.35; margin-top:3px; }
+.pairs { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:10px 0 16px; }
+.pair { height:58px; display:flex; align-items:center; justify-content:center; font-family:var(--display); font-weight:600; letter-spacing:.1em; text-transform:uppercase; font-size:14px; border:1px solid var(--chalk); -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+.type-specimen { border:1px solid var(--chalk); background:#fff; padding:18px 22px 16px; margin:10px 0 18px; page-break-inside:avoid; }
+.type-specimen .face { font-family:var(--display); font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--brass); margin-bottom:8px; }
+.type-specimen .big { font-size:58px; line-height:1.05; margin-bottom:8px; color:var(--ink); }
+.type-specimen .row { color:var(--ink); margin:2px 0; }
+.type-specimen .meta { font-family:var(--mono); font-size:11.5px; color:var(--slate); margin-top:8px; }
+.ts-display .big { font-family:var(--display); font-weight:600; text-transform:uppercase; letter-spacing:.04em; color:var(--green); }
+.ts-text .big { font-family:var(--text); font-size:40px; }
+.ts-mono .big { font-family:var(--mono); font-size:30px; }
+.callout-list { columns:2; column-gap:24px; font-size:13.5px; margin:0 0 12px; list-style:none; padding-left:0; }
+.callout-list li { break-inside:avoid; }
+.callout-list b { font-family:var(--mono); color:var(--brass); font-weight:500; margin-right:6px; }
+.mini-cover { background:var(--green); color:var(--ivory); padding:22px 20px 16px; width:230px; min-height:320px; display:flex; flex-direction:column; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+.mini-cover .co { font-family:var(--display); font-weight:600; font-size:9px; letter-spacing:.28em; text-transform:uppercase; }
+.mini-cover .bl { font-family:var(--display); font-weight:700; font-size:92px; line-height:.85; margin:10px 0 2px; }
+.mini-cover .bl small { display:block; font-size:8px; letter-spacing:.3em; text-transform:uppercase; margin-bottom:6px; font-weight:600; }
+.mini-cover .ti { font-family:var(--display); font-weight:600; font-size:20px; text-transform:uppercase; letter-spacing:.04em; line-height:1; margin:4px 0 6px; }
+.mini-cover .su { font-style:italic; font-size:9px; opacity:.9; margin-bottom:auto; }
+.mini-cover .ed { font-family:var(--mono); font-size:7px; border-top:1px solid rgba(244,239,227,.35); padding-top:6px; margin-top:16px; }
+.anatomy { display:flex; gap:22px; align-items:flex-start; flex-wrap:wrap; }
+.anatomy ol { font-size:13.5px; margin:0; padding-left:20px; flex:1; min-width:220px; }
+.slip { background:var(--ivory); border:1px solid var(--chalk); padding:12px 16px; width:330px; font-size:13px; box-shadow:2px 3px 0 rgba(26,26,26,.08); page-break-inside:avoid; }
+.slip .h { font-family:var(--display); font-weight:700; font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--green); border-bottom:1px solid var(--green); padding-bottom:4px; margin-bottom:6px; }
+.slip .m { font-family:var(--mono); font-size:11px; color:var(--slate); }
+.voice td:first-child { color:var(--red); }
+.voice td:last-child { color:var(--green); }
+.voice td { width:50%; }
+.box-message { font-family:var(--mono); font-size:13px; background:#fff; border:1px solid var(--chalk); padding:10px 14px; margin:8px 0 14px; }
+.box-message .sig { color:var(--slate); }
+@media print { .tiles, .swatches { grid-template-columns:repeat(3,1fr); } .pairs { grid-template-columns:repeat(4,1fr); } }
+</style>
+</head>
+<body>
+<nav class="desk-bar">
+  <a href="index.html">← Library</a>
+  <span class="spacer"></span>
+  <span>Book I · First edition · September 2026</span>
+  <a href="#" onclick="window.print();return false;">Print booklet</a>
+</nav>
+
+<div class="book">
+
+<!-- COVER -->
+<section class="cover">
+  <div class="rule-line"></div>
+  <img class="mark" src="../brand/mark-ivory.svg" alt="">
+  <div class="company">The Meridian Railway</div>
+  <div class="book-letter"><small>Book</small>I</div>
+  <h1 class="title">Identity Manual</h1>
+  <p class="subtitle">The name, the mark, the colours and the voice of the Meridian Railway, and how to use them.</p>
+  <div class="edition">First edition · September 2026 · Issued by the General Manager's Office</div>
+  <div class="motto">On the line, on time.</div>
+</section>
+
+<!-- CONTENTS -->
+<section class="page toc" data-folio="Book I · Contents">
+  <h1>Contents</h1>
+  <ol>
+    <li><span class="num">1</span><a href="#c1">Who we are</a><span class="dots"></span><span class="pg">3</span></li>
+    <li><span class="num">2</span><a href="#c2">The name</a><span class="dots"></span><span class="pg">5</span></li>
+    <li><span class="num">3</span><a href="#c3">The mark</a><span class="dots"></span><span class="pg">7</span></li>
+    <li class="sub"><span class="num">3.1</span><a href="#c3-1">Construction</a><span class="dots"></span><span class="pg">7</span></li>
+    <li class="sub"><span class="num">3.2</span><a href="#c3-2">Clear space and size</a><span class="dots"></span><span class="pg">8</span></li>
+    <li class="sub"><span class="num">3.3</span><a href="#c3-3">Right and wrong</a><span class="dots"></span><span class="pg">9</span></li>
+    <li class="sub"><span class="num">3.4</span><a href="#c3-4">The lock-up</a><span class="dots"></span><span class="pg">10</span></li>
+    <li><span class="num">4</span><a href="#c4">Colour</a><span class="dots"></span><span class="pg">11</span></li>
+    <li><span class="num">5</span><a href="#c5">Typography</a><span class="dots"></span><span class="pg">15</span></li>
+    <li><span class="num">6</span><a href="#c6">Livery</a><span class="dots"></span><span class="pg">19</span></li>
+    <li><span class="num">7</span><a href="#c7">Signage</a><span class="dots"></span><span class="pg">23</span></li>
+    <li><span class="num">8</span><a href="#c8">Voice</a><span class="dots"></span><span class="pg">27</span></li>
+    <li><span class="num">9</span><a href="#c9">The document system</a><span class="dots"></span><span class="pg">29</span></li>
+    <li><span class="num">—</span><a href="#colophon">Colophon</a><span class="dots"></span><span class="pg">32</span></li>
+  </ol>
+</section>
+
+<!-- 1 WHO WE ARE -->
+<section class="page chapter" id="c1" data-folio="Book I · 1 Who we are">
+  <h1><span class="num">§ 1</span> Who we are</h1>
+  <p class="lead">Before the paint and the type, a word about the railway they belong to. Everything in this book follows from a survey line and a habit.</p>
+  <blockquote class="epigraph">A line is only a promise until something runs along it.<span class="who">Valley Survey, field book 3</span></blockquote>
+
+  <h2><span class="num">1.1</span> The line and the name</h2>
+  <p>When the Valley Survey came to the Wend, it did what surveys do. It drove a stake into the meadow below Ashgrove, sighted a star, and laid out a meridian, a true north–south line, up the floor of the valley to the weir at Wending. Every field, mill and road was measured from that line. The surveyors were patient people. They checked their chains against a standard each morning and wrote everything down in a fair hand, because a survey that cannot be read is not a survey.</p>
+  <p>The first railway in the valley was built along that line, and it inherited two things from the surveyors: the name, and the habit. The name is <strong>the Meridian Railway</strong>. The habit is precision that is written down.</p>
+
+  <h2><span class="num">1.2</span> The motto</h2>
+  <p>Our motto is <em>On the line, on time.</em> It is a small joke that turned into a standard. A train on the line is where it should be; a train on time is when it should be. The two together are the whole of the job, and we would rather promise the whole of the job in five words than part of it in fifty.</p>
+  <p>The motto sits on the back cover of every Book and beneath the edition line on the front. It is set in italic text face, never in capitals, and never shortened.</p>
+
+  <h2><span class="num">1.3</span> What the identity is for</h2>
+  <p>An identity is not decoration. It is the visible half of a promise. When a passenger sees the mark on a name board at dusk, or a driver picks up a Book with the letter on its cover, they should feel two things at once: that this railway knows what it is doing, and that it is kind about it. A railway that only looks competent is cold. A railway that only looks friendly is not trusted with a level crossing.</p>
+  <p>So the identity is built to be three things, in this order.</p>
+  <dl class="dl">
+    <dt>Exact</dt><dd>Lines are straight, numbers are monospaced, colours are named, rules are numbered. Nothing is approximate on purpose.</dd>
+    <dt>Calm</dt><dd>Few colours, wide spacing, no exclamation marks. The page and the platform do not shout.</dd>
+    <dt>Warm</dt><dd>Ivory rather than white. Brass rather than chrome. A serif for reading. A sentence that explains why.</dd>
+  </dl>
+
+  <div class="rule" id="I10">
+    <span class="rule-num">Rule I 10</span><span class="rule-title">One identity</span>
+    <p>Use the identity as this Book describes it, on every vehicle, sign, document and message of the Railway. Where this Book is silent, choose the plainer option and ask the Drawing Office.</p>
+  </div>
+  <div class="why"><p>A railway is seen in pieces: a sign here, a coach there, a slip pasted in a Book. The pieces only add up to one railway if each is drawn to the same hand. Consistency is not vanity; it is how a passenger at a strange station knows they are still with us.</p></div>
+</section>
+
+<!-- 2 THE NAME -->
+<section class="page chapter" id="c2" data-folio="Book I · 2 The name">
+  <h1><span class="num">§ 2</span> The name</h1>
+  <p class="lead">The name is the oldest part of the identity and the least negotiable. It has one full form, two short forms and one abbreviation.</p>
+
+  <h2><span class="num">2.1</span> Forms of the name</h2>
+  <table>
+    <thead><tr><th>Form</th><th>Written</th><th>Used for</th></tr></thead>
+    <tbody>
+      <tr><td>Full</td><td>The Meridian Railway</td><td>Covers, name boards, legal and formal text, the first mention in any document.</td></tr>
+      <tr><td>Short</td><td>the Railway</td><td>Running text after the first mention.</td></tr>
+      <tr><td>Short (corporate)</td><td>the Company</td><td>Text about the Railway as an employer or owner.</td></tr>
+      <tr><td>Abbreviation</td><td class="mono">MR</td><td>Plates, badges, stock lettering, the works stamp. Never in running text.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="rule" id="I12">
+    <span class="rule-num">Rule I 12</span><span class="rule-title">The name</span>
+    <p>Write the full name as <strong>The Meridian Railway</strong>, with the article capitalised at the start of a sentence or on a cover and lower-case elsewhere. Abbreviate only to <strong>MR</strong>, and only on plates and stock. Do not write "Meridian Rail", "Meridian Railways", "MRC" or "the MR".</p>
+  </div>
+  <div class="note"><p>"Meridian" alone is the valley's survey line, not the Railway. A passenger can stand on the meridian; they can only travel on the Meridian Railway.</p></div>
+
+  <h2><span class="num">2.2</span> The wordmark</h2>
+  <p>The wordmark is the name set in a fixed way: <strong>MERIDIAN</strong> in Barlow Condensed at weight 600, upper case, with tracking of 0.22 em, and <strong>RAILWAY</strong> beneath it at roughly three-tenths of the size, weight 500, tracked to 0.56 em so that both lines are the same width. The wordmark is always centred on its own axis, which is the meridian line of the mark when the two are locked up together (§ 3.4).</p>
+
+  <div class="specimen on-ivory">
+    <div class="wordmark"><span class="wm-1">Meridian</span><span class="wm-2">Railway</span></div>
+  </div>
+  <div class="specimen on-green">
+    <div class="wordmark"><span class="wm-1">Meridian</span><span class="wm-2">Railway</span></div>
+  </div>
+  <figure><figcaption><span class="fig">Fig. 2.1</span> The wordmark in Meridian Green on Ivory and in Ivory on Meridian Green. These are the only two colourings.</figcaption></figure>
+
+  <p>The wordmark is drawn, not typed. When it must be typed, because a document is set on a machine without the drawing, use the settings above and check the two lines are the same width by eye. If they are not, adjust the tracking of RAILWAY only.</p>
+</section>
+
+<!-- 3 THE MARK -->
+<section class="page chapter" id="c3" data-folio="Book I · 3 The mark">
+  <h1><span class="num">§ 3</span> The mark</h1>
+  <p class="lead">The mark is a circle bisected by a vertical line, with a short horizontal tick at the centre. The circle is the valley seen from above; the line is the meridian; the tick is the rail crossing it. That is the whole of the symbolism, and it is enough.</p>
+
+  <h2 id="c3-1"><span class="num">3.1</span> Construction</h2>
+  <p>The mark is drawn on a square of 100 units. All strokes are 8 units wide with round ends. The circle has a radius of 42 units about the centre of the square; the meridian runs from 4 to 96 units; the tick runs from 36 to 64 units. Nothing else is added.</p>
+
+  <figure>
+    <div class="figure-frame" style="display:flex;justify-content:center">
+      <svg viewBox="-26 -20 152 148" width="380" height="370" font-family="IBM Plex Mono, Menlo, monospace" font-size="5.2" fill="#4A5560">
+        <g stroke="#D9D2C0" stroke-width=".5">
+          <line x1="0" y1="0" x2="0" y2="100"/><line x1="10" y1="0" x2="10" y2="100"/><line x1="20" y1="0" x2="20" y2="100"/><line x1="30" y1="0" x2="30" y2="100"/><line x1="40" y1="0" x2="40" y2="100"/><line x1="50" y1="0" x2="50" y2="100"/><line x1="60" y1="0" x2="60" y2="100"/><line x1="70" y1="0" x2="70" y2="100"/><line x1="80" y1="0" x2="80" y2="100"/><line x1="90" y1="0" x2="90" y2="100"/><line x1="100" y1="0" x2="100" y2="100"/>
+          <line x1="0" y1="0" x2="100" y2="0"/><line x1="0" y1="10" x2="100" y2="10"/><line x1="0" y1="20" x2="100" y2="20"/><line x1="0" y1="30" x2="100" y2="30"/><line x1="0" y1="40" x2="100" y2="40"/><line x1="0" y1="50" x2="100" y2="50"/><line x1="0" y1="60" x2="100" y2="60"/><line x1="0" y1="70" x2="100" y2="70"/><line x1="0" y1="80" x2="100" y2="80"/><line x1="0" y1="90" x2="100" y2="90"/><line x1="0" y1="100" x2="100" y2="100"/>
+        </g>
+        <rect x="0" y="0" width="100" height="100" fill="none" stroke="#4A5560" stroke-width=".6" stroke-dasharray="2 2"/>
+        <g fill="none" stroke="#1F4B3F" stroke-width="8" stroke-linecap="round">
+          <circle cx="50" cy="50" r="42"/>
+          <line x1="50" y1="4" x2="50" y2="96"/>
+          <line x1="36" y1="50" x2="64" y2="50"/>
+        </g>
+        <!-- radius -->
+        <line x1="50" y1="50" x2="79.7" y2="20.3" stroke="#B5913F" stroke-width=".8" stroke-dasharray="1.5 1.5"/>
+        <circle cx="50" cy="50" r="1.2" fill="#B5913F"/>
+        <text x="68" y="33" fill="#B5913F">r 42</text>
+        <!-- stroke width -->
+        <line x1="92" y1="62" x2="92" y2="68" stroke="#B5913F" stroke-width=".8"/>
+        <line x1="88" y1="62" x2="96" y2="62" stroke="#B5913F" stroke-width=".8"/>
+        <line x1="88" y1="68" x2="96" y2="68" stroke="#B5913F" stroke-width=".8"/>
+        <text x="98" y="67" fill="#B5913F">8</text>
+        <!-- tick -->
+        <line x1="36" y1="108" x2="64" y2="108" stroke="#B5913F" stroke-width=".8"/>
+        <line x1="36" y1="105" x2="36" y2="111" stroke="#B5913F" stroke-width=".8"/>
+        <line x1="64" y1="105" x2="64" y2="111" stroke="#B5913F" stroke-width=".8"/>
+        <text x="50" y="117" text-anchor="middle" fill="#B5913F">28 (36–64)</text>
+        <!-- meridian extent -->
+        <line x1="-8" y1="4" x2="-8" y2="96" stroke="#B5913F" stroke-width=".8"/>
+        <line x1="-11" y1="4" x2="-5" y2="4" stroke="#B5913F" stroke-width=".8"/>
+        <line x1="-11" y1="96" x2="-5" y2="96" stroke="#B5913F" stroke-width=".8"/>
+        <text x="-12" y="52" text-anchor="end" fill="#B5913F">92 (4–96)</text>
+        <!-- square -->
+        <line x1="0" y1="-8" x2="100" y2="-8" stroke="#4A5560" stroke-width=".6"/>
+        <line x1="0" y1="-11" x2="0" y2="-5" stroke="#4A5560" stroke-width=".6"/>
+        <line x1="100" y1="-11" x2="100" y2="-5" stroke="#4A5560" stroke-width=".6"/>
+        <text x="50" y="-12" text-anchor="middle">100 units</text>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 3.1</span> Construction of the mark on the 100-unit square. Dimensions in brass.</figcaption>
+  </figure>
+
+  <div class="rule" id="I14">
+    <span class="rule-num">Rule I 14</span><span class="rule-title">The mark</span>
+    <p>Reproduce the mark from the Drawing Office master, never redrawn by hand. Draw it in Meridian Green on Ivory, or in Ivory on Meridian Green. Where a document cannot print colour, Ink on white is permitted for that document only.</p>
+  </div>
+
+  <h2 id="c3-2"><span class="num">3.2</span> Clear space and size</h2>
+  <p>Give the mark room. The clear space around it is half its own width on every side; nothing else, not even the wordmark, comes inside that space except in the lock-up of § 3.4. The smallest size at which the mark may be reproduced is 8 mm across in print and 24 pixels on a screen. Below that the tick closes up and the mark becomes a target.</p>
+
+  <figure>
+    <div class="figure-frame" style="display:flex;justify-content:center;gap:40px;align-items:flex-end;flex-wrap:wrap">
+      <svg viewBox="-4 -4 208 208" width="220" height="220" font-family="IBM Plex Mono, Menlo, monospace" font-size="9" fill="#4A5560">
+        <rect x="0" y="0" width="200" height="200" fill="none" stroke="#4A5560" stroke-width="1" stroke-dasharray="3 3"/>
+        <rect x="50" y="50" width="100" height="100" fill="none" stroke="#D9D2C0" stroke-width="1"/>
+        <g fill="none" stroke="#1F4B3F" stroke-width="8" stroke-linecap="round">
+          <circle cx="100" cy="100" r="42"/>
+          <line x1="100" y1="54" x2="100" y2="146"/>
+          <line x1="86" y1="100" x2="114" y2="100"/>
+        </g>
+        <line x1="0" y1="25" x2="50" y2="25" stroke="#B5913F" stroke-width="1"/>
+        <text x="25" y="20" text-anchor="middle" fill="#B5913F">½ w</text>
+        <line x1="150" y1="175" x2="200" y2="175" stroke="#B5913F" stroke-width="1"/>
+        <text x="175" y="190" text-anchor="middle" fill="#B5913F">½ w</text>
+        <line x1="50" y1="188" x2="150" y2="188" stroke="#4A5560" stroke-width="1"/>
+        <text x="100" y="198" text-anchor="middle">w</text>
+      </svg>
+      <div style="display:flex;gap:22px;align-items:flex-end">
+        <div style="text-align:center"><img src="../brand/mark-green.svg" style="width:24px;height:24px;display:block;margin:0 auto 6px"><span class="mono small" style="color:var(--slate)">24 px</span></div>
+        <div style="text-align:center"><img src="../brand/mark-green.svg" style="width:48px;height:48px;display:block;margin:0 auto 6px"><span class="mono small" style="color:var(--slate)">48 px</span></div>
+        <div style="text-align:center"><img src="../brand/mark-green.svg" style="width:96px;height:96px;display:block;margin:0 auto 6px"><span class="mono small" style="color:var(--slate)">96 px</span></div>
+      </div>
+    </div>
+    <figcaption><span class="fig">Fig. 3.2</span> Clear space of half the width on each side, and the mark at 24, 48 and 96 pixels.</figcaption>
+  </figure>
+
+  <div class="rule" id="I16">
+    <span class="rule-num">Rule I 16</span><span class="rule-title">Clear space and minimum size</span>
+    <p>Keep a clear space of half the mark's width on every side. Do not reproduce the mark smaller than 8 mm or 24 pixels across.</p>
+  </div>
+
+  <h2 id="c3-3"><span class="num">3.3</span> Right and wrong</h2>
+  <p>The mark is simple enough that people are tempted to improve it. Please do not. The tiles below show the three permitted colourings and five of the commoner improvements.</p>
+  <div class="tiles">
+    <div class="tile do"><div class="box" style="background:#F4EFE3"><svg viewBox="0 0 100 100" width="64" height="64"><g fill="none" stroke="#1F4B3F" stroke-width="8" stroke-linecap="round"><circle cx="50" cy="50" r="42"/><line x1="50" y1="4" x2="50" y2="96"/><line x1="36" y1="50" x2="64" y2="50"/></g></svg></div><div class="cap">Green on Ivory</div></div>
+    <div class="tile do"><div class="box" style="background:#1F4B3F"><svg viewBox="0 0 100 100" width="64" height="64"><g fill="none" stroke="#F4EFE3" stroke-width="8" stroke-linecap="round"><circle cx="50" cy="50" r="42"/><line x1="50" y1="4" x2="50" y2="96"/><line x1="36" y1="50" x2="64" y2="50"/></g></svg></div><div class="cap">Ivory on Green</div></div>
+    <div class="tile do"><div class="box" style="background:#fff"><svg viewBox="0 0 100 100" width="64" height="64"><g fill="none" stroke="#1A1A1A" stroke-width="8" stroke-linecap="round"><circle cx="50" cy="50" r="42"/><line x1="50" y1="4" x2="50" y2="96"/><line x1="36" y1="50" x2="64" y2="50"/></g></svg></div><div class="cap">Ink on white, monochrome only</div></div>
+    <div class="tile dont"><div class="box" style="background:#F4EFE3"><svg viewBox="0 0 100 100" width="64" height="64"><g fill="none" stroke="#1F4B3F" stroke-width="8" stroke-linecap="round" transform="rotate(30 50 50)"><circle cx="50" cy="50" r="42"/><line x1="50" y1="4" x2="50" y2="96"/><line x1="36" y1="50" x2="64" y2="50"/></g></svg></div><div class="cap">Rotated</div></div>
+    <div class="tile dont"><div class="box" style="background:#F4EFE3"><svg viewBox="0 0 100 100" width="64" height="64"><g fill="none" stroke="#1A1A1A" stroke-width="12" stroke-linecap="round"><circle cx="50" cy="50" r="42"/><line x1="50" y1="4" x2="50" y2="96"/><line x1="36" y1="50" x2="64" y2="50"/></g><g fill="none" stroke="#F4EFE3" stroke-width="6" stroke-linecap="round"><circle cx="50" cy="50" r="42"/><line x1="50" y1="4" x2="50" y2="96"/><line x1="36" y1="50" x2="64" y2="50"/></g></svg></div><div class="cap">Outlined</div></div>
+    <div class="tile dont"><div class="box" style="background:#F4EFE3"><svg viewBox="0 0 100 100" width="64" height="64"><g fill="none" stroke="#C6321E" stroke-width="8" stroke-linecap="round"><circle cx="50" cy="50" r="42"/><line x1="50" y1="4" x2="50" y2="96"/><line x1="36" y1="50" x2="64" y2="50"/></g></svg></div><div class="cap">In Signal Red</div></div>
+    <div class="tile dont"><div class="box" style="background:#F4EFE3"><svg viewBox="0 0 100 100" width="64" height="64"><g fill="none" stroke="#1A1A1A" stroke-width="8" stroke-linecap="round" opacity=".25" transform="translate(4 5)"><circle cx="50" cy="50" r="42"/><line x1="50" y1="4" x2="50" y2="96"/><line x1="36" y1="50" x2="64" y2="50"/></g><g fill="none" stroke="#1F4B3F" stroke-width="8" stroke-linecap="round"><circle cx="50" cy="50" r="42"/><line x1="50" y1="4" x2="50" y2="96"/><line x1="36" y1="50" x2="64" y2="50"/></g></svg></div><div class="cap">With a shadow</div></div>
+    <div class="tile dont"><div class="box" style="background:#F4EFE3"><svg viewBox="0 0 100 100" width="90" height="56" preserveAspectRatio="none"><g fill="none" stroke="#1F4B3F" stroke-width="8" stroke-linecap="round"><circle cx="50" cy="50" r="42"/><line x1="50" y1="4" x2="50" y2="96"/><line x1="36" y1="50" x2="64" y2="50"/></g></svg></div><div class="cap">Stretched</div></div>
+  </div>
+
+  <div class="rule" id="I18">
+    <span class="rule-num">Rule I 18</span><span class="rule-title">Misuse of the mark</span>
+    <p>Do not rotate, outline, stretch, shadow, recolour or crop the mark, and do not place it on a photograph or a patterned ground. Do not use the mark as a letter in a word or as a signal aspect.</p>
+  </div>
+  <div class="why"><p>The mark is a circle with a line through it. So is a prohibition sign, a crosshair and a compass rose. Its meaning is held only by the exact proportions and the two house colours. Change either and it becomes one of the others.</p></div>
+
+  <h2 id="c3-4"><span class="num">3.4</span> The lock-up</h2>
+  <p>The mark and wordmark appear together in two arrangements. In the <strong>horizontal lock-up</strong> the mark stands to the left of the wordmark, its height equal to the height of MERIDIAN plus RAILWAY together, separated by a gap equal to the tick's length. In the <strong>stacked lock-up</strong> the mark sits above the wordmark, its meridian on the wordmark's axis, separated by a gap of half the mark's width. The stacked form is for covers and name boards; the horizontal form is for letterheads, tickets and the cab side.</p>
+
+  <div class="specimen on-ivory" style="gap:60px">
+    <div style="display:flex;align-items:center;gap:22px">
+      <img src="../brand/mark-green.svg" style="width:62px;height:62px">
+      <div class="wordmark sm"><span class="wm-1">Meridian</span><span class="wm-2">Railway</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:20px">
+      <img src="../brand/mark-green.svg" style="width:52px;height:52px">
+      <div class="wordmark sm"><span class="wm-1">Meridian</span><span class="wm-2">Railway</span></div>
+    </div>
+  </div>
+  <figure><figcaption><span class="fig">Fig. 3.3</span> Horizontal and stacked lock-ups, Meridian Green on Ivory.</figcaption></figure>
+</section>
+
+<!-- 4 COLOUR -->
+<section class="page chapter" id="c4" data-folio="Book I · 4 Colour">
+  <h1><span class="num">§ 4</span> Colour</h1>
+  <p class="lead">Nine colours, and two of them are not ours to decorate with. The Works keeps a paint standard for each; the Drawing Office keeps the values below. If the two ever disagree, the paint on a coach that has been out in the weather for a year is the truth, and the values are corrected to it.</p>
+
+  <div class="swatches">
+    <div class="swatch-card"><div class="chip" style="background:#1F4B3F"></div><div class="meta"><div class="name">Meridian Green</div><div class="hex">#1F4B3F · C75 M30 Y55 K45</div><div class="paint">Works Standard 1. Bodies, covers, signage, the mark.</div></div></div>
+    <div class="swatch-card"><div class="chip" style="background:#F4EFE3;border-bottom:1px solid #D9D2C0"></div><div class="meta"><div class="name">Ivory</div><div class="hex">#F4EFE3 · C3 M4 Y11 K0</div><div class="paint">Works Standard 2. Paper, waist bands, name boards, lettering on green.</div></div></div>
+    <div class="swatch-card"><div class="chip" style="background:#C6321E"></div><div class="meta"><div class="name">Signal Red</div><div class="hex">#C6321E · C10 M90 Y95 K5</div><div class="paint">Works Standard 3. Danger, buffer beams, stop aspects, the red face of the baton.</div></div></div>
+    <div class="swatch-card"><div class="chip" style="background:#B5913F"></div><div class="meta"><div class="name">Brass</div><div class="hex">#B5913F · C25 M40 Y85 K10</div><div class="paint">Works Standard 4. Lining, numerals, badges, figure numbers in the Books.</div></div></div>
+    <div class="swatch-card"><div class="chip" style="background:#1A1A1A"></div><div class="meta"><div class="name">Ink</div><div class="hex">#1A1A1A · C0 M0 Y0 K92</div><div class="paint">Works Standard 5. Text, the bar on a stop board, underframes.</div></div></div>
+    <div class="swatch-card"><div class="chip" style="background:#4A5560"></div><div class="meta"><div class="name">Slate</div><div class="hex">#4A5560 · C65 M45 Y35 K30</div><div class="paint">Works Standard 6. Signal posts, roofs, diagrams, secondary text.</div></div></div>
+    <div class="swatch-card"><div class="chip" style="background:#D9D2C0"></div><div class="meta"><div class="name">Chalk</div><div class="hex">#D9D2C0 · C12 M13 Y24 K0</div><div class="paint">Works Standard 7. Rules on tables, faint fills, the grid under a drawing.</div></div></div>
+    <div class="swatch-card"><div class="chip" style="background:#D9A21B"></div><div class="meta"><div class="name">Amber</div><div class="hex">#D9A21B · C12 M35 Y95 K0</div><div class="paint">Lamp Standard A. The CAUTION aspect only.</div></div></div>
+    <div class="swatch-card"><div class="chip" style="background:#2E9E5B"></div><div class="meta"><div class="name">Lamp Green</div><div class="hex">#2E9E5B · C75 M10 Y80 K0</div><div class="paint">Lamp Standard G. The CLEAR aspect only.</div></div></div>
+  </div>
+  <figure><figcaption><span class="fig">Fig. 4.1</span> The colour standards. Works Standards are paints; Lamp Standards are glasses.</figcaption></figure>
+
+  <h2><span class="num">4.1</span> The colours, one by one</h2>
+  <p><strong>Meridian Green</strong> is the colour of the Railway. It is a deep green with a little blue in it, chosen because it holds its depth in rain and reads as black from a distance without ever being black. It covers vehicle bodies, Book covers, the borders of name boards and the mark. Where there is a doubt about which colour a large surface should be, it should be this one.</p>
+  <p><strong>Ivory</strong> is our white. Pure white glares against green and looks like a repair. Ivory is the paper of the Books, the waist band on rolling stock, the field of every board and the lettering on every green surface. It is warm on purpose.</p>
+  <p><strong>Signal Red</strong> means danger and nothing else. It is the STOP aspect, the buffer beam, the band on a Limit of Shunt board and the red face of the baton. Because it means danger, it is never used to make something look lively. A red heading is a heading that is lying.</p>
+  <p><strong>Brass</strong> is the metal of the Railway and the colour of its small pride: the lining line along a coach, the fleet numerals, the badge on a cap, the figure numbers in the Books. It is applied thinly. A lot of brass looks like a bandstand.</p>
+  <p><strong>Ink</strong> is for reading and for the bar on a stop board. It is not quite black, so that a page does not look burnt.</p>
+  <p><strong>Slate</strong> is the working grey: signal posts, roofs, the lines of a diagram, a caption. It recedes, which is its job.</p>
+  <p><strong>Chalk</strong> is the faintest colour we have. It rules tables, fills the grid under a drawing and draws the dotted leaders in a contents list. It should never carry text.</p>
+  <p><strong>Amber</strong> and <strong>Lamp Green</strong> are glasses, not paints. They exist so that a driver never sees them anywhere but in a signal lamp, and so that when they do see them they know exactly what is meant.</p>
+
+  <div class="rule" id="I20">
+    <span class="rule-num">Rule I 20</span><span class="rule-title">Use of colour</span>
+    <p>Use only the nine standards. Large surfaces are Meridian Green or Ivory. Signal Red is used only where it means danger. Brass is used thinly, for lining, numerals and badges. Do not tint, blend or lighten a standard to make a new colour.</p>
+  </div>
+  <div class="rule" id="I22">
+    <span class="rule-num">Rule I 22</span><span class="rule-title">Lamp colours are reserved</span>
+    <p>Amber and Lamp Green are for signal aspects only. Do not use them on a vehicle, a board, a document or a screen for any other purpose.</p>
+  </div>
+  <div class="why"><p>A driver's eye is trained to react to amber and green lamps without thinking. If those colours appear on a poster beside the line, the eye reacts to the poster. We keep them out of everything else so that a lamp is always a lamp.</p></div>
+
+  <h2><span class="num">4.2</span> Pairings</h2>
+  <p>These pairings are permitted for text and marks. Anything not shown is not.</p>
+  <div class="pairs">
+    <div class="pair" style="background:#F4EFE3;color:#1F4B3F">Green on Ivory</div>
+    <div class="pair" style="background:#1F4B3F;color:#F4EFE3">Ivory on Green</div>
+    <div class="pair" style="background:#F4EFE3;color:#1A1A1A">Ink on Ivory</div>
+    <div class="pair" style="background:#fff;color:#1A1A1A">Ink on White</div>
+    <div class="pair" style="background:#1F4B3F;color:#B5913F">Brass on Green</div>
+    <div class="pair" style="background:#F4EFE3;color:#C6321E">Red on Ivory</div>
+    <div class="pair" style="background:#C6321E;color:#F4EFE3">Ivory on Red</div>
+    <div class="pair" style="background:#1A1A1A;color:#fff">White on Ink</div>
+  </div>
+  <p>Not permitted: Signal Red on Meridian Green or Green on Red, which vibrate; Brass on Ivory for text, which is too faint to read; Slate on Green, which disappears in the rain; and any lamp colour anywhere.</p>
+</section>
+
+<!-- 5 TYPOGRAPHY -->
+<section class="page chapter" id="c5" data-folio="Book I · 5 Typography">
+  <h1><span class="num">§ 5</span> Typography</h1>
+  <p class="lead">Three faces, each with one job. A condensed grotesque for names and headings, because it is what a station board wants. A serif for reading, because a Book is read. A monospace for numbers, because a timetable is a table.</p>
+
+  <div class="type-specimen ts-display">
+    <div class="face">Display · Barlow Condensed · 500, 600, 700</div>
+    <div class="big">Ashgrove 06:00</div>
+    <div class="row" style="font-family:var(--display);font-weight:500;font-size:22px;letter-spacing:.06em;text-transform:uppercase">Wending · Limit of Shunt · Book S</div>
+    <div class="row" style="font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:.06em;text-transform:uppercase">Danger · Rule S 10 · Signal AG 2</div>
+    <div class="meta">Headings, name boards, plates, rule numbers, captions. Upper case with tracking 0.03–0.28 em. Fallback: Arial Narrow.</div>
+  </div>
+
+  <div class="type-specimen ts-text">
+    <div class="face">Text · Source Serif 4 · 400, 400 italic, 600</div>
+    <div class="big">The train stops with its front level with the board.</div>
+    <div class="row">Proceed, prepared to stop at the next signal, stop board or end of track.</div>
+    <div class="row"><em>We would rather be understood than obeyed.</em></div>
+    <div class="row"><strong>Stop and stay.</strong></div>
+    <div class="meta">Running text of the Books, notes, explanations. 15.5 px on screen, 10.5 pt in print, leading 1.5. Fallback: Georgia.</div>
+  </div>
+
+  <div class="type-specimen ts-mono">
+    <div class="face">Data · IBM Plex Mono · 400, 500</div>
+    <div class="big">06:12 WD dep · km 3.165 · 5.0 bar</div>
+    <div class="row" style="font-family:var(--mono);font-size:14px">AG 1  AG 2  AG 3  AG 4  AG 5  AG 6      #1F4B3F      1002  4003  5107</div>
+    <div class="meta">Timetables, kilometrage, pressures, hex values, signal names in tables, edition lines, folios. Fallback: Menlo.</div>
+  </div>
+  <figure><figcaption><span class="fig">Fig. 5.1</span> The three faces at specimen size.</figcaption></figure>
+
+  <h2><span class="num">5.1</span> Setting rules</h2>
+  <table>
+    <thead><tr><th>Element</th><th>Face</th><th>Setting</th></tr></thead>
+    <tbody>
+      <tr><td>Chapter heading</td><td>Display 600</td><td>34 px / 22 pt, upper case, tracking .03 em, green rule beneath</td></tr>
+      <tr><td>Section heading</td><td>Display 600</td><td>21 px / 14 pt, upper case, tracking .04 em</td></tr>
+      <tr><td>Rule number</td><td>Display 700</td><td>13 px, upper case, tracking .16 em, Meridian Green</td></tr>
+      <tr><td>Rule title</td><td>Display 600</td><td>17 px, mixed case, Ink</td></tr>
+      <tr><td>Body text</td><td>Text 400</td><td>15.5 px / 10.5 pt, leading 1.5, measure 60–70 characters</td></tr>
+      <tr><td>Lead paragraph</td><td>Text 400 italic</td><td>17 px, Slate</td></tr>
+      <tr><td>Section and figure numbers</td><td>Data 500</td><td>12–14 px, Brass, tracking .08–.1 em</td></tr>
+      <tr><td>Tables, timetables</td><td>Data 400</td><td>13 px; headings in Display 600 upper case, tracking .12 em</td></tr>
+      <tr><td>Name boards</td><td>Display 600</td><td>Upper case, tracking .18 em, cap height one-third of the board</td></tr>
+      <tr><td>Fleet numerals</td><td>Display 600</td><td>Brass, height 180 mm on the body side</td></tr>
+    </tbody>
+  </table>
+
+  <div class="rule" id="I24">
+    <span class="rule-num">Rule I 24</span><span class="rule-title">Type</span>
+    <p>Set names, headings and plates in Barlow Condensed; running text in Source Serif 4; numbers, times and measurements in IBM Plex Mono. Do not introduce a fourth face. Where a face is unavailable, use its named fallback and nothing else.</p>
+  </div>
+  <div class="note"><p>Numbers inside running text stay in the text face ("within 3 m"). They move to the data face when they line up in a column, because a column of serif figures does not align and a timetable that does not align is not a timetable.</p></div>
+</section>
+
+<!-- 6 LIVERY -->
+<section class="page chapter" id="c6" data-folio="Book I · 6 Livery">
+  <h1><span class="num">§ 6</span> Livery</h1>
+  <p class="lead">Rolling stock is painted the same way whether it is a motor car, a locomotive or a coach. A train is one thing, and it should look like one thing from the platform.</p>
+
+  <figure>
+    <div class="figure-frame">
+      <svg viewBox="0 0 820 320" width="820" height="320" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+        <!-- contact wire -->
+        <line x1="0" y1="38" x2="820" y2="38" stroke="#4A5560" stroke-width="1"/>
+        <!-- rails -->
+        <line x1="0" y1="262" x2="820" y2="262" stroke="#4A5560" stroke-width="3"/>
+        <line x1="0" y1="268" x2="820" y2="268" stroke="#D9D2C0" stroke-width="1"/>
+        <!-- pantograph -->
+        <line x1="393" y1="92" x2="427" y2="92" stroke="#4A5560" stroke-width="4"/>
+        <line x1="410" y1="92" x2="380" y2="62" stroke="#1A1A1A" stroke-width="3"/>
+        <line x1="380" y1="62" x2="410" y2="42" stroke="#1A1A1A" stroke-width="3"/>
+        <line x1="392" y1="40" x2="428" y2="40" stroke="#1A1A1A" stroke-width="5" stroke-linecap="round"/>
+        <!-- roof -->
+        <rect x="66" y="90" width="688" height="22" rx="10" fill="#4A5560"/>
+        <!-- body -->
+        <rect x="60" y="104" width="700" height="114" rx="8" fill="#1F4B3F"/>
+        <!-- red ends -->
+        <path d="M68 104 h8 v114 h-8 a8 8 0 0 1 -8 -8 v-98 a8 8 0 0 1 8 -8 z" fill="#C6321E"/>
+        <path d="M744 104 h8 a8 8 0 0 1 8 8 v98 a8 8 0 0 1 -8 8 h-8 z" fill="#C6321E"/>
+        <!-- ivory band -->
+        <rect x="76" y="128" width="668" height="38" fill="#F4EFE3"/>
+        <!-- cab side windows -->
+        <rect x="84" y="133" width="32" height="28" rx="3" fill="#6F8593"/>
+        <rect x="704" y="133" width="32" height="28" rx="3" fill="#6F8593"/>
+        <!-- passenger windows -->
+        <g fill="#6F8593">
+          <rect x="170" y="133" width="36" height="28" rx="3"/><rect x="220" y="133" width="36" height="28" rx="3"/><rect x="270" y="133" width="36" height="28" rx="3"/><rect x="320" y="133" width="36" height="28" rx="3"/><rect x="370" y="133" width="36" height="28" rx="3"/><rect x="420" y="133" width="36" height="28" rx="3"/><rect x="470" y="133" width="36" height="28" rx="3"/><rect x="520" y="133" width="36" height="28" rx="3"/><rect x="570" y="133" width="36" height="28" rx="3"/><rect x="620" y="133" width="36" height="28" rx="3"/>
+        </g>
+        <!-- doors -->
+        <rect x="124" y="112" width="34" height="106" fill="#1F4B3F" stroke="#F4EFE3" stroke-width="1.5"/>
+        <rect x="129" y="133" width="24" height="28" rx="3" fill="#6F8593"/>
+        <rect x="662" y="112" width="34" height="106" fill="#1F4B3F" stroke="#F4EFE3" stroke-width="1.5"/>
+        <rect x="667" y="133" width="24" height="28" rx="3" fill="#6F8593"/>
+        <!-- brass lining -->
+        <line x1="78" y1="172" x2="742" y2="172" stroke="#B5913F" stroke-width="2"/>
+        <!-- fleet numbers -->
+        <text x="100" y="206" text-anchor="middle" font-size="24" font-weight="600" fill="#B5913F" letter-spacing="1">1002</text>
+        <text x="720" y="206" text-anchor="middle" font-size="24" font-weight="600" fill="#B5913F" letter-spacing="1">1002</text>
+        <!-- nickname -->
+        <text x="168" y="209" font-size="10" fill="#F4EFE3" letter-spacing="2.5">LARK</text>
+        <!-- mark -->
+        <g transform="translate(390 175) scale(0.4)" fill="none" stroke="#F4EFE3" stroke-width="8" stroke-linecap="round"><circle cx="50" cy="50" r="42"/><line x1="50" y1="4" x2="50" y2="96"/><line x1="36" y1="50" x2="64" y2="50"/></g>
+        <!-- underframe, bogies, wheels -->
+        <rect x="66" y="218" width="688" height="10" fill="#1A1A1A"/>
+        <rect x="118" y="226" width="104" height="16" rx="3" fill="#4A5560"/>
+        <rect x="598" y="226" width="104" height="16" rx="3" fill="#4A5560"/>
+        <g fill="#1A1A1A" stroke="#4A5560" stroke-width="2"><circle cx="140" cy="246" r="16"/><circle cx="200" cy="246" r="16"/><circle cx="620" cy="246" r="16"/><circle cx="680" cy="246" r="16"/></g>
+        <!-- buffer beams and buffers -->
+        <rect x="44" y="200" width="16" height="22" fill="#C6321E"/>
+        <rect x="760" y="200" width="16" height="22" fill="#C6321E"/>
+        <rect x="32" y="206" width="12" height="10" fill="#4A5560"/>
+        <rect x="776" y="206" width="12" height="10" fill="#4A5560"/>
+        <!-- callouts -->
+        <g stroke="#B5913F" stroke-width="1">
+          <line x1="250" y1="24" x2="250" y2="94"/>
+          <line x1="470" y1="24" x2="430" y2="42"/>
+          <line x1="560" y1="24" x2="560" y2="130"/>
+          <line x1="300" y1="292" x2="300" y2="174"/>
+          <line x1="52" y1="292" x2="52" y2="222"/>
+          <line x1="720" y1="292" x2="720" y2="210"/>
+          <line x1="410" y1="292" x2="410" y2="216"/>
+          <line x1="180" y1="292" x2="180" y2="212"/>
+        </g>
+        <g font-family="IBM Plex Mono, Menlo, monospace" font-size="11" font-weight="500" fill="#F4EFE3" text-anchor="middle">
+          <circle cx="250" cy="16" r="9" fill="#B5913F"/><text x="250" y="20">1</text>
+          <circle cx="470" cy="16" r="9" fill="#B5913F"/><text x="470" y="20">8</text>
+          <circle cx="560" cy="16" r="9" fill="#B5913F"/><text x="560" y="20">2</text>
+          <circle cx="300" cy="300" r="9" fill="#B5913F"/><text x="300" y="304">3</text>
+          <circle cx="52" cy="300" r="9" fill="#B5913F"/><text x="52" y="304">4</text>
+          <circle cx="720" cy="300" r="9" fill="#B5913F"/><text x="720" y="304">5</text>
+          <circle cx="410" cy="300" r="9" fill="#B5913F"/><text x="410" y="304">6</text>
+          <circle cx="180" cy="300" r="9" fill="#B5913F"/><text x="180" y="304">7</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 6.1</span> Side elevation of a two-cab electric vehicle in standard livery. Class 1 motor car 1002 shown.</figcaption>
+  </figure>
+  <ol class="callout-list">
+    <li><b>1</b> Roof in Slate, including the pantograph well and the roof edge.</li>
+    <li><b>2</b> Ivory waist band at window level, the full length of the body between the red ends. Doors carry the band across.</li>
+    <li><b>3</b> Brass lining, one line 25 mm wide, 60 mm below the band.</li>
+    <li><b>4</b> Ends and buffer beams in Signal Red, wrapped 150 mm round on to the side.</li>
+    <li><b>5</b> Fleet number in Brass, Barlow Condensed 600, 180 mm high, below the band at both ends.</li>
+    <li><b>6</b> The mark in Ivory, 400 mm across, centred on the lower panel of the body side.</li>
+    <li><b>7</b> Class nickname in small Ivory capitals, tracked, on the lower panel beside the cab door.</li>
+    <li><b>8</b> Pantograph and roof gear in Ink, unpainted where they work.</li>
+  </ol>
+
+  <h2><span class="num">6.1</span> Fleet numbering</h2>
+  <p>Every vehicle carries a four-figure fleet number. The first figure is the class; the rest count up from 001, except for coaching stock, which counts from 101 so that its numbers never look like a locomotive's.</p>
+  <table>
+    <thead><tr><th>Series</th><th>Class</th><th>Nickname</th><th>Vehicle</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">1001–1004</td><td>Class 1</td><td>Lark</td><td>Two-cab electric motor car, 22 m</td></tr>
+      <tr><td class="mono">4001–4006</td><td>Class 4</td><td>Heron</td><td>Two-cab electric locomotive, 16 m</td></tr>
+      <tr><td class="mono">5101–5120</td><td>Type C4</td><td>—</td><td>Saloon coach, 20 m, 64 seats</td></tr>
+    </tbody>
+  </table>
+  <p>Coaches carry no nickname and no pantograph, and their ends are Signal Red like everything else. The mark on a coach is the same size as on a motor car, so that a train shows a row of identical marks.</p>
+
+  <div class="rule" id="I26">
+    <span class="rule-num">Rule I 26</span><span class="rule-title">Livery</span>
+    <p>Paint rolling stock as Fig. 6.1: Meridian Green body, Ivory waist band, one Brass lining line, Signal Red ends and buffer beams, Slate roof, Brass fleet numerals at both ends, the mark in Ivory centred on each side. Do not add stripes, names, advertisements or a second lining line.</p>
+  </div>
+  <div class="rule" id="I28">
+    <span class="rule-num">Rule I 28</span><span class="rule-title">Fleet numbers</span>
+    <p>Number vehicles in the series of Fig. 6.1. Show the number at both ends of each side and on each cab front. Never reuse a number; a withdrawn vehicle takes its number with it.</p>
+  </div>
+  <div class="why"><p>The waist band is at window level so that a passenger looking for their carriage sees one continuous ivory line along the train and reads the numbers against green, not against glass. The lining is one line because two lines have to be parallel, and the Works has better things to do.</p></div>
+</section>
+
+<!-- 7 SIGNAGE -->
+<section class="page chapter" id="c7" data-folio="Book I · 7 Signage">
+  <h1><span class="num">§ 7</span> Signage</h1>
+  <p class="lead">Lineside signs are the identity at its most practical. They are read at speed, in rain, by tired people. So they are large, plain and few.</p>
+
+  <h2><span class="num">7.1</span> Station name boards</h2>
+  <p>An Ivory board with a Meridian Green border 40 mm wide, an inner rule 6 mm wide, and the station name in Barlow Condensed 600 upper case, tracked to 0.18 em, in Meridian Green. The cap height is one-third of the board height. Boards stand on two Slate posts, the lower edge 1.4 m above the platform, and are placed at both ends of every platform and opposite the stop board.</p>
+  <figure>
+    <div class="figure-frame" style="display:flex;justify-content:center">
+      <svg viewBox="0 0 380 160" width="380" height="160" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+        <rect x="60" y="80" width="10" height="80" fill="#4A5560"/><rect x="310" y="80" width="10" height="80" fill="#4A5560"/>
+        <rect x="20" y="18" width="340" height="66" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="6"/>
+        <rect x="28" y="26" width="324" height="50" fill="none" stroke="#1F4B3F" stroke-width="1.5"/>
+        <text x="190" y="64" text-anchor="middle" font-size="36" font-weight="600" fill="#1F4B3F" letter-spacing="6">ASHGROVE</text>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 7.1</span> Station name board, Ashgrove.</figcaption>
+  </figure>
+
+  <h2><span class="num">7.2</span> Signal name plates</h2>
+  <p>Every signal carries a plate: Ink black, white letters, the station code and the signal's number separated by a space, in Barlow Condensed 600. The plate is fixed to the post at the driver's eye level and is the only white lettering on the line.</p>
+  <figure>
+    <div class="figure-frame" style="display:flex;justify-content:center;gap:28px;align-items:center">
+      <svg viewBox="0 0 110 50" width="132" height="60" font-family="Barlow Condensed, Arial Narrow, sans-serif"><rect x="2" y="2" width="106" height="46" fill="#1A1A1A"/><text x="55" y="36" text-anchor="middle" font-size="30" font-weight="600" fill="#fff" letter-spacing="2">AG 2</text></svg>
+      <svg viewBox="0 0 110 50" width="132" height="60" font-family="Barlow Condensed, Arial Narrow, sans-serif"><rect x="2" y="2" width="106" height="46" fill="#1A1A1A"/><text x="55" y="36" text-anchor="middle" font-size="30" font-weight="600" fill="#fff" letter-spacing="2">WD 5</text></svg>
+    </div>
+    <figcaption><span class="fig">Fig. 7.2</span> Signal name plates. Odd numbers face Down, even numbers face Up (Book S).</figcaption>
+  </figure>
+
+  <h2><span class="num">7.3</span> Boards</h2>
+  <p>Three fixed boards are in use, drawn here so that the Works and Book S agree. Their meanings are Book S's business; their looks are ours.</p>
+  <figure>
+    <div class="figure-frame" style="display:flex;justify-content:space-around;align-items:flex-end;flex-wrap:wrap;gap:16px">
+      <svg viewBox="0 0 150 230" width="150" height="230" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+        <rect x="70" y="150" width="10" height="80" fill="#4A5560"/>
+        <rect x="20" y="20" width="110" height="132" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="3"/>
+        <rect x="32" y="52" width="86" height="26" fill="#1A1A1A"/>
+        <text x="75" y="118" text-anchor="middle" font-size="17" font-weight="600" fill="#1A1A1A" letter-spacing="2">ASHGROVE</text>
+        <text x="75" y="13" text-anchor="middle" font-size="11" fill="#4A5560" letter-spacing="1.5">STOP BOARD</text>
+      </svg>
+      <svg viewBox="0 0 170 230" width="170" height="230" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+        <rect x="80" y="150" width="10" height="80" fill="#4A5560"/>
+        <rect x="15" y="50" width="140" height="100" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="3"/>
+        <clipPath id="los"><rect x="16.5" y="51.5" width="137" height="97"/></clipPath>
+        <polygon points="15,150 155,50 155,78 15,178" fill="#C6321E" clip-path="url(#los)"/>
+        <polygon points="15,122 155,22 155,50 15,150" fill="#C6321E" clip-path="url(#los)" opacity="0"/>
+        <rect x="16.5" y="124" width="137" height="24" fill="#F4EFE3"/>
+        <text x="85" y="142" text-anchor="middle" font-size="15" font-weight="600" fill="#1A1A1A" letter-spacing="1.5">LIMIT OF SHUNT</text>
+        <text x="85" y="13" text-anchor="middle" font-size="11" fill="#4A5560" letter-spacing="1.5">LIMIT OF SHUNT</text>
+      </svg>
+      <svg viewBox="0 0 150 230" width="150" height="230" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+        <rect x="70" y="140" width="10" height="90" fill="#4A5560"/>
+        <circle cx="75" cy="84" r="56" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="7"/>
+        <text x="75" y="108" text-anchor="middle" font-size="66" font-weight="700" fill="#1A1A1A">25</text>
+        <text x="75" y="13" text-anchor="middle" font-size="11" fill="#4A5560" letter-spacing="1.5">SPEED BOARD</text>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 7.3</span> Stop board, Limit of Shunt board and Speed board. All on Slate posts, board centres 2.0 m above rail.</figcaption>
+  </figure>
+  <dl class="dl">
+    <dt>Stop board</dt><dd>Ivory board with an Ink border, a thick Ink bar across the upper half, the station name beneath in Barlow Condensed 600.</dd>
+    <dt>Limit of Shunt</dt><dd>Ivory board with an Ink border and a Signal Red band rising diagonally to the right; the words LIMIT OF SHUNT on an Ivory strip along the foot.</dd>
+    <dt>Speed board</dt><dd>Ivory disc with a thick Ink rim and the limit in km/h in Barlow Condensed 700.</dd>
+  </dl>
+
+  <h2><span class="num">7.4</span> Hectometre and kilometre posts</h2>
+  <p>The line is measured from the Ashgrove buffer stop, and every hundred metres of it is named by a post. A <strong>hectometre post</strong> is an Ivory plate 320 × 180 mm on a Slate post, with the distance in Ink figures in Barlow Condensed 600, 120 mm high: the kilometre, a point, and the hectometre digit, so that the post at 1.4 km reads <span class="mono">1.4</span>. At every full kilometre the plate is a <strong>kilometre post</strong> instead: Ivory, 360 × 240 mm, with a Meridian Green border 12 mm wide, the word KM in green 40 mm high, and the kilometre alone beneath it in green figures 150 mm high, so that the post at 2 km reads <span class="mono">2</span>. Posts are a position reference and nothing more. They are not signals and carry no instruction; Book S says what they are for.</p>
+  <figure>
+    <div class="figure-frame" style="display:flex;justify-content:space-around;align-items:flex-end;flex-wrap:wrap;gap:16px">
+      <svg viewBox="0 0 220 230" width="220" height="230" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+        <rect x="102" y="88" width="10" height="142" fill="#4A5560"/>
+        <rect x="43" y="16" width="128" height="72" fill="#F4EFE3" stroke="#4A5560" stroke-width="1.5"/>
+        <text x="107" y="76" text-anchor="middle" font-size="58" font-weight="600" fill="#1A1A1A">1.4</text>
+        <line x1="43" y1="100" x2="171" y2="100" stroke="#B5913F" stroke-width="1"/>
+        <line x1="43" y1="96" x2="43" y2="104" stroke="#B5913F" stroke-width="1"/><line x1="171" y1="96" x2="171" y2="104" stroke="#B5913F" stroke-width="1"/>
+        <text x="107" y="112" text-anchor="middle" font-size="10" fill="#B5913F" letter-spacing="1">320</text>
+        <line x1="184" y1="16" x2="184" y2="88" stroke="#B5913F" stroke-width="1"/>
+        <line x1="180" y1="16" x2="188" y2="16" stroke="#B5913F" stroke-width="1"/><line x1="180" y1="88" x2="188" y2="88" stroke="#B5913F" stroke-width="1"/>
+        <text x="196" y="56" font-size="10" fill="#B5913F" letter-spacing="1">180</text>
+        <line x1="30" y1="28" x2="30" y2="76" stroke="#B5913F" stroke-width="1"/>
+        <line x1="26" y1="28" x2="34" y2="28" stroke="#B5913F" stroke-width="1"/><line x1="26" y1="76" x2="34" y2="76" stroke="#B5913F" stroke-width="1"/>
+        <text x="22" y="56" text-anchor="end" font-size="10" fill="#B5913F" letter-spacing="1">120</text>
+        <text x="107" y="10" text-anchor="middle" font-size="11" fill="#4A5560" letter-spacing="1.5">HECTOMETRE POST</text>
+        <text x="130" y="200" font-size="10" fill="#B5913F" letter-spacing="1">1.2 m TO RAIL</text>
+      </svg>
+      <svg viewBox="0 0 220 230" width="220" height="230" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+        <rect x="102" y="112" width="10" height="118" fill="#4A5560"/>
+        <rect x="35" y="16" width="144" height="96" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="5"/>
+        <text x="107" y="41" text-anchor="middle" font-size="18" font-weight="600" fill="#1F4B3F" letter-spacing="3">KM</text>
+        <text x="107" y="104" text-anchor="middle" font-size="70" font-weight="600" fill="#1F4B3F">2</text>
+        <line x1="35" y1="124" x2="179" y2="124" stroke="#B5913F" stroke-width="1"/>
+        <line x1="35" y1="120" x2="35" y2="128" stroke="#B5913F" stroke-width="1"/><line x1="179" y1="120" x2="179" y2="128" stroke="#B5913F" stroke-width="1"/>
+        <text x="107" y="136" text-anchor="middle" font-size="10" fill="#B5913F" letter-spacing="1">360</text>
+        <line x1="192" y1="16" x2="192" y2="112" stroke="#B5913F" stroke-width="1"/>
+        <line x1="188" y1="16" x2="196" y2="16" stroke="#B5913F" stroke-width="1"/><line x1="188" y1="112" x2="196" y2="112" stroke="#B5913F" stroke-width="1"/>
+        <text x="204" y="68" font-size="10" fill="#B5913F" letter-spacing="1">240</text>
+        <line x1="22" y1="48" x2="22" y2="104" stroke="#B5913F" stroke-width="1"/>
+        <line x1="18" y1="48" x2="26" y2="48" stroke="#B5913F" stroke-width="1"/><line x1="18" y1="104" x2="26" y2="104" stroke="#B5913F" stroke-width="1"/>
+        <text x="14" y="80" text-anchor="end" font-size="10" fill="#B5913F" letter-spacing="1">150</text>
+        <text x="14" y="36" text-anchor="end" font-size="10" fill="#B5913F" letter-spacing="1">40</text>
+        <text x="107" y="10" text-anchor="middle" font-size="11" fill="#4A5560" letter-spacing="1.5">KILOMETRE POST</text>
+        <text x="130" y="200" font-size="10" fill="#B5913F" letter-spacing="1">BORDER 12</text>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 7.4</span> Hectometre post at 1.4 km and kilometre post at 2 km. Dimensions in millimetres, in brass.</figcaption>
+  </figure>
+  <p>Posts stand on the left of the line in the Down direction, the face of the plate parallel to the track so that it reads from either direction, the top of the plate 1.2 m above rail level. Where a loop track lies on that side the post moves outward past it, so that within the loops the posts stand beyond track 2. On a platform the plate is fixed to the platform wall without a post. A post is never moved to make room for a sign; the sign moves.</p>
+  <dl class="dl">
+    <dt>Hectometre post</dt><dd>Ivory plate, Slate border, Ink figures: kilometre, point, hectometre digit. One every 100 m from km 0.0 to the end of the line.</dd>
+    <dt>Kilometre post</dt><dd>Ivory plate with a Meridian Green border, the word KM small above the kilometre in green figures. One at every full kilometre, in place of the hectometre post.</dd>
+  </dl>
+
+  <h2><span class="num">7.5</span> The baton</h2>
+  <p>The station master's baton is a disc 200 mm across on a turned handle: Meridian Green on one face, Signal Red on the other, each face with an Ivory rim 12 mm wide and a small lens at the centre for the lamp. The green face shown steadily means <em>ready to start</em>; the red face means <em>stop</em>. The handle is unpainted ash, which darkens with use and is left to.</p>
+  <figure>
+    <div class="figure-frame" style="display:flex;justify-content:center;gap:48px">
+      <svg viewBox="0 0 120 200" width="120" height="200"><rect x="55" y="112" width="10" height="84" rx="4" fill="#B08A5A"/><circle cx="60" cy="62" r="54" fill="#F4EFE3"/><circle cx="60" cy="62" r="46" fill="#1F4B3F"/><circle cx="60" cy="62" r="8" fill="#F4EFE3" opacity=".9"/></svg>
+      <svg viewBox="0 0 120 200" width="120" height="200"><rect x="55" y="112" width="10" height="84" rx="4" fill="#B08A5A"/><circle cx="60" cy="62" r="54" fill="#F4EFE3"/><circle cx="60" cy="62" r="46" fill="#C6321E"/><circle cx="60" cy="62" r="8" fill="#F4EFE3" opacity=".9"/></svg>
+    </div>
+    <figcaption><span class="fig">Fig. 7.5</span> The baton, green face and red face.</figcaption>
+  </figure>
+
+  <h2><span class="num">7.6</span> Uniform</h2>
+  <p>Staff in uniform wear a Slate cap with a Meridian Green band and the MR badge in Brass at the front: a disc with the letters MR in Barlow Condensed 700 inside a thin Brass ring. Drivers and station masters wear the same badge; the station master's is the one holding the baton.</p>
+  <figure>
+    <div class="figure-frame" style="display:flex;justify-content:center;align-items:center;gap:36px">
+      <svg viewBox="0 0 240 60" width="240" height="60" font-family="Barlow Condensed, Arial Narrow, sans-serif"><rect x="0" y="0" width="240" height="60" rx="4" fill="#1F4B3F"/><circle cx="120" cy="30" r="22" fill="#1F4B3F" stroke="#B5913F" stroke-width="3"/><circle cx="120" cy="30" r="17" fill="none" stroke="#B5913F" stroke-width="1"/><text x="120" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#B5913F" letter-spacing="1">MR</text></svg>
+      <span class="small" style="color:var(--slate);max-width:220px">The cap band with the badge. Badge 44 mm across, ring 3 mm, letters 22 mm high.</span>
+    </div>
+    <figcaption><span class="fig">Fig. 7.6</span> Cap band and badge.</figcaption>
+  </figure>
+
+  <div class="rule" id="I30">
+    <span class="rule-num">Rule I 30</span><span class="rule-title">Signage</span>
+    <p>Make name boards, plates, boards, posts and batons to the drawings in this chapter. Hectometre and kilometre posts stand at every hundred metres and every kilometre without exception, and are the only lineside plates that carry a distance. Do not add a sign that is not in Book S, and do not vary a drawing to suit a site; move the post instead.</p>
+  </div>
+</section>
+
+<!-- 8 VOICE -->
+<section class="page chapter" id="c8" data-folio="Book I · 8 Voice">
+  <h1><span class="num">§ 8</span> Voice</h1>
+  <p class="lead">The Railway writes the way a good colleague speaks: calmly, exactly, and with the courtesy of assuming you are competent.</p>
+
+  <h2><span class="num">8.1</span> Three habits</h2>
+  <p><strong>Calm.</strong> We do not raise our voice on paper. There is no exclamation mark anywhere in the Books except in the single word DANGER, and that word appears only where someone could be hurt. Capitals are for names of aspects (STOP, CAUTION, CLEAR) and for boards, not for emphasis.</p>
+  <p><strong>Exact.</strong> We give the number. Not "stop close to the board" but "stop with the front within 3 m short of the board". Not "slowly" but "at 5 km/h or less over the last 20 m". Not "soon" but "06:12".</p>
+  <p><strong>Courteous.</strong> Rules are imperative because that is the clearest form: <em>Sound one short blast before moving.</em> Explanations are written as <em>we</em>, because the reader is one of us and deserves to know why. We say what to do rather than what not to do, wherever the positive form is as clear.</p>
+
+  <table class="voice">
+    <thead><tr><th>Not this</th><th>This</th></tr></thead>
+    <tbody>
+      <tr><td>Don't ever open the doors while the train is moving!</td><td>Open the doors only when the train has stopped at a platform.</td></tr>
+      <tr><td>It is required that the driver shall proceed to ascertain that brake pipe pressure is within normal parameters.</td><td>Check that the brake pipe reads 5.0 bar.</td></tr>
+      <tr><td>Drivers are reminded that signals at danger must not be passed under any circumstances.</td><td>Stop at a signal at STOP and stay there.</td></tr>
+      <tr><td>Awesome, you're good to go!!</td><td>WD 2 cleared. Ready to start. — Pell, Wending</td></tr>
+      <tr><td>Approach the coach carefully.</td><td>Approach at 5 km/h or less over the last 20 m; make contact at 2 km/h or less.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="rule" id="I32">
+    <span class="rule-num">Rule I 32</span><span class="rule-title">Voice</span>
+    <p>Write rules in the imperative. Write explanations as "we". Give numbers where a number exists. Use no exclamation mark except in the word DANGER, and use that word only where a person could be hurt.</p>
+  </div>
+
+  <h2><span class="num">8.2</span> Messages from a Box</h2>
+  <p>A message from a signal box to a driver is short, in full sentences, and signed with the sender's name and station. Signal names are written as on their plates, with the space. The instruction comes first, the state of the signal second, the signature last.</p>
+  <div class="box-message">Draw forward to the headshunt. AG 4 cleared. <span class="sig">— Marrow, Ashgrove</span></div>
+  <div class="box-message">Set back on to track 2 and stop short of the Limit of Shunt. WD 6 and WD 4 cleared. <span class="sig">— Pell, Wending</span></div>
+  <div class="box-message">Wait. The line is not yet clear. <span class="sig">— Marrow, Ashgrove</span></div>
+  <div class="rule" id="I34">
+    <span class="rule-num">Rule I 34</span><span class="rule-title">Box messages</span>
+    <p>Write a Box message as: the instruction; then the signals cleared, by name; then a dash, the sender's surname and the station. Nothing else.</p>
+  </div>
+  <div class="why"><p>A driver reads a message with one hand on the brake. The instruction is what they act on, so it comes first; the signal name is what they check against the lineside, so it comes second; the signature tells them who to answer.</p></div>
+</section>
+
+<!-- 9 THE DOCUMENT SYSTEM -->
+<section class="page chapter" id="c9" data-folio="Book I · 9 The document system">
+  <h1><span class="num">§ 9</span> The document system</h1>
+  <p class="lead">Everything the Railway needs to know is in a lettered Book. This chapter is about the shelf: which Books there are, what a cover says, and how a rule is cited from one Book to another.</p>
+
+  <h2><span class="num">9.1</span> The Books</h2>
+  <table>
+    <thead><tr><th>Book</th><th>Title</th><th>Keeper</th><th>Covers</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">I</td><td>Identity Manual</td><td>Drawing Office</td><td>Name, mark, colours, type, livery, signage, voice, documents</td></tr>
+      <tr><td class="mono">R</td><td>Rules of Operation</td><td>Operating Superintendent</td><td>Terms, directions, authority, speeds, station working, departure, doors, lights, horn, the Incident Book</td></tr>
+      <tr><td class="mono">S</td><td>Signalling Manual</td><td>Signal Engineer</td><td>Signals, boards, hand signals, station layouts, routes, block working, failures</td></tr>
+      <tr><td class="mono">D</td><td>Driving Manual</td><td>Chief Driver</td><td>Cab controls, preparing and stabling, running, stopping, changing ends, coupling, brake tests, the classes of stock</td></tr>
+      <tr><td class="mono">P</td><td>Permanent Way</td><td>Engineer</td><td><em>To be issued</em></td></tr>
+      <tr><td class="mono">W</td><td>Workshop</td><td>Works Manager</td><td><em>To be issued</em></td></tr>
+      <tr><td class="mono">T</td><td>Timetabling</td><td>Operating Superintendent</td><td><em>To be issued</em></td></tr>
+    </tbody>
+  </table>
+
+  <h2><span class="num">9.2</span> The cover</h2>
+  <div class="anatomy">
+    <div class="mini-cover">
+      <img src="../brand/mark-ivory.svg" style="width:26px;height:26px;margin-bottom:10px" alt="">
+      <div class="co">The Meridian Railway</div>
+      <div class="bl"><small>Book</small>S</div>
+      <div class="ti">Signalling Manual</div>
+      <div class="su">What the signals say, and why.</div>
+      <div class="ed">First edition · September 2026</div>
+      <div style="font-style:italic;font-size:8px;opacity:.8;margin-top:2px">On the line, on time.</div>
+    </div>
+    <ol>
+      <li>The mark in Ivory, top left.</li>
+      <li>THE MERIDIAN RAILWAY in Display 600, tracked 0.28 em.</li>
+      <li>The Book letter, very large, with the word BOOK small above it. The letter is the title a reader sees from across the room.</li>
+      <li>The title in Display 600 upper case.</li>
+      <li>A one-line subtitle in italic text face saying what the Book is for.</li>
+      <li>The edition line in the data face: edition, month and year, issuing office.</li>
+      <li>The motto in italic, small, last.</li>
+      <li>A faint meridian line down the centre of the cover, one shade lighter than the green, seen only when the light is right.</li>
+    </ol>
+  </div>
+  <figure><figcaption><span class="fig">Fig. 9.1</span> Anatomy of a cover. Every Book's cover is Meridian Green; the letter tells them apart.</figcaption></figure>
+
+  <h2><span class="num">9.3</span> Numbering and citation</h2>
+  <p>Chapters are numbered § 1, § 2 and so on; sections within them § 3.2. Rules are numbered in tens within each Book, <strong>Rule S 10</strong>, <strong>Rule S 12</strong>, leaving room for a rule to be inserted between two others without renumbering the rest. Figures are numbered by chapter, Fig. 6.1. A rule is cited from any Book, including its own, by its full name: "see Rule R 20". Never "see above" and never "rule 20".</p>
+  <p>Each Book has a contents page, a running footer with the Book letter and chapter, a colophon and a back cover. Page size is A5. The running footer is set in Display, upper case, tracked, in Slate.</p>
+
+  <h2><span class="num">9.4</span> Editions and amendments</h2>
+  <p>A Book is reissued as a new edition when it changes substantially. Between editions it is corrected by <strong>amendment slips</strong>: small Ivory slips, numbered, naming the Book, the section and the page, which the holder pastes in at the place indicated. A Book with its slips in is current; a Book without is not, and the colophon says how many slips it should carry.</p>
+  <figure>
+    <div style="display:flex;justify-content:center">
+      <div class="slip">
+        <div class="h">Amendment Slip No. 3 · Book S</div>
+        <div class="m">§ 4.2 · paste in at page 14 · issued 2026-09-15</div>
+        <p style="margin:8px 0 0">In Rule S 12, after "stop short of the board" add: "A move authorised by the station master in writing may pass it at walking pace."</p>
+      </div>
+    </div>
+    <figcaption style="text-align:center"><span class="fig">Fig. 9.2</span> An amendment slip. Illustrative; no such slip has been issued.</figcaption>
+  </figure>
+
+  <div class="rule" id="I36">
+    <span class="rule-num">Rule I 36</span><span class="rule-title">Documents</span>
+    <p>Issue every standing instruction of the Railway as part of a lettered Book, in the house style, with a cover, contents, numbered sections and rules, a colophon and a back cover. Cite rules by Book letter and number.</p>
+  </div>
+  <div class="rule" id="I38">
+    <span class="rule-num">Rule I 38</span><span class="rule-title">Amendments</span>
+    <p>Correct a Book between editions only by numbered amendment slip. Paste slips in where the slip says. Do not annotate a Book by hand except to initial a pasted slip.</p>
+  </div>
+  <div class="why"><p>A Book that everyone has, in the same edition with the same slips, is a Book everyone can quote to each other over a bad telephone line. That is worth the paste.</p></div>
+</section>
+
+<!-- COLOPHON -->
+<section class="page colophon" id="colophon" data-folio="Book I · Colophon">
+  <img class="mark" src="../brand/mark-green.svg" alt="">
+  <p><strong>Book I — Identity Manual.</strong> First edition, September 2026. Issued by the General Manager's Office of the Meridian Railway, drawn in the Drawing Office at Ashgrove, and printed at the Ashgrove Works press on Ivory stock, Works Standard 2.</p>
+  <p>Set in Barlow Condensed, Source Serif 4 and IBM Plex Mono. Page size A5. Colours are given as the Drawing Office values; the Works keeps the paint and glass standards. This edition supersedes nothing and should carry no amendment slips.</p>
+  <p>The Valley Survey's original stake is said to be under the Ashgrove buffer stop. Nobody has looked.</p>
+</section>
+
+<section class="back-cover">
+  <img class="mark" src="../brand/mark-ivory.svg" alt="">
+  <div>The Meridian Railway · On the line, on time</div>
+</section>
+
+</div>
+</body>
+</html>

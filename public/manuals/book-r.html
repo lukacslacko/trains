@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book R — Rules of Operation · The Meridian Railway</title>
+<link rel="stylesheet" href="book.css">
+<style>
+  /* Book R only: the one-page card and the timetable strips. */
+  .cover .title { color: var(--ivory); }
+  .rule table td:first-child { white-space: nowrap; }
+  .card-table td:first-child { white-space: nowrap; font-family: var(--display); font-weight: 700; letter-spacing: .1em; color: var(--green); }
+  .tt { font-family: var(--mono); font-size: 13px; }
+  .tt td, .tt th { padding: 5px 10px; }
+  .tt .arr { color: var(--slate); }
+  .ledger { border: 1px solid var(--chalk); background: #fff; padding: 12px 16px; font-family: var(--mono); font-size: 12.5px; color: var(--slate); }
+  .ledger .row { display: grid; grid-template-columns: 52px 62px 76px 1fr; gap: 10px; padding: 4px 0; border-bottom: 1px dotted var(--chalk); }
+  .ledger .row.head { font-family: var(--display); letter-spacing: .12em; text-transform: uppercase; color: var(--green); border-bottom: 1px solid var(--green); font-size: 11px; }
+  .ledger .row:last-child { border-bottom: 0; }
+</style>
+</head>
+<body>
+<nav class="desk-bar">
+  <a href="index.html">← Library</a>
+  <span class="spacer"></span>
+  <span>Book R · First edition · September 2026</span>
+  <a href="#" onclick="window.print();return false;">Print booklet</a>
+</nav>
+
+<div class="book">
+
+<!-- COVER -->
+<section class="cover">
+  <div class="rule-line"></div>
+  <img class="mark" src="../brand/mark-ivory.svg" alt="">
+  <div class="company">The Meridian Railway</div>
+  <div class="book-letter"><small>Book</small>R</div>
+  <h1 class="title">Rules of Operation</h1>
+  <p class="subtitle">The general rules by which the Meridian Railway is worked, and the Incident Book.</p>
+  <div class="edition">First edition · September 2026 · Issued by the General Manager's Office</div>
+  <div class="motto">On the line, on time.</div>
+</section>
+
+<!-- CONTENTS -->
+<section class="page toc" data-folio="Book R · Contents">
+  <h1>Contents</h1>
+  <ol>
+    <li><span class="num">1</span><a href="#c1">Preamble</a><span class="dots"></span><span class="pg">3</span></li>
+    <li><span class="num">2</span><a href="#c2">Terms and directions</a><span class="dots"></span><span class="pg">4</span></li>
+    <li><span class="num">3</span><a href="#c3">Staff and authority</a><span class="dots"></span><span class="pg">6</span></li>
+    <li><span class="num">4</span><a href="#c4">Speeds</a><span class="dots"></span><span class="pg">8</span></li>
+    <li class="sub"><span class="num">R 10</span><a href="#R10">Speeds</a><span class="dots"></span><span class="pg">8</span></li>
+    <li><span class="num">5</span><a href="#c5">Station working</a><span class="dots"></span><span class="pg">9</span></li>
+    <li class="sub"><span class="num">R 12</span><a href="#R12">Stop boards</a><span class="dots"></span><span class="pg">9</span></li>
+    <li class="sub"><span class="num">R 14</span><a href="#R14">Doors</a><span class="dots"></span><span class="pg">10</span></li>
+    <li class="sub"><span class="num">R 20</span><a href="#R20">Departure of a passenger train</a><span class="dots"></span><span class="pg">11</span></li>
+    <li><span class="num">6</span><a href="#c6">Lights and horn</a><span class="dots"></span><span class="pg">12</span></li>
+    <li class="sub"><span class="num">R 16</span><a href="#R16">Lights</a><span class="dots"></span><span class="pg">12</span></li>
+    <li class="sub"><span class="num">R 18</span><a href="#R18">Horn</a><span class="dots"></span><span class="pg">13</span></li>
+    <li><span class="num">7</span><a href="#c7">Securing a vehicle</a><span class="dots"></span><span class="pg">14</span></li>
+    <li class="sub"><span class="num">R 22</span><a href="#R22">Securing</a><span class="dots"></span><span class="pg">14</span></li>
+    <li><span class="num">8</span><a href="#c8">One Train Working</a><span class="dots"></span><span class="pg">15</span></li>
+    <li class="sub"><span class="num">R 24</span><a href="#R24">One Train Working</a><span class="dots"></span><span class="pg">15</span></li>
+    <li><span class="num">9</span><a href="#c9">Timekeeping</a><span class="dots"></span><span class="pg">16</span></li>
+    <li><span class="num">10</span><a href="#c10">The Incident Book</a><span class="dots"></span><span class="pg">18</span></li>
+    <li><span class="num">11</span><a href="#c11">The rules in one page</a><span class="dots"></span><span class="pg">21</span></li>
+    <li><span class="num">—</span><a href="#colophon">Colophon</a><span class="dots"></span><span class="pg">22</span></li>
+  </ol>
+</section>
+
+<!-- 1 PREAMBLE -->
+<section class="page chapter" id="c1" data-folio="Book R · 1 Preamble">
+  <h1><span class="num">§ 1</span> Preamble</h1>
+  <p class="lead">This Book holds the general rules of the Meridian Railway: the small number of agreements that let a driver, a station master and a train some kilometres apart act as one machine. Read it once through, then keep it in the cab.</p>
+
+  <blockquote class="epigraph">A rule you cannot explain is a rule you should not have.<span class="who">General Manager's minute, first edition</span></blockquote>
+
+  <p>A railway is a machine made partly of iron and partly of agreements. The iron is easy to see: rails, wire, wheels, the brass of a controller. The agreements are harder to see, and they matter more, because iron only does what it is told. When a train leaves Ashgrove, the driver has agreed to stop where the board says; the station master has agreed not to show the baton until the line is fit; and both have agreed, long before either was born, on what the word <em>Up</em> means. These agreements are the rules. Without them the iron is only scrap that moves.</p>
+
+  <p>Our rules are few. Where other railways have grown thick books by adding a rule for every mishap, we have tried to write down only what a careful person needs to know in order to act well, and beside every rule we have written why it exists. If a rule cannot be explained in a short paragraph, it goes back to the drawing office until it can. A rule that is understood is kept in the mind. A rule that is merely obeyed is kept in a drawer, and drawers are not open when it matters.</p>
+
+  <p>The rules themselves are written in the imperative, <em>do this</em>, because that is how a rule is used in the moment. The explanations are written by colleagues, in the plural, because that is what we are.</p>
+
+  <p>Where a rule is broken, or where something goes wrong without any rule being broken, the fact is written in the Incident Book. Chapter 10 describes the Book. It is a record and not a punishment. We keep it so that the rules can be improved and so that the next person on the same duty knows what the line has been doing lately.</p>
+
+  <div class="why"><p>We could have copied a great railway's rule book and struck out what did not apply. We chose instead to write from first principles, because a railway that understands its own rules can change them when the world changes, and a railway that has inherited them can only add to them.</p></div>
+
+  <h2><span class="num">1.1</span> How this Book is arranged</h2>
+  <p>Chapter 2 fixes the words. Chapter 3 says who may decide what. Chapters 4 to 8 hold the rules, each with its number, its text and its reasons. Chapter 9 concerns the clock, Chapter 10 the Incident Book, and Chapter 11 puts every rule on one page for pinning in the cab. Signals have their own Book (<a href="book-s.html">Book S</a>); the handling of vehicles has its own (<a href="book-d.html">Book D</a>). Where this Book refers to them it cites the rule, for instance <a href="book-s.html#S10">Rule S 10</a>.</p>
+</section>
+
+<!-- 2 TERMS -->
+<section class="page chapter" id="c2" data-folio="Book R · 2 Terms and directions">
+  <h1><span class="num">§ 2</span> Terms and directions</h1>
+  <p class="lead">Words are the first piece of signalling equipment. This chapter fixes the ones we use, so that a message from a Box means the same thing at both ends of the line.</p>
+
+  <figure>
+    <div class="figure-frame">
+      <svg viewBox="0 0 640 118" width="640" height="118" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+        <!-- direction arrows -->
+        <g stroke="#4A5560" stroke-width="1.5" fill="none">
+          <path d="M 170 26 L 250 26"/><path d="M 178 21 L 170 26 L 178 31"/>
+          <path d="M 390 26 L 470 26"/><path d="M 462 21 L 470 26 L 462 31"/>
+        </g>
+        <text x="210" y="16" text-anchor="middle" font-size="13" fill="#4A5560" letter-spacing="2.5">UP · DECREASING KM</text>
+        <text x="430" y="16" text-anchor="middle" font-size="13" fill="#4A5560" letter-spacing="2.5">DOWN · INCREASING KM</text>
+        <!-- track -->
+        <line x1="40" y1="62" x2="600" y2="62" stroke="#1A1A1A" stroke-width="3"/>
+        <!-- buffer stops -->
+        <rect x="34" y="53" width="6" height="18" fill="#C6321E"/>
+        <rect x="600" y="53" width="6" height="18" fill="#C6321E"/>
+        <!-- stations -->
+        <circle cx="90" cy="62" r="9" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="3"/>
+        <circle cx="550" cy="62" r="9" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="3"/>
+        <text x="90" y="92" text-anchor="middle" font-size="15" font-weight="600" fill="#1F4B3F" letter-spacing="2">ASHGROVE · AG</text>
+        <text x="90" y="108" text-anchor="middle" font-size="12" fill="#4A5560" font-family="IBM Plex Mono, Menlo, monospace">km 0.000</text>
+        <text x="550" y="92" text-anchor="middle" font-size="15" font-weight="600" fill="#1F4B3F" letter-spacing="2">WENDING · WD</text>
+        <text x="550" y="108" text-anchor="middle" font-size="12" fill="#4A5560" font-family="IBM Plex Mono, Menlo, monospace">km 3.300</text>
+        <text x="320" y="84" text-anchor="middle" font-size="12" fill="#4A5560" letter-spacing="2">SINGLE LINE · 1.5 kV DC OVERHEAD</text>
+        <!-- hectometre posts (ticks above the track) and kilometre posts (plates) -->
+        <g stroke="#4A5560" stroke-width="1">
+          <path d="M 57 52 v -5 M 74 52 v -5 M 91 52 v -5 M 108 52 v -5 M 125 52 v -5 M 142 52 v -5 M 159 52 v -5 M 176 52 v -5 M 193 52 v -5 M 227 52 v -5 M 244 52 v -5 M 261 52 v -5 M 278 52 v -5 M 295 52 v -5 M 312 52 v -5 M 329 52 v -5 M 346 52 v -5 M 363 52 v -5 M 397 52 v -5 M 414 52 v -5 M 431 52 v -5 M 448 52 v -5 M 465 52 v -5 M 482 52 v -5 M 499 52 v -5 M 516 52 v -5 M 533 52 v -5 M 567 52 v -5 M 584 52 v -5"/>
+        </g>
+        <g font-family="Barlow Condensed, Arial Narrow, sans-serif" font-size="10" font-weight="600" text-anchor="middle">
+          <rect x="203" y="36" width="14" height="16" rx="1.5" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="1.2"/><text x="210" y="48" fill="#1F4B3F">1</text>
+          <rect x="373" y="36" width="14" height="16" rx="1.5" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="1.2"/><text x="380" y="48" fill="#1F4B3F">2</text>
+          <rect x="543" y="36" width="14" height="16" rx="1.5" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="1.2"/><text x="550" y="48" fill="#1F4B3F">3</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 2.1</span> The line. Kilometrage runs from the Ashgrove buffer stop; Down is towards Wending. The small ticks are the hectometre posts, one every 100 m; the plates are the kilometre posts.</figcaption>
+  </figure>
+
+  <dl class="dl">
+    <dt>Kilometrage</dt><dd>Distance along the line, in kilometres, measured from the buffer stop at Ashgrove, which is km 0.000. The buffer stop at Wending is km 3.300. Every fixed object on the railway has a kilometrage, and every message that needs a place gives one.</dd>
+    <dt>Hectometre post</dt><dd>A slate post with an ivory plate, standing every 100 m along the line, that marks the kilometrage on the ground. The plate reads the kilometre, a point, and the hectometre digit in black figures: the post at 1.4 km reads <span class="mono">1.4</span>. See § 2.1.</dd>
+    <dt>Kilometre post</dt><dd>The larger post at each full kilometre: an ivory plate with a green border and a green numeral under the small word KM, reading <span class="mono">2</span> for km 2.0. It takes the place of the hectometre post at that point.</dd>
+    <dt>Down</dt><dd>The direction of increasing kilometrage: from Ashgrove towards Wending. A Down train is one travelling Down. A Down signal governs Down trains.</dd>
+    <dt>Up</dt><dd>The direction of decreasing kilometrage: from Wending towards Ashgrove.</dd>
+    <dt>Station code</dt><dd>Two letters standing for a station on plates, in the timetable and in messages. Ashgrove is <span class="mono">AG</span>; Wending is <span class="mono">WD</span>.</dd>
+    <dt>Box</dt><dd>The signal box at a station and, by extension, the station master on duty in it. "Ashgrove Box" is the place; a message from it is signed "Marrow, Ashgrove".</dd>
+    <dt>Main line</dt><dd>The single line between the two stations, on which train movements run at line speed.</dd>
+    <dt>Station limits</dt><dd>The part of the line that belongs to a station: from the speed board on the approach, or from the home signal where there is one, to the buffer stop. Within station limits the speed is 25 km/h and the station master's authority applies.</dd>
+    <dt>Loop tracks</dt><dd>At a station with a loop, the two parallel tracks between the switches. Track 1 lies at the platform; track 2 alongside it.</dd>
+    <dt>Headshunt</dt><dd>The short dead-end track beyond the inner switch, used to draw a locomotive clear of the loop while running round. It ends at the buffer stop.</dd>
+    <dt>Stub</dt><dd>The short length of single line between the outer switch and the home signal, inside station limits. A locomotive running round reverses on it.</dd>
+    <dt>Train movement</dt><dd>The running of a train between stations, or from a platform onto the main line, under main signals and the timetable.</dd>
+    <dt>Shunting move</dt><dd>Any movement within station limits that is not a train movement: drawing forward, setting back, running round, coupling. Shunting moves are governed by ground signals and by the station master's instructions, and never exceed 15 km/h.</dd>
+    <dt>Secured</dt><dd>Of a vehicle: left in the state <a href="#R22">Rule R 22</a> describes, so that it cannot move on its own or at a touch.</dd>
+    <dt>Proved</dt><dd>Of a brake: tested from the cab and shown to act through the whole train (<a href="book-d.html#D14">Rule D 14</a>).</dd>
+    <dt>Baton</dt><dd>The station master's hand-held disc, green on one face and red on the other, with a lamp for night. See § 5.3.</dd>
+    <dt>Booked time</dt><dd>A time printed in the working timetable for a departure or an arrival.</dd>
+    <dt>Duty</dt><dd>A day's work for a driver and a vehicle, laid out in the working timetable under a number: Duty 101, Duty 201.</dd>
+  </dl>
+
+  <div class="note"><p><em>Forward</em> and <em>reverse</em> belong to the cab and change when the driver changes ends. <em>Up</em> and <em>Down</em> belong to the line and never change. A message from a Box is written in Up and Down; a driver translates.</p></div>
+
+  <h2><span class="num">2.1</span> Posts and positions</h2>
+  <p>Kilometrage is not only a figure in a table; it is written on the ground. From the Ashgrove buffer stop to the end of the line a post stands every 100 m, on the left of the line in the Down direction, and within the loops moved outward past track 2 so that it is never between the rails of anything. Each post carries the distance from km 0.000: the kilometre, a point, and the hectometre digit, so that the post at 1.4 km reads <span class="mono">1.4</span> and the next one Down from it reads <span class="mono">1.5</span>. At every full kilometre a larger kilometre post stands instead, reading simply <span class="mono">2</span>.</p>
+  <p>The posts are a reference and nothing more. They are not signals, they carry no instruction, and no rule turns on passing one. They tell you where you are, and they tell the Box where you are when you say so.</p>
+  <p>They also settle a question that is easy to lose on the ground: the numbers grow in the Down direction. If you are standing beside the line and cannot remember which way is Down, walk to the nearest post and read the next one.</p>
+  <div class="note"><p><strong>Reporting a position.</strong> Give a position to the Box by the last post passed and, if you know it, the metres beyond it: "stopped at 2.7, about 40 metres on." A train's position is the position of its front. The Incident Book records positions the same way, so that a place in the Book can be walked to with nothing more than the posts.</p></div>
+  <div class="why"><p>A signal has a name and a platform has a stop board, but most of the line has neither. Without the posts, "a little past the speed board" is the best anyone could say, and the drawing office could not find the spot next week. With them, every hundred metres of the railway has a name that fits on a plate.</p></div>
+</section>
+
+<!-- 3 STAFF -->
+<section class="page chapter" id="c3" data-folio="Book R · 3 Staff and authority">
+  <h1><span class="num">§ 3</span> Staff and authority</h1>
+  <p class="lead">Two people work a train between Ashgrove and Wending: the driver, who is responsible for the train, and the station master, who is responsible for the station. Each has authority over their own part and none over the other's.</p>
+
+  <h2><span class="num">3.1</span> The driver</h2>
+  <p>The driver is in charge of the vehicle, or vehicles, from taking over the duty until stabling: their preparation, brakes, lights, speed and stopping, the doors, and the safety of every movement. Only the driver decides to move, and nothing in this Book obliges a driver to move a train they believe unfit. A driver who is in doubt stops, and asks.</p>
+
+  <h2><span class="num">3.2</span> The station master</h2>
+  <p>The station master is in charge of the station and everything within its limits: the switches, the signals, the platform, the passengers, and the order in which moves are made. The station master sets routes and clears signals, shows the baton, and instructs shunting moves. At the date of this edition the station masters are:</p>
+  <table>
+    <thead><tr><th>Station</th><th>Box</th><th>Station master</th><th>Signs messages</th></tr></thead>
+    <tbody>
+      <tr><td>Ashgrove</td><td class="mono">AG</td><td>T. Marrow</td><td>Marrow, Ashgrove</td></tr>
+      <tr><td>Wending</td><td class="mono">WD</td><td>J. Pell</td><td>Pell, Wending</td></tr>
+    </tbody>
+  </table>
+
+  <h2><span class="num">3.3</span> Instructions</h2>
+  <p>Instructions from a Box are short, in plain words, and signed with the sender's name and station:</p>
+  <p class="mono" style="padding-left:18px">Draw forward to the headshunt. AG 4 cleared. — Marrow, Ashgrove</p>
+  <p>An instruction names the move, the limit of the move, and the signal that has been cleared for it. A driver acknowledges an instruction by carrying it out, or by a short reply if they cannot. Instructions that concern a train's departure are given by the baton (§ 5.3), not by message, so that the driver's eyes are on the platform and not on a slip of paper.</p>
+
+  <h2><span class="num">3.4</span> The limit of authority</h2>
+  <p><strong>An instruction can never authorise passing a signal at STOP.</strong> If a message and a signal disagree, the signal governs; the driver stops and asks. A station master who needs a train past a signal at STOP first clears the signal. If the signal has failed and cannot be cleared, the procedure in <a href="book-s.html">Book S</a> applies and nothing in this Book shortens it. See <a href="book-s.html#S10">Rule S 10</a>.</p>
+
+  <div class="why"><p>We give each person one thing to be responsible for so that no one has to decide whose job it is. The driver never wonders whether the points are set; the station master never wonders whether the brakes will hold. Each trusts the other because each knows the other has nothing else to think about. And we put the signal above the instruction because a signal is a fact that both can see, while a message is a belief that one of them holds.</p></div>
+</section>
+
+<!-- 4 SPEEDS -->
+<section class="page chapter" id="c4" data-folio="Book R · 4 Speeds">
+  <h1><span class="num">§ 4</span> Speeds</h1>
+  <p class="lead">Speed is the one quantity that a driver alone controls and that everything else depends on. The limits below are upper bounds; a driver always runs at whatever lower speed the conditions ask for.</p>
+
+  <div class="rule" id="R10">
+    <span class="rule-num">Rule R 10</span><span class="rule-title">Speeds</span>
+    <p>Do not exceed the speed for the part of the line you are on, as follows.</p>
+    <table>
+      <thead><tr><th>Where</th><th class="mono">km/h</th><th>Begins</th></tr></thead>
+      <tbody>
+        <tr><td>Main line</td><td class="mono">50</td><td>At the speed board 50 on leaving station limits, until the next speed board 25.</td></tr>
+        <tr><td>Station limits</td><td class="mono">25</td><td>At the speed board 25 on the approach, or at the home signal where there is one, and as far as the buffer stop.</td></tr>
+        <tr><td>Shunting move</td><td class="mono">15</td><td>Throughout any shunting move, wherever it is.</td></tr>
+        <tr><td>Coupling approach</td><td class="mono">5</td><td>Over the last 20 m before a vehicle to be coupled.</td></tr>
+        <tr><td>Coupling contact</td><td class="mono">2</td><td>At the moment the couplers meet.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <figure>
+    <div class="figure-frame">
+      <svg viewBox="0 0 660 195" width="660" height="195" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+        <!-- approach arrow -->
+        <g stroke="#4A5560" stroke-width="1.5" fill="none">
+          <path d="M 600 22 L 500 22"/><path d="M 508 17 L 500 22 L 508 27"/>
+        </g>
+        <text x="550" y="12" text-anchor="middle" font-size="13" fill="#4A5560" letter-spacing="2.5">UP TRAIN APPROACHING</text>
+        <!-- platform -->
+        <rect x="104" y="72" width="150" height="8" fill="#F4EFE3" stroke="#4A5560" stroke-width="1"/>
+        <text x="179" y="66" text-anchor="middle" font-size="12" fill="#4A5560" letter-spacing="2">PLATFORM</text>
+        <!-- track -->
+        <line x1="30" y1="92" x2="630" y2="92" stroke="#1A1A1A" stroke-width="3"/>
+        <!-- buffer stop -->
+        <rect x="26" y="82" width="6" height="20" fill="#C6321E"/>
+        <text x="30" y="116" text-anchor="start" font-size="11" fill="#C6321E" letter-spacing="1.5">BUFFER STOP</text>
+        <text x="30" y="128" text-anchor="start" font-size="11" fill="#4A5560" font-family="IBM Plex Mono, Menlo, monospace">km 0.000</text>
+        <!-- stop board -->
+        <line x1="110" y1="92" x2="110" y2="104" stroke="#4A5560" stroke-width="2"/>
+        <rect x="102" y="104" width="16" height="12" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1"/>
+        <rect x="104" y="108" width="12" height="4" fill="#1A1A1A"/>
+        <text x="126" y="116" text-anchor="start" font-size="11" fill="#4A5560" letter-spacing="1.5">STOP BOARD</text>
+        <text x="126" y="128" text-anchor="start" font-size="11" fill="#4A5560" font-family="IBM Plex Mono, Menlo, monospace">km 0.135</text>
+        <!-- home signal -->
+        <line x1="400" y1="92" x2="400" y2="52" stroke="#4A5560" stroke-width="2"/>
+        <rect x="393" y="24" width="14" height="30" rx="3" fill="#1A1A1A"/>
+        <circle cx="400" cy="31" r="3.2" fill="#2E9E5B" opacity=".35"/>
+        <circle cx="400" cy="39" r="3.2" fill="#D9A21B" opacity=".35"/>
+        <circle cx="400" cy="47" r="3.2" fill="#C6321E"/>
+        <text x="400" y="116" text-anchor="middle" font-size="11" fill="#4A5560" letter-spacing="1.5">HOME SIGNAL AG 2</text>
+        <text x="400" y="128" text-anchor="middle" font-size="11" fill="#4A5560" font-family="IBM Plex Mono, Menlo, monospace">km 0.420</text>
+        <!-- speed board -->
+        <line x1="520" y1="92" x2="520" y2="60" stroke="#4A5560" stroke-width="2"/>
+        <circle cx="520" cy="46" r="14" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="2.5"/>
+        <text x="520" y="51" text-anchor="middle" font-size="15" font-weight="700" fill="#1A1A1A">25</text>
+        <text x="520" y="142" text-anchor="middle" font-size="11" fill="#4A5560" letter-spacing="1.5">SPEED BOARD 25</text>
+        <text x="520" y="154" text-anchor="middle" font-size="11" fill="#4A5560" font-family="IBM Plex Mono, Menlo, monospace">km 0.450</text>
+        <!-- limit brackets -->
+        <g stroke="#1F4B3F" stroke-width="1.5" fill="none">
+          <path d="M 30 172 L 30 178 L 517 178 L 517 172"/>
+          <path d="M 523 172 L 523 178 L 630 178 L 630 172"/>
+        </g>
+        <text x="274" y="191" text-anchor="middle" font-size="12" font-weight="600" fill="#1F4B3F" letter-spacing="2">STATION LIMITS · 25 km/h</text>
+        <text x="577" y="191" text-anchor="middle" font-size="12" font-weight="600" fill="#1F4B3F" letter-spacing="1.2">MAIN LINE · 50 km/h</text>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 4.1</span> Station limits at Ashgrove for an Up train. Under One Train Working there is no home signal and the limit begins at the speed board.</figcaption>
+  </figure>
+
+  <div class="why"><p>The station limit of 25 exists because a station is where the unexpected stands on the track: a coach left at the platform, a switch, a person with a barrow. At 25 km/h a driver can stop within the length of a platform on the service brake alone. Shunting is slower still because a shunting move is, by definition, heading towards something. And the coupling speeds are what the coupler and the passengers in the coach will forgive.</p></div>
+
+  <div class="note"><p>An overspeed is recorded in the Incident Book with the limit and the speed reached. Speed limits are read from the front of the train: the whole train keeps the lower limit until the front reaches the board that raises it, and the whole train is subject to a lower limit as soon as the front reaches the board that lowers it.</p></div>
+</section>
+
+<!-- 5 STATION WORKING -->
+<section class="page chapter" id="c5" data-folio="Book R · 5 Station working">
+  <h1><span class="num">§ 5</span> Station working</h1>
+  <p class="lead">Most of what happens on a railway happens standing still. Stopping in the right place, opening the doors at the right moment and leaving at the right time are the rules the passengers notice, and so they are the ones we take most care over.</p>
+
+  <h2><span class="num">5.1</span> Stopping</h2>
+  <div class="rule" id="R12">
+    <span class="rule-num">Rule R 12</span><span class="rule-title">Stop boards</span>
+    <p>Stop with the front of the train level with the stop board. A stop within 3 m short of the board is a correct stop. Passing the board is an overrun; stopping more than 3 m short is a short stop. Both are recorded.</p>
+  </div>
+  <div class="why"><p>The board is placed so that every door of a full-length train stands at the platform. At a terminus it is also what stands between the train and the buffer stop, and we would rather a driver aimed at a board than at the stop itself.</p></div>
+  <p>Approach a stop board as you would a signal at STOP: the brake goes on early, and the last metres are made at walking pace. A stop board faces the trains it governs; a board seen from behind is not yours.</p>
+
+  <h2><span class="num">5.2</span> Doors and dwell</h2>
+  <div class="rule" id="R14">
+    <span class="rule-num">Rule R 14</span><span class="rule-title">Doors</span>
+    <p>Open the doors only when the train is stationary at a platform. Close them before moving. The traction circuit is inhibited while any door is open.</p>
+  </div>
+  <p>The time between arrival and departure is the dwell. The working timetable gives generous dwells, and the driver uses them: to change ends, to run round, to look along the train, to read the next line of the timetable. A dwell is not a delay.</p>
+  <div class="note"><p>The traction inhibit protects against the commonest mistake, but it does not protect a train that is rolling. Close the doors, then release the brake, in that order.</p></div>
+
+  <h2><span class="num">5.3</span> The baton</h2>
+  <p>The station master's baton is a hand-held disc, green on one face and red on the other, with a lamp behind each face for night. It is shown from the platform, within the driver's view, and it is the only way a departure is authorised at a staffed station.</p>
+  <figure>
+    <div class="figure-frame">
+      <svg viewBox="0 0 400 130" width="400" height="130" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+        <g>
+          <rect x="112" y="80" width="8" height="40" rx="2" fill="#B5913F"/>
+          <circle cx="116" cy="50" r="34" fill="#2E9E5B" stroke="#1A1A1A" stroke-width="2.5"/>
+          <circle cx="116" cy="50" r="6" fill="#F4EFE3" opacity=".8"/>
+          <text x="116" y="14" text-anchor="middle" font-size="12" fill="#4A5560" letter-spacing="2">GREEN FACE · READY TO START</text>
+        </g>
+        <g>
+          <rect x="280" y="80" width="8" height="40" rx="2" fill="#B5913F"/>
+          <circle cx="284" cy="50" r="34" fill="#C6321E" stroke="#1A1A1A" stroke-width="2.5"/>
+          <circle cx="284" cy="50" r="6" fill="#F4EFE3" opacity=".8"/>
+          <text x="284" y="14" text-anchor="middle" font-size="12" fill="#4A5560" letter-spacing="2">RED FACE · STOP</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 5.1</span> The baton. One disc, two faces, a lamp behind each.</figcaption>
+  </figure>
+  <table>
+    <thead><tr><th>Shown</th><th>Means</th></tr></thead>
+    <tbody>
+      <tr><td><span class="swatch" style="background:var(--lamp)"></span>Green face, held steady</td><td><span class="term">Ready to start.</span> All conditions on the station's side are met. The driver may depart when the conditions on the train's side are also met.</td></tr>
+      <tr><td><span class="swatch" style="background:var(--red)"></span>Red face</td><td><span class="term">Stop.</span> Do not move; if moving, stop.</td></tr>
+      <tr><td>Not shown</td><td>Nothing has been authorised. Wait.</td></tr>
+    </tbody>
+  </table>
+  <p>The baton is shown until the train moves; if it is turned to red before the train moves, the authority is withdrawn and the driver stays. At an unstaffed halt there is no baton, and the driver acts on their own judgement.</p>
+
+  <h2><span class="num">5.4</span> Departure</h2>
+  <div class="rule" id="R20">
+    <span class="rule-num">Rule R 20</span><span class="rule-title">Departure of a passenger train</span>
+    <p>Start a passenger train from a station only when all of the following hold at the same moment:</p>
+    <ol class="steps">
+      <li>The doors are closed.</li>
+      <li>The booked departure time has been reached.</li>
+      <li>Where there are signals, the starting signal shows a proceed aspect.</li>
+      <li>Where a station master is on duty, the baton is shown green.</li>
+    </ol>
+    <p>Then sound one short blast (<a href="#R18">Rule R 18</a>), release the brake, and take power.</p>
+  </div>
+  <p>The four conditions may become true in any order, and it is usual for the baton to come last, because the station master waits for the doors. What matters is that all four hold at the moment the train moves. If any ceases to hold before then, the baton turned to red, the signal returned to STOP, the train stays.</p>
+  <div class="why"><p>Four conditions seem many for one departure. Each answers a different question. The doors ask whether the passengers are safe; the clock asks whether the passengers have had their chance; the signal asks whether the line is fit; the baton asks whether the platform is. No single person can answer all four, so no single person's word is enough.</p></div>
+  <div class="note"><p>At an unstaffed halt, conditions 3 and 4 do not apply: the driver satisfies themselves that the doors are closed, the time is right and the platform is clear, and departs. Under One Train Working (<a href="#R24">Rule R 24</a>) both stations may be worked this way.</p></div>
+</section>
+
+<!-- 6 LIGHTS AND HORN -->
+<section class="page chapter" id="c6" data-folio="Book R · 6 Lights and horn">
+  <h1><span class="num">§ 6</span> Lights and horn</h1>
+  <p class="lead">A train announces itself in two ways: by what it shows and by what it sounds. Both are messages to people who may not be looking at it, and so both are rules.</p>
+
+  <div class="rule" id="R16">
+    <span class="rule-num">Rule R 16</span><span class="rule-title">Lights</span>
+    <p>On the main line, the leading end of a train shows <span class="term">head</span> (white lights) and the rear of the train shows <span class="term">tail</span> (red lights). An end coupled to another vehicle shows nothing. Set the lights before leaving station limits.</p>
+    <p>On shunting moves within station limits, showing <span class="term">head</span> in the direction of movement is recommended and not required.</p>
+  </div>
+
+  <figure>
+    <div class="figure-frame">
+      <svg viewBox="0 0 640 120" width="640" height="120" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+        <g stroke="#4A5560" stroke-width="1.5" fill="none">
+          <path d="M 470 18 L 560 18"/><path d="M 552 13 L 560 18 L 552 23"/>
+        </g>
+        <text x="515" y="10" text-anchor="middle" font-size="12" fill="#4A5560" letter-spacing="2">DIRECTION OF TRAVEL</text>
+        <line x1="40" y1="82" x2="600" y2="82" stroke="#1A1A1A" stroke-width="3"/>
+        <!-- coach (trailing) -->
+        <rect x="130" y="42" width="180" height="36" rx="4" fill="#1F4B3F"/>
+        <rect x="130" y="54" width="180" height="8" fill="#F4EFE3"/>
+        <circle cx="134" cy="48" r="3.5" fill="#C6321E"/><circle cx="134" cy="72" r="3.5" fill="#C6321E"/>
+        <circle cx="306" cy="48" r="3.5" fill="#4A5560" opacity=".6"/><circle cx="306" cy="72" r="3.5" fill="#4A5560" opacity=".6"/>
+        <text x="220" y="34" text-anchor="middle" font-size="12" fill="#4A5560" letter-spacing="2">COACH 5107</text>
+        <!-- coupling -->
+        <line x1="310" y1="60" x2="326" y2="60" stroke="#B5913F" stroke-width="4"/>
+        <!-- loco (leading) -->
+        <rect x="326" y="42" width="150" height="36" rx="4" fill="#1F4B3F"/>
+        <rect x="326" y="54" width="150" height="8" fill="#F4EFE3"/>
+        <circle cx="330" cy="48" r="3.5" fill="#4A5560" opacity=".6"/><circle cx="330" cy="72" r="3.5" fill="#4A5560" opacity=".6"/>
+        <circle cx="472" cy="48" r="3.5" fill="#FFFFFF" stroke="#1A1A1A" stroke-width=".8"/><circle cx="472" cy="72" r="3.5" fill="#FFFFFF" stroke="#1A1A1A" stroke-width=".8"/>
+        <text x="401" y="34" text-anchor="middle" font-size="12" fill="#4A5560" letter-spacing="2">LOCOMOTIVE 4003</text>
+        <!-- labels -->
+        <text x="96" y="104" text-anchor="middle" font-size="12" font-weight="600" fill="#C6321E" letter-spacing="2">TAIL · RED</text>
+        <text x="318" y="104" text-anchor="middle" font-size="12" font-weight="600" fill="#4A5560" letter-spacing="2">COUPLED · OFF</text>
+        <text x="516" y="104" text-anchor="middle" font-size="12" font-weight="600" fill="#1A1A1A" letter-spacing="2">HEAD · WHITE</text>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 6.1</span> Lights on a two-vehicle train. The train, not the vehicle, has a front and a rear.</figcaption>
+  </figure>
+
+  <table>
+    <thead><tr><th>End of the train</th><th>Shows</th></tr></thead>
+    <tbody>
+      <tr><td>Leading end</td><td><span class="term">Head</span>: white.</td></tr>
+      <tr><td>Rear end</td><td><span class="term">Tail</span>: red.</td></tr>
+      <tr><td>Any end coupled to another vehicle</td><td>Nothing.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="why"><p>White ahead tells everyone which way the train is going. Red at the rear tells a person behind that the train is whole; a red light in the middle of a train is a coach that has been left on the line. When you change ends, the lights change ends too, and the walk between the cabs is where this is most often forgotten. Set the new rear before you leave it.</p></div>
+
+  <div class="rule" id="R18">
+    <span class="rule-num">Rule R 18</span><span class="rule-title">Horn</span>
+    <p>Before moving from rest, sound one short blast. When the baton has been shown, the blast is also the driver's acknowledgement of it.</p>
+  </div>
+  <div class="why"><p>A train that is about to move looks exactly like a train that is not. One blast gives the platform a second's warning and tells the station master that the baton has been seen. We ask for one blast, and a short one, so that it keeps its meaning.</p></div>
+</section>
+
+<!-- 7 SECURING -->
+<section class="page chapter" id="c7" data-folio="Book R · 7 Securing a vehicle">
+  <h1><span class="num">§ 7</span> Securing a vehicle</h1>
+  <p class="lead">A driver leaves the cab many times a day: to change ends, to couple, to look at something. Each time, the train is for a moment nobody's. This chapter is about that moment.</p>
+
+  <div class="rule" id="R22">
+    <span class="rule-num">Rule R 22</span><span class="rule-title">Securing</span>
+    <p>Before leaving the driving cab, in this order:</p>
+    <ol class="steps">
+      <li>Power controller to <span class="term">0</span>.</li>
+      <li>Train brake to <span class="term">Full</span>.</li>
+      <li>Reverser to <span class="term">Neutral</span>.</li>
+    </ol>
+    <p>The pantograph may stay up. A cab left in any other state is <em>unsecured</em>, and the fact is recorded.</p>
+  </div>
+
+  <p>The rule applies to changing ends as much as to stabling. The two cabs of a car are two places; the walk between them is time in which the vehicle is unattended, and a vehicle standing at a platform is as capable of rolling as one standing anywhere else.</p>
+
+  <div class="why"><p>The brake is applied fully so that nothing rolls. The reverser is put to Neutral so that a controller knocked in passing, or found by a curious child, does nothing at all. Power is taken off first because a controller cannot be left at a notch while the reverser is moved, and because it is the right habit. Stabling proper, with the pantograph down and the lights off, is in <a href="book-d.html">Book D</a>; this rule is the part of stabling that happens every time.</p></div>
+</section>
+
+<!-- 8 ONE TRAIN WORKING -->
+<section class="page chapter" id="c8" data-folio="Book R · 8 One Train Working">
+  <h1><span class="num">§ 8</span> One Train Working</h1>
+  <p class="lead">The simplest way to keep two trains apart is to have one. This chapter describes the method used on the Ashgrove–Wending line before its signals were commissioned, and still used whenever the line is worked by a single vehicle.</p>
+
+  <div class="rule" id="R24">
+    <span class="rule-num">Rule R 24</span><span class="rule-title">One Train Working</span>
+    <p>On a line worked under One Train Working there is one train and no signals. The driver departs from each station on their own authority at the booked time, the other conditions of <a href="#R20">Rule R 20</a> being met. No second vehicle is placed on the line while the method is in force.</p>
+  </div>
+
+  <p>The safety of the method rests entirely on its name. A collision needs two trains; with one, the only things a train can meet are the buffer stops and its own stop boards, and the speed within station limits is chosen so that the driver can deal with both. There are no signals because there is nothing for a signal to say: the line ahead is always clear, and the driver knows it because they are the only one on it.</p>
+
+  <p>For the same reason the method is fragile in exactly one way. The moment a second vehicle is put on the line, even a trolley, even for a minute, the method is withdrawn and the line is worked under Book S. There is no half-measure between one train and two.</p>
+
+  <div class="note"><p>Duty 101, the Ashgrove–Wending shuttle worked by a Class 1 car, is under One Train Working. When the loops and signals at both stations are commissioned for Duty 201, the line reverts to signalled working, the station masters take up duty, and the baton returns to the platform.</p></div>
+
+  <div class="why"><p>We describe this method in the general rules, rather than leaving it to Book S, because it is the method against which every other method is measured. Anything more complicated than one train must earn its complication by being at least as safe.</p></div>
+</section>
+
+<!-- 9 TIMEKEEPING -->
+<section class="page chapter" id="c9" data-folio="Book R · 9 Timekeeping">
+  <h1><span class="num">§ 9</span> Timekeeping</h1>
+  <p class="lead">The motto is not decoration. A railway is a promise about time made to people who are not on it yet.</p>
+
+  <h2><span class="num">9.1</span> The working timetable</h2>
+  <p>The public timetable tells passengers when trains call. The working timetable tells the railway how: it adds the duty numbers, the vehicles, the dwells, the shunting moves and the minutes a passenger never sees. A driver works from the working timetable. The line for each station gives a booked arrival and a booked departure.</p>
+
+  <table class="tt">
+    <thead><tr><th>Duty 101</th><th>Ashgrove</th><th>Wending</th><th>Duty 201</th><th>Ashgrove</th><th>Wending</th></tr></thead>
+    <tbody>
+      <tr><td>dep</td><td>06:00</td><td class="arr">arr 06:06</td><td>dep</td><td>07:00</td><td class="arr">arr 07:07</td></tr>
+      <tr><td>dep</td><td class="arr">arr 06:18</td><td>06:12</td><td>run round</td><td></td><td>07:07–07:30</td></tr>
+      <tr><td>dep</td><td>06:24</td><td class="arr">arr 06:30</td><td>dep</td><td class="arr">arr 07:37</td><td>07:30</td></tr>
+      <tr><td>dep</td><td class="arr">arr 06:42</td><td>06:36</td><td>run round</td><td>07:37–08:00</td><td></td></tr>
+      <tr><td>stable</td><td>06:42</td><td></td><td>stable</td><td>08:00</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <h2><span class="num">9.2</span> Early and late</h2>
+  <p>A departure before the booked time is an incident and is recorded. A late departure or arrival is noted in the margin of the timetable and is not an incident. The reasons are different in kind. A passenger who arrives at the booked time and finds the platform empty has been failed by the railway, and no explanation will reach them. A passenger who waits a few minutes has been inconvenienced, and the cause is very often outside the driver's hands; the cure for lateness is in the timetable, not in the Incident Book.</p>
+
+  <h2><span class="num">9.3</span> Dwells</h2>
+  <p>The dwells in the working timetable are generous on purpose. Changing ends means walking the length of a car; running round means five shunting moves and two walks; connecting a brake pipe means kneeling at a coupling. All of these take real minutes, and we would rather they were taken calmly. A driver who finds time in hand at a platform has not made a mistake.</p>
+
+  <div class="why"><p>We time the railway from the passenger's side of the doors. A minute spent properly securing a cab is invisible to them; a train that leaves without them is not.</p></div>
+
+  <h2><span class="num">9.4</span> The clock</h2>
+  <p>The Box clock governs. The cab clock is set from it at the start of every duty. Where the two disagree during the day, the Box clock is right and the cab clock is set again at the next station.</p>
+</section>
+
+<!-- 10 INCIDENT BOOK -->
+<section class="page chapter" id="c10" data-folio="Book R · 10 The Incident Book">
+  <h1><span class="num">§ 10</span> The Incident Book</h1>
+  <p class="lead">Every railway keeps a record of what went wrong. Ours is kept in a way that we hope makes it easy to write in and useful to read.</p>
+
+  <h2><span class="num">10.1</span> What it is</h2>
+  <p>The Incident Book is a ruled ledger, kept in each Box, with a copy made up weekly at the drawing office. An entry gives the time, the duty, the place by kilometrage (the last post passed, and the metres beyond it; see § 2.1), what happened in a line, and who wrote it down. The last column is headed <em>What was learned</em>. It is sometimes empty; it is the column the drawing office reads first.</p>
+
+  <div class="ledger">
+    <div class="row head"><span>Time</span><span>Duty</span><span>Place</span><span>Entry</span></div>
+    <div class="row"><span>06:31</span><span>101</span><span>km 3.167</span><span>Stop board overrun, 2 m. Board seen late in low sun. — Learned: try a second board on the far platform wall.</span></div>
+    <div class="row"><span>07:22</span><span>201</span><span>km 3.012</span><span>Rough coupling, 3 km/h. — Learned: nothing new; driver's second day.</span></div>
+  </div>
+  <p></p>
+
+  <h2><span class="num">10.2</span> The entries</h2>
+  <p>The following kinds of entry are made. Each is written in the same words every time, so that the weekly reading can count them.</p>
+  <table>
+    <thead><tr><th>Entry</th><th>Written when</th></tr></thead>
+    <tbody>
+      <tr><td>Early departure</td><td>A train moved from a platform before the booked time (<a href="#R20">R 20</a>).</td></tr>
+      <tr><td>Moved with doors open</td><td>A train moved, or power was taken, while a door was open (<a href="#R14">R 14</a>).</td></tr>
+      <tr><td>Doors opened away from platform</td><td>A door was opened while moving or where there is no platform (<a href="#R14">R 14</a>).</td></tr>
+      <tr><td>Overspeed</td><td>A limit was exceeded; the limit and the speed reached are written (<a href="#R10">R 10</a>).</td></tr>
+      <tr><td>Stop board overrun</td><td>The front of the train passed a stop board it should have stopped at (<a href="#R12">R 12</a>).</td></tr>
+      <tr><td>Stopped short of board</td><td>The train stopped more than 3 m short of its stop board (<a href="#R12">R 12</a>).</td></tr>
+      <tr><td>Incorrect lights on the main line</td><td>Head or tail lights not as Rule R 16 on leaving station limits (<a href="#R16">R 16</a>).</td></tr>
+      <tr><td>No horn before moving</td><td>A vehicle moved from rest without the short blast (<a href="#R18">R 18</a>).</td></tr>
+      <tr><td>Signal passed at danger</td><td>A main signal at STOP, or a ground signal at SHUNT STOP, was passed (<a href="book-s.html#S10">S 10</a>).</td></tr>
+      <tr><td>Limit of Shunt passed</td><td>A shunting move went beyond the Limit of Shunt board (<a href="book-s.html#S12">S 12</a>).</td></tr>
+      <tr><td>Rough coupling</td><td>Couplers met above 2 km/h; the speed is written (<a href="book-d.html#D10">D 10</a>).</td></tr>
+      <tr><td>Brake not proved before departure</td><td>A train departed after coupling without the continuity test (<a href="book-d.html#D14">D 14</a>).</td></tr>
+      <tr><td>Left cab unsecured</td><td>A cab was left with Rule R 22 not satisfied (<a href="#R22">R 22</a>).</td></tr>
+      <tr><td>Buffer stop struck</td><td>A vehicle touched a buffer stop (<a href="book-d.html#D16">D 16</a>).</td></tr>
+      <tr><td>Emergency brake used</td><td>The emergency position was used. This is noted and is not a fault (<a href="book-d.html#D18">D 18</a>).</td></tr>
+    </tbody>
+  </table>
+
+  <h2><span class="num">10.3</span> What the Book is for</h2>
+  <p>A clean duty is one with nothing written. That is the whole of the scoring on this railway: there are no points, and no one is ranked. The entries are read every week at the drawing office, in company, with the aim of improving the rules, the boards, the timetable or the vehicles. An entry that keeps appearing is a rule that is asking to be rewritten, or a board that is asking to be moved. Very rarely it is a person who is asking to be helped, and that is done quietly.</p>
+
+  <div class="why"><p>People do not write in a book that is used against them, and a book that is not written in is useless. We would rather know about every rough coupling than punish one. The last entry in the sample ledger above says <em>nothing new; driver's second day</em>, and that is exactly the kind of thing the Book is for.</p></div>
+
+  <div class="danger"><p>The Incident Book is not a substitute for stopping. If a person is on the track, a vehicle is where it should not be, or a signal cannot be trusted, stop first and write afterwards. Nothing in this chapter delays the emergency brake.</p></div>
+</section>
+
+<!-- 11 ONE PAGE -->
+<section class="page chapter" id="c11" data-folio="Book R · 11 The rules in one page">
+  <h1><span class="num">§ 11</span> The rules in one page</h1>
+  <p class="lead">For pinning in the cab. The numbers are the numbers in the Books; the words are shorter.</p>
+  <table class="card-table">
+    <thead><tr><th>Rule</th><th>In one line</th></tr></thead>
+    <tbody>
+      <tr><td>R 10</td><td>Speeds: 50 on the main line, 25 within station limits, 15 shunting, 5 over the last 20 m to a coupling, 2 at contact.</td></tr>
+      <tr><td>R 12</td><td>Stop with the front within 3 m short of the stop board.</td></tr>
+      <tr><td>R 14</td><td>Doors open only when stationary at a platform; closed before moving.</td></tr>
+      <tr><td>R 16</td><td>On the main line: HEAD at the front, TAIL at the rear, nothing at coupled ends.</td></tr>
+      <tr><td>R 18</td><td>One short blast before moving from rest.</td></tr>
+      <tr><td>R 20</td><td>Depart only with doors closed, booked time reached, starting signal at proceed, baton green. Then horn, then move.</td></tr>
+      <tr><td>R 22</td><td>Before leaving the cab: power 0, brake Full, reverser Neutral.</td></tr>
+      <tr><td>R 24</td><td>One Train Working: one train, no signals; depart on your own authority at the booked time.</td></tr>
+      <tr><td>S 10</td><td>Never pass a signal at STOP. No instruction can authorise it.</td></tr>
+      <tr><td>S 12</td><td>Shunting moves stop short of the Limit of Shunt.</td></tr>
+      <tr><td>S 14</td><td>Move only on a cleared signal, and only as far as the route goes.</td></tr>
+      <tr><td>D 10</td><td>Couple at 2 km/h or less; then connect the pipe at the coupling.</td></tr>
+      <tr><td>D 12</td><td>Uncouple stationary, brake applied, from the coupling.</td></tr>
+      <tr><td>D 14</td><td>After coupling, prove the brake before departing.</td></tr>
+      <tr><td>D 16</td><td>Do not strike the buffer stops.</td></tr>
+      <tr><td>D 18</td><td>When in doubt, use the emergency brake. It is noted, not held against you.</td></tr>
+    </tbody>
+  </table>
+  <p class="small" style="color:var(--slate)">Where this page and the rule differ, the rule governs. Where the rule and a signal differ, the signal governs. Where a signal and your judgement differ, stop.</p>
+</section>
+
+<!-- COLOPHON -->
+<section class="page colophon" id="colophon" data-folio="Book R · Colophon">
+  <img class="mark" src="../brand/mark-green.svg" alt="">
+  <p><strong>Book R — Rules of Operation.</strong> First edition, September 2026. Issued by the General Manager's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
+  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes nothing: it is the first.</p>
+  <p>Companion volumes: <a href="book-i.html">Book I, Identity</a>; <a href="book-s.html">Book S, Signalling</a>; <a href="book-d.html">Book D, Driving</a>. Amendments are issued as numbered slips; paste them in at the page indicated, and initial the margin.</p>
+  <p>Every rule in this Book has been explained to at least one person who had never seen a railway. Where they did not understand, we rewrote the rule.</p>
+</section>
+
+<section class="back-cover">
+  <img class="mark" src="../brand/mark-ivory.svg" alt="">
+  <div>The Meridian Railway · On the line, on time</div>
+</section>
+
+</div>
+</body>
+</html>

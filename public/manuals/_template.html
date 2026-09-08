@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book X — Template · The Meridian Railway</title>
+<link rel="stylesheet" href="book.css">
+</head>
+<body>
+<!-- Screen-only bar. Keep exactly this shape in every Book. -->
+<nav class="desk-bar">
+  <a href="index.html">← Library</a>
+  <span class="spacer"></span>
+  <span>Book X · First edition · September 2026</span>
+  <a href="#" onclick="window.print();return false;">Print booklet</a>
+</nav>
+
+<div class="book">
+
+<!-- COVER -->
+<section class="cover">
+  <div class="rule-line"></div>
+  <img class="mark" src="../brand/mark-ivory.svg" alt="">
+  <div class="company">The Meridian Railway</div>
+  <div class="book-letter"><small>Book</small>X</div>
+  <h1 class="title">Template Manual</h1>
+  <p class="subtitle">A demonstration of the house style, for the drawing office.</p>
+  <div class="edition">First edition · September 2026 · Issued by the General Manager's Office</div>
+  <div class="motto">On the line, on time.</div>
+</section>
+
+<!-- CONTENTS -->
+<section class="page toc" data-folio="Book X · Contents">
+  <h1>Contents</h1>
+  <ol>
+    <li><span class="num">1</span><a href="#c1">Principles</a><span class="dots"></span><span class="pg">3</span></li>
+    <li class="sub"><span class="num">1.1</span><a href="#c1-1">Rules and notes</a><span class="dots"></span><span class="pg">3</span></li>
+    <li><span class="num">2</span><a href="#c2">Tables and figures</a><span class="dots"></span><span class="pg">5</span></li>
+    <li><span class="num">—</span><a href="#colophon">Colophon</a><span class="dots"></span><span class="pg">8</span></li>
+  </ol>
+</section>
+
+<!-- CHAPTER -->
+<section class="page chapter" id="c1" data-folio="Book X · 1 Principles">
+  <h1><span class="num">§ 1</span> Principles</h1>
+  <p class="lead">Every chapter opens with a lead paragraph in the voice of a calm colleague: what this chapter is for, and why you might read it.</p>
+  <blockquote class="epigraph">Write it down so well that people want to read it.<span class="who">Drawing office inscription</span></blockquote>
+
+  <h2 id="c1-1"><span class="num">1.1</span> Rules and notes</h2>
+  <p>Rules are imperative and numbered. Cite them across books as <a href="book-r.html#R20">Rule R 20</a>.</p>
+
+  <div class="rule" id="X10">
+    <span class="rule-num">Rule X 10</span><span class="rule-title">The shape of a rule</span>
+    <p>State the rule in one or two sentences. Say what to do, not what not to do, where possible.</p>
+  </div>
+
+  <div class="why"><p>Every rule that could puzzle a newcomer gets a short explanation of its purpose. We would rather be understood than obeyed.</p></div>
+  <div class="note"><p>Notes carry practical detail: exceptions, measurements, cross-references.</p></div>
+  <div class="danger"><p>Reserved for things that hurt people. Use sparingly so that it keeps its force.</p></div>
+
+  <h3>Procedures</h3>
+  <ol class="steps">
+    <li>Numbered steps in green discs for procedures.</li>
+    <li>Keys are shown like <span class="kbd">P</span> and controls in <span class="term">small capitals</span>.</li>
+  </ol>
+
+  <dl class="dl">
+    <dt>Down</dt><dd>The direction of increasing kilometrage.</dd>
+    <dt>Up</dt><dd>The direction of decreasing kilometrage.</dd>
+  </dl>
+</section>
+
+<section class="page chapter" id="c2" data-folio="Book X · 2 Tables and figures">
+  <h1><span class="num">§ 2</span> Tables and figures</h1>
+  <table>
+    <thead><tr><th>Aspect</th><th>Shows</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td><span class="swatch" style="background:var(--red)"></span>Stop</td><td>red</td><td>Stop and stay.</td></tr>
+      <tr><td><span class="swatch" style="background:var(--amber)"></span>Caution</td><td>amber</td><td>Proceed, prepared to stop at the next signal.</td></tr>
+      <tr><td><span class="swatch" style="background:var(--lamp)"></span>Clear</td><td>green</td><td>Proceed at line speed.</td></tr>
+    </tbody>
+  </table>
+
+  <figure>
+    <div class="figure-frame">
+      <svg viewBox="0 0 400 120" width="400" height="120" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+        <line x1="10" y1="60" x2="390" y2="60" stroke="#1A1A1A" stroke-width="3"/>
+        <circle cx="200" cy="60" r="9" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="3"/>
+        <text x="200" y="95" text-anchor="middle" font-size="14" fill="#4A5560" letter-spacing="2">A DIAGRAM IN INK, GREEN AND SLATE</text>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 2.1</span> Figures are inline SVG in the house colours, framed on white.</figcaption>
+  </figure>
+</section>
+
+<!-- COLOPHON -->
+<section class="page colophon" id="colophon" data-folio="Book X · Colophon">
+  <img class="mark" src="../brand/mark-green.svg" alt="">
+  <p><strong>Book X — Template Manual.</strong> First edition, September 2026. Issued by the General Manager's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
+  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes nothing.</p>
+  <p>Amendments are issued as numbered slips; paste them in at the page indicated.</p>
+</section>
+
+<section class="back-cover">
+  <img class="mark" src="../brand/mark-ivory.svg" alt="">
+  <div>The Meridian Railway · On the line, on time</div>
+</section>
+
+</div>
+</body>
+</html>

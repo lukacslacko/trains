@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book S — Signalling Manual · The Meridian Railway</title>
+<link rel="stylesheet" href="book.css">
+<style>
+  /* Book S only: small helpers for signal figures */
+  .sig-fig svg text { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; }
+  .layout-fig svg text { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 22px; font-family: var(--display); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--slate); margin: -8px 0 16px; }
+  .legend span svg { vertical-align: middle; margin-right: 6px; }
+  table.signals td:first-child { font-family: var(--display); font-weight: 600; letter-spacing: .04em; white-space: nowrap; }
+</style>
+</head>
+<body>
+<nav class="desk-bar">
+  <a href="index.html">← Library</a>
+  <span class="spacer"></span>
+  <span>Book S · First edition · September 2026</span>
+  <a href="#" onclick="window.print();return false;">Print booklet</a>
+</nav>
+
+<div class="book">
+
+<!-- COVER -->
+<section class="cover">
+  <div class="rule-line"></div>
+  <img class="mark" src="../brand/mark-ivory.svg" alt="">
+  <div class="company">The Meridian Railway</div>
+  <div class="book-letter"><small>Book</small>S</div>
+  <h1 class="title">Signalling Manual</h1>
+  <p class="subtitle">Signals, boards and hand signals of the Meridian Railway, and the routes they protect.</p>
+  <div class="edition">First edition · September 2026 · Issued by the Signal Engineer's Office</div>
+  <div class="motto">On the line, on time.</div>
+</section>
+
+<!-- CONTENTS -->
+<section class="page toc" data-folio="Book S · Contents">
+  <h1>Contents</h1>
+  <ol>
+    <li><span class="num">1</span><a href="#c1">Principles</a><span class="dots"></span><span class="pg">3</span></li>
+    <li class="sub"><span class="num">1.1</span><a href="#c1-1">Eight principles</a><span class="dots"></span><span class="pg">3</span></li>
+    <li class="sub"><span class="num">1.2</span><a href="#c1-2">Who speaks, who listens</a><span class="dots"></span><span class="pg">4</span></li>
+    <li><span class="num">2</span><a href="#c2">Main signals</a><span class="dots"></span><span class="pg">5</span></li>
+    <li><span class="num">3</span><a href="#c3">Ground signals</a><span class="dots"></span><span class="pg">8</span></li>
+    <li><span class="num">4</span><a href="#c4">Boards</a><span class="dots"></span><span class="pg">10</span></li>
+    <li class="sub"><span class="num">4.1</span><a href="#c4-1">Where boards stand</a><span class="dots"></span><span class="pg">11</span></li>
+    <li class="sub"><span class="num">4.2</span><a href="#c4-2">Posts</a><span class="dots"></span><span class="pg">11</span></li>
+    <li><span class="num">5</span><a href="#c5">Hand signals and the baton</a><span class="dots"></span><span class="pg">12</span></li>
+    <li><span class="num">6</span><a href="#c6">Station layouts and numbering</a><span class="dots"></span><span class="pg">14</span></li>
+    <li class="sub"><span class="num">6.1</span><a href="#c6-1">The numbering rule</a><span class="dots"></span><span class="pg">14</span></li>
+    <li class="sub"><span class="num">6.2</span><a href="#c6-2">Ashgrove</a><span class="dots"></span><span class="pg">15</span></li>
+    <li class="sub"><span class="num">6.3</span><a href="#c6-3">Wending</a><span class="dots"></span><span class="pg">17</span></li>
+    <li><span class="num">7</span><a href="#c7">Routes and the box</a><span class="dots"></span><span class="pg">19</span></li>
+    <li class="sub"><span class="num">7.3</span><a href="#c7-3">A worked example: the run-round at Wending</a><span class="dots"></span><span class="pg">21</span></li>
+    <li><span class="num">8</span><a href="#c8">One Train Working</a><span class="dots"></span><span class="pg">24</span></li>
+    <li><span class="num">9</span><a href="#c9">Failures and doubt</a><span class="dots"></span><span class="pg">25</span></li>
+    <li><span class="num">10</span><a href="#c10">Glossary</a><span class="dots"></span><span class="pg">27</span></li>
+    <li><span class="num">—</span><a href="#colophon">Colophon</a><span class="dots"></span><span class="pg">29</span></li>
+  </ol>
+</section>
+
+<!-- 1 PRINCIPLES -->
+<section class="page chapter" id="c1" data-folio="Book S · 1 Principles">
+  <h1><span class="num">§ 1</span> Principles</h1>
+  <p class="lead">This book describes how the Railway speaks to its drivers from the lineside: with lights, with boards and, on the platform, with a disc held in a hand. It was written from first principles rather than inherited, and it tries to say everything once.</p>
+  <blockquote class="epigraph">A signal is a promise. The box promises that the road is yours; you promise to go no further than the promise.<span class="who">Notice pinned above the frame, Wending Box</span></blockquote>
+
+  <h2 id="c1-1"><span class="num">1.1</span> Eight principles</h2>
+  <p>Everything in this book follows from eight decisions taken when the Railway was laid out. Where a later chapter seems arbitrary, one of these will explain it.</p>
+
+  <ol class="steps">
+    <li><strong>One meaning per aspect.</strong> An aspect means the same thing at every signal on the Railway. There are no local variations, no special cases marked by a plate, and no aspect whose meaning depends on the one before it.</li>
+    <li><strong>Everything fails to STOP.</strong> A lamp that goes out, a wire that breaks, a lever that jams: each of them produces a signal at STOP, or a signal that must be read as STOP. Nothing that can fail can fail towards "go".</li>
+    <li><strong>A signal faces the trains it governs.</strong> A signal speaks only to the trains coming towards its face, and to no others. A driver never has to work out whether a signal is meant for them; if they can read it, it is.</li>
+    <li><strong>Two kinds of movement, two kinds of signal.</strong> A <span class="term">train movement</span> runs from station to station under main signals. A <span class="term">shunting movement</span> shifts vehicles within a station under ground signals. The two kinds of signal look nothing alike, and neither speaks to the other's movements.</li>
+    <li><strong>Fixed things are boards; changing things are lights.</strong> A board tells you something that is always true at that place: stop here, slow to this, shunt no further. A light tells you something that is true now. You never have to wonder whether a board might have changed.</li>
+    <li><strong>Every signal has a name you can say on the telephone.</strong> A station code and a number. Odd numbers face Down, even numbers face Up. Nothing else on the Railway is named like a signal.</li>
+    <li><strong>The signal is the box's voice; the baton is the station master's hand.</strong> To go, a passenger train needs both, where both exist. To stop, it needs only one.</li>
+    <li><strong>The signal stands where you stop.</strong> The position of a signal is the stopping place for a train it holds. There is no allowance for overlap to remember and no distance to estimate; the front of the train stops at the post.</li>
+  </ol>
+
+  <div class="why"><p>Older railways accumulated their signalling one accident at a time, and their rulebooks show it: exceptions to exceptions, aspects that mean one thing on a branch and another on the main line. We had the rare good fortune of starting with a blank sheet and a valley to fill. We chose to spend that fortune on simplicity, because a simple rule is one that is obeyed at four in the morning in the rain.</p></div>
+
+  <h2 id="c1-2"><span class="num">1.2</span> Who speaks, who listens</h2>
+  <dl class="dl">
+    <dt>The box</dt><dd>Each station has a signal box, named for the station: <strong>Ashgrove Box</strong> and <strong>Wending Box</strong>. The box holds the frame that sets switches and clears signals. At Ashgrove and Wending the station master works the box in person.</dd>
+    <dt>The station master</dt><dd>At Ashgrove, T. Marrow; at Wending, J. Pell. The station master sets routes, holds the baton, and is the authority for every movement within station limits. Messages from the box are signed "Marrow, Ashgrove" or "Pell, Wending".</dd>
+    <dt>The driver</dt><dd>Obeys every signal and board that faces them, obeys the baton, and drives no faster than the boards allow. Where the driver is in doubt, the driver stops. Book D describes the driver's work in full.</dd>
+    <dt>The Signal Engineer</dt><dd>Owns this book, the signals, and the frame. Nobody else alters a signal or its meaning.</dd>
+  </dl>
+
+  <div class="note"><p>Directions are as defined in <a href="book-r.html">Book R</a>: <strong>Down</strong> is the direction of increasing kilometrage, from Ashgrove towards Wending; <strong>Up</strong> is the direction of decreasing kilometrage, from Wending towards Ashgrove. Kilometrage counts from the buffer stop at Ashgrove, km 0.000, to the buffer stop at Wending, km 3.300.</p></div>
+</section>
+
+<!-- 2 MAIN SIGNALS -->
+<section class="page chapter" id="c2" data-folio="Book S · 2 Main signals">
+  <h1><span class="num">§ 2</span> Main signals</h1>
+  <p class="lead">Main signals govern train movements. They are colour lights on a slate post, with three lamps in a vertical row and a black plate carrying the signal's name. They show the same thing by day and by night.</p>
+
+  <h2><span class="num">2.1</span> The head</h2>
+  <p>The three lamps are always in the same order: <strong>green at the top, amber in the middle, red at the bottom.</strong> Only one lamp is lit at a time. The head is mounted on a slate post at a height where the driver sees it over the whole approach, and the plate beneath the head gives the signal's name in white on black.</p>
+
+  <figure class="sig-fig">
+    <div class="figure-frame">
+      <svg viewBox="0 0 420 275" width="420" height="275" role="img" aria-label="Three main signal heads showing STOP, CAUTION and CLEAR">
+        <defs>
+          <radialGradient id="glowR"><stop offset="0" stop-color="#C6321E" stop-opacity=".55"/><stop offset="1" stop-color="#C6321E" stop-opacity="0"/></radialGradient>
+          <radialGradient id="glowA"><stop offset="0" stop-color="#D9A21B" stop-opacity=".6"/><stop offset="1" stop-color="#D9A21B" stop-opacity="0"/></radialGradient>
+          <radialGradient id="glowG"><stop offset="0" stop-color="#2E9E5B" stop-opacity=".6"/><stop offset="1" stop-color="#2E9E5B" stop-opacity="0"/></radialGradient>
+        </defs>
+        <line x1="10" y1="240" x2="410" y2="240" stroke="#D9D2C0" stroke-width="2"/>
+
+        <!-- STOP -->
+        <g transform="translate(70,0)">
+          <rect x="-4" y="160" width="8" height="80" fill="#4A5560"/>
+          <rect x="-18" y="236" width="36" height="6" fill="#4A5560"/>
+          <rect x="-22" y="14" width="44" height="118" rx="10" fill="#1A1A1A"/>
+          <circle cx="0" cy="38" r="12" fill="#2A2E2C" stroke="#3E4441"/>
+          <circle cx="0" cy="73" r="12" fill="#2A2E2C" stroke="#3E4441"/>
+          <circle cx="0" cy="108" r="26" fill="url(#glowR)"/>
+          <circle cx="0" cy="108" r="12" fill="#C6321E"/>
+          <rect x="-24" y="138" width="48" height="20" fill="#1A1A1A"/>
+          <text x="0" y="153" text-anchor="middle" fill="#F4EFE3" font-size="13" font-weight="600" letter-spacing="1.5">AG 2</text>
+          <text x="0" y="264" text-anchor="middle" fill="#1F4B3F" font-size="15" font-weight="700" letter-spacing="2.5">STOP</text>
+        </g>
+        <!-- CAUTION -->
+        <g transform="translate(210,0)">
+          <rect x="-4" y="160" width="8" height="80" fill="#4A5560"/>
+          <rect x="-18" y="236" width="36" height="6" fill="#4A5560"/>
+          <rect x="-22" y="14" width="44" height="118" rx="10" fill="#1A1A1A"/>
+          <circle cx="0" cy="38" r="12" fill="#2A2E2C" stroke="#3E4441"/>
+          <circle cx="0" cy="73" r="26" fill="url(#glowA)"/>
+          <circle cx="0" cy="73" r="12" fill="#D9A21B"/>
+          <circle cx="0" cy="108" r="12" fill="#2A2E2C" stroke="#3E4441"/>
+          <rect x="-24" y="138" width="48" height="20" fill="#1A1A1A"/>
+          <text x="0" y="153" text-anchor="middle" fill="#F4EFE3" font-size="13" font-weight="600" letter-spacing="1.5">WD 1</text>
+          <text x="0" y="264" text-anchor="middle" fill="#1F4B3F" font-size="15" font-weight="700" letter-spacing="2.5">CAUTION</text>
+        </g>
+        <!-- CLEAR -->
+        <g transform="translate(350,0)">
+          <rect x="-4" y="160" width="8" height="80" fill="#4A5560"/>
+          <rect x="-18" y="236" width="36" height="6" fill="#4A5560"/>
+          <rect x="-22" y="14" width="44" height="118" rx="10" fill="#1A1A1A"/>
+          <circle cx="0" cy="38" r="26" fill="url(#glowG)"/>
+          <circle cx="0" cy="38" r="12" fill="#2E9E5B"/>
+          <circle cx="0" cy="73" r="12" fill="#2A2E2C" stroke="#3E4441"/>
+          <circle cx="0" cy="108" r="12" fill="#2A2E2C" stroke="#3E4441"/>
+          <rect x="-24" y="138" width="48" height="20" fill="#1A1A1A"/>
+          <text x="0" y="153" text-anchor="middle" fill="#F4EFE3" font-size="13" font-weight="600" letter-spacing="1.5">AG 1</text>
+          <text x="0" y="264" text-anchor="middle" fill="#1F4B3F" font-size="15" font-weight="700" letter-spacing="2.5">CLEAR</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 2.1</span> The three aspects of a main signal. Green top, amber middle, red bottom; one lamp lit at a time.</figcaption>
+  </figure>
+
+  <h2><span class="num">2.2</span> The aspects</h2>
+  <table>
+    <thead><tr><th>Aspect</th><th>Shows</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td><span class="swatch" style="background:var(--red)"></span><strong>STOP</strong></td><td>red, bottom lamp</td><td>Stop and stay. The front of the train stops at the post.</td></tr>
+      <tr><td><span class="swatch" style="background:var(--amber)"></span><strong>CAUTION</strong></td><td>amber, middle lamp</td><td>Proceed; be prepared to stop at the next signal, stop board or end of track.</td></tr>
+      <tr><td><span class="swatch" style="background:var(--lamp)"></span><strong>CLEAR</strong></td><td>green, top lamp</td><td>Proceed at line speed; the next signal shows a proceed aspect.</td></tr>
+      <tr><td><span class="swatch" style="background:#2A2E2C"></span>(dark, doubtful)</td><td>nothing, or more than one lamp</td><td>Treat as STOP.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="rule" id="S10">
+    <span class="rule-num">Rule S 10</span><span class="rule-title">Signals at STOP</span>
+    <p>Never pass a main signal at STOP, and never pass a ground signal at SHUNT STOP. Bring the front of the train to a stand at the post and wait for the aspect to change or for the box to speak. Passing a signal at STOP is a <em>signal passed at danger</em> and is written in the Incident Book whatever the outcome.</p>
+  </div>
+
+  <div class="rule" id="S16">
+    <span class="rule-num">Rule S 16</span><span class="rule-title">Dark or doubtful signals</span>
+    <p>A main signal that shows no light, or more than one light, or a light you cannot read with confidence, is at STOP. Stop at it and speak to the box (§ 9).</p>
+  </div>
+
+  <p>CAUTION and CLEAR are both <span class="term">proceed aspects</span>: they give you the road as far as the next signal. They differ only in what they tell you about what lies beyond. CLEAR promises that the next signal is also showing a proceed aspect, so line speed is safe. CAUTION promises nothing beyond the next stopping place, so you approach it able to stop.</p>
+
+  <div class="note"><p><strong>The terminal-platform convention.</strong> A home signal that admits a train to a platform track ending at a buffer stop shows CAUTION when cleared, never CLEAR. There is no next signal, only the stop board and the end of the track, and the aspect says so honestly. At Ashgrove and Wending the home signals AG 2 and WD 1 therefore never show green.</p></div>
+
+  <div class="why"><p>Three aspects are enough for the Railway we have, and we resisted adding a fourth. Every extra aspect is one more thing to distinguish through a wet windscreen, and one more way for a tired driver to be nearly right. When the line grows and trains follow one another closely, we would rather add distant signals that repeat a home signal's aspect from further back than invent a new colour.</p></div>
+
+  <h2><span class="num">2.3</span> Kinds of main signal</h2>
+  <p>Main signals are all the same to look at; they are named for what they do.</p>
+  <dl class="dl">
+    <dt>Home signal</dt><dd>Stands on the single line at the approach to a station and governs entry. Ashgrove's home is AG 2; Wending's is WD 1. A train held at a home signal stands outside station limits.</dd>
+    <dt>Starting signal</dt><dd>Stands at the end of a platform track and governs departure onto the single line. Ashgrove's starter is AG 1; Wending's is WD 2. A starting signal is cleared only when the section to the next station has been offered and accepted (§ 7.2).</dd>
+  </dl>
+  <p>Every main signal carries a telephone to its box at the foot of the post. If you are stopped at a signal and the box has not spoken to you, use it.</p>
+</section>
+
+<!-- 3 GROUND SIGNALS -->
+<section class="page chapter" id="c3" data-folio="Book S · 3 Ground signals">
+  <h1><span class="num">§ 3</span> Ground signals</h1>
+  <p class="lead">Ground signals govern shunting movements: the short, slow moves within a station by which a locomotive runs round its train or vehicles are put where they are wanted. They are low, black and unmistakable.</p>
+
+  <p>A ground signal is a small black box on a short post, close to the ground, with two white lamps. It is placed at the point where a shunting move begins or must stop, and carries a name plate like a main signal. It shows one of two things.</p>
+
+  <figure class="sig-fig">
+    <div class="figure-frame">
+      <svg viewBox="0 0 360 165" width="360" height="165" role="img" aria-label="Ground signal showing SHUNT STOP and SHUNT">
+        <defs>
+          <radialGradient id="glowW"><stop offset="0" stop-color="#FFFFFF" stop-opacity=".9"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>
+        </defs>
+        <line x1="10" y1="132" x2="350" y2="132" stroke="#D9D2C0" stroke-width="2"/>
+        <!-- SHUNT STOP -->
+        <g transform="translate(95,0)">
+          <rect x="-4" y="94" width="8" height="38" fill="#4A5560"/>
+          <rect x="-18" y="128" width="36" height="5" fill="#4A5560"/>
+          <rect x="-36" y="36" width="72" height="58" rx="8" fill="#1A1A1A"/>
+          <circle cx="-14" cy="65" r="15" fill="url(#glowW)"/>
+          <circle cx="14" cy="65" r="15" fill="url(#glowW)"/>
+          <circle cx="-14" cy="65" r="8" fill="#FFFFFF"/>
+          <circle cx="14" cy="65" r="8" fill="#FFFFFF"/>
+          <rect x="-20" y="100" width="40" height="16" fill="#1A1A1A"/>
+          <text x="0" y="112" text-anchor="middle" fill="#F4EFE3" font-size="11" font-weight="600" letter-spacing="1.2">AG 4</text>
+          <text x="0" y="156" text-anchor="middle" fill="#1F4B3F" font-size="15" font-weight="700" letter-spacing="2.5">SHUNT STOP</text>
+        </g>
+        <!-- SHUNT -->
+        <g transform="translate(265,0)">
+          <rect x="-4" y="94" width="8" height="38" fill="#4A5560"/>
+          <rect x="-18" y="128" width="36" height="5" fill="#4A5560"/>
+          <rect x="-36" y="36" width="72" height="58" rx="8" fill="#1A1A1A"/>
+          <circle cx="-13" cy="77" r="15" fill="url(#glowW)"/>
+          <circle cx="13" cy="51" r="15" fill="url(#glowW)"/>
+          <circle cx="-13" cy="77" r="8" fill="#FFFFFF"/>
+          <circle cx="13" cy="51" r="8" fill="#FFFFFF"/>
+          <rect x="-20" y="100" width="40" height="16" fill="#1A1A1A"/>
+          <text x="0" y="112" text-anchor="middle" fill="#F4EFE3" font-size="11" font-weight="600" letter-spacing="1.2">AG 4</text>
+          <text x="0" y="156" text-anchor="middle" fill="#1F4B3F" font-size="15" font-weight="700" letter-spacing="2.5">SHUNT</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 3.1</span> The two indications of a ground signal. Horizontal: do not pass. Diagonal rising to the right: shunt.</figcaption>
+  </figure>
+
+  <table>
+    <thead><tr><th>Indication</th><th>Shows</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td><strong>SHUNT STOP</strong></td><td>two white lamps, horizontal</td><td>Do not pass. Stand at the post.</td></tr>
+      <tr><td><strong>SHUNT</strong></td><td>two white lamps, diagonal rising to the right</td><td>Proceed as a shunting movement, at shunting speed, prepared to stop short of any vehicle or obstruction, as far as the route goes.</td></tr>
+      <tr><td>(dark)</td><td>nothing</td><td>Treat as SHUNT STOP.</td></tr>
+    </tbody>
+  </table>
+
+  <h2><span class="num">3.1</span> What a SHUNT indication promises</h2>
+  <p>A SHUNT indication promises less than a main signal does. It tells you that the switches on your route are set and locked, and that the box wants you to move. It does <em>not</em> tell you that the track ahead is empty. Very often it is not: the last move of a run-round is made under a ground signal into a platform track where a coach is standing, so that the locomotive can couple to it. That is why the indication carries its own speed and its own posture.</p>
+  <ul>
+    <li><strong>Shunting speed</strong> is 15 km/h (<a href="book-r.html#R10">Rule R 10</a>). It is a maximum, not a target.</li>
+    <li><strong>Prepared to stop short</strong> means driving at a speed from which you can stop within the distance you can see to be clear. Approaching a vehicle to couple, that means 5 km/h over the last 20 m and contact at 2 km/h or less (<a href="book-d.html#D10">Rule D 10</a>).</li>
+    <li><strong>As far as the route goes</strong> means to the next signal in your direction, to a Limit of Shunt board, or to the end of the track, whichever comes first.</li>
+  </ul>
+
+  <h2><span class="num">3.2</span> Ground signals speak only to shunting movements</h2>
+  <p>A ground signal is addressed to shunting movements and to nothing else. A train movement that has been given a proceed aspect at a main signal passes any ground signal within its route without regard to it; the main signal has already spoken for the whole route, and the ground signals along it stay at SHUNT STOP because nobody is shunting. So a Down train entering Wending under WD 1 at CAUTION passes WD 5 at SHUNT STOP on the stub without stopping, and has done nothing wrong.</p>
+  <div class="note"><p>This is not an exception to Rule S 10. The ground signal was never speaking to you. It is, though, the one place where a driver must know which kind of movement they are making, and the answer is always the same: if your last signal was a main signal, you are a train; if it was a ground signal, you are shunting.</p></div>
+  <div class="why"><p>We could have arranged for the box to clear every ground signal along a train's route as well as the main signal, and some railways do. It costs levers and it costs time, and it teaches drivers to expect the white lamps to move for them. We would rather they read the black box as what it is: a signal for a different job.</p></div>
+</section>
+
+<!-- 4 BOARDS -->
+<section class="page chapter" id="c4" data-folio="Book S · 4 Boards">
+  <h1><span class="num">§ 4</span> Boards</h1>
+  <p class="lead">Boards are fixed signs. They say something that is always true at the place where they stand. They are painted in the house colours on reflective stock so that they read by headlight at night as well as by day.</p>
+
+  <figure class="sig-fig">
+    <div class="figure-frame">
+      <svg viewBox="0 0 640 200" width="640" height="200" role="img" aria-label="Stop board, Limit of Shunt board, speed board and buffer stop">
+        <line x1="10" y1="172" x2="630" y2="172" stroke="#D9D2C0" stroke-width="2"/>
+        <!-- Stop board -->
+        <g transform="translate(80,0)">
+          <rect x="-3" y="106" width="6" height="66" fill="#4A5560"/>
+          <rect x="-40" y="18" width="80" height="56" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="2.5"/>
+          <rect x="-31" y="40" width="62" height="12" fill="#1A1A1A"/>
+          <rect x="-46" y="82" width="92" height="20" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="2"/>
+          <text x="0" y="97" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="2">ASHGROVE</text>
+          <text x="0" y="192" text-anchor="middle" fill="#1F4B3F" font-size="13" font-weight="700" letter-spacing="2">STOP BOARD</text>
+        </g>
+        <!-- Limit of shunt -->
+        <g transform="translate(240,0)">
+          <rect x="-3" y="106" width="6" height="66" fill="#4A5560"/>
+          <rect x="-44" y="18" width="88" height="56" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="2.5"/>
+          <polygon points="-42,72 -42,52 30,20 42,20 42,40 -30,72" fill="#C6321E"/>
+          <rect x="-44" y="18" width="88" height="56" fill="none" stroke="#1A1A1A" stroke-width="2.5"/>
+          <rect x="-50" y="82" width="100" height="20" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="2"/>
+          <text x="0" y="97" text-anchor="middle" fill="#1A1A1A" font-size="11" font-weight="700" letter-spacing="1.6">LIMIT OF SHUNT</text>
+          <text x="0" y="192" text-anchor="middle" fill="#1F4B3F" font-size="13" font-weight="700" letter-spacing="2">LIMIT OF SHUNT</text>
+        </g>
+        <!-- Speed board -->
+        <g transform="translate(400,0)">
+          <rect x="-3" y="90" width="6" height="82" fill="#4A5560"/>
+          <circle cx="0" cy="52" r="34" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="6"/>
+          <text x="0" y="66" text-anchor="middle" fill="#1A1A1A" font-size="40" font-weight="700">25</text>
+          <text x="0" y="192" text-anchor="middle" fill="#1F4B3F" font-size="13" font-weight="700" letter-spacing="2">SPEED BOARD</text>
+        </g>
+        <!-- Buffer stop -->
+        <g transform="translate(560,0)">
+          <rect x="-30" y="100" width="9" height="72" fill="#4A5560"/>
+          <rect x="21" y="100" width="9" height="72" fill="#4A5560"/>
+          <rect x="-36" y="118" width="72" height="16" fill="#1A1A1A"/>
+          <rect x="-2" y="70" width="4" height="30" fill="#4A5560"/>
+          <circle cx="0" cy="62" r="16" fill="#C6321E" opacity=".25"/>
+          <circle cx="0" cy="62" r="8" fill="#C6321E"/>
+          <text x="0" y="192" text-anchor="middle" fill="#1F4B3F" font-size="13" font-weight="700" letter-spacing="2">BUFFER STOP</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 4.1</span> The four boards of the present Railway, and the lamp on a buffer stop.</figcaption>
+  </figure>
+
+  <table>
+    <thead><tr><th>Board</th><th>Look</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Stop board</strong></td><td>ivory board, thick black horizontal bar, station name on a plate beneath</td><td>Stop with the front of the train level with the board. Within 3 m short of it is a correct stop (<a href="book-r.html#R12">Rule R 12</a>).</td></tr>
+      <tr><td><strong>Limit of Shunt</strong></td><td>ivory board with a red diagonal band, "LIMIT OF SHUNT" beneath</td><td>Shunting movements must not pass. Rule S 12.</td></tr>
+      <tr><td><strong>Speed board</strong></td><td>black numeral on an ivory disc with a black rim</td><td>Speed limit in km/h from the board onward, until the next speed board facing you.</td></tr>
+      <tr><td><strong>Buffer stop</strong></td><td>red lamp on the stop</td><td>End of track. Do not strike it (<a href="book-d.html#D16">Rule D 16</a>).</td></tr>
+      <tr><td><strong>Hectometre post, Kilometre post</strong></td><td>ivory plate on a slate post, black figures (1.4) or a green numeral under KM (2)</td><td>Position reference only. No instruction; see § 4.2.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="rule" id="S12">
+    <span class="rule-num">Rule S 12</span><span class="rule-title">Limit of Shunt</span>
+    <p>A shunting movement stops short of a Limit of Shunt board facing it, and does not pass it under any indication of a ground signal. The board marks the edge of the station master's authority; beyond it is the single line, which belongs to the block.</p>
+  </div>
+
+  <h2 id="c4-1"><span class="num">4.1</span> Where boards stand</h2>
+  <p>A <strong>stop board</strong> stands at the end of each platform in the direction of arrival, placed so that a train stopped at it has its doors along the platform. The Up stop board at Ashgrove is at km 0.135; the Down stop board at Wending is at km 3.165. A stop board faces the trains that stop at it and is invisible, in effect, to trains leaving.</p>
+  <p>A <strong>Limit of Shunt</strong> board stands on the single line a short way outside the outer switch of each station, facing the station: at Ashgrove at km 0.400 facing Down, at Wending at km 2.900 facing Up. The stretch between the outer switch and the board is called the <span class="term">stub</span>, and it is exactly long enough for a locomotive to stand clear of the switch while it runs round.</p>
+  <p><strong>Speed boards</strong> stand in pairs at the edge of station limits, back to back: a 25 facing the arriving train and a 50 facing the departing one. At Ashgrove the pair stands at km 0.450, at Wending at km 2.850. Between them, on the single line, the speed is 50 km/h; inside them, 25 km/h; shunting, 15 km/h, whatever the boards say.</p>
+
+  <div class="note"><p>A board is never lit and never changes. If a board seems to be wrong, missing or turned, do what the board would have said if it were there, report it to the box, and let the Signal Engineer sort it out.</p></div>
+
+  <h2 id="c4-2"><span class="num">4.2</span> Posts</h2>
+  <p>Every hundred metres from the Ashgrove buffer stop to the end of the line at km 3.300 stands a <strong>hectometre post</strong>: an ivory plate on a slate post, carrying in black figures the distance from the origin in kilometres, a point, and the hectometre digit. The post at 1.4 km reads <span class="mono">1.4</span>. At every full kilometre the plate is larger, bordered in green, and carries the kilometre alone in a green numeral under the small word KM: the post at 2 km reads <span class="mono">2</span>. The posts stand on the left of the line in the Down direction; within the loops they are moved outward past track 2 so that they stay clear of every track.</p>
+
+  <figure class="sig-fig">
+    <div class="figure-frame">
+      <svg viewBox="0 0 480 200" width="480" height="200" role="img" aria-label="A hectometre post reading 1.4 and a kilometre post reading KM 2">
+        <line x1="10" y1="172" x2="470" y2="172" stroke="#D9D2C0" stroke-width="2"/>
+        <!-- Hectometre post -->
+        <g transform="translate(140,0)">
+          <rect x="-3" y="96" width="6" height="76" fill="#4A5560"/>
+          <rect x="-40" y="48" width="80" height="46" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="2.5"/>
+          <text x="0" y="83" text-anchor="middle" fill="#1A1A1A" font-size="30" font-weight="700" letter-spacing="1">1.4</text>
+          <text x="0" y="192" text-anchor="middle" fill="#1F4B3F" font-size="13" font-weight="700" letter-spacing="2">HECTOMETRE POST</text>
+        </g>
+        <!-- Kilometre post -->
+        <g transform="translate(340,0)">
+          <rect x="-3" y="96" width="6" height="76" fill="#4A5560"/>
+          <rect x="-46" y="30" width="92" height="64" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="4"/>
+          <text x="0" y="50" text-anchor="middle" fill="#1F4B3F" font-size="11" font-weight="600" letter-spacing="3">KM</text>
+          <text x="0" y="88" text-anchor="middle" fill="#1F4B3F" font-size="38" font-weight="700">2</text>
+          <text x="0" y="192" text-anchor="middle" fill="#1F4B3F" font-size="13" font-weight="700" letter-spacing="2">KILOMETRE POST</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 4.2</span> A hectometre post and a kilometre post. The figures are the distance from the Ashgrove buffer stop.</figcaption>
+  </figure>
+
+  <p>A post is not a signal. It tells you where you are, never what to do; a train never stops or slows for a post. Its work is to give every place on the line a name that everyone shares. The Wending stop board stands between posts 3.1 and 3.2; the Ashgrove home signal AG 2 stands at 0.42, between posts 0.4 and 0.5; a rail that needs looking at is "at 1.7, on the Down side". The tables in § 6 give every signal's kilometre, and every one of them can be read against the posts from the cab.</p>
+
+  <div class="rule" id="S20">
+    <span class="rule-num">Rule S 20</span><span class="rule-title">Posts</span>
+    <p>Hectometre and kilometre posts are a position reference and carry no instruction. Quote them when you report where a train, a fault or a person is.</p>
+  </div>
+
+  <div class="note"><p>To quote a position, give the last post you passed and, if you know them, the metres beyond it: "stopped at 2.7, about 40 metres on". A Box hearing "2.7" knows at once which side of the Wending speed boards you are, and what to send. Drivers also use the posts to judge braking: from 50 km/h the step-2 application for a stop board begins about a post and a half before it (<a href="book-d.html">Book D</a>).</p></div>
+</section>
+
+<!-- 5 HAND SIGNALS -->
+<section class="page chapter" id="c5" data-folio="Book S · 5 Hand signals and the baton">
+  <h1><span class="num">§ 5</span> Hand signals and the baton</h1>
+  <p class="lead">The lineside speaks in lights and boards; the station master speaks with the baton. It is the oldest instrument on the Railway and the one we are fondest of.</p>
+
+  <figure class="sig-fig">
+    <div class="figure-frame">
+      <svg viewBox="0 0 320 165" width="320" height="165" role="img" aria-label="The baton, green face and red face">
+        <g transform="translate(85,0)">
+          <rect x="-5" y="98" width="10" height="46" rx="3" fill="#B5913F"/>
+          <circle cx="0" cy="60" r="40" fill="#2E9E5B" stroke="#1A1A1A" stroke-width="2.5"/>
+          <circle cx="0" cy="60" r="8" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.5"/>
+          <text x="0" y="160" text-anchor="middle" fill="#1F4B3F" font-size="13" font-weight="700" letter-spacing="2">GREEN FACE · READY TO START</text>
+        </g>
+        <g transform="translate(235,0)">
+          <rect x="-5" y="98" width="10" height="46" rx="3" fill="#B5913F"/>
+          <circle cx="0" cy="60" r="40" fill="#C6321E" stroke="#1A1A1A" stroke-width="2.5"/>
+          <circle cx="0" cy="60" r="8" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.5"/>
+          <text x="0" y="160" text-anchor="middle" fill="#1F4B3F" font-size="13" font-weight="700" letter-spacing="2">RED FACE · STOP</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 5.1</span> The baton: a hand-held disc, green on one face and red on the other, with a lamp at the centre for night.</figcaption>
+  </figure>
+
+  <h2><span class="num">5.1</span> The baton</h2>
+  <p>The baton is a disc on a brass handle, green on one face and red on the other, with a small lamp at the centre that shows the colour of the face through a lens after dark. Each station master has one. It is shown from the platform, steadily, to the driver of a train standing at the platform.</p>
+  <table>
+    <thead><tr><th>Shown</th><th>Meaning</th><th>The driver</th></tr></thead>
+    <tbody>
+      <tr><td><span class="swatch" style="background:var(--lamp)"></span><strong>Green face, held steady</strong></td><td><em>Ready to start.</em> The station work is done, the doors may be closed, the station master is content for the train to leave.</td><td>Checks the starting signal, closes the doors if not already closed, sounds one short blast, and departs.</td></tr>
+      <tr><td><span class="swatch" style="background:var(--red)"></span><strong>Red face</strong></td><td><em>Stop.</em> Do not start; or, if moving, stop.</td><td>Stops, or stays. Waits for the box or the station master.</td></tr>
+      <tr><td>Nothing shown</td><td>Not yet.</td><td>Waits.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="rule" id="S18">
+    <span class="rule-num">Rule S 18</span><span class="rule-title">Signal and baton</span>
+    <p>Where a starting signal and a station master both exist, a passenger train departs only when the starting signal shows a proceed aspect <em>and</em> the baton is shown green. Either at STOP holds the train. If they disagree, the one that says stop is right, and the driver stays.</p>
+  </div>
+
+  <p>The driver acknowledges the green baton with <strong>one short blast</strong> of the horn, which is also the blast that <a href="book-r.html#R18">Rule R 18</a> requires before any movement from rest; one sound does both jobs. The full departure procedure, with the doors and the booked time, is <a href="book-r.html#R20">Rule R 20</a>.</p>
+
+  <div class="why"><p>A starting signal knows whether the line ahead is clear. It does not know whether a passenger is halfway through a door, or a parcel is still on the barrow, or the station master has something to tell the driver. The baton carries the human half of the decision. We could replace it with a lamp on a post and a button in the office, and one day, at a busier station, we may. It would work exactly as well and mean rather less.</p></div>
+
+  <h2><span class="num">5.2</span> Where there is no baton</h2>
+  <p>At an unstaffed halt there is no baton. The driver departs on their own authority when the doors are closed and the booked time has come. On the shuttle line worked under One Train Working (§ 8) this is the rule at both ends.</p>
+
+  <h2><span class="num">5.3</span> Other hand signals</h2>
+  <p>Any person on the Railway may stop a train by any means that reads as "stop": a red flag, a red lamp, both arms raised, a light waved from side to side. A driver who sees such a thing stops, and asks afterwards. Nobody is ever wrong to stop a train.</p>
+</section>
+
+<!-- 6 STATION LAYOUTS -->
+<section class="page chapter" id="c6" data-folio="Book S · 6 Station layouts and numbering">
+  <h1><span class="num">§ 6</span> Station layouts and numbering</h1>
+  <p class="lead">Both stations on the line are laid out the same way, mirrored: a platform track and a loop, a switch at each end, a headshunt beyond the inner switch and a stub of the single line beyond the outer one. Here is every signal, board and switch, named and placed.</p>
+
+  <h2 id="c6-1"><span class="num">6.1</span> The numbering rule</h2>
+  <p>Every signal is named by its <strong>station code</strong> and a <strong>number</strong>, written with a space: <span class="mono">AG 2</span>, <span class="mono">WD 5</span>. Station codes are two letters: Ashgrove <strong>AG</strong>, Wending <strong>WD</strong>.</p>
+  <ul>
+    <li><strong>Odd numbers face Down</strong> (they govern trains moving towards increasing kilometrage). <strong>Even numbers face Up.</strong></li>
+    <li><strong>Main signals take the lowest numbers</strong>, 1 and 2. Ground signals take the rest, 3 to 6.</li>
+    <li>Switches are named by station code and a letter: <span class="mono">AG A</span> is the outer switch on the single-line side, <span class="mono">AG B</span> the inner switch on the headshunt side. A switch is <span class="term">normal</span> when set for track 1 and <span class="term">reverse</span> when set for track 2.</li>
+  </ul>
+  <p>So a driver who hears "AG 3" on the telephone knows at once that it is at Ashgrove, that it faces Down, and that it is a ground signal, before they have looked at a diagram.</p>
+
+  <div class="legend">
+    <span><svg width="22" height="18" viewBox="0 0 22 18"><line x1="6" y1="18" x2="6" y2="8" stroke="#4A5560" stroke-width="2"/><circle cx="6" cy="6" r="5" fill="#1F4B3F"/><polygon points="13,3 19,6 13,9" fill="#1F4B3F"/></svg>main signal</span>
+    <span><svg width="22" height="18" viewBox="0 0 22 18"><rect x="0" y="4" width="14" height="10" fill="#1A1A1A"/><circle cx="4" cy="9" r="1.7" fill="#fff"/><circle cx="10" cy="9" r="1.7" fill="#fff"/><polygon points="16,6 22,9 16,12" fill="#4A5560"/></svg>ground signal</span>
+    <span><svg width="22" height="18" viewBox="0 0 22 18"><rect x="1" y="3" width="14" height="12" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.5"/><polygon points="17,6 22,9 17,12" fill="#4A5560"/></svg>board</span>
+    <span><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="4" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="2"/></svg>switch</span>
+    <span>arrows point the way the signal or board faces</span>
+  </div>
+
+  <h2 id="c6-2"><span class="num">6.2</span> Ashgrove</h2>
+  <p>Ashgrove is at the foot of the valley, at the Up end of the line. Its headshunt and buffer stop are at km 0.000; the single line leaves towards Wending at the Down end. Down is to the right in the diagram.</p>
+
+  <figure class="layout-fig">
+    <div class="figure-frame">
+      <svg viewBox="0 0 780 232" width="780" height="232" role="img" aria-label="Schematic layout of Ashgrove station">
+        <text x="14" y="26" fill="#1F4B3F" font-size="18" font-weight="700" letter-spacing="3">ASHGROVE</text>
+        <text x="110" y="26" fill="#4A5560" font-size="12" letter-spacing="1.5" font-family="IBM Plex Mono, Menlo, monospace">KM 0.000 – 0.450 · BOX: T. MARROW</text>
+
+        <!-- tracks -->
+        <line x1="28" y1="140" x2="600" y2="140" stroke="#1A1A1A" stroke-width="3"/>
+        <line x1="600" y1="140" x2="768" y2="140" stroke="#1A1A1A" stroke-width="3"/>
+        <line x1="110" y1="140" x2="150" y2="80" stroke="#1A1A1A" stroke-width="3"/>
+        <line x1="150" y1="80" x2="560" y2="80" stroke="#1A1A1A" stroke-width="3"/>
+        <line x1="560" y1="80" x2="600" y2="140" stroke="#1A1A1A" stroke-width="3"/>
+        <!-- platform -->
+        <rect x="190" y="150" width="330" height="16" fill="#D9D2C0" stroke="#4A5560" stroke-width="1"/>
+        <text x="355" y="162" text-anchor="middle" fill="#4A5560" font-size="11" letter-spacing="2.5">PLATFORM · KM 0.130 – 0.290</text>
+        <!-- track names -->
+        <text x="355" y="72" text-anchor="middle" fill="#4A5560" font-size="11" letter-spacing="2">TRACK 2</text>
+        <text x="355" y="132" text-anchor="middle" fill="#4A5560" font-size="11" letter-spacing="2">TRACK 1</text>
+        <text x="62" y="178" text-anchor="middle" fill="#4A5560" font-size="10" letter-spacing="1.5">HEADSHUNT</text>
+        <text x="662" y="121" text-anchor="middle" fill="#4A5560" font-size="10" letter-spacing="1.5">STUB</text>
+        <text x="768" y="226" text-anchor="end" fill="#1F4B3F" font-size="11" font-weight="600" letter-spacing="2">DOWN · TO WENDING →</text>
+
+        <!-- buffer stop -->
+        <rect x="26" y="130" width="5" height="20" fill="#1A1A1A"/>
+        <circle cx="28" cy="124" r="3.5" fill="#C6321E"/>
+
+        <!-- switches -->
+        <circle cx="110" cy="140" r="4" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="2"/>
+        <text x="110" y="162" text-anchor="middle" fill="#1F4B3F" font-size="12" font-weight="700" letter-spacing="1">AG B</text>
+        <circle cx="600" cy="140" r="4" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="2"/>
+        <text x="600" y="162" text-anchor="middle" fill="#1F4B3F" font-size="12" font-weight="700" letter-spacing="1">AG A</text>
+
+        <!-- AG 5 ground, Down, headshunt, above -->
+        <g transform="translate(88,140)">
+          <line x1="0" y1="0" x2="0" y2="-14" stroke="#4A5560" stroke-width="2"/>
+          <rect x="-8" y="-27" width="16" height="12" fill="#1A1A1A"/>
+          <circle cx="-3.5" cy="-21" r="1.8" fill="#fff"/><circle cx="3.5" cy="-21" r="1.8" fill="#fff"/>
+          <polygon points="11,-25 18,-21 11,-17" fill="#4A5560"/>
+          <text x="0" y="-33" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">AG 5</text>
+        </g>
+        <!-- AG 4 ground, Up, track 1, below -->
+        <g transform="translate(160,140)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#4A5560" stroke-width="2"/>
+          <rect x="-8" y="14" width="16" height="12" fill="#1A1A1A"/>
+          <circle cx="-3.5" cy="20" r="1.8" fill="#fff"/><circle cx="3.5" cy="20" r="1.8" fill="#fff"/>
+          <polygon points="-11,16 -18,20 -11,24" fill="#4A5560"/>
+          <text x="0" y="40" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">AG 4</text>
+        </g>
+        <!-- Stop board, Up, track 1, above -->
+        <g transform="translate(205,140)">
+          <line x1="0" y1="0" x2="0" y2="-14" stroke="#4A5560" stroke-width="2"/>
+          <rect x="-9" y="-28" width="18" height="14" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.5"/>
+          <rect x="-7" y="-22.5" width="14" height="3" fill="#1A1A1A"/>
+          <polygon points="-12,-25 -19,-21 -12,-17" fill="#4A5560"/>
+          <text x="0" y="-34" text-anchor="middle" fill="#1A1A1A" font-size="11" font-weight="700" letter-spacing="1">STOP BOARD</text>
+        </g>
+        <!-- AG 1 main, Down, track 1, below -->
+        <g transform="translate(560,140)">
+          <line x1="0" y1="0" x2="0" y2="20" stroke="#4A5560" stroke-width="2"/>
+          <circle cx="0" cy="26" r="6" fill="#1F4B3F"/>
+          <polygon points="9,22 16,26 9,30" fill="#1F4B3F"/>
+          <text x="0" y="46" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">AG 1</text>
+        </g>
+        <!-- AG 3 ground, Down, track 2, above -->
+        <g transform="translate(548,80)">
+          <line x1="0" y1="0" x2="0" y2="-14" stroke="#4A5560" stroke-width="2"/>
+          <rect x="-8" y="-27" width="16" height="12" fill="#1A1A1A"/>
+          <circle cx="-3.5" cy="-21" r="1.8" fill="#fff"/><circle cx="3.5" cy="-21" r="1.8" fill="#fff"/>
+          <polygon points="11,-25 18,-21 11,-17" fill="#4A5560"/>
+          <text x="0" y="-33" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">AG 3</text>
+        </g>
+        <!-- AG 6 ground, Up, stub, above -->
+        <g transform="translate(624,140)">
+          <line x1="0" y1="0" x2="0" y2="-14" stroke="#4A5560" stroke-width="2"/>
+          <rect x="-8" y="-27" width="16" height="12" fill="#1A1A1A"/>
+          <circle cx="-3.5" cy="-21" r="1.8" fill="#fff"/><circle cx="3.5" cy="-21" r="1.8" fill="#fff"/>
+          <polygon points="-11,-25 -18,-21 -11,-17" fill="#4A5560"/>
+          <text x="0" y="-33" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">AG 6</text>
+        </g>
+        <!-- Limit of shunt, Down, below -->
+        <g transform="translate(660,140)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#4A5560" stroke-width="2"/>
+          <rect x="-9" y="14" width="18" height="14" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.5"/>
+          <line x1="-8" y1="27" x2="8" y2="15" stroke="#C6321E" stroke-width="3"/>
+          <polygon points="12,17 19,21 12,25" fill="#4A5560"/>
+          <text x="0" y="41" text-anchor="middle" fill="#1A1A1A" font-size="11" font-weight="700" letter-spacing="1">LIMIT OF SHUNT</text>
+        </g>
+        <!-- AG 2 home, Up, above -->
+        <g transform="translate(698,140)">
+          <line x1="0" y1="0" x2="0" y2="-20" stroke="#4A5560" stroke-width="2"/>
+          <circle cx="0" cy="-26" r="6" fill="#1F4B3F"/>
+          <polygon points="-9,-30 -16,-26 -9,-22" fill="#1F4B3F"/>
+          <text x="0" y="-38" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">AG 2</text>
+        </g>
+        <!-- Speed boards, below -->
+        <g transform="translate(752,140)">
+          <line x1="0" y1="0" x2="0" y2="-14" stroke="#4A5560" stroke-width="2"/>
+          <circle cx="0" cy="-21" r="7" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.5"/>
+          <text x="0" y="-17.5" text-anchor="middle" fill="#1A1A1A" font-size="9" font-weight="700">25</text>
+          <text x="0" y="-33" text-anchor="middle" fill="#1A1A1A" font-size="11" font-weight="700" letter-spacing="1">25 ↑ · 50 ↓</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 6.1</span> Ashgrove. Not to scale: the loop is 200 m long and the single line beyond it runs 2.4 km to Wending. Every kilometre in the table below can be read against the hectometre posts: AG 2 stands at 0.42, between posts 0.4 and 0.5.</figcaption>
+  </figure>
+
+  <table class="signals">
+    <thead><tr><th>Signal or board</th><th class="mono">km</th><th>Faces</th><th>Stands on</th><th>Governs</th></tr></thead>
+    <tbody>
+      <tr><td>Buffer stop</td><td class="mono">0.000</td><td>—</td><td>headshunt</td><td>End of track; red lamp.</td></tr>
+      <tr><td>AG 5</td><td class="mono">0.070</td><td>Down</td><td>headshunt</td><td>Shunt from the headshunt into the station.</td></tr>
+      <tr><td>Switch AG B</td><td class="mono">0.080</td><td>toe faces Up</td><td>—</td><td>Normal = track 1, reverse = track 2.</td></tr>
+      <tr><td>AG 4</td><td class="mono">0.115</td><td>Up</td><td>track 1</td><td>Shunt from track 1 into the headshunt.</td></tr>
+      <tr><td>Stop board ASHGROVE</td><td class="mono">0.135</td><td>Up</td><td>track 1</td><td>Up trains stop here.</td></tr>
+      <tr><td>AG 1</td><td class="mono">0.305</td><td>Down</td><td>track 1</td><td>Starting signal: track 1 onto the single line.</td></tr>
+      <tr><td>AG 3</td><td class="mono">0.305</td><td>Down</td><td>track 2</td><td>Shunt from track 2 onto the stub.</td></tr>
+      <tr><td>Switch AG A</td><td class="mono">0.340</td><td>toe faces Down</td><td>—</td><td>Normal = track 1, reverse = track 2.</td></tr>
+      <tr><td>AG 6</td><td class="mono">0.350</td><td>Up</td><td>single line (stub)</td><td>Shunt from the stub into the station.</td></tr>
+      <tr><td>Limit of Shunt</td><td class="mono">0.400</td><td>Down</td><td>single line</td><td>Shunting movements stop short.</td></tr>
+      <tr><td>AG 2</td><td class="mono">0.420</td><td>Up</td><td>single line</td><td>Home signal: entry to Ashgrove.</td></tr>
+      <tr><td>Speed boards</td><td class="mono">0.450</td><td>25 Up · 50 Down</td><td>single line</td><td>Edge of station limits.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="c6-3"><span class="num">6.3</span> Wending</h2>
+  <p>Wending is at the head of the valley, at the Down end of the line. The single line arrives from Ashgrove at the Up end; the headshunt and buffer stop are at km 3.300. Down is still to the right.</p>
+
+  <figure class="layout-fig">
+    <div class="figure-frame">
+      <svg viewBox="0 0 760 232" width="760" height="232" role="img" aria-label="Schematic layout of Wending station">
+        <text x="14" y="26" fill="#1F4B3F" font-size="18" font-weight="700" letter-spacing="3">WENDING</text>
+        <text x="100" y="26" fill="#4A5560" font-size="12" letter-spacing="1.5" font-family="IBM Plex Mono, Menlo, monospace">KM 2.850 – 3.300 · BOX: J. PELL</text>
+
+        <!-- tracks -->
+        <line x1="12" y1="140" x2="165" y2="140" stroke="#1A1A1A" stroke-width="3"/>
+        <line x1="165" y1="140" x2="735" y2="140" stroke="#1A1A1A" stroke-width="3"/>
+        <line x1="165" y1="140" x2="205" y2="80" stroke="#1A1A1A" stroke-width="3"/>
+        <line x1="205" y1="80" x2="600" y2="80" stroke="#1A1A1A" stroke-width="3"/>
+        <line x1="600" y1="80" x2="640" y2="140" stroke="#1A1A1A" stroke-width="3"/>
+        <!-- platform -->
+        <rect x="240" y="150" width="330" height="16" fill="#D9D2C0" stroke="#4A5560" stroke-width="1"/>
+        <text x="405" y="162" text-anchor="middle" fill="#4A5560" font-size="11" letter-spacing="2.5">PLATFORM · KM 3.010 – 3.170</text>
+        <text x="405" y="72" text-anchor="middle" fill="#4A5560" font-size="11" letter-spacing="2">TRACK 2</text>
+        <text x="405" y="132" text-anchor="middle" fill="#4A5560" font-size="11" letter-spacing="2">TRACK 1</text>
+        <text x="700" y="178" text-anchor="middle" fill="#4A5560" font-size="10" letter-spacing="1.5">HEADSHUNT</text>
+        <text x="108" y="121" text-anchor="middle" fill="#4A5560" font-size="10" letter-spacing="1.5">STUB</text>
+        <text x="14" y="226" fill="#1F4B3F" font-size="11" font-weight="600" letter-spacing="2">← UP · TO ASHGROVE</text>
+
+        <!-- buffer stop -->
+        <rect x="732" y="130" width="5" height="20" fill="#1A1A1A"/>
+        <circle cx="735" cy="124" r="3.5" fill="#C6321E"/>
+
+        <!-- switches -->
+        <circle cx="165" cy="140" r="4" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="2"/>
+        <text x="165" y="162" text-anchor="middle" fill="#1F4B3F" font-size="12" font-weight="700" letter-spacing="1">WD A</text>
+        <circle cx="640" cy="140" r="4" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="2"/>
+        <text x="640" y="162" text-anchor="middle" fill="#1F4B3F" font-size="12" font-weight="700" letter-spacing="1">WD B</text>
+
+        <!-- Speed boards, below, far left -->
+        <g transform="translate(30,140)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#4A5560" stroke-width="2"/>
+          <circle cx="0" cy="21" r="7" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.5"/>
+          <text x="0" y="24.5" text-anchor="middle" fill="#1A1A1A" font-size="9" font-weight="700">25</text>
+          <text x="0" y="41" text-anchor="middle" fill="#1A1A1A" font-size="11" font-weight="700" letter-spacing="1">25 ↓ · 50 ↑</text>
+        </g>
+        <!-- WD 1 home, Down, above -->
+        <g transform="translate(66,140)">
+          <line x1="0" y1="0" x2="0" y2="-20" stroke="#4A5560" stroke-width="2"/>
+          <circle cx="0" cy="-26" r="6" fill="#1F4B3F"/>
+          <polygon points="9,-30 16,-26 9,-22" fill="#1F4B3F"/>
+          <text x="0" y="-38" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">WD 1</text>
+        </g>
+        <!-- Limit of shunt, Up, below -->
+        <g transform="translate(112,140)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#4A5560" stroke-width="2"/>
+          <rect x="-9" y="14" width="18" height="14" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.5"/>
+          <line x1="-8" y1="27" x2="8" y2="15" stroke="#C6321E" stroke-width="3"/>
+          <polygon points="-12,17 -19,21 -12,25" fill="#4A5560"/>
+          <text x="0" y="41" text-anchor="middle" fill="#1A1A1A" font-size="11" font-weight="700" letter-spacing="1">LIMIT OF SHUNT</text>
+        </g>
+        <!-- WD 5 ground, Down, stub, above -->
+        <g transform="translate(142,140)">
+          <line x1="0" y1="0" x2="0" y2="-14" stroke="#4A5560" stroke-width="2"/>
+          <rect x="-8" y="-27" width="16" height="12" fill="#1A1A1A"/>
+          <circle cx="-3.5" cy="-21" r="1.8" fill="#fff"/><circle cx="3.5" cy="-21" r="1.8" fill="#fff"/>
+          <polygon points="11,-25 18,-21 11,-17" fill="#4A5560"/>
+          <text x="0" y="-33" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">WD 5</text>
+        </g>
+        <!-- WD 2 main, Up, track 1, below -->
+        <g transform="translate(212,140)">
+          <line x1="0" y1="0" x2="0" y2="20" stroke="#4A5560" stroke-width="2"/>
+          <circle cx="0" cy="26" r="6" fill="#1F4B3F"/>
+          <polygon points="-9,22 -16,26 -9,30" fill="#1F4B3F"/>
+          <text x="0" y="46" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">WD 2</text>
+        </g>
+        <!-- WD 4 ground, Up, track 2, above -->
+        <g transform="translate(216,80)">
+          <line x1="0" y1="0" x2="0" y2="-14" stroke="#4A5560" stroke-width="2"/>
+          <rect x="-8" y="-27" width="16" height="12" fill="#1A1A1A"/>
+          <circle cx="-3.5" cy="-21" r="1.8" fill="#fff"/><circle cx="3.5" cy="-21" r="1.8" fill="#fff"/>
+          <polygon points="-11,-25 -18,-21 -11,-17" fill="#4A5560"/>
+          <text x="0" y="-33" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">WD 4</text>
+        </g>
+        <!-- Stop board, Down, track 1, above -->
+        <g transform="translate(552,140)">
+          <line x1="0" y1="0" x2="0" y2="-14" stroke="#4A5560" stroke-width="2"/>
+          <rect x="-9" y="-28" width="18" height="14" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.5"/>
+          <rect x="-7" y="-22.5" width="14" height="3" fill="#1A1A1A"/>
+          <polygon points="12,-25 19,-21 12,-17" fill="#4A5560"/>
+          <text x="0" y="-34" text-anchor="middle" fill="#1A1A1A" font-size="11" font-weight="700" letter-spacing="1">STOP BOARD</text>
+        </g>
+        <!-- WD 3 ground, Down, track 1, below -->
+        <g transform="translate(598,140)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#4A5560" stroke-width="2"/>
+          <rect x="-8" y="14" width="16" height="12" fill="#1A1A1A"/>
+          <circle cx="-3.5" cy="20" r="1.8" fill="#fff"/><circle cx="3.5" cy="20" r="1.8" fill="#fff"/>
+          <polygon points="11,16 18,20 11,24" fill="#4A5560"/>
+          <text x="0" y="40" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">WD 3</text>
+        </g>
+        <!-- WD 6 ground, Up, headshunt, above -->
+        <g transform="translate(668,140)">
+          <line x1="0" y1="0" x2="0" y2="-14" stroke="#4A5560" stroke-width="2"/>
+          <rect x="-8" y="-27" width="16" height="12" fill="#1A1A1A"/>
+          <circle cx="-3.5" cy="-21" r="1.8" fill="#fff"/><circle cx="3.5" cy="-21" r="1.8" fill="#fff"/>
+          <polygon points="-11,-25 -18,-21 -11,-17" fill="#4A5560"/>
+          <text x="0" y="-33" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">WD 6</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 6.2</span> Wending. The mirror of Ashgrove; the stub is at the Up end and the headshunt at the Down end. Read the table against the posts: the stop board at 3.165 stands between posts 3.1 and 3.2, and WD 1 at 2.88 between 2.8 and 2.9.</figcaption>
+  </figure>
+
+  <table class="signals">
+    <thead><tr><th>Signal or board</th><th class="mono">km</th><th>Faces</th><th>Stands on</th><th>Governs</th></tr></thead>
+    <tbody>
+      <tr><td>Speed boards</td><td class="mono">2.850</td><td>25 Down · 50 Up</td><td>single line</td><td>Edge of station limits.</td></tr>
+      <tr><td>WD 1</td><td class="mono">2.880</td><td>Down</td><td>single line</td><td>Home signal: entry to Wending.</td></tr>
+      <tr><td>Limit of Shunt</td><td class="mono">2.900</td><td>Up</td><td>single line</td><td>Shunting movements stop short.</td></tr>
+      <tr><td>WD 5</td><td class="mono">2.950</td><td>Down</td><td>single line (stub)</td><td>Shunt from the stub into the station.</td></tr>
+      <tr><td>Switch WD A</td><td class="mono">2.960</td><td>toe faces Up</td><td>—</td><td>Normal = track 1, reverse = track 2.</td></tr>
+      <tr><td>WD 2</td><td class="mono">2.995</td><td>Up</td><td>track 1</td><td>Starting signal: track 1 onto the single line.</td></tr>
+      <tr><td>WD 4</td><td class="mono">2.995</td><td>Up</td><td>track 2</td><td>Shunt from track 2 onto the stub.</td></tr>
+      <tr><td>Stop board WENDING</td><td class="mono">3.165</td><td>Down</td><td>track 1</td><td>Down trains stop here.</td></tr>
+      <tr><td>WD 3</td><td class="mono">3.185</td><td>Down</td><td>track 1</td><td>Shunt from track 1 into the headshunt.</td></tr>
+      <tr><td>Switch WD B</td><td class="mono">3.220</td><td>toe faces Down</td><td>—</td><td>Normal = track 1, reverse = track 2.</td></tr>
+      <tr><td>WD 6</td><td class="mono">3.230</td><td>Up</td><td>headshunt</td><td>Shunt from the headshunt into the station.</td></tr>
+      <tr><td>Buffer stop</td><td class="mono">3.300</td><td>—</td><td>headshunt</td><td>End of track; red lamp.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note"><p>Track 2 has no platform. It is a loop for running round, and no passenger train is booked to stand on it. Its only signals are the ground signals at each end.</p></div>
+</section>
+
+<!-- 7 ROUTES AND THE BOX -->
+<section class="page chapter" id="c7" data-folio="Book S · 7 Routes and the box">
+  <h1><span class="num">§ 7</span> Routes and the box</h1>
+  <p class="lead">A signal is never cleared on its own. It is cleared as the last act of setting a route, after the switches have been set and locked and the track has been shown to be clear. This chapter is about that sequence, and about the frame that enforces it.</p>
+
+  <h2><span class="num">7.1</span> What a route is</h2>
+  <p>A <span class="term">route</span> is a path through the station from one signal to the place where the movement will stop, together with the switch positions that make that path continuous. Every route has a <span class="term">governing signal</span>: the one main signal or the one or two ground signals that the driver reads to make the movement. A route is <span class="term">set</span> when the switches are in position and locked; it is <span class="term">cleared</span> when the governing signal has been changed from STOP to a proceed aspect or from SHUNT STOP to SHUNT.</p>
+
+  <p>The frame in the box holds a lever for each switch and each signal. The levers are <span class="term">interlocked</span>: a signal lever cannot be pulled unless the switches on its route are set the right way, and a switch lever cannot be moved while a signal reading over it is cleared. The frame is also wired to the track. Each switch, and each stretch of track between switches and signals, is a <span class="term">track section</span> which reports whether a vehicle stands on it, and the frame will not clear a signal over an occupied section.</p>
+
+  <div class="rule" id="S14">
+    <span class="rule-num">Rule S 14</span><span class="rule-title">Moving on a route</span>
+    <p>Move only when the governing signal has been cleared for the move you are about to make, and only as far as the route goes: to the next signal facing you, to a Limit of Shunt board, to a stop board, or to the end of the track. When the movement is complete, stop and wait; the route will be taken back behind you and the next one set.</p>
+  </div>
+
+  <div class="note"><p><strong>The one deliberate exception.</strong> A shunt route whose purpose is coupling is cleared into an occupied track. The frame permits this only for the routes marked "for coupling" in the tables below, only for a ground signal, and only when the occupied section is the last one on the route. The driver approaches under <a href="book-d.html#D10">Rule D 10</a>.</p></div>
+
+  <h2 id="c7-2"><span class="num">7.2</span> The routes at Ashgrove and Wending</h2>
+  <table>
+    <thead><tr><th>Route</th><th>Switches</th><th>Governing signal</th><th>Cleared to</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td colspan="5" style="font-family:var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--green);font-weight:600">Ashgrove</td></tr>
+      <tr><td class="mono">Main → 1</td><td>AG A normal</td><td>AG 2</td><td>CAUTION</td><td>Up train into the platform.</td></tr>
+      <tr><td class="mono">1 → Main</td><td>AG A normal</td><td>AG 1</td><td>CLEAR</td><td>Down train departs, once Wending has accepted it.</td></tr>
+      <tr><td class="mono">1 → Headshunt</td><td>AG B normal</td><td>AG 4</td><td>SHUNT</td><td>Locomotive off the train into the headshunt.</td></tr>
+      <tr><td class="mono">Headshunt → 2 → Stub</td><td>AG B reverse, AG A reverse</td><td>AG 5 and AG 3</td><td>SHUNT</td><td>Locomotive round the loop to the stub.</td></tr>
+      <tr><td class="mono">Stub → 1</td><td>AG A normal</td><td>AG 6</td><td>SHUNT</td><td>Locomotive onto the train. <em>For coupling: cleared into occupied track 1.</em></td></tr>
+      <tr><td colspan="5" style="font-family:var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--green);font-weight:600">Wending</td></tr>
+      <tr><td class="mono">Main → 1</td><td>WD A normal</td><td>WD 1</td><td>CAUTION</td><td>Down train into the platform.</td></tr>
+      <tr><td class="mono">1 → Main</td><td>WD A normal</td><td>WD 2</td><td>CLEAR</td><td>Up train departs, once Ashgrove has accepted it.</td></tr>
+      <tr><td class="mono">1 → Headshunt</td><td>WD B normal</td><td>WD 3</td><td>SHUNT</td><td>Locomotive off the train into the headshunt.</td></tr>
+      <tr><td class="mono">Headshunt → 2 → Stub</td><td>WD B reverse, WD A reverse</td><td>WD 6 and WD 4</td><td>SHUNT</td><td>Locomotive round the loop to the stub.</td></tr>
+      <tr><td class="mono">Stub → 1</td><td>WD A normal</td><td>WD 5</td><td>SHUNT</td><td>Locomotive onto the train. <em>For coupling: cleared into occupied track 1.</em></td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>The section between the stations.</strong> The single line from AG 1 to WD 1, and from WD 2 to AG 2, is one <span class="term">block section</span>, and only one train may be in it. Before a starting signal is cleared, the box at the departure end asks the box at the arrival end whether the line is clear for the train; the arrival box sets its <span class="mono">Main → 1</span> route, clears its home signal to CAUTION, and answers. Only then does the starter show CLEAR, which is honest, because the next signal is now showing a proceed aspect. The exchange is recorded in both boxes' registers, and one day it will be done by instruments; today it is done by telephone and a good deal of politeness.</p>
+
+  <h2 id="c7-3"><span class="num">7.3</span> A worked example: the run-round at Wending</h2>
+  <p>Service 201 is a Class 4 locomotive with one Type C4 coach. It arrives at Wending from Ashgrove, locomotive leading, and must leave for Ashgrove with the locomotive leading again. Here is what the driver sees and does, signal by signal. The driver's side of it, cab by cab, is in <a href="book-d.html">Book D</a>.</p>
+
+  <ol class="steps">
+    <li><strong>Arrival.</strong> Passing the 25 speed board at km 2.850 the train is already down to 25 km/h. WD 1 shows CAUTION: the platform is cleared for the train, and the track ends. The train passes WD 5 at SHUNT STOP without regard to it (§ 3.2), runs through WD A set normal onto track 1, and stops with its front level with the WENDING stop board at km 3.165. The locomotive now stands at the Down end of the coach, facing the headshunt.</li>
+    <li><strong>Station work.</strong> Doors open, passengers alight. The driver secures the locomotive, walks to the coupling, disconnects the brake pipe (both parts' brakes apply of their own accord) and parts the coupler (<a href="book-d.html#D12">Rule D 12</a>), then returns to the cab facing the headshunt.</li>
+    <li><strong>Into the headshunt.</strong> Wending Box sets <span class="mono">1 → Headshunt</span>: WD B is already normal; WD 3 changes to SHUNT. The locomotive draws forward at shunting speed through WD B into the headshunt and stops clear of the switch, well short of the buffer stop. WD 3 returns to SHUNT STOP behind it.</li>
+    <li><strong>Round the loop.</strong> The driver changes ends. The box sets <span class="mono">Headshunt → 2 → Stub</span>: WD B reverse, WD A reverse, both locked; WD 6 and WD 4 change to SHUNT. The locomotive runs Up through WD B onto track 2, along track 2 past the standing coach, passes WD 4 at SHUNT, through WD A onto the stub, and stops short of the Limit of Shunt board at km 2.900 (Rule S 12). It is now clear of WD A. Both ground signals return to SHUNT STOP.</li>
+    <li><strong>Onto the train.</strong> The driver changes ends again. The box sets <span class="mono">Stub → 1</span> for coupling: WD A normal, locked; WD 5 changes to SHUNT although track 1 is occupied. The locomotive runs Down through WD A onto track 1 and approaches the coach at 5 km/h over the last 20 m, touching at 2 km/h or less. The coupler engages. The driver walks to the coupling, connects the brake pipe, returns to the cab and proves the brake through the train (<a href="book-d.html#D14">Rule D 14</a>). WD 5 returns to SHUNT STOP.</li>
+    <li><strong>Departure.</strong> Wending Box asks Ashgrove Box for the line. Ashgrove sets <span class="mono">Main → 1</span>, AG 2 shows CAUTION, and Ashgrove answers. Wending sets <span class="mono">1 → Main</span> and WD 2 shows CLEAR. At the booked time, doors closed, J. Pell shows the green baton from the platform. The driver sounds one short blast and takes the train away, Up, towards Ashgrove.</li>
+  </ol>
+
+  <p>At Ashgrove the same thing happens in mirror image: arrival under AG 2 at CAUTION to the ASHGROVE board, AG 4 into the headshunt, AG 5 and AG 3 round the loop to the stub short of the Limit of Shunt at km 0.400, AG 6 onto the train, AG 1 and T. Marrow's baton to leave.</p>
+
+  <div class="why"><p>Six signals and two switches per station is more than a small terminus strictly needs; a single ground signal and a promise would do. But every one of these signals stands where a driver has to make a decision, and a signal at that spot means the decision is never made alone. We would rather buy six lamps than one misunderstanding.</p></div>
+</section>
+
+<!-- 8 ONE TRAIN WORKING -->
+<section class="page chapter" id="c8" data-folio="Book S · 8 One Train Working">
+  <h1><span class="num">§ 8</span> One Train Working</h1>
+  <p class="lead">Before the loops and the signals were built, the Ashgrove–Wending line was worked by one motor car, back and forth, with nothing between the buffer stops but two stop boards and four speed boards. The Railway still works it that way when the loops are out of use. This is how it is safe.</p>
+
+  <p>Under <span class="term">One Train Working</span> the whole line, buffer to buffer, is one block section, and one vehicle holds it. There is no other train to collide with, so there is nothing for a signal to protect, and the line has none. The driver departs each station on their own authority at the booked time (<a href="book-r.html#R24">Rule R 24</a>), stops at the stop boards, and obeys the speed boards. The only thing that can go wrong is a second vehicle, and the rule is simply that there is none: no locomotive is allowed onto the line until the motor car is stabled and the working is formally changed.</p>
+
+  <table>
+    <thead><tr><th>Under One Train Working</th><th>Under signalled working</th></tr></thead>
+    <tbody>
+      <tr><td>One vehicle on the whole line.</td><td>One train per block section; shunting within station limits alongside.</td></tr>
+      <tr><td>No main signals; no ground signals.</td><td>Home and starting signals; ground signals for the loop.</td></tr>
+      <tr><td>Departure on the driver's authority at the booked time.</td><td>Departure on starting signal and baton (Rule S 18, <a href="book-r.html#R20">Rule R 20</a>).</td></tr>
+      <tr><td>Stop boards, speed boards.</td><td>Stop boards, speed boards, Limit of Shunt boards.</td></tr>
+      <tr><td>No station master required.</td><td>Station master works the box and holds the baton.</td></tr>
+    </tbody>
+  </table>
+
+  <p>Everything a driver learns on the shuttle is still true when the signals arrive. The boards do not move, the speeds do not change, and the stop is still made at the board. What changes is that the driver stops deciding whether the line is theirs, and starts reading whether it is.</p>
+</section>
+
+<!-- 9 FAILURES -->
+<section class="page chapter" id="c9" data-folio="Book S · 9 Failures and doubt">
+  <h1><span class="num">§ 9</span> Failures and doubt</h1>
+  <p class="lead">Signals fail. Lamps go, wires part, a plate falls off in a gale. The Railway is designed so that every failure looks like STOP, and the driver's response to every failure is the same.</p>
+
+  <h2><span class="num">9.1</span> What counts as a failure</h2>
+  <ul>
+    <li>A main signal showing <strong>no lamp</strong>, or <strong>two lamps</strong>, or a lamp of a colour you cannot name with confidence.</li>
+    <li>A ground signal showing <strong>no lamps</strong>, or one lamp, or lamps in a position that is neither horizontal nor the diagonal.</li>
+    <li>A signal whose <strong>plate is missing</strong> or unreadable, so that you cannot say which signal you are looking at.</li>
+    <li>A signal that shows a proceed aspect for a route you can see is <strong>not set</strong>: a switch lying the wrong way, a vehicle where a CLEAR says there is none.</li>
+    <li>A board that is missing, turned, or contradicts the last board you passed.</li>
+  </ul>
+
+  <h2><span class="num">9.2</span> What to do</h2>
+  <ol class="steps">
+    <li><strong>Stop.</strong> At the signal if you can; at once if you are already past it. Nobody is ever wrong to stop.</li>
+    <li><strong>Speak to the box.</strong> Use the telephone at the foot of the signal, or the cab radio. Say who you are, where you are, and what you see. "Service 201 at WD 1, signal dark."</li>
+    <li><strong>Do what the box tells you, and nothing more.</strong> The station master may authorise you past a failed signal at STOP, in words, for that one movement. Proceed at shunting speed, prepared to stop short of anything, as far as the next signal and no further.</li>
+    <li><strong>Write it down.</strong> Every failure, and every movement past a signal at STOP under authority, goes in the Incident Book with the time and the words used.</li>
+  </ol>
+
+  <div class="danger"><p>Never pass a signal at STOP on your own judgment because it "must have failed". A signal that has failed and a signal that is holding you for a train coming the other way look exactly the same. Rule S 10 has no exception for confidence.</p></div>
+
+  <h2><span class="num">9.3</span> When the signal and the baton disagree</h2>
+  <p>A starting signal at STOP with a green baton, or a starting signal at CLEAR with a red baton, is a disagreement, and Rule S 18 settles it: whichever says stop is right. Stay, and speak to the station master. Most often the box has simply not caught up with the platform, or the platform with the box, and a moment's patience mends it. If the signal is at STOP and the station master insists, the station master may authorise the movement in words under § 9.2, and it is written down.</p>
+
+  <div class="why"><p>Two instruments that must agree before a train moves cannot fail towards "go" one at a time. That is the whole of the reason, and it is enough.</p></div>
+</section>
+
+<!-- 10 GLOSSARY -->
+<section class="page chapter" id="c10" data-folio="Book S · 10 Glossary">
+  <h1><span class="num">§ 10</span> Glossary</h1>
+  <p class="lead">Words used in this book with a particular meaning. Book R holds the Railway's general vocabulary.</p>
+  <dl class="dl">
+    <dt>Aspect</dt><dd>What a main signal shows: STOP, CAUTION or CLEAR. Ground signals show <em>indications</em>: SHUNT STOP or SHUNT.</dd>
+    <dt>Baton</dt><dd>The station master's hand-held disc, green one side and red the other, with a lamp. Green held steady means <em>Ready to start</em>.</dd>
+    <dt>Block section</dt><dd>The single line between one station's starting signal and the next station's home signal. One train at a time.</dd>
+    <dt>Box</dt><dd>The signal box: the room, the frame and the person working it. Ashgrove Box, Wending Box.</dd>
+    <dt>Cleared</dt><dd>Of a signal: changed from STOP to a proceed aspect, or from SHUNT STOP to SHUNT. Of a route: set and its signal cleared.</dd>
+    <dt>Down, Up</dt><dd>Down is towards increasing kilometrage (Ashgrove to Wending); Up is towards decreasing. Odd signals face Down, even face Up.</dd>
+    <dt>Frame</dt><dd>The row of interlocked levers in the box that set switches and clear signals.</dd>
+    <dt>Ground signal</dt><dd>A low black signal with two white lamps, governing shunting movements only.</dd>
+    <dt>Headshunt</dt><dd>The dead-end track beyond the inner switch of a station, used to run round. Ends at the buffer stop.</dd>
+    <dt>Hectometre post</dt><dd>An ivory plate on a slate post every 100 m, reading the distance from the Ashgrove buffer stop as kilometre, point, hectometre digit (1.4). A position reference, not a signal.</dd>
+    <dt>Home signal</dt><dd>The main signal governing entry to a station from the single line: AG 2, WD 1.</dd>
+    <dt>Kilometre post</dt><dd>The larger, green-bordered post at each full kilometre, reading the kilometre alone under the word KM (2). A position reference, not a signal.</dd>
+    <dt>Limit of Shunt</dt><dd>A board on the single line beyond the outer switch, which shunting movements must not pass.</dd>
+    <dt>Main signal</dt><dd>A three-lamp colour-light signal on a post, governing train movements.</dd>
+    <dt>Normal, reverse</dt><dd>The two positions of a switch: normal for track 1, reverse for track 2.</dd>
+    <dt>One Train Working</dt><dd>Working a line with a single vehicle and no signals, the driver departing on their own authority.</dd>
+    <dt>Proceed aspect</dt><dd>CAUTION or CLEAR. Either gives the road as far as the next signal.</dd>
+    <dt>Route</dt><dd>A path through a station with its switch positions, governed by one signal (or a pair of ground signals).</dd>
+    <dt>Shunting movement</dt><dd>A movement within station limits under ground signals, at up to 15 km/h, prepared to stop short of anything.</dd>
+    <dt>Signal passed at danger</dt><dd>Passing a main signal at STOP or a ground signal at SHUNT STOP without authority. Always recorded.</dd>
+    <dt>Starting signal</dt><dd>The main signal governing departure from a platform track onto the single line: AG 1, WD 2.</dd>
+    <dt>Station limits</dt><dd>Everything between the speed boards at a station: the stub, the loop, the headshunt. Speed 25 km/h, shunting 15 km/h.</dd>
+    <dt>Stop board</dt><dd>The ivory board with a black bar at the end of a platform, where the front of an arriving train stops.</dd>
+    <dt>Stub</dt><dd>The short length of single line between a station's outer switch and its Limit of Shunt board.</dd>
+    <dt>Track section</dt><dd>A length of track, or a switch, that reports to the frame whether a vehicle stands on it.</dd>
+    <dt>Train movement</dt><dd>A movement made under main signals, from station to station.</dd>
+  </dl>
+</section>
+
+<!-- COLOPHON -->
+<section class="page colophon" id="colophon" data-folio="Book S · Colophon">
+  <img class="mark" src="../brand/mark-green.svg" alt="">
+  <p><strong>Book S — Signalling Manual.</strong> First edition, September 2026. Issued by the Signal Engineer's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
+  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes nothing; it is the first.</p>
+  <p>Amendments are issued as numbered slips; paste them in at the page indicated. Rules S 10 to S 18 are cited by number in Books R and D and must not be renumbered without a general amendment.</p>
+  <p>Companion volumes: <a href="book-i.html">Book I, Identity</a> · <a href="book-r.html">Book R, Rules of Operation</a> · <a href="book-d.html">Book D, Driving</a>.</p>
+</section>
+
+<section class="back-cover">
+  <img class="mark" src="../brand/mark-ivory.svg" alt="">
+  <div>The Meridian Railway · On the line, on time</div>
+</section>
+
+</div>
+</body>
+</html>

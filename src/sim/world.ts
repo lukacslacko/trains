@@ -1,0 +1,543 @@
+import { type Layout, type Signal, type Board, type Trackside, type StationInfo } from "../track/layouts";
+import { type Position, type Edge, type Pt, type Dir, type Switch, type SwitchState, advance, reversed, worldPoint, pathAhead, kmOf, kmDirOf, tangentAt } from "../track/graph";
+
+/** metres from a vehicle end to the cab door, to the driver's seat, and how far beside the track a person stands */
+const CAB_DOOR_INWARD = 2.6, SEAT_INWARD = 1.4, ASIDE = 2.6;
+import { Vehicle, Consist, type End, type Cab, type LightState, type BrakeStep, type Reverser, stepConsist } from "../stock/vehicles";
+import { fmtTime, kmh } from "../core/util";
+
+export interface Message { t: number; from: string; text: string; kind: "box" | "system" | "driver" }
+export interface Incident { t: number; code: string; text: string; note?: boolean }
+
+export type Anchor =
+  | { kind: "cab"; vehicle: Vehicle; end: End }
+  | { kind: "coupling"; consist: Consist; index: number };
+
+export type DriverLocation =
+  | { kind: "cab"; vehicle: Vehicle; end: End }
+  | { kind: "ground"; at: Anchor }
+  | { kind: "walking"; from: Pt; target: Anchor; t: number; duration: number };
+
+export interface Route {
+  id: string;
+  station: string;
+  switches: [Switch, SwitchState][];
+  signals: [Signal, Signal["aspect"]][];
+  /** edges that must be unoccupied */
+  clear: Edge[];
+}
+
+export interface AheadItem { kind: "signal" | "board" | "vehicle" | "buffer"; label: string; dist: number; obj?: Trackside; aspect?: string; applies: boolean }
+
+export interface Station extends StationInfo {
+  batonShown: boolean;
+}
+
+export class World {
+  layout: Layout;
+  time: number;
+  warp = 1;
+  paused = false;
+  consists: Consist[] = [];
+  vehicles: Vehicle[] = [];
+  driver: DriverLocation;
+  messages: Message[] = [];
+  incidents: Incident[] = [];
+  stations: Station[];
+  routes: Route[] = [];
+  /** the passenger train the duty is about */
+  trainVehicle: Vehicle;
+  brakeTest: { consist: Consist; t: number } | null = null;
+  hooks: ((w: World, dt: number) => void)[] = [];
+  private prevLead = new Map<Consist, { pos: Position; v: number }>();
+  private flags = { doorsMoving: false, lightsBad: false, overspeed: false, shortStop: new Set<string>() };
+  finished: string | null = null;
+
+  constructor(layout: Layout, startTime: number, trainVehicle: Vehicle, driver: DriverLocation) {
+    this.layout = layout;
+    this.time = startTime;
+    this.trainVehicle = trainVehicle;
+    this.driver = driver;
+    this.stations = layout.stations.map((s) => ({ ...s, batonShown: false }));
+  }
+
+  /* ---------- messages & incidents ---------- */
+
+  say(from: string, text: string, kind: Message["kind"] = "box") {
+    this.messages.push({ t: this.time, from, text, kind });
+  }
+  incident(code: string, text: string, note = false) {
+    // de-duplicate identical incidents within 10 s
+    const last = this.incidents[this.incidents.length - 1];
+    if (last && last.code === code && this.time - last.t < 10) return;
+    this.incidents.push({ t: this.time, code, text, note });
+    this.say("Incident Book", `${fmtTime(this.time)} — ${text}`, "system");
+  }
+
+  /* ---------- queries ---------- */
+
+  get signals(): Signal[] { return this.layout.objects.filter((o): o is Signal => o.kind === "signal"); }
+  get boards(): Board[] { return this.layout.objects.filter((o): o is Board => o.kind === "board"); }
+  signal(id: string): Signal { const s = this.signals.find((x) => x.id === id); if (!s) throw new Error(`no signal ${id}`); return s; }
+  station(code: string): Station { return this.stations.find((s) => s.code === code)!; }
+
+  consistOf(v: Vehicle): Consist { return this.consists.find((c) => c.vehicles.includes(v))!; }
+  get train(): Consist { return this.consistOf(this.trainVehicle); }
+
+  /** The consist the driver is driving (or standing at). */
+  get driverConsist(): Consist | null {
+    const d = this.driver;
+    if (d.kind === "cab") return this.consistOf(d.vehicle);
+    if (d.kind === "ground") return d.at.kind === "cab" ? this.consistOf(d.at.vehicle) : d.at.consist;
+    return null;
+  }
+  get driverCab(): { vehicle: Vehicle; cab: Cab; consist: Consist } | null {
+    const d = this.driver;
+    if (d.kind !== "cab") return null;
+    return { vehicle: d.vehicle, cab: d.vehicle.cabs[d.end]!, consist: this.consistOf(d.vehicle) };
+  }
+
+  edgesOf(v: Vehicle): Edge[] {
+    return advance(reversed(v.pos), v.length).edges;
+  }
+  occupancy(): Map<Edge, Vehicle[]> {
+    const m = new Map<Edge, Vehicle[]>();
+    for (const v of this.vehicles) for (const e of this.edgesOf(v)) m.set(e, [...(m.get(e) ?? []), v]);
+    return m;
+  }
+  isOccupied(e: Edge, except?: Consist): boolean {
+    const occ = this.occupancy().get(e) ?? [];
+    return occ.some((v) => !except || !except.vehicles.includes(v));
+  }
+  /** true when all the consist's vehicles lie entirely within the given edges */
+  whollyOn(c: Consist, edges: Edge[]): boolean {
+    return c.vehicles.every((v) => this.edgesOf(v).every((e) => edges.includes(e)));
+  }
+
+  /** A point beside the track: `inward` metres back from a vehicle end, `aside` metres to the platform side. */
+  private besideTrack(endPos: Position, inward: number, aside: number): Pt {
+    const p = advance(endPos, -inward).pos;
+    const pt = worldPoint(p);
+    const t = tangentAt(p.edge, p.s);
+    // platform side is +y in the world; pick the normal that points that way
+    let n = { x: -t.y, y: t.x };
+    if (n.y < 0) n = { x: -n.x, y: -n.y };
+    return { x: pt.x + n.x * aside, y: pt.y + n.y * aside };
+  }
+  /** Where the driver stands on the ground for an anchor: beside the cab door, or beside the coupling. */
+  anchorPoint(a: Anchor): Pt {
+    if (a.kind === "cab") return this.besideTrack(a.vehicle.endPos(a.end), CAB_DOOR_INWARD, ASIDE);
+    const v = a.consist.vehicles[a.index];
+    const end: End = a.consist.flip[a.index] ? "A" : "B";
+    return this.besideTrack(v.endPos(end), 0, ASIDE);
+  }
+  /** The driver's seat in a cab: inside the vehicle, a little back from the end. */
+  seatPoint(vehicle: Vehicle, end: End): Pt {
+    return this.besideTrack(vehicle.endPos(end), SEAT_INWARD, 0);
+  }
+  driverPoint(): Pt {
+    const d = this.driver;
+    if (d.kind === "cab") return this.seatPoint(d.vehicle, d.end);
+    if (d.kind === "ground") return this.anchorPoint(d.at);
+    const to = this.anchorPoint(d.target);
+    const t = Math.min(1, d.t / d.duration);
+    return { x: d.from.x + (to.x - d.from.x) * t, y: d.from.y + (to.y - d.from.y) * t };
+  }
+
+  /** What lies ahead of a consist's leading end (in the direction of its cab's Forward if stationary). */
+  ahead(c: Consist, max = 1200): AheadItem[] {
+    const ctl = c.control;
+    let sign = c.v !== 0 ? Math.sign(c.v) : 0;
+    if (sign === 0 && ctl) sign = c.cabForwardSign(ctl.index, ctl.cab) * (ctl.cab.reverser === "R" ? -1 : 1);
+    if (sign === 0) sign = 1;
+    const lead = c.leadingPos(sign);
+    const items: AheadItem[] = [];
+    const stretches = pathAhead(lead, max);
+    for (const st of stretches) {
+      const lo = Math.min(st.s0, st.s1), hi = Math.max(st.s0, st.s1);
+      for (const o of this.layout.objects) {
+        if (o.pos.edge !== st.edge) continue;
+        if (o.pos.s < lo - 1e-6 || o.pos.s > hi + 1e-6) continue;
+        const d = st.offset + Math.abs(o.pos.s - st.s0);
+        if (d < 0.3 && o.kind !== "board") continue;
+        const facing = o.pos.dir === st.dir;
+        if (!facing) continue;
+        if (o.kind === "signal") {
+          const applies = o.type === "main" ? c.isTrain : !c.isTrain;
+          items.push({ kind: "signal", label: o.id, dist: d, obj: o, aspect: o.aspect, applies });
+        } else {
+          const label = o.board === "stop" ? `Stop board ${o.label}` : o.board === "limitOfShunt" ? "Limit of Shunt" : o.board === "speed" ? `Speed ${o.value}` : "Buffer stop";
+          const applies = o.board === "stop" ? c.isTrain : o.board === "limitOfShunt" ? !c.isTrain : true;
+          items.push({ kind: o.board === "buffer" ? "buffer" : "board", label, dist: d, obj: o, applies });
+        }
+      }
+      for (const other of this.consists) {
+        if (other === c) continue;
+        for (const v of other.vehicles) for (const end of ["A", "B"] as End[]) {
+          const p = v.endPos(end);
+          if (p.edge !== st.edge) continue;
+          if (p.s < lo - 1e-6 || p.s > hi + 1e-6) continue;
+          const d = st.offset + Math.abs(p.s - st.s0);
+          items.push({ kind: "vehicle", label: `${v.type.cls} ${v.number} (end ${end})`, dist: d, applies: true });
+        }
+      }
+    }
+    items.sort((a, b) => a.dist - b.dist);
+    // keep only the nearest vehicle end
+    let seenVehicle = false;
+    return items.filter((i) => { if (i.kind !== "vehicle") return true; if (seenVehicle) return false; seenVehicle = true; return true; });
+  }
+
+  /** speed limit for a consist right now */
+  limitFor(c: Consist): number {
+    const lead = c.leadingPos(c.v >= 0 ? 1 : -1);
+    let lim = this.layout.limitAt(kmOf(lead));
+    if (!c.isTrain) lim = Math.min(lim, 15);
+    return lim;
+  }
+
+  /* ---------- routes / interlocking ---------- */
+
+  setRoute(id: string): boolean {
+    const r = this.routes.find((x) => x.id === id);
+    if (!r) throw new Error(`no route ${id}`);
+    if (r.clear.some((e) => this.isOccupied(e))) return false;
+    for (const [sw, st] of r.switches) sw.state = st;
+    for (const [sig, asp] of r.signals) sig.aspect = asp;
+    return true;
+  }
+  replaceSignal(id: string) { this.signal(id).aspect = "stop"; }
+
+  /* ---------- driver actions ---------- */
+
+  private requireCab(): { vehicle: Vehicle; cab: Cab; consist: Consist } | null {
+    return this.driverCab;
+  }
+  setReverser(r: Reverser) {
+    const c = this.requireCab(); if (!c) return;
+    if (c.cab.notch > 0) { this.say("Cab", "Power controller must be at 0 to move the reverser.", "system"); return; }
+    c.cab.reverser = r;
+  }
+  setNotch(n: number) {
+    const c = this.requireCab(); if (!c) return;
+    n = Math.max(0, Math.min(4, Math.round(n)));
+    if (n > 0 && c.cab.reverser === "N") { this.say("Cab", "Reverser is in Neutral.", "system"); return; }
+    c.cab.notch = n;
+  }
+  setBrake(step: BrakeStep) {
+    const c = this.requireCab(); if (!c) return;
+    c.cab.brake = step;
+    if (step === 5) this.incident("EMERGENCY", "Emergency brake used", true);
+  }
+  togglePanto() {
+    const c = this.requireCab(); if (!c) return;
+    const v = c.vehicle;
+    if (!v.type.pantograph) return;
+    if (v.panto === "down" || v.panto === "lowering") { v.panto = "raising"; v.pantoTimer = 4; }
+    else { v.panto = "lowering"; v.pantoTimer = 3; }
+  }
+  setLights(l: LightState) {
+    const c = this.requireCab(); if (!c) return;
+    c.cab.lights = l;
+  }
+  toggleDoors() {
+    const c = this.requireCab(); if (!c) return;
+    const open = !c.consist.anyDoorsOpen();
+    if (open && !this.atPlatform(c.consist)) this.incident("DOORS-AWAY", "Doors opened away from a platform");
+    if (open && Math.abs(c.consist.v) > 0.1) this.incident("DOORS-MOVING", "Doors opened while moving");
+    const group = c.consist.pipeGroups().find((g) => g.includes(c.vehicle)) ?? [c.vehicle];
+    for (const v of group) if (v.type.doors) { v.doorsOpen = open; v.doorTimer = 2.5; }
+  }
+  horn() {
+    const c = this.requireCab(); if (!c) return;
+    c.vehicle.hornUntil = this.time + 1.0;
+    c.vehicle.lastHorn = this.time;
+    this.say("Driver", "One short blast.", "driver");
+  }
+  startBrakeTest() {
+    const c = this.requireCab(); if (!c) return;
+    if (c.cab.brake !== 4) { this.say("Cab", "Put the train brake to Full to prove the brake.", "system"); return; }
+    if (c.consist.vehicles.length < 2) { this.say("Cab", "Single vehicle: the brake proves itself. (Test noted.)", "system"); c.consist.brakeProved = true; return; }
+    this.brakeTest = { consist: c.consist, t: 15 };
+    this.say("Driver", "Proving the brake through the train…", "driver");
+  }
+
+  secured(cab: Cab): boolean { return cab.notch === 0 && cab.reverser === "N" && cab.brake >= 4; }
+
+  /** Why the cab may not be left yet, or null when secured (Rule R 22). */
+  unsecuredReason(cab: Cab): string | null {
+    if (cab.notch > 0) return "power controller is not at 0";
+    if (cab.reverser !== "N") return "reverser is not in Neutral";
+    if (cab.brake < 4) return "train brake is not fully applied";
+    return null;
+  }
+  leaveCab() {
+    const d = this.driver; if (d.kind !== "cab") return;
+    const cab = d.vehicle.cabs[d.end]!;
+    const why = this.unsecuredReason(cab);
+    if (why) { this.say("Cab", `Secure the cab before leaving: ${why} (Rule R 22).`, "system"); return; }
+    if (this.consistOf(d.vehicle).v !== 0) { this.say("Cab", "The train is still moving.", "system"); return; }
+    cab.active = false;
+    this.driver = { kind: "ground", at: { kind: "cab", vehicle: d.vehicle, end: d.end } };
+  }
+  enterCab() {
+    const d = this.driver; if (d.kind !== "ground" || d.at.kind !== "cab") return;
+    const v = d.at.vehicle;
+    const cab = v.cabs[d.at.end];
+    if (!cab) return;
+    cab.active = true;
+    const c = this.consistOf(v);
+    c.control = { vehicle: v, cab, index: c.vehicles.indexOf(v) };
+    this.driver = { kind: "cab", vehicle: v, end: d.at.end };
+  }
+  /** Places within walking reach (80 m): cabs of any vehicle, couplings of any consist. */
+  walkTargets(): { label: string; anchor: Anchor; dist: number }[] {
+    const d = this.driver;
+    if (d.kind !== "ground") return [];
+    const here = this.driverPoint();
+    const out: { label: string; anchor: Anchor; dist: number }[] = [];
+    const push = (label: string, anchor: Anchor) => {
+      const p = this.anchorPoint(anchor);
+      const dist = Math.hypot(p.x - here.x, p.y - here.y);
+      if (dist <= 80) out.push({ label, anchor, dist });
+    };
+    for (const c of this.consists) {
+      for (const v of c.vehicles) for (const end of v.type.cabs) {
+        if (d.at.kind === "cab" && d.at.vehicle === v && d.at.end === end) continue;
+        push(`Cab ${end} of ${v.number}`, { kind: "cab", vehicle: v, end });
+      }
+      for (let i = 0; i + 1 < c.vehicles.length; i++) {
+        if (d.at.kind === "coupling" && d.at.consist === c && d.at.index === i) continue;
+        push(`Coupling ${c.vehicles[i].number}–${c.vehicles[i + 1].number}`, { kind: "coupling", consist: c, index: i });
+      }
+    }
+    out.sort((a, b) => a.dist - b.dist);
+    return out;
+  }
+  walkTo(anchor: Anchor) {
+    const d = this.driver; if (d.kind !== "ground") return;
+    const from = this.driverPoint();
+    const to = this.anchorPoint(anchor);
+    const dist = Math.hypot(to.x - from.x, to.y - from.y) + 3;
+    this.driver = { kind: "walking", from, target: anchor, t: 0, duration: dist / 1.2 };
+  }
+  /** Uncouple at the coupling the driver stands at. */
+  uncouple() {
+    const d = this.driver; if (d.kind !== "ground" || d.at.kind !== "coupling") return;
+    const c = d.at.consist, k = d.at.index;
+    if (c.v !== 0) { this.say("Driver", "The train is moving.", "system"); return; }
+    const ctl = c.control;
+    if (ctl && ctl.cab.brake < 4) this.incident("UNCOUPLE-UNBRAKED", "Uncoupled with the train brake not fully applied (Rule D 12)");
+    const partA = new Consist(`${c.id}a`, c.vehicles.slice(0, k + 1), c.flip.slice(0, k + 1));
+    const partB = new Consist(`${c.id}b`, c.vehicles.slice(k + 1), c.flip.slice(k + 1));
+    partA.couplings = c.couplings.slice(0, k);
+    partB.couplings = c.couplings.slice(k + 1);
+    for (const p of [partA, partB]) {
+      if (ctl && p.vehicles.includes(ctl.vehicle)) p.control = { vehicle: ctl.vehicle, cab: ctl.cab, index: p.vehicles.indexOf(ctl.vehicle) };
+    }
+    this.consists = this.consists.filter((x) => x !== c).concat([partA, partB]);
+    this.prevLead.delete(c);
+    // the driver stands at the parted coupling; anchor them to a parted end, preferring one with a cab
+    const endA: Anchor = { kind: "cab", vehicle: partA.vehicles[k], end: partA.flip[k] ? "A" : "B" };
+    const endB: Anchor = { kind: "cab", vehicle: partB.vehicles[0], end: partB.flip[0] ? "B" : "A" };
+    const hasCab = (a: Anchor) => a.kind === "cab" && !!a.vehicle.cabs[a.end];
+    this.driver = { kind: "ground", at: hasCab(endA) ? endA : hasCab(endB) ? endB : endA };
+    this.say("Driver", `Uncoupled ${c.vehicles[k].number} from ${c.vehicles[k + 1].number}. Brake pipe parted; both parts braked.`, "driver");
+  }
+  /** Connect the brake pipe at the coupling the driver stands at. */
+  connectPipe() {
+    const d = this.driver; if (d.kind !== "ground" || d.at.kind !== "coupling") return;
+    const c = d.at.consist;
+    c.couplings[d.at.index].pipe = true;
+    c.brakeProved = false;
+    this.say("Driver", "Brake pipe and control line connected.", "driver");
+  }
+
+  atPlatform(c: Consist): boolean {
+    for (const v of c.vehicles) {
+      if (!v.type.passenger) continue;
+      const kA = kmOf(v.pos), kB = kmOf(v.posB);
+      const ok = this.layout.platforms.some((p) => {
+        const onTrack = this.edgesOf(v).every((e) => e.track === p.track);
+        return onTrack && Math.min(kA, kB) >= p.kmFrom - 0.006 && Math.max(kA, kB) <= p.kmTo + 0.006;
+      });
+      if (!ok) return false;
+    }
+    return true;
+  }
+
+  /* ---------- coupling on contact ---------- */
+
+  private tryCouple(c: Consist) {
+    if (c.v === 0) return;
+    const sign = Math.sign(c.v);
+    const lead = c.leadingPos(sign);
+    const stretches = pathAhead(lead, 1.0);
+    for (const st of stretches) {
+      const lo = Math.min(st.s0, st.s1), hi = Math.max(st.s0, st.s1);
+      for (const other of this.consists) {
+        if (other === c) continue;
+        for (let i = 0; i < other.vehicles.length; i++) {
+          const v = other.vehicles[i];
+          for (const end of ["A", "B"] as End[]) {
+            const p = v.endPos(end);
+            if (p.edge !== st.edge || p.s < lo - 1e-6 || p.s > hi + 1e-6) continue;
+            // only free ends can be coupled to
+            const isFront = i === 0 && end === (other.flip[0] ? "B" : "A");
+            const isRear = i === other.vehicles.length - 1 && end === (other.flip[i] ? "A" : "B");
+            if (!isFront && !isRear) continue;
+            this.couple(c, other, isFront ? "front" : "rear", sign);
+            return;
+          }
+        }
+      }
+    }
+  }
+
+  private couple(c1: Consist, c2: Consist, touched: "front" | "rear", sign: number) {
+    const speed = kmh(Math.abs(c1.v));
+    // merged order: c2 far end ... c2 touched end, c1 leading ... c1 rear (in motion direction)
+    const c2Vehicles = touched === "rear" ? c2.vehicles.slice() : c2.vehicles.slice().reverse();
+    const c2Flip = touched === "rear" ? c2.flip.slice() : c2.flip.slice().reverse().map((f) => !f);
+    const c2Coup = touched === "rear" ? c2.couplings.slice() : c2.couplings.slice().reverse();
+    const c1Vehicles = sign > 0 ? c1.vehicles.slice() : c1.vehicles.slice().reverse();
+    const c1Flip = sign > 0 ? c1.flip.slice() : c1.flip.slice().reverse().map((f) => !f);
+    const c1Coup = sign > 0 ? c1.couplings.slice() : c1.couplings.slice().reverse();
+    const merged = new Consist(`${c1.id}+${c2.id}`, [...c2Vehicles, ...c1Vehicles], [...c2Flip, ...c1Flip]);
+    merged.couplings = [...c2Coup, { pipe: false }, ...c1Coup];
+    const ctl = c1.control ?? c2.control;
+    if (ctl) merged.control = { vehicle: ctl.vehicle, cab: ctl.cab, index: merged.vehicles.indexOf(ctl.vehicle) };
+    merged.v = 0;
+    merged.brakeProved = false;
+    this.consists = this.consists.filter((x) => x !== c1 && x !== c2).concat([merged]);
+    this.prevLead.delete(c1); this.prevLead.delete(c2);
+    if (this.driver.kind === "ground" && this.driver.at.kind === "coupling") this.driver = { kind: "ground", at: { kind: "cab", vehicle: merged.vehicles[0], end: merged.flip[0] ? "B" : "A" } };
+    const names = c1Vehicles.map((v) => v.number).join("+") + " to " + c2Vehicles.map((v) => v.number).join("+");
+    if (speed > 5) this.incident("COUPLE-DAMAGE", `Coupled ${names} at ${speed.toFixed(1)} km/h — damage likely (Rule D 10)`);
+    else if (speed > 2) this.incident("COUPLE-ROUGH", `Rough coupling ${names} at ${speed.toFixed(1)} km/h (Rule D 10)`);
+    else this.say("Driver", `Coupled ${names} at ${speed.toFixed(1)} km/h. Brake pipe not yet connected.`, "driver");
+  }
+
+  /* ---------- the step ---------- */
+
+  step(dt: number) {
+    if (this.paused || this.finished) return;
+    this.time += dt;
+
+    // driver walking
+    const d = this.driver;
+    if (d.kind === "walking") {
+      d.t += dt;
+      if (d.t >= d.duration) this.driver = { kind: "ground", at: d.target };
+    }
+
+    // brake test
+    if (this.brakeTest) {
+      const bt = this.brakeTest;
+      bt.t -= dt;
+      if (bt.t <= 0) {
+        const far = bt.consist.vehicles[bt.consist.vehicles.length - 1];
+        const near = bt.consist.vehicles[0];
+        const ok = bt.consist.allPipesConnected() && far.pipe <= 3.7 && near.pipe <= 3.7;
+        if (ok) { bt.consist.brakeProved = true; this.say("Driver", `Brake proved through ${bt.consist.vehicles.length} vehicles.`, "driver"); }
+        else this.incident("BRAKE-NOT-PROVED", "Brake continuity test failed: pipe not connected through the train");
+        this.brakeTest = null;
+      }
+    }
+
+    // physics
+    for (const c of this.consists.slice()) {
+      const sign = c.v !== 0 ? Math.sign(c.v) : 0;
+      const before = sign !== 0 ? c.leadingPos(sign) : null;
+      const r = stepConsist(c, dt);
+      if (r.hitBuffer) { this.incident("BUFFER", `${c.vehicles.map((v) => v.number).join("+")} struck the buffer stop (Rule D 16)`); }
+      if (r.trailed) this.incident("TRAILED", `Ran through switch ${r.trailed} set against the move`);
+      if (before && Math.abs(c.v) > 0) this.checkPassings(c, before, Math.abs(c.v) * dt);
+      if (this.consists.includes(c)) this.tryCouple(c);
+    }
+
+    this.checkContinuous(dt);
+    for (const h of this.hooks) h(this, dt);
+  }
+
+  private checkPassings(c: Consist, before: Position, moved: number) {
+    const stretches = pathAhead(before, moved + 1e-6);
+    for (const st of stretches) {
+      for (const o of this.layout.objects) {
+        if (o.pos.edge !== st.edge || o.pos.dir !== st.dir) continue;
+        // passed when the object lies strictly inside the moved interval (exclusive of the start point)
+        const inside = st.dir === 1 ? (o.pos.s > st.s0 && o.pos.s <= st.s1) : (o.pos.s < st.s0 && o.pos.s >= st.s1);
+        if (!inside) continue;
+        this.onPassed(c, o);
+      }
+    }
+  }
+
+  private onPassed(c: Consist, o: Trackside) {
+    const names = c.vehicles.map((v) => v.number).join("+");
+    if (o.kind === "signal") {
+      const governs = o.type === "main" ? c.isTrain : !c.isTrain;
+      if (governs && o.aspect === "stop") this.incident("SPAD", `${names} passed ${o.id} at ${o.type === "main" ? "STOP" : "SHUNT STOP"} (Rule S 10)`);
+      if (o.aspect !== "stop") { o.aspect = "stop"; }
+      return;
+    }
+    if (o.board === "stop" && c.isTrain) this.incident("OVERRUN", `${names} overran the stop board at ${o.label} (Rule R 12)`);
+    if (o.board === "limitOfShunt" && !c.isTrain) this.incident("LOS", `${names} passed the Limit of Shunt (Rule S 12)`);
+  }
+
+  private checkContinuous(dt: number) {
+    void dt;
+    for (const c of this.consists) {
+      const moving = Math.abs(c.v) > 0.05;
+      const speed = c.speedKmh;
+      // overspeed
+      const lim = this.limitFor(c);
+      if (moving && speed > lim + 2) {
+        if (!this.flags.overspeed) { this.flags.overspeed = true; this.incident("OVERSPEED", `${c.vehicles.map((v) => v.number).join("+")} at ${speed.toFixed(0)} km/h where the limit is ${lim} (Rule R 10)`); }
+      } else if (speed < lim) this.flags.overspeed = false;
+      // doors
+      if (moving && c.anyDoorsOpen()) {
+        if (!this.flags.doorsMoving) { this.flags.doorsMoving = true; this.incident("DOORS-MOVING", "Moved with doors open (Rule R 14)"); }
+      } else if (!c.anyDoorsOpen()) this.flags.doorsMoving = false;
+      // lights on the main line
+      if (moving && c.isTrain && speed > 5) {
+        const lead = c.leadingPos(Math.sign(c.v));
+        const onMain = lead.edge.track === "main";
+        if (onMain) {
+          const front = c.v > 0 ? c.frontEnd() : c.rearEnd();
+          const rear = c.v > 0 ? c.rearEnd() : c.frontEnd();
+          const ok = front.vehicle.lightsAt(front.end) === "head" && rear.vehicle.lightsAt(rear.end) === "tail";
+          if (!ok) { if (!this.flags.lightsBad) { this.flags.lightsBad = true; this.incident("LIGHTS", `Incorrect lights on the main line: front shows ${front.vehicle.lightsAt(front.end).toUpperCase()}, rear shows ${rear.vehicle.lightsAt(rear.end).toUpperCase()} (Rule R 16)`); } }
+          else this.flags.lightsBad = false;
+        }
+      }
+      // horn before moving from rest
+      const pl = this.prevLead.get(c);
+      const wasStill = !pl || pl.v === 0;
+      if (wasStill && c.v !== 0) {
+        const ctl = c.control;
+        if (ctl && this.time - ctl.vehicle.lastHorn > 25) this.incident("HORN", "Moved from rest without one short blast (Rule R 18)");
+      }
+      this.prevLead.set(c, { pos: c.leadingPos(c.v >= 0 ? 1 : -1), v: c.v });
+      // automatic coach lights
+      for (let i = 0; i < c.vehicles.length; i++) {
+        const v = c.vehicles[i];
+        if (v.type.cabs.length > 0) continue;
+        const litTrain = c.vehicles.some((x) => Object.values(x.cabs).some((cb) => cb && cb.lights !== "off"));
+        const frontEnd: End = c.flip[i] ? "B" : "A", rearEnd: End = c.flip[i] ? "A" : "B";
+        v.autoLights[frontEnd] = i === 0 && litTrain ? (c.v < 0 ? "head" : "tail") : "off";
+        v.autoLights[rearEnd] = i === c.vehicles.length - 1 && litTrain ? (c.v > 0 || c.v === 0 ? "tail" : "head") : "off";
+        // a coach shows tail at its free end(s); when it leads (pushed) it would show head — not used in these duties
+        if (i === 0 && litTrain) v.autoLights[frontEnd] = "tail";
+        if (i === c.vehicles.length - 1 && litTrain) v.autoLights[rearEnd] = "tail";
+      }
+    }
+  }
+
+  /** km and travel direction of the leading end of the train */
+  trainKm(): { km: number; dir: Dir } {
+    const c = this.train;
+    const lead = c.leadingPos(c.v >= 0 ? 1 : -1);
+    return { km: kmOf(lead), dir: kmDirOf(lead) };
+  }
+}
