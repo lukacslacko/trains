@@ -51,6 +51,32 @@ Rules are cited as "Rule R 20" across books.
 
 Later: P (Permanent Way), W (Workshop), T (Timetabling).
 
+### 2.1 Editions and amendment slips (standing requirement)
+
+A reader who knows one edition of a Book must be able to bring themselves
+up to date quickly. Therefore, whenever the text or figures of a Book
+change (a change to the shared stylesheet alone does not count):
+
+1. **Bump the edition** on the cover, in the desk-bar and in the colophon:
+   "Second edition · October 2026", and the colophon says which edition it
+   supersedes.
+2. **Deposit an amendment slip** at
+   `public/manuals/amendments/book-<letter>-ed<N>.html`, in the house style
+   (it is itself a small Book page): title "Amendment Slip <Letter>-<N>:
+   first edition to second edition", date, then one entry per change, in
+   book order, each giving the section (with a link to its anchor), a
+   one-line reason, and the wording before and after where wording changed,
+   or the new text in full (or a faithful summary for long additions).
+   It must read cleanly on its own, like a well-made diff, not like a patch
+   file.
+3. **Link it**: the Book's colophon lists its slips; the Library page lists
+   the current edition of every Book and its slips; the slip links back to
+   the Book.
+
+The first editions of Books I, R, S and D (September 2026) are the
+baseline; the hectometre-post amendment of 2026-09-08 predates this rule
+and carries no slip.
+
 ## 3. Geography
 
 The Wend valley. The line runs south to north from **Ashgrove** (a market

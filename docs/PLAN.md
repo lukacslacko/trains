@@ -211,3 +211,8 @@ manual that describes exactly what is playable.
   the cab has a paragraph in Book D.
 - Add depth only through an existing interface; add a new interface only
   with a milestone.
+- Every change to a Book bumps its edition and ships an amendment slip: a
+  clean, readable account of what changed, deposited next to the Book and
+  linked from it and from the Library (see `docs/WORLD.md` §2.1).
+- Every piece of finished work is committed and pushed to
+  `github.com/lukacslacko/trains`.
