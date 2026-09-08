@@ -1,7 +1,7 @@
 import { World } from "../sim/world";
 import { DutyTracker } from "../sim/duty";
 import { BRAKE_NAMES, type BrakeStep, type LightState, type Reverser } from "../stock/vehicles";
-import { fmtTime } from "../core/util";
+import { fmtTime, parseTime } from "../core/util";
 import { kmOf } from "../track/graph";
 
 function esc(s: string) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
@@ -51,6 +51,7 @@ export class SidePanel {
       case "uncouple": w.uncouple(); break;
       case "connect": w.connectPipe(); break;
       case "tab": this.tab = v as SidePanel["tab"]; this.lastPane = ""; break;
+      case "skipto": { const l = this.duty.legs[Number(v)]; if (l) w.skipTo(parseTime(l.leg.dep)); break; }
     }
     this.update(true);
   }
@@ -154,14 +155,19 @@ export class SidePanel {
 
   private renderSheet(): string {
     const d = this.duty;
+    const w = this.world;
     const rows = d.legs.map((l, i) => {
       const cls = l.phase === "done" ? "done" : i === d.index ? "cur" : "";
       const dep = l.departed !== undefined ? fmtTime(l.departed) : "";
       const arr = l.arrived !== undefined ? fmtTime(l.arrived) : "";
-      return `<tr class="${cls}"><td>${l.leg.from}</td><td>${l.leg.dep}</td><td>${dep}</td><td>${l.leg.to}</td><td>${l.leg.arr}</td><td>${arr}</td></tr>`;
+      const canSkip = i === d.index && l.phase === "waiting" && w.time < parseTime(l.leg.dep) - 15 && w.skipUntil === null;
+      const depCell = canSkip
+        ? `<button class="skip" data-a="skipto" data-v="${i}" title="Advance the clock to 15 s before this departure">${l.leg.dep} ▸</button>`
+        : w.skipUntil !== null && i === d.index ? `<span class="skipping">${l.leg.dep} …</span>` : l.leg.dep;
+      return `<tr class="${cls}"><td>${l.leg.from}</td><td>${depCell}</td><td>${dep}</td><td>${l.leg.to}</td><td>${l.leg.arr}</td><td>${arr}</td></tr>`;
     }).join("");
     const prep = d.prep.map((p) => `<li>${esc(p)}</li>`).join("");
-    return `<div class="sheet"><table><thead><tr><th>From</th><th>Dep</th><th>Actual</th><th>To</th><th>Arr</th><th>Actual</th></tr></thead><tbody>${rows}</tbody></table><h4>The duty in brief</h4><ol>${prep}</ol></div>`;
+    return `<div class="sheet"><table><thead><tr><th>From</th><th>Dep</th><th>Actual</th><th>To</th><th>Arr</th><th>Actual</th></tr></thead><tbody>${rows}</tbody></table><h4>The duty in brief</h4><ol>${prep}</ol><p class="hint">Waiting for a departure? Click its booked time to bring the clock to 15 s before it. The world runs on meanwhile; the clock stops early if anything moves or is written in the Incident Book.</p></div>`;
   }
 
   private renderIncidents(): string {

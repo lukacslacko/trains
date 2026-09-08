@@ -43,6 +43,9 @@ node scripts/play.mjs 201
 - **The Library.** Book I (Identity), Book R (Rules of Operation), Book S
   (Signalling), Book D (Driving). HTML booklets with a print stylesheet
   (A5) in `public/manuals/`.
+- **Waiting for a departure.** On the duty sheet, click the booked departure
+  time to bring the clock to 15 s before it. The world keeps running through
+  the skip, and it stops early if anything moves or an incident is written.
 - **Incident notices.** A new Incident Book entry pauses the duty and shows a
   notice with the rule, a short lesson and a link into the Book; dismiss it
   with a click or Enter.

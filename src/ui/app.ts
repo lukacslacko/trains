@@ -119,7 +119,9 @@ export class App {
       // Advance the world by exactly the elapsed time, in substeps of at most 20 ms,
       // so that vehicles move every frame and the tracked view stays smooth.
       const held = r.notices.length > 0;
-      if (!r.world.paused && !held) {
+      if (r.world.skipUntil !== null && !held) {
+        r.world.runSkip();
+      } else if (!r.world.paused && !held) {
         const target = real * r.world.warp;
         const n = Math.max(1, Math.ceil(target / 0.02));
         const dt = target / n;

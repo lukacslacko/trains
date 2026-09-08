@@ -49,6 +49,8 @@ export class World {
   trainVehicle: Vehicle;
   brakeTest: { consist: Consist; t: number } | null = null;
   hooks: ((w: World, dt: number) => void)[] = [];
+  /** when set, the UI runs the world quickly until this time (a "wait for departure" convenience) */
+  skipUntil: number | null = null;
   private prevLead = new Map<Consist, { pos: Position; v: number }>();
   private flags = { doorsMoving: false, lightsBad: false, overspeed: false, shortStop: new Set<string>() };
   finished: string | null = null;
@@ -263,6 +265,27 @@ export class World {
   }
 
   secured(cab: Cab): boolean { return cab.notch === 0 && cab.reverser === "N" && cab.brake >= 4; }
+
+  /** Bring the clock to `lead` seconds before `t`, provided the train stands still. The world still steps normally. */
+  skipTo(t: number, lead = 15): boolean {
+    const target = t - lead;
+    if (target <= this.time) return false;
+    if (this.consists.some((c) => c.v !== 0)) { this.say("Duty", "Cannot advance the clock while a vehicle is moving.", "system"); return false; }
+    this.skipUntil = target;
+    return true;
+  }
+  /** One frame's worth of fast-forward; returns true while still skipping. */
+  runSkip(maxSteps = 3000): boolean {
+    if (this.skipUntil === null) return false;
+    const n0 = this.incidents.length;
+    let n = 0;
+    while (this.time < this.skipUntil && n < maxSteps) {
+      this.step(0.05); n++;
+      if (this.consists.some((c) => c.v !== 0) || this.incidents.length > n0 || this.finished) { this.skipUntil = null; return false; }
+    }
+    if (this.time >= this.skipUntil) { this.skipUntil = null; this.say("Duty", `Clock advanced to ${fmtTime(this.time, true)}.`, "system"); return false; }
+    return true;
+  }
 
   /** Why the cab may not be left yet, or null when secured (Rule R 22). */
   unsecuredReason(cab: Cab): string | null {
