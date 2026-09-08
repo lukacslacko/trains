@@ -63,7 +63,7 @@ export class LineDiagram {
     }
     // platforms
     ctx.fillStyle = "rgba(244,239,227,.25)";
-    for (const p of world.layout.platforms) ctx.fillRect(X(p.kmFrom), y0 + 5, X(p.kmTo) - X(p.kmFrom), 4);
+    for (const p of world.layout.platforms) ctx.fillRect(X(p.kmFrom), y0 + 3, X(p.kmTo) - X(p.kmFrom), 3);
     // stations
     ctx.fillStyle = C.ivory; ctx.font = `600 13px ${DISPLAY}`; ctx.textAlign = "center";
     for (const st of world.stations) {
@@ -81,7 +81,7 @@ export class LineDiagram {
       const x = X(km);
       if (o.kind === "signal") {
         const col = o.aspect === "clear" ? C.lamp : o.aspect === "caution" ? C.amber : o.aspect === "shunt" ? C.white : C.red;
-        const yy = y + side * (track === "2" ? 7 : 9);
+        const yy = y + side * (track === "2" ? 8 : 12);
         ctx.strokeStyle = C.slate; ctx.lineWidth = 1;
         ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, yy); ctx.stroke();
         if (o.type === "main") {
@@ -93,8 +93,9 @@ export class LineDiagram {
           ctx.beginPath(); ctx.arc(x - 2, yy + dy, 1, 0, Math.PI * 2); ctx.fill();
           ctx.beginPath(); ctx.arc(x + 2, yy - dy, 1, 0, Math.PI * 2); ctx.fill();
         }
-        ctx.fillStyle = C.chalk; ctx.font = `600 10px ${DISPLAY}`; ctx.textAlign = "center";
-        ctx.fillText(o.id, x, yy + side * 10 + 3);
+        // the name sits beside the head, on the side away from the direction it faces
+        ctx.fillStyle = C.chalk; ctx.font = `600 9px ${DISPLAY}`; ctx.textAlign = facingDown ? "right" : "left";
+        ctx.fillText(o.id.replace(" ", ""), facingDown ? x - 7 : x + 7, yy + 3);
         // direction tick
         ctx.fillStyle = C.slate;
         ctx.beginPath(); const dx = facingDown ? 6 : -6; ctx.moveTo(x + dx, yy); ctx.lineTo(x + dx * 0.4, yy - 2.5); ctx.lineTo(x + dx * 0.4, yy + 2.5); ctx.fill();
@@ -104,24 +105,32 @@ export class LineDiagram {
       } else if (o.board === "limitOfShunt") {
         ctx.fillStyle = C.red; ctx.fillRect(x - 1.5, y + side * 4 - 3, 3, 6);
       } else if (o.board === "speed") {
-        ctx.fillStyle = C.chalk; ctx.font = `10px ${MONO}`; ctx.textAlign = "center";
-        ctx.fillText(String(o.value), x, y + side * 12 + 3);
+        // speed boards are read off the speed ribbon below the line; mark the board's place with a tick on the line
+        ctx.strokeStyle = C.chalk; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(x, y - 4); ctx.lineTo(x, y + 4); ctx.stroke();
       } else if (o.board === "speedAdvance") {
         const yy = y + side * 12;
         ctx.strokeStyle = C.chalk; ctx.lineWidth = 1; ctx.lineJoin = "round";
         ctx.beginPath(); ctx.moveTo(x, yy - 5); ctx.lineTo(x + 4.5, yy + 3); ctx.lineTo(x - 4.5, yy + 3); ctx.closePath(); ctx.stroke();
-        ctx.fillStyle = C.chalk; ctx.font = `8px ${MONO}`; ctx.textAlign = "center";
-        ctx.fillText(String(o.value), x, yy + side * 12 + 3);
+        ctx.fillStyle = C.chalk; ctx.font = `600 9px ${DISPLAY}`; ctx.textAlign = facingDown ? "right" : "left";
+        ctx.fillText(String(o.value), facingDown ? x - 7 : x + 7, yy + 3);
       } else if (o.board === "buffer") {
         ctx.strokeStyle = C.red; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(x, y - 5); ctx.lineTo(x, y + 5); ctx.stroke();
       }
+    }
+    // speed ribbon: the limit in force along each stretch, boundaries at the speed boards
+    ctx.strokeStyle = C.slate; ctx.lineWidth = 1; ctx.fillStyle = C.chalk; ctx.font = `8px ${MONO}`; ctx.textAlign = "center";
+    for (const [a, b, lim] of world.layout.speedZones) {
+      const xa = X(a), xb = X(b);
+      ctx.beginPath(); ctx.moveTo(xa, y0 + 18); ctx.lineTo(xa, y0 + 25); ctx.moveTo(xb, y0 + 18); ctx.lineTo(xb, y0 + 25); ctx.stroke();
+      ctx.fillText(`${lim}`, (xa + xb) / 2, y0 + 25);
     }
     // hectometre ticks and kilometre numerals along the bottom
     ctx.strokeStyle = C.slate; ctx.lineWidth = 1; ctx.fillStyle = C.chalk; ctx.font = `9px ${MONO}`; ctx.textAlign = "center";
     for (const p of world.layout.posts) {
       const x = X(p.km);
       const tall = p.major ? 8 : Math.round(p.km * 10) % 5 === 0 ? 5 : 3;
-      ctx.beginPath(); ctx.moveTo(x, y0 + 26); ctx.lineTo(x, y0 + 26 + tall); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(x, y0 + 28); ctx.lineTo(x, y0 + 28 + tall); ctx.stroke();
       if (p.major) ctx.fillText(`km ${p.label}`, x, y0 + 44);
     }
     // driver: a brass ring on the line

@@ -88,7 +88,8 @@ function limitOver(kmA: number, kmB: number) {
   return lim === Infinity ? limitAt(lo) : lim;
 }
 
-const zones: [number, number, number][] = [[0, AG_LIMIT + 0.05, 0.3], [AG_LIMIT + 0.05, WD_LIMIT - 0.05, 0.4], [WD_LIMIT - 0.05, KM_MAX, 0.3]];
+/** The line diagram is drawn to a true, linear scale so its hectometre ticks mean what they say. */
+const zones: [number, number, number][] = [[0, KM_MAX, 1]];
 
 const platforms: Platform[] = [
   { name: "Ashgrove", track: "1", kmFrom: 0.13, kmTo: 0.29, side: 1 },
