@@ -151,7 +151,7 @@ export class NpcDriver {
         if (joining) for (const i of items) if (i.kind === "vehicle") { target = Math.min(target, i.dist - 0.2); coupling = true; break; }
         for (const i of items) {
           if (i.dist > 15 || !i.obj || i.obj.kind !== "board") continue;
-          if (i.obj.board === "whistle" && !this.whistled.has(i.obj.id)) { this.whistled.add(i.obj.id); v.hornUntil = w.time + 1.5; v.lastHorn = w.time; }
+          if (i.obj.board === "whistle" && !this.whistled.has(i.obj.id)) { this.whistled.add(i.obj.id); v.hornUntil = w.time + 1.5; v.lastHorn = w.time; v.lastLongHorn = w.time; }
           if (i.obj.board === "section") this.powerOff = true;
           if (i.obj.board === "resume") this.powerOff = false;
         }

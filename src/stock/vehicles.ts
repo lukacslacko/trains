@@ -56,8 +56,11 @@ export class Vehicle {
   parkingBrake = false;
   /** set by the world: false while the pantograph stands under a neutral section */
   lineVolts = true;
+  /** sounding until this time (Infinity while the horn is held) */
   hornUntil = 0;
   lastHorn = -1e9;
+  /** when the last long blast (held 1.5 s or more) ended */
+  lastLongHorn = -1e9;
 
   constructor(id: string, number: string, type: VehicleType, pos: Position) {
     this.id = id; this.number = number; this.type = type; this.pos = pos;

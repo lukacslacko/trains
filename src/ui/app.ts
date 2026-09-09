@@ -21,6 +21,8 @@ export class App {
     this.root = root;
     window.addEventListener("hashchange", () => this.route());
     window.addEventListener("keydown", this.keyHandler);
+    window.addEventListener("keyup", (e) => this.onKeyUp(e));
+    window.addEventListener("blur", () => { const r = this.running; if (r) { r.world.hornUp(); r.panel.update(true); } });
     this.route();
   }
 
@@ -167,6 +169,11 @@ export class App {
       </div>`;
   }
 
+  private onKeyUp(e: KeyboardEvent) {
+    const r = this.running; if (!r) return;
+    if (e.key.toLowerCase() === "h" && r.world.hornHeld) { r.world.hornUp(); r.panel.update(true); }
+  }
+
   private dismissNotice() {
     const r = this.running; if (!r || r.notices.length === 0) return;
     r.notices.shift();
@@ -200,7 +207,7 @@ export class App {
       case "b": w.setParkingBrake(!cab.vehicle.parkingBrake); break;
       case "l": w.setLights(c.lights === "off" ? "tail" : c.lights === "tail" ? "head" : "off"); break;
       case "o": w.toggleDoors(); break;
-      case "h": w.horn(); break;
+      case "h": if (!e.repeat) w.hornDown(); break;
       default: return;
     }
     r.panel.update(true);

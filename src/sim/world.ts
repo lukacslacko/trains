@@ -384,8 +384,32 @@ export class World {
     const group = c.consist.pipeGroups().find((g) => g.includes(c.vehicle)) ?? [c.vehicle];
     for (const v of group) if (v.type.doors) { v.doorsOpen = open; v.doorTimer = 2.5; }
   }
+  /** A held blast is long once it has lasted this many seconds (Rule R 18). */
+  static readonly LONG_BLAST = 1.5;
+  /** the horn held down: the vehicle sounding and the time it began */
+  hornHeld: { vehicle: Vehicle; since: number } | null = null;
+  /** Press the horn: it sounds until hornUp(). */
+  hornDown() {
+    if (this.hornHeld) return;
+    const c = this.requireCab(); if (!c) return;
+    c.vehicle.hornUntil = Infinity;
+    c.vehicle.lastHorn = this.time;
+    this.hornHeld = { vehicle: c.vehicle, since: this.time };
+  }
+  /** Release the horn: the blast was short or long by how long it was held. */
+  hornUp() {
+    const h = this.hornHeld; if (!h) return;
+    this.hornHeld = null;
+    const v = h.vehicle;
+    v.hornUntil = this.time;
+    v.lastHorn = this.time;
+    if (this.time - h.since >= World.LONG_BLAST) { v.lastLongHorn = this.time; this.say("Driver", "One long blast.", "driver"); }
+    else this.say("Driver", "One short blast.", "driver");
+  }
+  /** One short blast, as a single press gives. */
   horn() {
     const c = this.requireCab(); if (!c) return;
+    if (this.hornHeld) return;
     c.vehicle.hornUntil = this.time + 1.0;
     c.vehicle.lastHorn = this.time;
     this.say("Driver", "One short blast.", "driver");
@@ -712,7 +736,9 @@ export class World {
         const front = kmOf(c.leadingPos(c.v >= 0 ? 1 : -1));
         if ((front - wd.km) * wd.dir >= 0) {
           const ctl = c.control;
-          if (!ctl || ctl.vehicle.lastHorn < wd.since) this.incident("WHISTLE", `${c.vehicles.map((v) => v.number).join("+")} passed the crossing without sounding the horn (Rule R 18)`, false, c);
+          // a long blast since the board: either finished, or still being held and already long enough
+          const held = this.hornHeld && ctl && this.hornHeld.vehicle === ctl.vehicle && this.time - this.hornHeld.since >= World.LONG_BLAST ? this.time : -1e9;
+          if (!ctl || Math.max(ctl.vehicle.lastLongHorn, held) < wd.since) this.incident("WHISTLE", `${c.vehicles.map((v) => v.number).join("+")} passed the crossing without a long blast (Rule R 18)`, false, c);
           this.whistleDue.delete(c);
         }
       }

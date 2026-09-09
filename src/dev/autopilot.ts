@@ -43,7 +43,7 @@ export class Autopilot {
       const ctlV = c.control?.vehicle;
       for (const i of items) {
         if (i.dist > 15 || !i.obj || i.obj.kind !== "board") continue;
-        if (i.obj.board === "whistle" && ctlV && w.time - ctlV.lastHorn > 30) { ctlV.hornUntil = w.time + 1.5; ctlV.lastHorn = w.time; }
+        if (i.obj.board === "whistle" && ctlV && w.time - ctlV.lastHorn > 30) { ctlV.hornUntil = w.time + 1.5; ctlV.lastHorn = w.time; ctlV.lastLongHorn = w.time; }
         if (i.obj.board === "section") this.powerOff = true;
         if (i.obj.board === "resume") this.powerOff = false;
       }

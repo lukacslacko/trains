@@ -23,12 +23,20 @@ export class SidePanel {
 
   constructor(root: HTMLElement, world: World, duty: DutyTracker) {
     this.root = root; this.world = world; this.duty = duty;
-    root.innerHTML = `<div class="cab"></div><div class="ahead"></div><div class="tabs"></div><div class="tabpane"></div><div class="keys">W/S power · A/D brake · Space emergency · B parking brake · F/N/R reverser · P panto · L lights · O doors · H horn · C cab · Home re-centre</div>`;
+    root.innerHTML = `<div class="col drive"><div class="cab"></div><div class="ahead"></div></div><div class="col work"><div class="tabs"></div><div class="tabpane"></div></div><div class="keys">W/S power · A/D brake · Space emergency · B parking brake · F/N/R reverser · P panto · L lights · O doors · H horn (hold for a long blast) · C cab · Home re-centre</div>`;
     this.cabEl = root.querySelector(".cab")!;
     this.aheadEl = root.querySelector(".ahead")!;
     this.tabsEl = root.querySelector(".tabs")!;
     this.paneEl = root.querySelector(".tabpane")!;
     root.addEventListener("click", (e) => this.onClick(e));
+    // the horn button sounds while it is held down
+    root.addEventListener("pointerdown", (e) => {
+      const el = (e.target as HTMLElement).closest("[data-a=horn]");
+      if (!el) return;
+      e.preventDefault();
+      world.hornDown(); this.update(true);
+    });
+    for (const ev of ["pointerup", "pointercancel"] as const) window.addEventListener(ev, () => { if (this.world.hornHeld) { this.world.hornUp(); this.update(true); } });
   }
 
   private onClick(e: Event) {
@@ -44,7 +52,6 @@ export class SidePanel {
       case "park": w.setParkingBrake(v === "on"); break;
       case "lights": w.setLights(v as LightState); break;
       case "doors": w.toggleDoors(); break;
-      case "horn": w.horn(); break;
       case "test": w.startBrakeTest(); break;
       case "leave": w.leaveCab(); break;
       case "enter": w.enterCab(); break;
@@ -133,7 +140,7 @@ export class SidePanel {
       <div class="ctl"><div class="lbl">Parking brake<span class="k">B</span></div><div class="opts">${b("park", "off", "Off", !v.parkingBrake)}${b("park", "on", "On", v.parkingBrake, v.parkingBrake ? "red" : "")}</div></div>
       <div class="ctl"><div class="lbl">Pantograph<span class="k">P</span></div><div class="opts">${b("panto", "", v.panto === "up" || v.panto === "raising" ? "Up" : "Down", v.panto === "up")}</div></div>
       <div class="ctl"><div class="lbl">Lights ${cab.end}<span class="k">L</span></div><div class="opts">${b("lights", "off", "Off", cab.lights === "off")}${b("lights", "tail", "Tail", cab.lights === "tail", cab.lights === "tail" ? "red" : "")}${b("lights", "head", "Head", cab.lights === "head")}</div></div>
-      <div class="ctl"><div class="lbl">Doors<span class="k">O</span></div><div class="opts">${b("doors", "", c.anyDoorsOpen() ? "Open" : "Closed", c.anyDoorsOpen())}${b("horn", "", "Horn", false)}${b("test", "", "Prove brake", false)}</div></div>
+      <div class="ctl"><div class="lbl">Doors<span class="k">O</span></div><div class="opts">${b("doors", "", c.anyDoorsOpen() ? "Open" : "Closed", c.anyDoorsOpen())}${b("horn", "", "Horn", w.hornHeld !== null)}${b("test", "", "Prove brake", false)}</div></div>
       <div class="ctl"><div class="lbl">Cab<span class="k">C</span></div><div class="opts">${b("leave", "", "Leave cab", false)}</div></div>`;
     const otherLights = Object.values(v.cabs).filter((x) => x && x.end !== cab.end).map((x) => `other end ${x!.end}: ${x!.lights}`).join(", ");
     return `<h4>Cab ${cab.end} · ${v.type.cls} ${v.number} <span class="where">${esc(otherLights)}</span></h4>${gauges}${lamps}${ctl}`;

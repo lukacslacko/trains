@@ -524,7 +524,7 @@ work their cabs and change ends without walking.
 | Pantograph | Down · Up | `P` |
 | Lights (this end) | Off · Tail · Head | `L` cycles |
 | Doors | Closed · Open | `O` |
-| Horn | one short blast | `H` |
+| Horn | press: one short blast · hold 1.5 s or more: one long blast | `H` |
 | Brake test | run continuity test | button |
 | Leave / enter cab | — | `C` |
 
