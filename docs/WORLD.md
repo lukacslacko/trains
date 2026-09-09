@@ -48,8 +48,9 @@ Rules are cited as "Rule R 20" across books.
 | R | Rules of Operation | terms, directions, staff and authority, speeds, station working, departure procedure, doors, lights, horn, incident book |
 | S | Signalling Manual | principles, main signals, ground signals, boards, hand signals and the baton, station layouts and signal numbering, routes and block working, failures |
 | D | Driving Manual | the driver's person and locations, cab controls, preparing and stabling, running, stopping, changing ends, coupling and uncoupling, brake continuity test, the Class 1 car, the Class 4 locomotive, the Type C4 coach |
+| P | Permanent Way | what the permanent way is, the line and its profile (gradient diagram), gradient posts, hectometre posts, warning distances; inspection and maintenance to follow with M4 |
 
-Later: P (Permanent Way), W (Workshop), T (Timetabling).
+Later: W (Workshop), T (Timetabling).
 
 ### 2.1 Editions and amendment slips (standing requirement)
 
@@ -96,6 +97,12 @@ town at the foot of the valley) to **Wending** (a mill village by the weir).
 - **Line speed:** 50 km/h. **Station limits:** 25 km/h. **Shunting:** 15
   km/h. **Coupling approach:** 5 km/h in the last 20 m, contact at 2 km/h
   or less.
+- **Profile.** The valley climbs from Ashgrove to Wending. Gradients in per
+  mille, positive = rising in the Down direction: km 0.0–0.5 level (Ashgrove
+  station limits), 0.5–2.4 rising 12‰, 2.4–2.8 rising 6‰ (easing towards the
+  weir), 2.8–3.3 level (Wending station limits). Wending stands 25.2 m above
+  Ashgrove. Changes of grade, each marked by a gradient post: km 0.5, 2.4,
+  2.8. Down trains climb, Up trains descend.
 
 ## 4. Layouts
 
@@ -114,8 +121,11 @@ Plain single track from buffer to buffer, no switches, no signals.
 | 0.135 | Stop board "ASHGROVE" | Up | Up trains stop here |
 | 0.450 | Speed board 25 | Up | station limit begins for Up trains |
 | 0.450 | Speed board 50 | Down | line speed resumes for Down trains, once the rear has passed |
-| 0.650 | Advance speed board 25 | Up | announces the 25 board 200 m ahead |
+| 0.500 | Gradient post | both | level ↔ 12‰ |
+| 0.700 | Advance speed board 25 | Up | announces the 25 board 250 m ahead: the approach falls at 12‰ |
+| 2.400 | Gradient post | both | 12‰ ↔ 6‰ |
 | 2.650 | Advance speed board 25 | Down | announces the 25 board 200 m ahead |
+| 2.800 | Gradient post | both | 6‰ ↔ level |
 | 2.850 | Speed board 25 | Down | |
 | 2.850 | Speed board 50 | Up | |
 | 3.010–3.170 | Wending platform | – | |
@@ -150,13 +160,16 @@ Ashgrove (headshunt at the Up/buffer end, main line at the Down end):
 | 0.400 | Limit of Shunt board | Down | single line | shunting moves stop short of it |
 | 0.420 | Home signal **AG 2** | Up | single line | main signal, governs entry |
 | 0.450 | Speed boards 25 (Up) / 50 (Down) | | | |
-| 0.650 | Advance speed board 25 | Up | single line | 200 m before the 25 board |
+| 0.500 | Gradient post | both | single line | level ↔ 12‰ |
+| 0.700 | Advance speed board 25 | Up | single line | 250 m before the 25 board (falling approach) |
 
 Wending (mirror; headshunt at the Down/buffer end):
 
 | km | object | faces | on | note |
 |----|--------|-------|----|------|
+| 2.400 | Gradient post | both | single line | 12‰ ↔ 6‰ |
 | 2.650 | Advance speed board 25 | Down | single line | 200 m before the 25 board |
+| 2.800 | Gradient post | both | single line | 6‰ ↔ level |
 | 2.850 | Speed boards 25 (Down) / 50 (Up) | | | |
 | 2.880 | Home signal **WD 1** | Down | single line | |
 | 2.900 | Limit of Shunt board | Up | single line | |
@@ -216,7 +229,13 @@ obstruction. Ground signals govern shunting moves only.
 | Stop board | ivory board, thick black horizontal bar, station name beneath | Stop with the front of the train level with the board. Within 3 m short is a correct stop. |
 | Limit of Shunt | ivory board with a red diagonal band, "LIMIT OF SHUNT" | Shunting moves must not pass. |
 | Speed board | black numeral on an ivory disc with a black rim | Speed limit in km/h from the board onward. A lower limit applies to the front of the train as it passes; a higher limit applies only once the rear of the train has passed. |
-| Advance speed board | black numeral on an ivory triangle, point up, black rim | A lower limit lies ahead: the speed board with this numeral stands one warning distance beyond (200 m on this line). Be at that speed when the front reaches the speed board. Higher limits are not announced. |
+| Advance speed board | black numeral on an ivory triangle, point up, black rim | A lower limit lies ahead: the speed board with this numeral stands one warning distance beyond. Be at that speed when the front reaches the speed board. Higher limits are not announced. |
+| Gradient post | slate post with a small ivory disc and two black arms, one along the line each way, each tilted with the grade on its side and lettered with that grade in per mille, L for level | Stands at every change of grade. The arm on the side you are travelling towards shows the grade ahead: tilted up and away from you it rises, down and away it falls. Information only, no instruction. |
+
+**Warning distance.** 200 m where the approach to the speed board is level
+or rising; 250 m where the approach falls at 10‰ or more. On this line the
+Up advance board for Ashgrove stands at 0.70 (falling 12‰ approach), the
+Down advance board for Wending at 2.65 (rising 6‰ approach).
 | Buffer stop | red lamp on the stop | End of track. |
 
 Future: whistle board, pantograph down/up boards, end of wire, distant
@@ -248,10 +267,11 @@ authority.
   applies to the whole train: a train's limit is the lowest limit under any
   part of it, so a reduction applies from the moment the front reaches its
   board and a rise only once the rear has passed its board. Reductions are
-  announced by an advance speed board one warning distance (200 m on this
-  line) before the speed board; at a service deceleration of 0.5 m/s² a train
-  loses the 25 km/h between 50 and 25 in about 145 m, the rest is the
-  driver's allowance for reaction, fog and snow.
+  announced by an advance speed board one warning distance before the speed
+  board: 200 m on a level or rising approach, 250 m where the approach falls
+  at 10‰ or more; at a service deceleration of 0.5 m/s² a train loses the
+  25 km/h between 50 and 25 in about 145 m on the level, about 190 m on a
+  12‰ fall, the rest is the driver's allowance for reaction, fog and snow.
 - **R 12 Stop boards.** Stop with the front within 3 m short of the board.
   Overrunning the board is an incident.
 - **R 14 Doors.** Open only when stopped at a platform. Close before moving.
@@ -265,9 +285,10 @@ authority.
   where a station master is on duty, the baton shown green. Then the horn,
   then move.
 - **R 22 Securing.** Before leaving the cab: power off, train brake fully
-  applied, reverser to neutral. The pantograph may stay up. (The cab door
-  will not let you out otherwise: the sim refuses with a message naming the
-  missing condition.)
+  applied, reverser to neutral, and the parking brake applied where the
+  vehicle stands on a gradient or is to be left unattended (stabling always).
+  The pantograph may stay up. (The cab door will not let you out otherwise:
+  the sim refuses with a message naming the missing condition.)
 - **R 24 One Train Working.** On a line worked by one train with no signals,
   the driver departs on their own authority at the booked time.
 - **S 10 Signals at STOP.** Never pass a main signal at STOP or a ground
@@ -292,17 +313,29 @@ authority.
   answer the cab only once the pipe and control line are connected.
 - **D 16 Buffer stops.** Do not strike them.
 - **D 18 Emergency brake.** Use it when in doubt; its use is recorded.
+- **D 20 Starting on a rise.** Hold the train on the train brake, apply
+  power, release the brake as the traction takes up. Rolling back more than
+  half a metre is an incident.
+- **D 22 Parking brake.** Release it before moving (first thing after
+  entering the cab); apply it before leaving the cab on a gradient and
+  whenever the vehicle is stabled. Moving with it applied, or a vehicle
+  moving with no direction set (a runaway), is an incident.
 
 ## 7. Rolling stock
 
 **Class 1 motor car ("Lark").** Fleet 1001–1004; Duty 101 uses **1002**.
 Length 22 m, mass 38 t, two cabs (A and B), doors on both sides, one
 pantograph, two 150 kW motors, max tractive effort 45 kN, max speed 60 km/h.
-Automatic air brake, max service deceleration about 1.0 m/s².
+Automatic air brake, max service deceleration about 1.0 m/s². Parking
+brake worked from either cab, holding about half the full service force
+(good for any grade on the Railway).
+
+Gravity on 12‰ is 4.5 kN for the car and 11 kN for the loco and coach:
+both climb easily, both roll away if left unbraked.
 
 **Class 4 locomotive ("Heron").** Fleet 4001–4006; Duty 201 uses **4003**.
 Length 16 m, mass 64 t, two cabs, one pantograph, 1200 kW, max tractive
-effort 140 kN, max speed 90 km/h.
+effort 140 kN, max speed 90 km/h. Parking brake as the Class 1.
 
 **Type C4 coach.** Fleet 5101–5120; Duty 201 uses **5107**. Length 20 m,
 mass 30 t, 64 seats, doors both sides, automatic end lights (show TAIL at a
@@ -325,6 +358,7 @@ there.
 | Reverser | Reverse · Neutral · Forward (relative to this cab) | `R` / `N` / `F` |
 | Power controller | 0 – 4 notches | `W` up, `S` down |
 | Train brake | Release · 1 · 2 · 3 · Full · Emergency | `A` release, `D` apply, `Space` emergency |
+| Parking brake | Off · On | `B` |
 | Pantograph | Down · Up | `P` |
 | Lights (this end) | Off · Tail · Head | `L` cycles |
 | Doors | Closed · Open | `O` |
@@ -333,22 +367,23 @@ there.
 | Leave / enter cab | — | `C` |
 
 Indicators: speed (km/h), brake pipe pressure (bar; 5.0 released, 3.5 full
-service, 0 emergency), line voltage present, doors, next signal or board
-ahead with distance, current speed limit, clock.
+service, 0 emergency), gradient ahead (per mille, rising or falling), parking
+brake, height above Ashgrove, line voltage present, doors, next signal or
+board ahead with distance, current speed limit, clock.
 
 ## 10. Duties
 
 **Duty 101 — Ashgrove–Wending shuttle.** Car 1002 stabled at Ashgrove
-platform, pantograph down, lights off, doors closed, brake applied. Sim
+platform, pantograph down, lights off, doors closed, parking brake on. Sim
 starts 05:45. Booked: 06:00 AG dep → 06:06 WD arr; 06:12 WD dep → 06:18 AG
 arr; 06:24 AG dep → 06:30 WD arr; 06:36 WD dep → 06:42 AG arr; then stable
-(pantograph down, lights off).
+(pantograph down, lights off, parking brake on).
 
 **Duty 201 — Ashgrove–Wending with run-round.** Loco 4003 coupled to coach
 5107 on Ashgrove track 1, loco at the Down (main line) end, stabled.
 Sim starts 06:45. Booked: 07:00 AG dep → 07:07 WD arr; run round; 07:30 WD
 dep → 07:37 AG arr; run round; duty complete when coupled, brake proved,
-and stabled at Ashgrove before 08:00.
+and stabled (pantograph down, parking brake on) at Ashgrove before 08:00.
 
 ## 11. Incident Book entries (what the rules engine records)
 
@@ -357,7 +392,9 @@ Overspeed (with limit and speed) · Stop board overrun · Stopped short of
 board (> 3 m) · Incorrect lights on the main line · No horn before moving ·
 Signal passed at danger · Limit of Shunt passed · Rough coupling (speed) ·
 Brake not proved before departure · Buffer stop struck · Uncoupled with the
-brake not fully applied · Emergency brake used (noted, not a fault).
+brake not fully applied · Rolled back on the gradient · Ran away (moved with
+no direction set) · Moved with the parking brake applied · Emergency brake
+used (noted, not a fault).
 
 Book I adds identity rules I 10–I 38 (name, mark, colour, type, livery,
 signage, voice, document system); they are not enforced by the sim.

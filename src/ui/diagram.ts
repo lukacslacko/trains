@@ -125,13 +125,32 @@ export class LineDiagram {
       ctx.beginPath(); ctx.moveTo(xa, y0 + 18); ctx.lineTo(xa, y0 + 25); ctx.moveTo(xb, y0 + 18); ctx.lineTo(xb, y0 + 25); ctx.stroke();
       ctx.fillText(`${lim}`, (xa + xb) / 2, y0 + 25);
     }
+    // gradient profile: height above Ashgrove, exaggerated, with the grade of each section
+    {
+      const top = y0 + 34, bottom = y0 + 52;
+      const hmax = Math.max(1, world.layout.elevationAt(world.layout.kmMax));
+      const yOfH = (h: number) => bottom - (h / hmax) * (bottom - top);
+      ctx.strokeStyle = C.brass; ctx.lineWidth = 1.2; ctx.lineJoin = "round";
+      ctx.beginPath();
+      const pr = world.layout.profile;
+      ctx.moveTo(X(pr[0][0]), yOfH(world.layout.elevationAt(pr[0][0])));
+      for (const [, b] of pr) ctx.lineTo(X(b), yOfH(world.layout.elevationAt(b)));
+      ctx.stroke();
+      ctx.fillStyle = C.chalk; ctx.font = `8px ${MONO}`; ctx.textAlign = "center";
+      for (const [a, b, g] of pr) {
+        const xm = (X(a) + X(b)) / 2, ym = yOfH((world.layout.elevationAt(a) + world.layout.elevationAt(b)) / 2);
+        ctx.fillText(g === 0 ? "L" : `${g}‰`, xm, ym - 3);
+      }
+      ctx.strokeStyle = C.slate; ctx.lineWidth = 1;
+      for (let i = 1; i < pr.length; i++) { const x = X(pr[i][0]); ctx.beginPath(); ctx.moveTo(x, top - 2); ctx.lineTo(x, bottom + 2); ctx.stroke(); }
+    }
     // hectometre ticks and kilometre numerals along the bottom
     ctx.strokeStyle = C.slate; ctx.lineWidth = 1; ctx.fillStyle = C.chalk; ctx.font = `9px ${MONO}`; ctx.textAlign = "center";
     for (const p of world.layout.posts) {
       const x = X(p.km);
       const tall = p.major ? 8 : Math.round(p.km * 10) % 5 === 0 ? 5 : 3;
-      ctx.beginPath(); ctx.moveTo(x, y0 + 28); ctx.lineTo(x, y0 + 28 + tall); ctx.stroke();
-      if (p.major) ctx.fillText(`km ${p.label}`, x, y0 + 44);
+      ctx.beginPath(); ctx.moveTo(x, y0 + 56); ctx.lineTo(x, y0 + 56 + tall); ctx.stroke();
+      if (p.major) ctx.fillText(`km ${p.label}`, x, y0 + 72);
     }
     // driver: a brass ring on the line
     const dp = world.driverPoint();

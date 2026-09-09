@@ -23,7 +23,7 @@
 <nav class="desk-bar">
   <a href="index.html">← Library</a>
   <span class="spacer"></span>
-  <span>Book R · Second edition · September 2026</span>
+  <span>Book R · Third edition · September 2026</span>
   <a href="#" onclick="window.print();return false;">Print booklet</a>
 </nav>
 
@@ -37,7 +37,7 @@
   <div class="book-letter"><small>Book</small>R</div>
   <h1 class="title">Rules of Operation</h1>
   <p class="subtitle">The general rules by which the Meridian Railway is worked, and the Incident Book.</p>
-  <div class="edition">Second edition · September 2026 · Issued by the General Manager's Office</div>
+  <div class="edition">Third edition · September 2026 · Issued by the General Manager's Office</div>
   <div class="motto">On the line, on time.</div>
 </section>
 
@@ -47,6 +47,8 @@
   <ol>
     <li><span class="num">1</span><a href="#c1">Preamble</a><span class="dots"></span><span class="pg">3</span></li>
     <li><span class="num">2</span><a href="#c2">Terms and directions</a><span class="dots"></span><span class="pg">4</span></li>
+    <li class="sub"><span class="num">2.1</span><a href="#c2-1">Posts and positions</a><span class="dots"></span><span class="pg">6</span></li>
+    <li class="sub"><span class="num">2.2</span><a href="#c2-2">The profile</a><span class="dots"></span><span class="pg">7</span></li>
     <li><span class="num">3</span><a href="#c3">Staff and authority</a><span class="dots"></span><span class="pg">6</span></li>
     <li><span class="num">4</span><a href="#c4">Speeds</a><span class="dots"></span><span class="pg">8</span></li>
     <li class="sub"><span class="num">R 10</span><a href="#R10">Speeds</a><span class="dots"></span><span class="pg">8</span></li>
@@ -143,7 +145,11 @@
     <dt>Main line</dt><dd>The single line between the two stations, on which train movements run at line speed.</dd>
     <dt>Station limits</dt><dd>The part of the line that belongs to a station: from the speed board on the approach, or from the home signal where there is one, to the buffer stop. Within station limits the speed is 25 km/h and the station master's authority applies.</dd>
     <dt>Advance speed board</dt><dd>A black numeral on an ivory triangle, point up, standing one warning distance before a speed board that lowers the limit. It announces the lower limit; it does not impose it. The board it announces carries the same numeral (<a href="#c4-1">§ 4.1</a>, <a href="book-s.html">Book S</a>).</dd>
-    <dt>Warning distance</dt><dd>The distance from an advance speed board to the speed board it announces: 200 m on the Ashgrove–Wending line. It is enough to lose the difference in speed at a steady service deceleration with a margin for reaction, fog and snow.</dd>
+    <dt>Warning distance</dt><dd>The distance from an advance speed board to the speed board it announces: 200 m where the approach to the board is level or rising, 250 m where it falls at 10‰ or more. It is enough to lose the difference in speed at a steady service deceleration with a margin for reaction, fog and snow (<a href="#c4-1">§ 4.1</a>).</dd>
+    <dt>Gradient</dt><dd>The slope of the line, given in per mille and named from the Down direction: a <em>rising</em> gradient climbs towards Wending, a <em>falling</em> one descends towards it. What rises for a Down train falls for an Up train. See § 2.2.</dd>
+    <dt>Per mille (‰)</dt><dd>Metres of rise or fall in every thousand metres of line. A gradient of 12‰ climbs 12 m in a kilometre.</dd>
+    <dt>Gradient post</dt><dd>A slate post with a small ivory disc and two black arms, standing at every change of grade. Each arm points along the line on its side, tilted with the grade there and lettered with it in per mille, <span class="mono">L</span> for level. The arm on the side you are travelling towards shows the grade ahead. Information only; it carries no instruction.</dd>
+    <dt>Parking brake</dt><dd>The hand-applied brake of a cabbed vehicle, independent of the air. It holds a vehicle standing on any grade on this Railway, and it is what secures a vehicle that is left (<a href="#R22">Rule R 22</a>, <a href="book-d.html#D22">Rule D 22</a>).</dd>
     <dt>Loop tracks</dt><dd>At a station with a loop, the two parallel tracks between the switches. Track 1 lies at the platform; track 2 alongside it.</dd>
     <dt>Headshunt</dt><dd>The short dead-end track beyond the inner switch, used to draw a locomotive clear of the loop while running round. It ends at the buffer stop.</dd>
     <dt>Stub</dt><dd>The short length of single line between the outer switch and the home signal, inside station limits. A locomotive running round reverses on it.</dd>
@@ -158,12 +164,58 @@
 
   <div class="note"><p><em>Forward</em> and <em>reverse</em> belong to the cab and change when the driver changes ends. <em>Up</em> and <em>Down</em> belong to the line and never change. A message from a Box is written in Up and Down; a driver translates.</p></div>
 
-  <h2><span class="num">2.1</span> Posts and positions</h2>
+  <h2 id="c2-1"><span class="num">2.1</span> Posts and positions</h2>
   <p>Kilometrage is not only a figure in a table; it is written on the ground. From the Ashgrove buffer stop to the end of the line a post stands every 100 m, on the left of the line in the Down direction, and within the loops moved outward past track 2 so that it is never between the rails of anything. Each post carries the distance from km 0.000: the kilometre, a point, and the hectometre digit, so that the post at 1.4 km reads <span class="mono">1.4</span> and the next one Down from it reads <span class="mono">1.5</span>. At every full kilometre a larger kilometre post stands instead, reading simply <span class="mono">2</span>.</p>
   <p>The posts are a reference and nothing more. They are not signals, they carry no instruction, and no rule turns on passing one. They tell you where you are, and they tell the Box where you are when you say so.</p>
   <p>They also settle a question that is easy to lose on the ground: the numbers grow in the Down direction. If you are standing beside the line and cannot remember which way is Down, walk to the nearest post and read the next one.</p>
   <div class="note"><p><strong>Reporting a position.</strong> Give a position to the Box by the last post passed and, if you know it, the metres beyond it: "stopped at 2.7, about 40 metres on." A train's position is the position of its front. The Incident Book records positions the same way, so that a place in the Book can be walked to with nothing more than the posts.</p></div>
   <div class="why"><p>A signal has a name and a platform has a stop board, but most of the line has neither. Without the posts, "a little past the speed board" is the best anyone could say, and the drawing office could not find the spot next week. With them, every hundred metres of the railway has a name that fits on a plate.</p></div>
+
+  <h2 id="c2-2"><span class="num">2.2</span> The profile</h2>
+  <p>The line is not flat. The Wend valley climbs from Ashgrove to Wending, and the railway climbs with it: level through the station limits at Ashgrove, then 12‰ up the valley from post 0.5 to post 2.4, easing to 6‰ towards the weir, and level again through the station limits at Wending from post 2.8. Wending stands 25.2 m above Ashgrove. A Down train climbs all the way; an Up train descends all the way, and arrives at the Ashgrove speed board with the 12‰ fall still under it.</p>
+
+  <figure>
+    <div class="figure-frame">
+      <svg viewBox="0 0 640 150" width="640" height="150" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+        <!-- datum and profile (heights exaggerated) -->
+        <line x1="40" y1="112" x2="600" y2="112" stroke="#D9D2C0" stroke-width="1"/>
+        <polyline points="40,112 125,112 448,54 516,48 600,48" fill="none" stroke="#B5913F" stroke-width="3" stroke-linejoin="round"/>
+        <!-- changes of grade: gradient posts -->
+        <g stroke="#4A5560" stroke-width="1.5">
+          <line x1="125" y1="112" x2="125" y2="92"/><line x1="448" y1="54" x2="448" y2="34"/><line x1="516" y1="48" x2="516" y2="28"/>
+        </g>
+        <g fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.2">
+          <circle cx="125" cy="90" r="3.5"/><circle cx="448" cy="32" r="3.5"/><circle cx="516" cy="26" r="3.5"/>
+        </g>
+        <g font-family="IBM Plex Mono, Menlo, monospace" font-size="11" fill="#4A5560" text-anchor="middle">
+          <text x="125" y="130">0.5</text><text x="448" y="130">2.4</text><text x="516" y="130">2.8</text>
+          <text x="40" y="130">0.0</text><text x="600" y="130">3.3</text>
+        </g>
+        <!-- grade labels -->
+        <g font-size="13" font-weight="600" fill="#1F4B3F" text-anchor="middle" letter-spacing="1.5">
+          <text x="82" y="102">LEVEL</text>
+          <text x="286" y="74" transform="rotate(-10 286 74)">RISING 12‰</text>
+          <text x="482" y="42">6‰</text>
+          <text x="558" y="40">LEVEL</text>
+        </g>
+        <!-- heights -->
+        <g font-family="IBM Plex Mono, Menlo, monospace" font-size="10" fill="#B5913F" text-anchor="middle">
+          <text x="448" y="66" transform="translate(0 4)">22.8 m</text>
+          <text x="600" y="62">25.2 m</text>
+        </g>
+        <!-- stations -->
+        <text x="82" y="145" text-anchor="middle" font-size="12" font-weight="600" fill="#1F4B3F" letter-spacing="2">ASHGROVE</text>
+        <text x="558" y="145" text-anchor="middle" font-size="12" font-weight="600" fill="#1F4B3F" letter-spacing="2">WENDING</text>
+        <!-- direction -->
+        <g stroke="#4A5560" stroke-width="1.5" fill="none"><path d="M 250 18 L 390 18"/><path d="M 382 13 L 390 18 L 382 23"/></g>
+        <text x="320" y="12" text-anchor="middle" font-size="12" fill="#4A5560" letter-spacing="2.5">DOWN · CLIMBING</text>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 2.2</span> The profile of the Ashgrove–Wending line, heights exaggerated. The three small discs are the gradient posts at the changes of grade, km 0.5, 2.4 and 2.8.</figcaption>
+  </figure>
+
+  <p>Every change of grade is marked on the ground by a <span class="term">gradient post</span>. It is a post like the hectometre posts, but instead of a plate it carries a small disc with two arms, one pointing along the line each way. Each arm is tilted with the grade on its side and lettered with that grade in per mille, or <span class="mono">L</span> where the line is level. Read the arm on the side you are travelling towards: tilted up and away from you, the line ahead rises; down and away, it falls. The post says nothing about what to do. Like the hectometre posts it is information, and the rules that turn on a gradient are written elsewhere: the warning distance in <a href="#R10">Rule R 10</a>, securing in <a href="#R22">Rule R 22</a>, and the handling of a train on a grade in <a href="book-d.html#D20">Rules D 20</a> and <a href="book-d.html#D22">D 22</a>.</p>
+  <div class="why"><p>Twelve per mille is a gentle grade as railways go, but gravity on it is a fifth of what the Class 1 car can pull, and enough to set any unbraked vehicle rolling within a few seconds. A driver who knows where the grade begins can start, brake and leave a vehicle accordingly; a driver who does not will learn it from the Incident Book. We would rather they learned it from a post.</p></div>
 </section>
 
 <!-- 3 STAFF -->
@@ -207,13 +259,14 @@
       <thead><tr><th>Where</th><th class="mono">km/h</th><th>Begins</th></tr></thead>
       <tbody>
         <tr><td>Main line</td><td class="mono">50</td><td>Once the rear of the train has passed the speed board 50 on leaving station limits, until the front reaches the next speed board 25.</td></tr>
-        <tr><td>Station limits</td><td class="mono">25</td><td>From the moment the front reaches the speed board 25 on the approach, or the home signal where there is one, and as far as the buffer stop. An advance speed board 25 stands one warning distance before it.</td></tr>
+        <tr><td>Station limits</td><td class="mono">25</td><td>From the moment the front reaches the speed board 25 on the approach, or the home signal where there is one, and as far as the buffer stop. An advance speed board 25 stands one warning distance before it: 200 m on a level or rising approach, 250 m where the approach falls at 10‰ or more.</td></tr>
         <tr><td>Shunting move</td><td class="mono">15</td><td>Throughout any shunting move, wherever it is.</td></tr>
         <tr><td>Coupling approach</td><td class="mono">5</td><td>Over the last 20 m before a vehicle to be coupled.</td></tr>
         <tr><td>Coupling contact</td><td class="mono">2</td><td>At the moment the couplers meet.</td></tr>
       </tbody>
     </table>
     <p>A limit applies to the whole train. A train's limit is the lowest limit under any part of it: a reduction applies from the moment the front reaches its board, and a rise only once the rear has passed its board.</p>
+    <p>The warning distance before a speed board is 200 m where the approach to it is level or rising, and 250 m where the approach falls at 10‰ or more.</p>
   </div>
 
   <figure>
@@ -258,12 +311,12 @@
         <polygon points="700,28 717,60 683,60" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="2.5" stroke-linejoin="round"/>
         <text x="700" y="56" text-anchor="middle" font-size="12" font-weight="700" fill="#1A1A1A">25</text>
         <text x="700" y="142" text-anchor="middle" font-size="11" fill="#4A5560" letter-spacing="1.5">ADVANCE BOARD 25</text>
-        <text x="700" y="154" text-anchor="middle" font-size="11" fill="#4A5560" font-family="IBM Plex Mono, Menlo, monospace">km 0.650</text>
+        <text x="700" y="154" text-anchor="middle" font-size="11" fill="#4A5560" font-family="IBM Plex Mono, Menlo, monospace">km 0.700</text>
         <!-- warning distance -->
         <g stroke="#B5913F" stroke-width="1.2" fill="none">
           <path d="M 538 46 L 680 46"/><path d="M 544 42 L 538 46 L 544 50"/><path d="M 674 42 L 680 46 L 674 50"/>
         </g>
-        <text x="609" y="41" text-anchor="middle" font-size="11" fill="#B5913F" letter-spacing="1.5">WARNING DISTANCE 200 m</text>
+        <text x="609" y="41" text-anchor="middle" font-size="11" fill="#B5913F" letter-spacing="1.5">WARNING DISTANCE 250 m · FALLING 12‰</text>
         <!-- limit brackets -->
         <g stroke="#1F4B3F" stroke-width="1.5" fill="none">
           <path d="M 30 172 L 30 178 L 517 178 L 517 172"/>
@@ -273,7 +326,7 @@
         <text x="631" y="191" text-anchor="middle" font-size="12" font-weight="600" fill="#1F4B3F" letter-spacing="1.2">MAIN LINE · 50 km/h</text>
       </svg>
     </div>
-    <figcaption><span class="fig">Fig. 4.1</span> Station limits at Ashgrove for an Up train. Under One Train Working there is no home signal and the limit begins at the speed board. The advance speed board stands one warning distance further Up, at km 0.650; the figure is not to scale.</figcaption>
+    <figcaption><span class="fig">Fig. 4.1</span> Station limits at Ashgrove for an Up train. Under One Train Working there is no home signal and the limit begins at the speed board. The advance speed board stands one warning distance further Up, at km 0.700: an Up train comes down the 12‰ valley grade to this board, so the warning distance is the longer one of 250 m. The figure is not to scale.</figcaption>
   </figure>
 
   <div class="why"><p>The station limit of 25 exists because a station is where the unexpected stands on the track: a coach left at the platform, a switch, a person with a barrow. At 25 km/h a driver can stop within the length of a platform on the service brake alone. Shunting is slower still because a shunting move is, by definition, heading towards something. And the coupling speeds are what the coupler and the passengers in the coach will forgive.</p></div>
@@ -282,7 +335,7 @@
 
   <h2 id="c4-1"><span class="num">4.1</span> Where a limit begins and ends</h2>
   <p>A speed board marks a point on the line, but a train is not a point: it is a length, and every part of it is somewhere. So a limit is read against the whole train. Where the limit goes down, the front of the train is the part that reaches the board first, and the whole train must already be at the lower speed when it does. Where the limit goes up, the rear of the train is the last part still in the slow section, and the higher speed may be used only once the rear has passed the board that raises it. The short form is the one in <a href="#R10">Rule R 10</a>: a train's limit is the lowest limit under any part of it.</p>
-  <p>A reduction is announced. One warning distance before every speed board that lowers the limit stands an <span class="term">advance speed board</span>: the same numeral, but on an ivory triangle with its point up instead of a disc. It imposes nothing itself; it tells the driver that the disc with that numeral stands one warning distance ahead, and that the train must be at that speed when the front reaches it. On the Ashgrove–Wending line the warning distance is 200 m. At the service deceleration of 0.5 m/s² a train loses the 25 km/h between 50 and 25 in about 145 m; the remaining 55 m are the driver's allowance for reaction, and for the days when the disc cannot be seen until it is close. The boards themselves are drawn in <a href="book-s.html">Book S</a>; the way to brake between them is in <a href="book-d.html">Book D</a>.</p>
+  <p>A reduction is announced. One warning distance before every speed board that lowers the limit stands an <span class="term">advance speed board</span>: the same numeral, but on an ivory triangle with its point up instead of a disc. It imposes nothing itself; it tells the driver that the disc with that numeral stands one warning distance ahead, and that the train must be at that speed when the front reaches it. The warning distance is 200 m where the approach to the board is level or rising, and 250 m where it falls at 10‰ or more, because gravity is braking against the driver on a fall. At the service deceleration of 0.5 m/s² a train loses the 25 km/h between 50 and 25 in about 145 m on the level and about 190 m on a 12‰ fall; the rest of the warning distance is the driver's allowance for reaction, and for the days when the disc cannot be seen until it is close. On this line the Down advance board for Wending stands at km 2.65, 200 m before its speed board, the approach rising at 6‰; the Up advance board for Ashgrove stands at km 0.70, 250 m before its speed board, the approach falling at 12‰. The boards themselves are drawn in <a href="book-s.html">Book S</a>; the way to brake between them is in <a href="book-d.html">Book D</a>.</p>
   <p>A rise is not announced. Nothing is lost by finding a higher limit a little late, so a speed board that raises the limit stands alone, and the driver reads it when the rear has cleared it.</p>
   <div class="why"><p>The rear matters because the tail of a train does not know that the front has passed a board. A coach still in the station limits is still passing the switches, the platform end and whatever stands beside them, at whatever speed the driver has chosen for the front. And a reduction is announced because braking wants a distance, not a moment: with an advance board the driver can begin a steady, well-defined application and arrive at the lower speed exactly where it is required, in clear weather or in fog and snow alike, instead of guessing where the disc will appear and braking hard when it does.</p></div>
 </section>
@@ -428,13 +481,14 @@
       <li>Power controller to <span class="term">0</span>.</li>
       <li>Train brake to <span class="term">Full</span>.</li>
       <li>Reverser to <span class="term">Neutral</span>.</li>
+      <li>Parking brake <span class="term">On</span>, where the vehicle stands on a gradient, or is to be left unattended. A vehicle being stabled is always left unattended.</li>
     </ol>
-    <p>The pantograph may stay up. A cab left in any other state is <em>unsecured</em>, and the fact is recorded.</p>
+    <p>The pantograph may stay up. A cab in any other state cannot be left: the door does not open until the cab is secured, and the cab tells you which condition is missing.</p>
   </div>
 
-  <p>The rule applies to changing ends as much as to stabling. The two cabs of a car are two places; the walk between them is time in which the vehicle is unattended, and a vehicle standing at a platform is as capable of rolling as one standing anywhere else.</p>
+  <p>The rule applies to changing ends as much as to stabling. The two cabs of a car are two places; the walk between them is time in which the vehicle is unattended, and a vehicle standing at a platform is as capable of rolling as one standing anywhere else. On the level, and with the driver coming straight back, the air brake alone holds it for the walk; on a gradient, or when the vehicle is to be left, the parking brake holds it whatever the air does. Releasing the parking brake again before moving, and the handling of a train on a grade, are in <a href="book-d.html#D22">Rule D 22</a> and <a href="book-d.html#D20">Rule D 20</a>.</p>
 
-  <div class="why"><p>The brake is applied fully so that nothing rolls. The reverser is put to Neutral so that a controller knocked in passing, or found by a curious child, does nothing at all. Power is taken off first because a controller cannot be left at a notch while the reverser is moved, and because it is the right habit. Stabling proper, with the pantograph down and the lights off, is in <a href="book-d.html">Book D</a>; this rule is the part of stabling that happens every time.</p></div>
+  <div class="why"><p>The brake is applied fully so that nothing rolls. The reverser is put to Neutral so that a controller knocked in passing, or found by a curious child, does nothing at all. Power is taken off first because a controller cannot be left at a notch while the reverser is moved, and because it is the right habit. The parking brake is asked for on a gradient because air leaks and gravity does not: a vehicle held on air alone for long enough on the valley grade will, one day, go to Ashgrove by itself. Stabling proper, with the pantograph down and the lights off, is in <a href="book-d.html">Book D</a>; this rule is the part of stabling that happens every time.</p></div>
 </section>
 
 <!-- 8 ONE TRAIN WORKING -->
@@ -519,8 +573,10 @@
       <tr><td>Limit of Shunt passed</td><td>A shunting move went beyond the Limit of Shunt board (<a href="book-s.html#S12">S 12</a>).</td></tr>
       <tr><td>Rough coupling</td><td>Couplers met above 2 km/h; the speed is written (<a href="book-d.html#D10">D 10</a>).</td></tr>
       <tr><td>Brake not proved before departure</td><td>A train departed after coupling without the continuity test (<a href="book-d.html#D14">D 14</a>).</td></tr>
-      <tr><td>Left cab unsecured</td><td>A cab was left with Rule R 22 not satisfied (<a href="#R22">R 22</a>).</td></tr>
       <tr><td>Buffer stop struck</td><td>A vehicle touched a buffer stop (<a href="book-d.html#D16">D 16</a>).</td></tr>
+      <tr><td>Rolled back on the gradient</td><td>A train starting on a rise moved more than half a metre against the direction set (<a href="book-d.html#D20">D 20</a>).</td></tr>
+      <tr><td>Ran away</td><td>A vehicle moved with no direction set: the reverser in Neutral, or no one in the cab (<a href="book-d.html#D22">D 22</a>).</td></tr>
+      <tr><td>Moved with the parking brake applied</td><td>A train moved more than a few metres with a parking brake still on (<a href="book-d.html#D22">D 22</a>).</td></tr>
       <tr><td>Emergency brake used</td><td>The emergency position was used. This is noted and is not a fault (<a href="book-d.html#D18">D 18</a>).</td></tr>
     </tbody>
   </table>
@@ -540,13 +596,13 @@
   <table class="card-table">
     <thead><tr><th>Rule</th><th>In one line</th></tr></thead>
     <tbody>
-      <tr><td>R 10</td><td>Speeds: 50 on the main line, 25 within station limits, 15 shunting, 5 over the last 20 m to a coupling, 2 at contact. A limit applies to the whole train: lower from the front reaching the board, higher only once the rear has passed it.</td></tr>
+      <tr><td>R 10</td><td>Speeds: 50 on the main line, 25 within station limits, 15 shunting, 5 over the last 20 m to a coupling, 2 at contact. A limit applies to the whole train: lower from the front reaching the board, higher only once the rear has passed it. Advance board 200 m before a reduction, 250 m on a fall of 10‰ or more.</td></tr>
       <tr><td>R 12</td><td>Stop with the front within 3 m short of the stop board.</td></tr>
       <tr><td>R 14</td><td>Doors open only when stationary at a platform; closed before moving.</td></tr>
       <tr><td>R 16</td><td>On the main line: HEAD at the front, TAIL at the rear, nothing at coupled ends.</td></tr>
       <tr><td>R 18</td><td>One short blast before moving from rest.</td></tr>
       <tr><td>R 20</td><td>Depart only with doors closed, booked time reached, starting signal at proceed, baton green. Then horn, then move.</td></tr>
-      <tr><td>R 22</td><td>Before leaving the cab: power 0, brake Full, reverser Neutral.</td></tr>
+      <tr><td>R 22</td><td>Before leaving the cab: power 0, brake Full, reverser Neutral; parking brake On on a gradient or when leaving the vehicle.</td></tr>
       <tr><td>R 24</td><td>One Train Working: one train, no signals; depart on your own authority at the booked time.</td></tr>
       <tr><td>S 10</td><td>Never pass a signal at STOP. No instruction can authorise it.</td></tr>
       <tr><td>S 12</td><td>Shunting moves stop short of the Limit of Shunt.</td></tr>
@@ -556,6 +612,8 @@
       <tr><td>D 14</td><td>After coupling, prove the brake before departing.</td></tr>
       <tr><td>D 16</td><td>Do not strike the buffer stops.</td></tr>
       <tr><td>D 18</td><td>When in doubt, use the emergency brake. It is noted, not held against you.</td></tr>
+      <tr><td>D 20</td><td>Starting on a rise: hold on the train brake, apply power, release as the traction takes up. No rolling back.</td></tr>
+      <tr><td>D 22</td><td>Parking brake: off before moving, on before leaving the cab on a gradient and whenever stabled.</td></tr>
     </tbody>
   </table>
   <p class="small" style="color:var(--slate)">Where this page and the rule differ, the rule governs. Where the rule and a signal differ, the signal governs. Where a signal and your judgement differ, stop.</p>
@@ -564,8 +622,8 @@
 <!-- COLOPHON -->
 <section class="page colophon" id="colophon" data-folio="Book R · Colophon">
   <img class="mark" src="../brand/mark-green.svg" alt="">
-  <p><strong>Book R — Rules of Operation.</strong> Second edition, September 2026. Issued by the General Manager's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
-  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes the first edition of September 2026. The changes are listed in <a href="amendments/book-r-ed2.html">Amendment Slip R-2</a>: Rule R 10 now applies a limit to the whole train, and reductions are announced by advance speed boards.</p>
+  <p><strong>Book R — Rules of Operation.</strong> Third edition, September 2026. Issued by the General Manager's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
+  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes the second edition of September 2026. The changes are listed in <a href="amendments/book-r-ed3.html">Amendment Slip R-3</a>: the line has a profile, the warning distance depends on it, and Rule R 22 asks for the parking brake on a gradient. The earlier changes, from the first edition to the second, are in <a href="amendments/book-r-ed2.html">Amendment Slip R-2</a>.</p>
   <p>Companion volumes: <a href="book-i.html">Book I, Identity</a>; <a href="book-s.html">Book S, Signalling</a>; <a href="book-d.html">Book D, Driving</a>. Amendments are issued as numbered slips; paste them in at the page indicated, and initial the margin.</p>
   <p>Every rule in this Book has been explained to at least one person who had never seen a railway. Where they did not understand, we rewrote the rule.</p>
 </section>

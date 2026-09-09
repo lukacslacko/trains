@@ -8,7 +8,7 @@ export function play101() {
   const car = w.trainVehicle;
   w.enterCab(); w.setLights("tail"); w.leaveCab();
   a.toCab(car, "A");
-  w.togglePanto(); a.until(() => car.panto === "up"); w.setLights("head"); w.setReverser("F");
+  w.togglePanto(); a.until(() => car.panto === "up"); w.setLights("head"); w.setReverser("F"); w.setParkingBrake(false);
   const legs: [string, number, 1 | -1, "A" | "B" | null][] = [["06:00", 3.165, 1, "B"], ["06:12", 0.135, -1, "A"], ["06:24", 3.165, 1, "B"], ["06:36", 0.135, -1, null]];
   for (const [dep, target, dir, next] of legs) {
     a.waitUntilTime(parseTime(dep)); a.depart(car);
@@ -17,7 +17,7 @@ export function play101() {
     w.toggleDoors(); a.step(300); w.toggleDoors(); a.step(60);
     if (next) a.changeEnds(car, next);
   }
-  a.secure(); w.setLights("off"); w.togglePanto(); a.until(() => car.panto === "down");
+  a.secure(); w.setLights("off"); w.togglePanto(); a.until(() => car.panto === "down"); w.setParkingBrake(true);
   w.leaveCab(); a.walkTo("Cab"); w.enterCab(); w.setLights("off"); a.step(40);
   return a.report();
 }
@@ -49,7 +49,7 @@ export function play201() {
     a.secure(); w.leaveCab(); a.walkTo("Coupling"); w.connectPipe(); a.toCab(loco, isWD ? "B" : "A"); a.prove(loco);
     a.say(`${code}: proved ${w.train.brakeProved}, pipes ${w.train.allPipesConnected()}, driver in cab ${w.driver.kind === "cab" ? w.driver.end : "?"}`);
   };
-  w.enterCab(); w.togglePanto(); a.until(() => loco.panto === "up"); w.setLights("head"); w.setReverser("F"); a.prove(loco);
+  w.enterCab(); w.togglePanto(); a.until(() => loco.panto === "up"); w.setLights("head"); w.setReverser("F"); w.setParkingBrake(false); a.prove(loco);
   a.say(`prep: proved ${w.train.brakeProved}`);
   a.say(`baton AG: ${a.waitBaton("AG", parseTime("07:00"))} AG1=${w.signal("AG 1").aspect} WD1=${w.signal("WD 1").aspect}`);
   a.depart(loco);
@@ -61,6 +61,6 @@ export function play201() {
   r = a.drive(w.train, 0.135, -1); a.say(`run to AG ${JSON.stringify(r)}`);
   w.toggleDoors(); a.step(300); w.toggleDoors(); a.step(40);
   runRound("AG");
-  a.secure(); w.setLights("off"); w.togglePanto(); a.until(() => loco.panto === "down"); a.step(40);
+  a.secure(); w.setLights("off"); w.togglePanto(); a.until(() => loco.panto === "down"); w.setParkingBrake(true); a.step(40);
   return a.report();
 }

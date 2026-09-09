@@ -31,16 +31,17 @@ export const DUTY_101: Scenario = {
     const g = layout.graph;
     // car 1002 at Ashgrove platform: end B at the stop board (km 0.135), A end towards Wending
     const car = new Vehicle("v1002", "1002", CLASS_1, g.atKm("1", 0.135 + 0.022, 1));
+    car.parkingBrake = true;
     const consist = new Consist("c1", [car], [false]);
     const world = new World(layout, parseTime("05:45"), car, { kind: "ground", at: { kind: "cab", vehicle: car, end: "B" } });
     world.vehicles.push(car);
     world.consists.push(consist);
-    world.say("General Manager's Office", "Duty 101. Car 1002 is stabled at Ashgrove platform, pantograph down, brakes applied. Booked away at 06:00. One Train Working applies (Rule R 24): you depart on your own authority at the booked time.", "system");
+    world.say("General Manager's Office", "Duty 101. Car 1002 is stabled at Ashgrove platform, pantograph down, parking brake on. Booked away at 06:00. One Train Working applies (Rule R 24): you depart on your own authority at the booked time. The valley climbs 12‰ from post 0.5.", "system");
     const duty = new DutyTracker(world, DUTY_101.legs,
-      ["Set the rear cab's lights to Tail", "Pantograph up in the leading cab", "Lights Head, reverser Forward", "Doors, horn, and away at 06:00"],
+      ["Set the rear cab's lights to Tail", "Pantograph up in the leading cab, parking brake off", "Lights Head, reverser Forward", "Doors, horn, and away at 06:00", "Stable with the parking brake on"],
       (w) => {
         const v = w.trainVehicle;
-        const stabled = v.panto === "down" && Object.values(v.cabs).every((c) => c && c.lights === "off") && w.train.v === 0;
+        const stabled = v.panto === "down" && v.parkingBrake && Object.values(v.cabs).every((c) => c && c.lights === "off") && w.train.v === 0;
         return stabled ? "Duty 101 complete. Car 1002 stabled at Ashgrove. Thank you." : null;
       });
     return { world, duty };
@@ -63,6 +64,7 @@ export const DUTY_201: Scenario = {
     // coach 5107: A end at km 0.155 facing Down; loco 4003: A end at 0.171 facing Down (cab A leads towards Wending)
     const coach = new Vehicle("v5107", "5107", TYPE_C4, g.atKm("1", 0.155, 1));
     const loco = new Vehicle("v4003", "4003", CLASS_4, g.atKm("1", 0.171, 1));
+    loco.parkingBrake = true;
     const consist = new Consist("c1", [loco, coach], [false, false]);
     consist.control = { vehicle: loco, cab: loco.cabs.A!, index: 0 };
     const world = new World(layout, parseTime("06:45"), coach, { kind: "ground", at: { kind: "cab", vehicle: loco, end: "A" } });
@@ -75,10 +77,10 @@ export const DUTY_201: Scenario = {
     world.say("General Manager's Office", "Duty 201. Loco 4003 and coach 5107 stand coupled on Ashgrove track 1, stabled. Booked away at 07:00 under Ashgrove Box's starter AG 1 and Mr Marrow's baton. Run round at Wending and again at Ashgrove.", "system");
     world.say("Ashgrove Box", "Good morning. Prove the brake when you are ready; AG 1 will be cleared at 06:58. — Marrow, Ashgrove");
     const duty = new DutyTracker(world, DUTY_201.legs,
-      ["Pantograph up, lights, prove the brake", "Depart on AG 1 and the baton", "Run round at Wending under Pell's signals", "Return and run round at Ashgrove"],
+      ["Pantograph up, lights, parking brake off, prove the brake", "Depart on AG 1 and the baton", "Run round at Wending under Pell's signals", "Return and run round at Ashgrove", "Stable with the parking brake on"],
       (w) => {
         const t = w.train;
-        const ok = t.vehicles.length === 2 && t.brakeProved && t.v === 0 && w.vehicles.every((v) => !v.type.pantograph || v.panto === "down");
+        const ok = t.vehicles.length === 2 && t.brakeProved && t.v === 0 && w.vehicles.every((v) => !v.type.pantograph || (v.panto === "down" && v.parkingBrake));
         return ok ? "Duty 201 complete. Train coupled, brake proved and stabled at Ashgrove. Thank you." : null;
       });
     return { world, duty };

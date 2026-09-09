@@ -23,6 +23,9 @@ export const LESSONS: Record<string, Lesson> = {
   "BRAKE-NOT-PROVED": { title: "Brake not proved", rule: "Rule D 14", ...B("D", "D14"), lesson: "After coupling, before departure, prove the brake from the cab: train brake to Full, then the test. It confirms the pipe reaches the far end of the train." },
   "UNCOUPLE-UNBRAKED": { title: "Uncoupled without the brake", rule: "Rule D 12", ...B("D", "D12"), lesson: "Before parting a coupling the train brake is fully applied. When the pipe parts, both halves brake automatically, but only if they were charged and held first." },
   BUFFER: { title: "Buffer stop struck", rule: "Rule D 16", ...B("D", "D16"), lesson: "The buffer stop is the end of the railway. Approach a headshunt at walking pace and stop with metres to spare." },
+  ROLLBACK: { title: "Rolled back", rule: "Rule D 20", ...B("D", "D20"), lesson: "On a rise, hold the train with the train brake, apply power, and release the brake only as the traction takes up. Released first, a train on 12‰ starts to roll before the motors have anything to say." },
+  RUNAWAY: { title: "Ran away", rule: "Rule D 22", ...B("D", "D22"), lesson: "A vehicle moved with no direction set. On a gradient the automatic brake alone is not a way of leaving a vehicle: apply the parking brake before you leave the cab, and never release the train brake with the reverser in Neutral." },
+  "PARKING-DRAG": { title: "Parking brake dragging", rule: "Rule D 22", ...B("D", "D22"), lesson: "The parking brake was still applied when the train moved. Release it before moving, as the first item after entering the cab; a dragged brake heats blocks and wheels and costs you tractive effort you will want on the climb." },
   TRAILED: { title: "Ran through switch", rule: "Rule S 14", ...B("S", "S14"), lesson: "Move only when the governing signal has been cleared for the move, and only as far as the route goes. The switches are set for the route, not for wherever you happen to go." },
 };
 

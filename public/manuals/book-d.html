@@ -33,7 +33,7 @@
 <nav class="desk-bar">
   <a href="index.html">← Library</a>
   <span class="spacer"></span>
-  <span>Book D · Second edition · September 2026</span>
+  <span>Book D · Third edition · September 2026</span>
   <a href="#" onclick="window.print();return false;">Print booklet</a>
 </nav>
 
@@ -47,7 +47,7 @@
   <div class="book-letter"><small>Book</small>D</div>
   <h1 class="title">Driving Manual</h1>
   <p class="subtitle">The cab, the procedures, and the handbooks of the Class 1 car, the Class 4 locomotive and the Type C4 coach.</p>
-  <div class="edition">Second edition · September 2026 · Issued by the Locomotive Superintendent's Office</div>
+  <div class="edition">Third edition · September 2026 · Issued by the Locomotive Superintendent's Office</div>
   <div class="motto">On the line, on time.</div>
 </section>
 
@@ -68,6 +68,7 @@
     <li class="sub"><span class="num">4.2</span><a href="#c4-2">Speeds</a><span class="dots"></span><span class="pg">12</span></li>
     <li class="sub"><span class="num">4.3</span><a href="#c4-3">Braking to a stop board</a><span class="dots"></span><span class="pg">12</span></li>
     <li class="sub"><span class="num">4.4</span><a href="#c4-4">The emergency brake and the buffer stop</a><span class="dots"></span><span class="pg">13</span></li>
+    <li class="sub"><span class="num">4.5</span><a href="#c4-5">Gradients</a><span class="dots"></span><span class="pg">14</span></li>
     <li><span class="num">5</span><a href="#c5">Changing ends</a><span class="dots"></span><span class="pg">14</span></li>
     <li><span class="num">6</span><a href="#c6">Coupling, uncoupling and the brake test</a><span class="dots"></span><span class="pg">15</span></li>
     <li><span class="num">7</span><a href="#c7">Stabling</a><span class="dots"></span><span class="pg">18</span></li>
@@ -115,10 +116,10 @@
 
   <div class="rule" id="R22-cited">
     <span class="rule-num">Rule R 22</span><span class="rule-title">Securing (cited)</span>
-    <p>Before leaving the cab: power controller to 0, train brake to <span class="term">Full</span>, reverser to <span class="term">Neutral</span>. The pantograph may stay up. See <a href="book-r.html#R22">Book R, Rule R 22</a>.</p>
+    <p>Before leaving the cab: power controller to 0, train brake to <span class="term">Full</span>, reverser to <span class="term">Neutral</span>, and the <span class="term">parking brake</span> applied where the vehicle stands on a gradient or is to be left unattended. The pantograph may stay up. See <a href="book-r.html#R22">Book R, Rule R 22</a>.</p>
   </div>
 
-  <p>The cab will not let you out of the door while the train can move: the <span class="kbd">C</span> key does nothing until the three conditions are met, and the message panel tells you which one is missing. Leaving a cab that is not secured is entered in the Incident Book, so treat it as a habit rather than a check.</p>
+  <p>The cab will not let you out of the door while the train can move: the <span class="kbd">C</span> key does nothing until the conditions are met, and the message panel tells you which one is missing. On a gradient that includes the parking brake; on the level at a platform it does not, unless you are stabling. Leaving a cab that is not secured is entered in the Incident Book, so treat it as a habit rather than a check.</p>
   <div class="note"><p>You may leave the pantograph up when you go to the other cab. On a cold morning the heating is on the traction supply and the passengers will thank you for it.</p></div>
 </section>
 
@@ -187,10 +188,11 @@
           <rect x="420" y="122" width="30" height="18" rx="3" fill="#fff" stroke="#4A5560"/><text x="435" y="152" text-anchor="middle" font-size="9" fill="#4A5560">DOORS</text>
           <circle cx="470" cy="131" r="9" fill="#1F4B3F"/><text x="470" y="152" text-anchor="middle" font-size="9" fill="#4A5560">HORN</text>
           <rect x="426" y="166" width="52" height="18" rx="3" fill="#fff" stroke="#4A5560"/><text x="452" y="196" text-anchor="middle" font-size="9" fill="#4A5560">BRAKE TEST</text>
+          <rect x="484" y="166" width="16" height="18" rx="3" fill="#C6321E" stroke="#4A5560"/><text x="492" y="196" text-anchor="middle" font-size="9" fill="#4A5560">PARK</text>
         </g>
       </svg>
     </div>
-    <figcaption><span class="fig">Fig. 2.1</span> The standard desk. Left hand: reverser and power. Right hand: brake and switches. Between them, the two gauges you watch most.</figcaption>
+    <figcaption><span class="fig">Fig. 2.1</span> The standard desk. Left hand: reverser and power. Right hand: brake and switches, the red parking-brake switch at the far end. Between them, the two gauges you watch most.</figcaption>
   </figure>
 
   <h2 id="c2-1"><span class="num">2.1</span> Controls</h2>
@@ -206,6 +208,10 @@
   <p>Six positions: <span class="term">Release</span>, <span class="term">1</span>, <span class="term">2</span>, <span class="term">3</span>, <span class="term">Full</span>, <span class="term">Emergency</span>. The <span class="kbd">D</span> key moves the handle one step towards apply, the <span class="kbd">A</span> key one step towards release. <span class="kbd">Space</span> throws it straight to Emergency from anywhere.</p>
   <p>The brake is an automatic air brake, and it repays a moment's understanding. A pipe runs the length of the train, joined at every coupling. When you place the handle in Release, the pipe is charged to 5.0 bar and every brake on the train releases. Each step towards apply drops the pipe pressure, and each vehicle answers the drop by applying its own brakes in proportion; at 3.5 bar, the Full position, every brake is fully applied. Emergency vents the pipe to nothing, as fast as air can leave it. The important consequence is this: if the pipe is parted anywhere, by uncoupling or by accident, the air escapes and the brakes apply themselves on both parts of the train. The brake fails safe. It cannot be forgotten, only released.</p>
   <div class="note"><p>Releasing takes longer than applying. The pipe recharges at about half a bar a second, so a full release from Full takes three seconds or so, and from Emergency the better part of ten. Plan your starts accordingly.</p></div>
+
+  <h3>Parking brake <span class="kbd">B</span></h3>
+  <p>Two positions, <span class="term">Off</span> and <span class="term">On</span>. It is a mechanical brake on this vehicle only, needing no air, and it holds about half the full service force: enough to hold the car, or the locomotive with its coach, on any grade the Railway has. It is the brake that holds a stabled vehicle overnight and the brake you apply before leaving a cab on a gradient (<a href="#D22">Rule D 22</a>). Release it before you move, as the first thing you do after entering a cab; a train that moves with it applied drags it, and the Incident Book says so.</p>
+  <div class="why"><p>The air brake is a fine brake and a poor anchor. Its air leaks away over hours, and it cannot be told the vehicle is to be left alone. A parking brake is a screw and a rod: it holds until somebody takes it off, which is exactly the property an anchor wants.</p></div>
 
   <h3>Pantograph <span class="kbd">P</span></h3>
   <p>Two positions, <span class="term">Down</span> and <span class="term">Up</span>. Raising takes a few seconds; the <span class="term">Line</span> lamp lights when the pantograph is touching a live wire. Without it there is no traction, no heating and no lights. The whole line, headshunts included, is wired at 1.5 kV, so on the Ashgrove–Wending line you may raise it where you stand.</p>
@@ -236,6 +242,9 @@
       <tr><td>Ahead</td><td>text</td><td>The next signal or board in your direction, its aspect, and the distance to it.</td></tr>
       <tr><td>Limit</td><td class="mono">km/h</td><td>The lowest limit under any part of the train. It falls as the front reaches a lower board and rises only once the rear has passed a higher one.</td></tr>
       <tr><td>Kilometre</td><td class="mono">km</td><td>Where the front of the train stands, to the metre. It agrees with the hectometre posts beside the line; report a position to the Box by the last post passed, as in "stopped at 2.7".</td></tr>
+      <tr><td>Gradient ahead</td><td class="mono">‰</td><td>The grade under the front of the train in the direction this cab faces: rising, falling or level. It agrees with the gradient posts, § 4.5.</td></tr>
+      <tr><td>Parking brake</td><td>On · Off</td><td>Shown in red while it is applied. If it is red and you are about to move, you are about to drag it.</td></tr>
+      <tr><td>Height</td><td class="mono">m</td><td>Height above the Ashgrove buffer stop. Wending is 25 m up; the figure climbs with you.</td></tr>
       <tr><td>Clock</td><td class="mono">hh:mm</td><td>Railway time. Compare it with the duty sheet.</td></tr>
       <tr><td>Where you are</td><td>text</td><td>Cab A, Cab B, on the ground, or at a coupling.</td></tr>
     </tbody>
@@ -249,6 +258,7 @@
       <tr><td>Reverser</td><td>Reverse · Neutral · Forward</td><td><span class="kbd">R</span> <span class="kbd">N</span> <span class="kbd">F</span></td></tr>
       <tr><td>Power controller</td><td>0 – 4</td><td><span class="kbd">W</span> up, <span class="kbd">S</span> down</td></tr>
       <tr><td>Train brake</td><td>Release · 1 · 2 · 3 · Full · Emergency</td><td><span class="kbd">A</span> release, <span class="kbd">D</span> apply, <span class="kbd">Space</span> emergency</td></tr>
+      <tr><td>Parking brake</td><td>Off · On</td><td><span class="kbd">B</span></td></tr>
       <tr><td>Pantograph</td><td>Down · Up</td><td><span class="kbd">P</span></td></tr>
       <tr><td>Lights (this end)</td><td>Off · Tail · Head</td><td><span class="kbd">L</span> cycles</td></tr>
       <tr><td>Doors</td><td>Closed · Open</td><td><span class="kbd">O</span></td></tr>
@@ -262,12 +272,13 @@
 <!-- 3 PREPARING -->
 <section class="page chapter" id="c3" data-folio="Book D · 3 Preparing a stabled vehicle">
   <h1><span class="num">§ 3</span> Preparing a stabled vehicle</h1>
-  <p class="lead">A stabled vehicle stands with its pantograph down, its lights off, its doors closed and its brake applied. You arrive on the ground beside it with fifteen minutes in hand. This is how those fifteen minutes go.</p>
+  <p class="lead">A stabled vehicle stands with its pantograph down, its lights off, its doors closed, its train brake applied and its parking brake on. You arrive on the ground beside it with fifteen minutes in hand. This is how those fifteen minutes go.</p>
 
   <ol class="steps">
     <li>Decide which end will lead. On the duty sheet the first departure has a direction; the cab facing that way is the leading cab, the other is the rear cab.</li>
     <li>Walk to the <strong>rear</strong> cab and enter it. Set the lights at this end to <span class="term">Tail</span>. Leave the cab; it is already secured because nothing has been touched.</li>
     <li>Walk to the <strong>leading</strong> cab and enter it.</li>
+    <li>Parking brake <span class="term">Off</span>. It has held the vehicle all night; the train brake, in Full, holds it now. Make this the first thing you do in any cab you mean to drive from (<a href="#D22">Rule D 22</a>).</li>
     <li>Pantograph <span class="term">Up</span>. Wait for the <span class="term">Line</span> lamp. Nothing else in the cab is alive until it lights.</li>
     <li>Lights at this end to <span class="term">Head</span>.</li>
     <li>Brake handle to <span class="term">Release</span> and watch the pipe rise to 5.0 bar, then back to <span class="term">Full</span>. You have just proved that the brake on your own vehicle answers the handle.</li>
@@ -277,7 +288,8 @@
   </ol>
 
   <div class="why"><p>We put the walk to the rear cab first, before the pantograph goes up, so that you are never on the ground beside a live train that you have already made ready to move. It also means the rear lamps are lit before anybody has to remember them.</p></div>
-  <div class="note"><p>On a locomotive coupled to a coach, the rear of the <em>train</em> is the coach, and the coach lights its own tail lamps. The locomotive's coupled end stays at <span class="term">Off</span>. Steps 2 and 5 then apply only to the locomotive's leading cab.</p></div>
+  <div class="note"><p>On a locomotive coupled to a coach, the rear of the <em>train</em> is the coach, and the coach lights its own tail lamps. The locomotive's coupled end stays at <span class="term">Off</span>. Steps 2 and 6 then apply only to the locomotive's leading cab.</p></div>
+  <div class="note"><p>The parking brake is one brake on one vehicle; it does not care which cab you release it from. If you released it in the rear cab by habit, it stays released. Step 4 simply makes sure it is off before anything else can move the train.</p></div>
 </section>
 
 <!-- 4 RUNNING -->
@@ -313,14 +325,14 @@
   <div class="why"><p>The tail of the train is still in the slow section until it has passed the board. A locomotive that opens up the moment its cab passes the 50 board drags its coach through station limits at forty. Reductions are announced ahead, so that the front can be at the new speed when it arrives; rises are not, because nothing is lost by waiting a train-length.</p></div>
 
   <h3 id="c4-2-reduction">Braking for a reduction</h3>
-  <p>A reduction is announced one <span class="term">warning distance</span> ahead by an <span class="term">advance speed board</span>: the same black numeral, on an ivory triangle with its point up (<a href="book-s.html">Book S</a>, § 4). On the Ashgrove–Wending line the warning distance is <strong>200 metres</strong>. The advance board for the 25 at 2.85 stands at 2.65 running Down, fifty metres beyond post <span class="mono">2.6</span>; the one for the 25 at 0.45 stands at 0.65 running Up, fifty metres beyond post <span class="mono">0.7</span>. Rises get no advance board: a 50 board simply stands where the 50 begins.</p>
+  <p>A reduction is announced one <span class="term">warning distance</span> ahead by an <span class="term">advance speed board</span>: the same black numeral, on an ivory triangle with its point up (<a href="book-s.html">Book S</a>, § 4). The warning distance is <strong>200 metres</strong> where the approach to the speed board is level or rising, and <strong>250 metres</strong> where it falls at 10‰ or more (<a href="book-r.html#R10">Rule R 10</a>). On the Ashgrove–Wending line the advance board for the 25 at 2.85 stands at 2.65 running Down, fifty metres beyond post <span class="mono">2.6</span>, on a rising approach; the one for the 25 at 0.45 stands at <strong>0.70</strong> running Up, at post <span class="mono">0.7</span>, because an Up train comes down the 12‰ valley grade to within fifty metres of the board. Rises get no advance board: a 50 board simply stands where the 50 begins.</p>
   <ol class="steps">
     <li><strong>At the advance board, step 2.</strong> On the Class 1 car, and on the Class 4 with one coach, step 2 gives about 0.5 m/s² on the level.</li>
-    <li><strong>Count the distance.</strong> At that rate a train loses the twenty-five between 50 and 25 in about 145 metres. You reach the speed board with some fifty metres in hand. That margin is the allowance for reaction, for fog and for snow; it is not an invitation to apply later.</li>
+    <li><strong>Count the distance.</strong> At that rate a train loses the twenty-five between 50 and 25 in about 145 metres on the level, and about 190 metres on a 12‰ fall, where gravity takes back a quarter of the brake. Either way you reach the speed board with some fifty to sixty metres in hand. That margin is the allowance for reaction, for fog and for snow; it is not an invitation to apply later.</li>
     <li><strong>Check at the speed board.</strong> Be at 25 as the front reaches it. If you are above, step 3 at once and note it; if you are well under, ease to step 1, but do not release before the board.</li>
     <li><strong>Hold it.</strong> Release once at 25 and keep 25: the Limit indicator shows 25 through station limits and will not show 50 again until the rear of the train has cleared the 50 board on the way out.</li>
   </ol>
-  <div class="note"><p>In fog or falling snow, brake at the advance board without waiting to see the speed board. The board will arrive when the count says it will, and the posts confirm the count: running Down, <span class="mono">2.7</span> and <span class="mono">2.8</span> pass while you brake and the board is fifty metres beyond <span class="mono">2.8</span>; running Up, <span class="mono">0.6</span> and <span class="mono">0.5</span> pass and the board is fifty metres beyond <span class="mono">0.5</span>.</p></div>
+  <div class="note"><p>In fog or falling snow, brake at the advance board without waiting to see the speed board. The board will arrive when the count says it will, and the posts confirm the count: running Down, <span class="mono">2.7</span> and <span class="mono">2.8</span> pass while you brake and the board is fifty metres beyond <span class="mono">2.8</span>; running Up, you brake at <span class="mono">0.7</span>, <span class="mono">0.6</span> and <span class="mono">0.5</span> pass, the grade levels out at <span class="mono">0.5</span>, and the board is fifty metres beyond it.</p></div>
 
   <h2 id="c4-3"><span class="num">4.3</span> Braking to a stop board</h2>
   <p>Every platform has a stop board: an ivory board with a thick black bar, the station's name beneath. <a href="book-r.html#R12">Rule R 12</a> asks you to stop with the front of the train level with it; anywhere within three metres short of the board is a correct stop. Passing the board is an overrun and is recorded. Stopping more than three metres short is recorded too, though nobody will think worse of you for it.</p>
@@ -335,15 +347,17 @@
 
   <h3>Judging distance by the posts</h3>
   <p>The Ahead indicator is a courtesy; the posts are the railway. A <span class="term">hectometre post</span> stands every hundred metres along the line, on your left as you run Down, an ivory plate on a slate post reading the distance from the Ashgrove buffer stop: the post at 1.4 km reads <span class="mono">1.4</span>. Every full kilometre has a larger <span class="term">kilometre post</span>, a green numeral under the word KM, reading simply <span class="mono">2</span>. Within the loops the posts stand outward of track 2. They carry no instruction; they tell you where you are, and from that, how far you have to go.</p>
-  <p>The Wending stop board stands at 3.165 and the Ashgrove board at 0.135. Running Down, the post reading <span class="mono">3.0</span> is 165 metres from the board: pass it, make your step-2 application, and you will be settling to a stop as <span class="mono">3.1</span> goes by, sixty-five metres out. Running Up, <span class="mono">0.3</span> does the same office, 165 metres from the board, and <span class="mono">0.2</span> is the last post before it. A post and a half, either way. The 25 km/h boards stand at 2.85 and 0.45, between posts, and their advance boards two hundred metres earlier at 2.65 and 0.65. Running Down, make your application fifty metres past <span class="mono">2.6</span> and be at 25 before <span class="mono">2.9</span>; running Up, make it fifty metres past <span class="mono">0.7</span> and be at 25 before <span class="mono">0.4</span>. The 50 boards at the same places are yours once the rear of the train has passed them.</p>
+  <p>The Wending stop board stands at 3.165 and the Ashgrove board at 0.135. Running Down, the post reading <span class="mono">3.0</span> is 165 metres from the board: pass it, make your step-2 application, and you will be settling to a stop as <span class="mono">3.1</span> goes by, sixty-five metres out. Running Up, <span class="mono">0.3</span> does the same office, 165 metres from the board, and <span class="mono">0.2</span> is the last post before it. A post and a half, either way. The 25 km/h boards stand at 2.85 and 0.45, between posts, and their advance boards one warning distance earlier: at 2.65, two hundred metres out on a rising approach, and at 0.70, two hundred and fifty metres out because the Up approach falls at 12‰. Running Down, make your application fifty metres past <span class="mono">2.6</span> and be at 25 before <span class="mono">2.9</span>; running Up, make it at <span class="mono">0.7</span> and be at 25 before <span class="mono">0.4</span>. The 50 boards at the same places are yours once the rear of the train has passed them. Gradient posts stand at <span class="mono">0.5</span>, <span class="mono">2.4</span> and <span class="mono">2.8</span>, where the grade changes (§ 4.5).</p>
   <table>
     <thead><tr><th>Post</th><th>What stands near it</th></tr></thead>
     <tbody>
       <tr><td class="mono">0.1</td><td>Ashgrove stop board 35 m on the Down side. Up trains come to rest between 0.2 and 0.1.</td></tr>
       <tr><td class="mono">0.4</td><td>Home signal AG 2 20 m on the Down side; speed boards 25 (Up) and 50 (Down) at 0.45. The 50 is yours once the rear has passed it.</td></tr>
-      <tr><td class="mono">0.7</td><td>Running Up, the advance speed board 25 stands 50 m beyond, at 0.65: make your application there. The 25 board is 200 m further on, at 0.45.</td></tr>
-      <tr><td class="mono">2.6</td><td>Running Down, the advance speed board 25 stands 50 m beyond, at 2.65: make your application there. The 25 board is 200 m further on, at 2.85.</td></tr>
-      <tr><td class="mono">2.8</td><td>Speed boards 25 (Down) and 50 (Up) at 2.85, the 50 yours once the rear has passed it; home signal WD 1 at 2.88, twenty metres short of 2.9.</td></tr>
+      <tr><td class="mono">0.5</td><td>Gradient post: level behind, 12‰ rising ahead running Down. Down trains begin the climb here; Up trains have their last fifty metres of fall.</td></tr>
+      <tr><td class="mono">0.7</td><td>Running Up, the advance speed board 25 stands at the post: make your application here, on the fall. The 25 board is 250 m further on, at 0.45.</td></tr>
+      <tr><td class="mono">2.4</td><td>Gradient post: 12‰ behind, 6‰ ahead running Down. The climb eases.</td></tr>
+      <tr><td class="mono">2.6</td><td>Running Down, the advance speed board 25 stands 50 m beyond, at 2.65: make your application there, on the last of the 6‰ rise. The 25 board is 200 m further on, at 2.85.</td></tr>
+      <tr><td class="mono">2.8</td><td>Gradient post: 6‰ behind, level ahead. Speed boards 25 (Down) and 50 (Up) at 2.85, the 50 yours once the rear has passed it; home signal WD 1 at 2.88, twenty metres short of 2.9.</td></tr>
       <tr><td class="mono">3</td><td>Kilometre post. 165 m to the Wending stop board: brake here running Down.</td></tr>
       <tr><td class="mono">3.1</td><td>Wending stop board 65 m on the Down side. Down trains come to rest between 3.1 and 3.2.</td></tr>
     </tbody>
@@ -363,6 +377,47 @@
     <p>Do not strike them. Every headshunt and platform on the line ends at a buffer stop carrying a fixed red lamp. Treat the lamp as a signal at Stop that will never clear.</p>
   </div>
   <div class="danger"><p>The buffer stop at the end of a headshunt is close behind the inner switch, eighty metres at Ashgrove and Wending. A locomotive drawing forward from the platform must be at shunting speed and braking as soon as its rear end is clear of the switch.</p></div>
+
+  <h2 id="c4-5"><span class="num">4.5</span> Gradients</h2>
+  <p>The Wend valley climbs. Ashgrove lies at the foot of it and Wending stands 25 metres higher, by the weir; the line rises between them and is level only within the station limits at each end. Down trains climb, Up trains descend, and the difference between the two is the subject of this section.</p>
+  <table>
+    <thead><tr><th class="mono">km</th><th>Grade</th><th>Marked by</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">0.0 – 0.5</td><td>Level</td><td>Ashgrove station limits. Gradient post at <span class="mono">0.5</span>.</td></tr>
+      <tr><td class="mono">0.5 – 2.4</td><td>Rising 12‰</td><td>The valley grade: twelve metres up for every kilometre Down. Gradient post at <span class="mono">2.4</span>.</td></tr>
+      <tr><td class="mono">2.4 – 2.8</td><td>Rising 6‰</td><td>Easing towards the weir. Gradient post at <span class="mono">2.8</span>.</td></tr>
+      <tr><td class="mono">2.8 – 3.3</td><td>Level</td><td>Wending station limits.</td></tr>
+    </tbody>
+  </table>
+  <p>Every change of grade is marked by a <span class="term">gradient post</span>: a slate post with a small ivory disc and two black arms, one along the line each way, each tilted with the grade on its side and lettered with that grade in per mille, <span class="mono">L</span> for level. The arm on the side you are travelling towards shows the grade ahead: tilted up and away from you, the line rises; down and away, it falls. The posts are information, not instruction; the cab's <span class="term">Gradient ahead</span> indicator reads the same thing. Book S draws them.</p>
+  <p>What a grade does to a train is simple arithmetic. On 12‰, gravity pulls the Class 1 car with 4.5 kN and the locomotive and coach with 11 kN, about a tenth of the tractive effort either has at line speed: both climb easily, in notch 2, and both roll away if left unbraked. A released car on 12‰ gathers a tenth of a metre a second every second, and is at walking pace within fifteen seconds. Nothing on this line is steep. Everything on it moves by itself.</p>
+
+  <h3>Starting on a rise</h3>
+  <div class="rule" id="D20">
+    <span class="rule-num">Rule D 20</span><span class="rule-title">Starting on a rise</span>
+    <p>Hold the train on the train brake, apply power, and release the brake as the traction takes up. Rolling back more than half a metre is an incident.</p>
+  </div>
+  <ol class="steps">
+    <li>Handle in <span class="term">Full</span>, or step 3 at least: the train is held.</li>
+    <li>Reverser <span class="term">Forward</span>, controller to notch 1, then notch 2. The motors are pulling against the brake; nothing moves yet.</li>
+    <li>Handle to <span class="term">Release</span>. The pipe charges over three seconds and the brakes come off gradually; by the time they are off, the traction is more than the hill, and the train moves the way you mean it to.</li>
+    <li>If the speed indicator shows movement before you have released, you have rolled: step 3 at once, and begin again with more notch.</li>
+  </ol>
+  <div class="why"><p>Released first, a train on 12‰ starts to roll before the motors have anything to say; a driver who then notches up in a hurry starts with a jerk, or with wheelspin. Power first and brake after is the order that costs nothing and never surprises anybody, so it is the order for every start, level or not.</p></div>
+
+  <h3>Descending</h3>
+  <p>Coasting down 12‰ builds speed: about a third of a kilometre an hour every second on the car, rather more on the heavier train. From 50 km/h you would be over the limit in a quarter of a minute. Hold the speed with the brake, not with the controller: a step 1 application checks the car on the 12‰, a step 2 application slows it, and the right hand moves between Release and step 1 as the speed drifts. On the 6‰ stretch step 1 alone is nearly a balance. The Up run from Wending is the descent: level to the 25 board at 2.85, then 6‰ from post 2.8, 12‰ from 2.4, and level again from 0.5.</p>
+
+  <h3>The reduction at Ashgrove, on the fall</h3>
+  <p>An Up train reaches the Ashgrove reduction going downhill, which is why its advance board stands at 0.70 and not at 0.65 (§ 4.2). At 0.5 m/s² on a 12‰ fall you lose the twenty-five between 50 and 25 in about 190 metres, not 145, because gravity is working against the brake all the way. Make the step-2 application at the triangle at post <span class="mono">0.7</span>, hold it, and be at 25 by the disc at 0.45; the grade levels out at 0.5, fifty metres before the board, which is where you find the last of your margin. In fog, the same, by the posts.</p>
+
+  <h3>Securing on a gradient</h3>
+  <div class="rule" id="D22">
+    <span class="rule-num">Rule D 22</span><span class="rule-title">Parking brake</span>
+    <p>Release the parking brake before moving, as the first thing after entering the cab. Apply it before leaving the cab on a gradient, and whenever the vehicle is stabled. Moving with it applied, or a vehicle moving with no direction set, is an incident.</p>
+  </div>
+  <p>Wherever the gradient indicator shows anything but level, <a href="book-r.html#R22">Rule R 22</a> adds the parking brake to the three conditions for leaving a cab, and the door will not open without it. The stations are level, so a run-round never needs it; a change of ends after a stop on the valley grade always does. A vehicle that moves with no direction set, with the reverser in Neutral or nobody in a cab, is a <em>runaway</em>, and the Incident Book records it under that word. A train that moves with the parking brake still applied is dragging it; that is recorded too, after three metres.</p>
+  <div class="note"><p>The Type C4 coach has no parking brake of its own. Uncoupled, it is held by its automatic brake, which applies when the pipe is parted; that is safe on the level platforms where run-rounds happen, and it is the reason a coach is never left uncoupled on the grade.</p></div>
 </section>
 
 <!-- 5 CHANGING ENDS -->
@@ -372,11 +427,11 @@
 
   <ol class="steps">
     <li>Stop at the board. Handle to <span class="term">Full</span>. If there are passengers, work the doors now and close them again.</li>
-    <li>Secure the cab: controller to 0, brake Full, reverser <span class="term">Neutral</span> (<a href="book-r.html#R22">Rule R 22</a>).</li>
+    <li>Secure the cab: controller to 0, brake Full, reverser <span class="term">Neutral</span> (<a href="book-r.html#R22">Rule R 22</a>). On a gradient, parking brake <span class="term">On</span> as well (<a href="#D22">Rule D 22</a>); at the stations, which are level, it is not needed.</li>
     <li>Lights at this end to <span class="term">Tail</span>. This end is about to become the rear of the train.</li>
     <li>Leave the cab <span class="kbd">C</span>. You are on the ground.</li>
     <li>Walk to the other cab. This is the twenty seconds we spoke of in § 1.</li>
-    <li>Enter the cab <span class="kbd">C</span>. The desk is dark except for the pipe gauge and the Line lamp, because the reverser is in Neutral.</li>
+    <li>Enter the cab <span class="kbd">C</span>. The desk is dark except for the pipe gauge and the Line lamp, because the reverser is in Neutral. If you applied the parking brake at the other end, take it <span class="term">Off</span> now, first thing.</li>
     <li>Lights at this end to <span class="term">Head</span>.</li>
     <li>Reverser to <span class="term">Forward</span>. Remember that Forward is away from the cab you are now sitting in, which is the direction you came from. The train has not turned; your idea of forward has.</li>
     <li>Wait for the departure conditions (§ 4.1), horn, and go.</li>
@@ -438,12 +493,13 @@
     <li>Stop at the board and hold the train in <span class="term">Full</span>.</li>
     <li>Doors: open for the passengers, then <span class="term">Closed</span>.</li>
     <li>Controller 0, reverser <span class="term">Neutral</span>. The cab is secured.</li>
+    <li>Parking brake <span class="term">On</span>. A stabled vehicle is held by its parking brake, level or not (<a href="#D22">Rule D 22</a>).</li>
     <li>Lights at this end <span class="term">Off</span>.</li>
     <li>Pantograph <span class="term">Down</span>. The Line lamp goes out and the cab goes dark.</li>
     <li>Leave the cab, walk to the other end, enter it, lights <span class="term">Off</span>. On a locomotive and coach the coach's lamps go out with the pantograph; only the locomotive's own ends need you.</li>
     <li>Leave the cab. The duty is complete.</li>
   </ol>
-  <div class="note"><p>The brake is left applied, and the pipe will hold its air for hours. The next driver's first act is to prove it, which is why § 3 begins with the rear cab and not with the pantograph.</p></div>
+  <div class="note"><p>The train brake is left applied too, and the pipe will hold its air for hours; but it is the parking brake that holds the vehicle, because air leaks and a screw does not. The next driver releases the parking brake first and proves the air brake next, which is why § 3 puts those steps where it does.</p></div>
 </section>
 
 <!-- 8 CLASS 1 -->
@@ -536,12 +592,14 @@
     <dt>Traction</dt><dd>Two motors of 150 kW, 300 kW in all. Maximum tractive effort 45 kN.</dd>
     <dt>Maximum speed</dt><dd>60 km/h. Line speed is 50, so you will never be near it.</dd>
     <dt>Brake</dt><dd>Automatic air brake. Full service gives about 1.0 m/s² on dry rail.</dd>
+    <dt>Parking brake</dt><dd>Mechanical, worked from either cab, holding about half the full service force. Holds the car on any grade on the Railway.</dd>
     <dt>Lights</dt><dd>Head and tail lamps at each end, switched from that end's cab.</dd>
   </dl>
 
   <h2><span class="num">8.1</span> Performance</h2>
   <p>The Lark is light and willing. From rest, notch 2 gets it rolling; notch 4 will take it to 50 km/h in roughly twenty-five seconds on the level, which is quicker than the timetable needs. A gentle start in notch 1 and 2 to the end of the platform, then notch 3, is comfortable and only a few seconds slower.</p>
   <p>From 50 km/h a Full application stops it in about a hundred metres. Step 2 takes nearer two hundred. Those two figures are the whole of the braking arithmetic on this line: with the Ahead indicator reading 150 metres to the board, step 2 is right and step 3 is a little early.</p>
+  <p>On the 12‰ valley grade gravity asks 4.5 kN of the car. Notch 1 just holds 50 km/h on the climb, notch 2 holds it with something to spare, and the timetable is written for notch 2. Coming down, the car gathers speed coasting; a step 1 application checks it and step 2 slows it (§ 4.5). Left with its brakes released on the grade it is at walking pace in fifteen seconds, which is why the parking brake exists.</p>
   <p>The car is short enough that a change of ends is quick, twenty seconds of walking and a few more for the steps. On Duty 101 the six-minute dwell is generous; use the spare for the doors.</p>
 
   <h2><span class="num">8.2</span> The cab</h2>
@@ -620,12 +678,14 @@
     <dt>Traction</dt><dd>1200 kW. Maximum tractive effort 140 kN.</dd>
     <dt>Maximum speed</dt><dd>90 km/h. Line speed is 50.</dd>
     <dt>Brake</dt><dd>Automatic air brake, through pipe to the train.</dd>
+    <dt>Parking brake</dt><dd>Mechanical, worked from either cab, holding about half the locomotive's full service force. Holds the locomotive with one coach on any grade on the Railway.</dd>
     <dt>Couplers</dt><dd>Meridian automatic coupler at both ends, with brake pipe connection.</dd>
   </dl>
 
   <h2><span class="num">9.1</span> Performance</h2>
   <p>The Heron is strong and light on its feet. Running alone during a run-round it will reach shunting speed in a couple of seconds on notch 1; treat notch 2 as the ceiling for a light engine inside station limits, and brake early, because sixty-four tonnes have their own opinion about stopping. With one Type C4 coach behind it, notch 2 is plenty for the line: it will reach 50 km/h before the 50 board and hold it on the level in notch 1. Notch 3 and 4 exist for the day it has ten coaches.</p>
   <p>Braking: from 50 km/h with one coach, step 2 at about 120 metres from the board. Alone, step 2 from 80 metres at shunting speed is more than enough; step 1 at 15 km/h will stop it within a car length.</p>
+  <p>The valley grade means little to the Heron. On 12‰ the locomotive and coach together, 94 tonnes, are pulled back with 11 kN, and notch 1 at line speed gives twice that: the climb is made in notch 2 without noticing it. Coming down with the coach, the train is heavier and quicker to gather speed than the Class 1 car; a step 1 application will not hold it on the 12‰ and step 2 is the working position (§ 4.5). Alone, on a level station, none of this applies, but a light locomotive stopped on the grade is 64 tonnes that will move by itself: parking brake before you leave the cab.</p>
   <div class="note"><p>A light locomotive approaching a coach to couple should be in notch 0 with the brake between step 1 and Release from twenty metres out. The last two metres it does on its own weight. If it stops a metre short, notch 1 for one second and Release.</p></div>
 
   <h2><span class="num">9.2</span> The cab</h2>
@@ -694,6 +754,7 @@
     <dt>Doors</dt><dd>One at each end on each side, worked from the locomotive cab through the control line.</dd>
     <dt>Cab</dt><dd>None. It goes where it is taken.</dd>
     <dt>Brake</dt><dd>Automatic air brake, through pipe, coupler connection at each end.</dd>
+    <dt>Parking brake</dt><dd>None. Uncoupled, the coach is held by its automatic brake, applied by the parted pipe. It is never left uncoupled on a gradient.</dd>
     <dt>End lights</dt><dd>Automatic. A free end shows Tail whenever the coach is part of a train whose locomotive has its lights on. A coupled end shows nothing.</dd>
   </dl>
 
@@ -711,7 +772,7 @@
     <table>
       <thead><tr><th class="mono">Time</th><th>Station</th><th>Event</th><th>Direction</th></tr></thead>
       <tbody>
-        <tr><td class="mono">05:45</td><td>Ashgrove</td><td class="act">on duty; car stabled at platform, pantograph down</td><td></td></tr>
+        <tr><td class="mono">05:45</td><td>Ashgrove</td><td class="act">on duty; car stabled at platform, pantograph down, parking brake on</td><td></td></tr>
         <tr><td class="mono">06:00</td><td>Ashgrove</td><td>depart</td><td>Down</td></tr>
         <tr><td class="mono">06:06</td><td>Wending</td><td>arrive</td><td></td></tr>
         <tr><td class="mono">06:12</td><td>Wending</td><td>depart</td><td>Up</td></tr>
@@ -720,33 +781,33 @@
         <tr><td class="mono">06:30</td><td>Wending</td><td>arrive</td><td></td></tr>
         <tr><td class="mono">06:36</td><td>Wending</td><td>depart</td><td>Up</td></tr>
         <tr><td class="mono">06:42</td><td>Ashgrove</td><td>arrive</td><td></td></tr>
-        <tr><td class="mono">—</td><td>Ashgrove</td><td class="act">stable: lights off, pantograph down</td><td></td></tr>
+        <tr><td class="mono">—</td><td>Ashgrove</td><td class="act">stable: lights off, pantograph down, parking brake on</td><td></td></tr>
       </tbody>
     </table>
-    <p class="foot">One Train Working, Rule R 24. No signals; stop boards at each platform; speed boards 25 and 50 at the station limits. Departures on the driver's own authority at the booked time.</p>
+    <p class="foot">One Train Working, Rule R 24. No signals; stop boards at each platform; speed boards 25 and 50 at the station limits, advance boards at 2.65 and 0.70. Level at the stations, 12‰ up the valley from post 0.5, easing to 6‰ from 2.4. Departures on the driver's own authority at the booked time.</p>
   </div>
 
-  <p><strong>What to expect.</strong> The car stands at Ashgrove platform with Cab A facing Down, towards Wending. Prepare it as in § 3, with Cab B's lights at Tail and Cab A's at Head. At 06:00, doors closed and horn, and away. Six minutes is comfortable for the 3.2 kilometres at line speed; the 25 board comes at km 2.850 and the Wending stop board at km 3.165. Change ends (§ 5), and at 06:12 do it all again the other way. Four runs, two changes of ends at Wending, one at Ashgrove, and then stable the car where you found it. The dwells are six minutes; a change of ends takes about one. Nothing on this duty is hard, and everything on it is a habit you will keep.</p>
+  <p><strong>What to expect.</strong> The car stands at Ashgrove platform with Cab A facing Down, towards Wending. Prepare it as in § 3, with Cab B's lights at Tail and Cab A's at Head, and the parking brake off before anything else. At 06:00, doors closed and horn, and away. Six minutes is comfortable for the 3.2 kilometres at line speed, uphill or down; the climb begins at post 0.5, the 25 board comes at km 2.850 and the Wending stop board at km 3.165. Coming back Up you descend: hold the speed on the brake, and brake for the Ashgrove reduction at the triangle at post 0.7, on the fall (§ 4.5). Change ends (§ 5), and at 06:12 do it all again the other way. Four runs, two changes of ends at Wending, one at Ashgrove, and then stable the car where you found it, parking brake on. The dwells are six minutes; a change of ends takes about one. Nothing on this duty is hard, and everything on it is a habit you will keep.</p>
 
   <div class="card">
     <div class="card-head"><span>Duty 201 · Ashgrove–Wending with run-round</span><span class="mono">Loco 4003 · Class 4 + coach 5107</span></div>
     <table>
       <thead><tr><th class="mono">Time</th><th>Station</th><th>Event</th><th>Direction</th></tr></thead>
       <tbody>
-        <tr><td class="mono">06:45</td><td>Ashgrove</td><td class="act">on duty; train stabled on track 1, loco at the Down end</td><td></td></tr>
+        <tr><td class="mono">06:45</td><td>Ashgrove</td><td class="act">on duty; train stabled on track 1, loco at the Down end, parking brake on</td><td></td></tr>
         <tr><td class="mono">07:00</td><td>Ashgrove</td><td>depart, signal AG 1 and baton</td><td>Down</td></tr>
         <tr><td class="mono">07:07</td><td>Wending</td><td>arrive track 1 under WD 1</td><td></td></tr>
         <tr><td class="mono">—</td><td>Wending</td><td class="act">run round via track 2, under Wending Box</td><td></td></tr>
         <tr><td class="mono">07:30</td><td>Wending</td><td>depart, signal WD 2 and baton</td><td>Up</td></tr>
         <tr><td class="mono">07:37</td><td>Ashgrove</td><td>arrive track 1 under AG 2</td><td></td></tr>
         <tr><td class="mono">—</td><td>Ashgrove</td><td class="act">run round via track 2, under Ashgrove Box</td><td></td></tr>
-        <tr><td class="mono">by 08:00</td><td>Ashgrove</td><td class="act">coupled at the Down end, brake proved, stabled</td><td></td></tr>
+        <tr><td class="mono">by 08:00</td><td>Ashgrove</td><td class="act">coupled at the Down end, brake proved, stabled with the parking brake on</td><td></td></tr>
       </tbody>
     </table>
     <p class="foot">Signalled stations, Book S. Station masters: T. Marrow at Ashgrove, J. Pell at Wending. Depart only on a cleared starter and the green baton, Rule R 20.</p>
   </div>
 
-  <p><strong>What to expect.</strong> The train is coupled and stabled on Ashgrove track 1 with the locomotive at the Down end, its Cab A facing Wending. Prepare the locomotive only; the coach lights itself. Wait for AG 1 to clear and for Mr Marrow's baton, and go at 07:00. At Wending the home signal WD 1 shows Caution because track 1 ends at a buffer; stop at the board. Then the run-round, which is the whole point of the duty: uncouple (§ 6.2), draw forward into the headshunt under WD 3, change ends, run back along track 2 under WD 6 and WD 4 and stop short of the Limit of Shunt board, change ends again, and come onto track 1 under WD 5 to couple to the coach's other end at walking pace (§ 6.1). Connect the pipe, prove the brake, and wait for WD 2 and Mr Pell. Each move is offered to you by Wending Box in a message; the ground signals are its word made visible. The worked example in <a href="book-s.html">Book S</a> walks through every signal of this run-round in order. At Ashgrove the same again in mirror, under Mr Marrow, and then stable the train coupled and proved before 08:00 so that the next driver finds it ready.</p>
+  <p><strong>What to expect.</strong> The train is coupled and stabled on Ashgrove track 1 with the locomotive at the Down end, its Cab A facing Wending. Prepare the locomotive only, parking brake off first; the coach lights itself. Wait for AG 1 to clear and for Mr Marrow's baton, and go at 07:00. The climb to Wending is nothing to the Heron in notch 2; the descent back is the heavier train's, so keep step 2 in hand on the 12‰ and brake at the triangle at 0.7 for the Ashgrove reduction. At Wending the home signal WD 1 shows Caution because track 1 ends at a buffer; stop at the board. Then the run-round, which is the whole point of the duty: uncouple (§ 6.2), draw forward into the headshunt under WD 3, change ends, run back along track 2 under WD 6 and WD 4 and stop short of the Limit of Shunt board, change ends again, and come onto track 1 under WD 5 to couple to the coach's other end at walking pace (§ 6.1). Connect the pipe, prove the brake, and wait for WD 2 and Mr Pell. Each move is offered to you by Wending Box in a message; the ground signals are its word made visible. The worked example in <a href="book-s.html">Book S</a> walks through every signal of this run-round in order. At Ashgrove the same again in mirror, under Mr Marrow, and then stable the train coupled and proved, pantograph down and parking brake on, before 08:00 so that the next driver finds it ready.</p>
 </section>
 
 <!-- 12 GLOSSARY -->
@@ -760,6 +821,7 @@
     <dt>Continuity</dt><dd>The condition of the brake pipe being connected from the cab to the far end of the train, proved by the brake test.</dd>
     <dt>Down, Up</dt><dd>Down is the direction of increasing kilometrage, Ashgrove towards Wending. Up is the opposite.</dd>
     <dt>Dwell</dt><dd>The time a train stands at a station between arrival and departure.</dd>
+    <dt>Gradient post</dt><dd>A slate post at every change of grade, with a small ivory disc and two black arms along the line, each tilted with the grade on its side and lettered in per mille; <span class="mono">L</span> for level. The arm on the side you are travelling towards shows the grade ahead. Information, not instruction.</dd>
     <dt>Headshunt</dt><dd>The short dead-end track beyond the inner switch of a station loop, into which a locomotive draws to begin a run-round.</dd>
     <dt>Hectometre post</dt><dd>A post every hundred metres on the left of the line in the Down direction, its ivory plate reading the distance from the Ashgrove buffer stop in kilometres and tenths, as <span class="mono">1.4</span>. A position reference, not a signal.</dd>
     <dt>Home signal</dt><dd>The main signal that governs entry to a station from the line.</dd>
@@ -769,23 +831,25 @@
     <dt>Line speed</dt><dd>50 km/h, the highest speed permitted between stations.</dd>
     <dt>Notch</dt><dd>One position of the power controller. There are four above 0.</dd>
     <dt>One Train Working</dt><dd>Working a line that carries a single train and no signals. Rule R 24.</dd>
+    <dt>Parking brake</dt><dd>The mechanical brake on a cabbed vehicle, worked from either cab, holding about half the full service force without air. Off before moving; on before leaving a cab on a gradient, and whenever stabled. Rule D 22.</dd>
+    <dt>Per mille</dt><dd>Parts per thousand, the Railway's unit for gradients: 12‰ is twelve metres of rise in a thousand metres of line, written ‰.</dd>
     <dt>Run-round</dt><dd>The moves by which a locomotive is taken from one end of its train to the other at a terminus, by way of the loop.</dd>
-    <dt>Securing</dt><dd>Controller 0, brake Full, reverser Neutral, before leaving a cab. Rule R 22.</dd>
+    <dt>Securing</dt><dd>Controller 0, brake Full, reverser Neutral, and on a gradient or when stabling the parking brake, before leaving a cab. Rule R 22.</dd>
     <dt>Shunting move</dt><dd>Any movement made under a ground signal within station limits, at 15 km/h or less.</dd>
-    <dt>Stabled</dt><dd>Standing out of service: pantograph down, lights off, doors closed, brake applied.</dd>
+    <dt>Stabled</dt><dd>Standing out of service: pantograph down, lights off, doors closed, train brake applied, parking brake on.</dd>
     <dt>Starting signal</dt><dd>The main signal at the departure end of a platform that governs leaving the station.</dd>
     <dt>Station limits</dt><dd>The area from the speed board or home signal to the buffer stop, where 25 km/h applies.</dd>
     <dt>Stop board</dt><dd>The board at which a train stops at a platform, front of the train level with the bar.</dd>
     <dt>Tail, Head</dt><dd>Red lamps at the rear of a train; white lamps at its front.</dd>
-    <dt>Warning distance</dt><dd>The distance from an advance speed board to the speed board it announces: 200 m on the Ashgrove–Wending line, enough to lose 25 km/h at 0.5 m/s² with fifty metres to spare.</dd>
+    <dt>Warning distance</dt><dd>The distance from an advance speed board to the speed board it announces: 200 m where the approach is level or rising, 250 m where it falls at 10‰ or more, enough to lose 25 km/h at 0.5 m/s² with fifty metres to spare. On this line 200 m at 2.65 and 250 m at 0.70.</dd>
   </dl>
 </section>
 
 <!-- COLOPHON -->
 <section class="page colophon" id="colophon" data-folio="Book D · Colophon">
   <img class="mark" src="../brand/mark-green.svg" alt="">
-  <p><strong>Book D — Driving Manual.</strong> Second edition, September 2026, superseding the first edition of September 2026. Issued by the Locomotive Superintendent's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
-  <p>Changes since the first edition are listed on <a href="amendments/book-d-ed2.html">Amendment Slip D-2</a>: advance speed boards, the whole-train rule for limits, and braking for a reduction.</p>
+  <p><strong>Book D — Driving Manual.</strong> Third edition, September 2026, superseding the second edition of September 2026. Issued by the Locomotive Superintendent's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
+  <p>Changes are listed on the amendment slips. <a href="amendments/book-d-ed2.html">Amendment Slip D-2</a>, first to second edition: advance speed boards, the whole-train rule for limits, and braking for a reduction. <a href="amendments/book-d-ed3.html">Amendment Slip D-3</a>, second to third edition: the gradient profile of the line, gradient posts, the parking brake, Rules D 20 and D 22, and the warning distance on a falling approach.</p>
   <p>This Book cites Book R (Rules of Operation) and Book S (Signalling Manual). Where they differ, Book R governs. Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5.</p>
   <p>The handbooks in § 8 to § 10 are to be amended whenever a class is altered. Amendments are issued as numbered slips; paste them in at the page indicated. Drivers are asked to report any paragraph they had to read twice.</p>
 </section>

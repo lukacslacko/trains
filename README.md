@@ -49,6 +49,11 @@ node scripts/play.mjs 201
 - **Waiting for a departure.** On the duty sheet, click the booked departure
   time to bring the clock to 15 s before it. The world keeps running through
   the skip, and it stops early if anything moves or an incident is written.
+- **Gradients.** The valley climbs 12‰ from Ashgrove towards Wending, easing
+  to 6‰ near the weir, level through both stations. Gradient posts mark each
+  change of grade; a parking brake (`B`) is part of securing and stabling;
+  rolling back, running away and dragging the parking brake are incidents.
+  Advance speed boards stand further out where the approach falls.
 - **Incident notices.** A new Incident Book entry pauses the duty and shows a
   notice with the rule, a short lesson and a link into the Book; dismiss it
   with a click or Enter.
@@ -71,7 +76,7 @@ docs            PLAN.md (roadmap and backlog), WORLD.md (fiction bible)
 
 ## Keys
 
-`W`/`S` power notch · `A`/`D` train brake · `Space` emergency ·
+`W`/`S` power notch · `A`/`D` train brake · `Space` emergency · `B` parking brake ·
 `F`/`N`/`R` reverser · `P` pantograph · `L` lights (this end) · `O` doors ·
 `H` horn · `C` leave/enter cab · `Home` re-centre the view.
 Everything else is on the panel: walking, coupling, proving the brake.

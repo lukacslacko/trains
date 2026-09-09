@@ -14,7 +14,7 @@ export interface Signal {
 export interface Board {
   kind: "board";
   id: string;
-  board: "stop" | "limitOfShunt" | "speed" | "speedAdvance" | "buffer";
+  board: "stop" | "limitOfShunt" | "speed" | "speedAdvance" | "gradient" | "buffer";
   pos: Position;
   label?: string;
   value?: number;
@@ -63,6 +63,12 @@ export interface Layout {
   limitAt(km: number): number;
   /** the lowest limit anywhere under a train standing from kmA to kmB */
   limitOver(kmA: number, kmB: number): number;
+  /** gradient profile [kmFrom, kmTo, per mille], positive = rising in the Down direction */
+  profile: [number, number, number][];
+  /** gradient in per mille at a point (positive = rising Down) */
+  gradientAt(km: number): number;
+  /** height above the Ashgrove buffer stop, metres */
+  elevationAt(km: number): number;
   /** diagram zones for the line diagram: [kmFrom, kmTo, share of width] */
   zones: [number, number, number][];
 }
@@ -71,8 +77,36 @@ const LINE_SPEED = 50, STATION_SPEED = 25;
 const AG_LIMIT = 0.45, WD_LIMIT = 2.85;
 const KM_MAX = 3.3;
 
-/** Advance speed boards stand this far before the speed board they announce (Book S). */
+/** Advance speed boards stand this far before the speed board they announce (Book S);
+ *  further where the approach falls at 10‰ or more (Rule R 10). */
 export const WARNING_DISTANCE_KM = 0.2;
+export const WARNING_DISTANCE_FALLING_KM = 0.25;
+
+/** The Wend valley climbs from Ashgrove to Wending: level through each station, 12‰ up the valley, easing to 6‰ near the weir. */
+const profile: [number, number, number][] = [[0, 0.5, 0], [0.5, 2.4, 12], [2.4, 2.8, 6], [2.8, KM_MAX, 0]];
+function gradientAt(km: number) {
+  for (const [a, b, g] of profile) if (km >= a && km < b) return g;
+  return 0;
+}
+function elevationAt(km: number) {
+  let h = 0;
+  for (const [a, b, g] of profile) {
+    if (km <= a) break;
+    h += (Math.min(km, b) - a) * g; // km × ‰ = metres
+  }
+  return h;
+}
+/** Gradient posts stand at every change of grade; each faces both ways, so one object per direction. */
+function gradientPosts(g: TrackGraph): Board[] {
+  const out: Board[] = [];
+  for (let i = 1; i < profile.length; i++) {
+    const km = profile[i][0], before = profile[i - 1][2], after = profile[i][2];
+    // Down-facing: ahead is the grade after the post; Up-facing: ahead is the grade before, seen falling if it rises Down
+    out.push({ kind: "board", id: `GP-${km}-D`, board: "gradient", pos: g.atKm("main", km, 1), value: after, label: String(before) });
+    out.push({ kind: "board", id: `GP-${km}-U`, board: "gradient", pos: g.atKm("main", km, -1), value: -before, label: String(-after) });
+  }
+  return out;
+}
 
 const speedZones: [number, number, number][] = [[0, AG_LIMIT, STATION_SPEED], [AG_LIMIT, WD_LIMIT, LINE_SPEED], [WD_LIMIT, KM_MAX, STATION_SPEED]];
 
@@ -105,8 +139,9 @@ function signal(g: TrackGraph, id: string, type: Signal["type"], track: string, 
 
 function speedBoards(g: TrackGraph): Board[] {
   return [
-    // reductions to 25 are announced one warning distance ahead; the rises to 50 are not
-    board(g, "SBA-AG25", "speedAdvance", "main", AG_LIMIT + WARNING_DISTANCE_KM, -1, { value: 25 }),
+    // reductions to 25 are announced one warning distance ahead; the rises to 50 are not.
+    // Up trains approach Ashgrove down the 12‰ valley grade, so their advance board stands further out.
+    board(g, "SBA-AG25", "speedAdvance", "main", AG_LIMIT + WARNING_DISTANCE_FALLING_KM, -1, { value: 25 }),
     board(g, "SB-AG25", "speed", "main", AG_LIMIT, -1, { value: 25 }),
     board(g, "SB-AG50", "speed", "main", AG_LIMIT, 1, { value: 50 }),
     board(g, "SBA-WD25", "speedAdvance", "main", WD_LIMIT - WARNING_DISTANCE_KM, 1, { value: 25 }),
@@ -133,10 +168,11 @@ export function shuttleLayout(): Layout {
     board(g, "BUF-AG", "buffer", "1", 0.0, -1),
     board(g, "BUF-WD", "buffer", "1", KM_MAX, 1),
     ...speedBoards(g),
+    ...gradientPosts(g),
   ];
   return {
     name: "Ashgrove–Wending (single line)",
-    graph: g, objects, platforms, kmMax: KM_MAX, speedZones, limitAt, limitOver, zones,
+    graph: g, objects, platforms, kmMax: KM_MAX, speedZones, limitAt, limitOver, zones, profile, gradientAt, elevationAt,
     posts: hectometrePosts(KM_MAX, () => -3.6),
     stations: [
       { code: "AG", name: "Ashgrove", stopBoardKm: 0.135, platform: platforms[0], arriveDir: -1 },
@@ -247,12 +283,12 @@ export function loopLayout(): Layout & { loops: Record<string, LoopStation> } {
       board(g, "BUF-WD", "buffer", "hs", KM_MAX, 1),
     );
   }
-  objects.push(...speedBoards(g));
+  objects.push(...speedBoards(g), ...gradientPosts(g));
 
   const inLoop = (km: number) => (km > 0.08 && km < 0.34) || (km > 2.96 && km < 3.22);
   return {
     name: "Ashgrove–Wending (loops and signals)",
-    graph: g, objects, platforms, kmMax: KM_MAX, speedZones, limitAt, limitOver, zones, loops,
+    graph: g, objects, platforms, kmMax: KM_MAX, speedZones, limitAt, limitOver, zones, loops, profile, gradientAt, elevationAt,
     posts: hectometrePosts(KM_MAX, (km) => (inLoop(km) ? T2 - 3.6 : -3.6)),
     stations: [
       { code: "AG", name: "Ashgrove", master: "Marrow", stopBoardKm: 0.135, platform: platforms[0], arriveDir: -1 },

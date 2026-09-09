@@ -52,6 +52,8 @@ export class Vehicle {
   doorsOpen = false;
   doorTimer = 0;
   pipe = 0;             // brake pipe pressure, bar
+  /** parking (hand) brake, cabbed vehicles only; holds about half the full service force */
+  parkingBrake = false;
   hornUntil = 0;
   lastHorn = -1e9;
 
@@ -174,7 +176,10 @@ export class Consist {
 export interface Forces { traction: number; brake: number; resistance: number }
 
 /** One physics step for a consist. Returns events. */
-export function stepConsist(c: Consist, dt: number): { hitBuffer: boolean; trailed: string | null; forces: Forces } {
+/**
+ * @param gravityN  the downhill force on the whole consist, signed in the consist reference (N)
+ */
+export function stepConsist(c: Consist, dt: number, gravityN = 0): { hitBuffer: boolean; trailed: string | null; forces: Forces } {
   const ctl = c.control;
 
   // Pantographs
@@ -215,20 +220,22 @@ export function stepConsist(c: Consist, dt: number): { hitBuffer: boolean; trail
       traction = sign * (cab.notch / 4) * te * taper;
     }
   }
-  const brake = c.vehicles.reduce((f, v) => f + v.brakeFraction * v.mass * 1000 * v.type.brakeDecel, 0);
+  const brake = c.vehicles.reduce((f, v) => f + (v.brakeFraction + (v.parkingBrake ? 0.5 : 0)) * v.mass * 1000 * v.type.brakeDecel, 0);
   const vabs = Math.abs(c.v);
   const resistance = M * 9.81 * 0.0015 + 0.6 * vabs * vabs;
+  // gravity acts like traction: it has a direction of its own
+  const drive = traction + gravityN;
 
   let v = c.v;
   if (v === 0) {
-    // static: need traction to beat brake + rolling resistance
-    if (Math.abs(traction) > brake + resistance) {
-      const a = (Math.abs(traction) - brake - resistance) / M;
-      v = Math.sign(traction) * a * dt;
+    // static: the driving forces must beat brake + rolling resistance, else the train stays put
+    if (Math.abs(drive) > brake + resistance) {
+      const a = (Math.abs(drive) - brake - resistance) / M;
+      v = Math.sign(drive) * a * dt;
     }
   } else {
     const s = Math.sign(v);
-    const a = (traction - s * (brake + resistance)) / M;
+    const a = (drive - s * (brake + resistance)) / M;
     const nv = v + a * dt;
     v = Math.sign(nv) !== s ? 0 : nv;
   }

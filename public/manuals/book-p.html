@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book P — Permanent Way · The Meridian Railway</title>
+<link rel="stylesheet" href="book.css">
+<style>
+  .std { display: grid; grid-template-columns: 170px 1fr; gap: 6px 16px; margin: 0 0 14px; font-size: 14.5px; }
+  .std dt { font-family: var(--display); font-weight: 600; letter-spacing: .04em; color: var(--green); }
+  .std dd { margin: 0; }
+  .profile-fig svg text { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; }
+  .mono-cell { font-family: var(--mono); font-size: 13px; }
+</style>
+</head>
+<body>
+<nav class="desk-bar">
+  <a href="index.html">← Library</a>
+  <span class="spacer"></span>
+  <span>Book P · First edition · September 2026</span>
+  <a href="#" onclick="window.print();return false;">Print booklet</a>
+</nav>
+
+<div class="book">
+
+<!-- COVER -->
+<section class="cover">
+  <div class="rule-line"></div>
+  <img class="mark" src="../brand/mark-ivory.svg" alt="">
+  <div class="company">The Meridian Railway</div>
+  <div class="book-letter"><small>Book</small>P</div>
+  <h1 class="title">Permanent Way</h1>
+  <p class="subtitle">The line beneath the trains: its track, its profile, its posts, and the distances that follow from them.</p>
+  <div class="edition">First edition · September 2026 · Issued by the Engineer's Office</div>
+  <div class="motto">On the line, on time.</div>
+</section>
+
+<!-- CONTENTS -->
+<section class="page toc" data-folio="Book P · Contents">
+  <h1>Contents</h1>
+  <ol>
+    <li><span class="num">1</span><a href="#c1">What the permanent way is</a><span class="dots"></span><span class="pg">3</span></li>
+    <li class="sub"><span class="num">1.1</span><a href="#c1-1">The Railway's standards</a><span class="dots"></span><span class="pg">4</span></li>
+    <li><span class="num">2</span><a href="#c2">The line</a><span class="dots"></span><span class="pg">5</span></li>
+    <li><span class="num">3</span><a href="#c3">The profile</a><span class="dots"></span><span class="pg">6</span></li>
+    <li class="sub"><span class="num">3.1</span><a href="#c3-1">Reading a gradient</a><span class="dots"></span><span class="pg">7</span></li>
+    <li class="sub"><span class="num">3.2</span><a href="#c3-2">What a gradient does to a train</a><span class="dots"></span><span class="pg">8</span></li>
+    <li><span class="num">4</span><a href="#c4">Gradient posts</a><span class="dots"></span><span class="pg">9</span></li>
+    <li><span class="num">5</span><a href="#c5">Speeds and warning distances</a><span class="dots"></span><span class="pg">11</span></li>
+    <li><span class="num">6</span><a href="#c6">Looking after the line</a><span class="dots"></span><span class="pg">13</span></li>
+    <li><span class="num">7</span><a href="#c7">Glossary</a><span class="dots"></span><span class="pg">14</span></li>
+    <li><span class="num">—</span><a href="#colophon">Colophon</a><span class="dots"></span><span class="pg">15</span></li>
+  </ol>
+</section>
+
+<!-- 1 WHAT THE PERMANENT WAY IS -->
+<section class="page chapter" id="c1" data-folio="Book P · 1 What the permanent way is">
+  <h1><span class="num">§ 1</span> What the permanent way is</h1>
+  <p class="lead">Everything in the other Books happens on top of something. This Book is about that something: the ground that was shaped, the stone that was laid on it, and the steel that was fixed to the stone. We call it the permanent way because it was built to stay.</p>
+  <blockquote class="epigraph">A train is only ever as good as the metre of track it is standing on.<span class="who">Engineer's Office, first survey report</span></blockquote>
+
+  <p>Read from the bottom up, the permanent way is five things laid one on the other.</p>
+  <dl class="std">
+    <dt>Formation</dt><dd>The prepared ground: a level or evenly graded bed, cut out of the hillside or built up from it, wide enough for the track and a walking cess on each side, and shaped so that water runs off it rather than into it.</dd>
+    <dt>Drainage</dt><dd>The ditches, pipes and culverts that take that water away. A cess drain runs along each side of the formation. Every culvert under the line has a number and a mouth the Engineer can look into.</dd>
+    <dt>Ballast</dt><dd>Broken hard stone, angular so that the pieces lock together, laid in a bed that holds the sleepers in place, spreads the load of a train into the formation, and lets rain fall straight through.</dd>
+    <dt>Sleepers</dt><dd>The crossmembers that hold the two rails at their distance apart and carry the load into the ballast. Ours are concrete, heavy on purpose.</dd>
+    <dt>Rails and fastenings</dt><dd>The two steel rails the wheels run on, and the clips and pads that hold each rail to each sleeper at exactly the right gauge and inclination.</dd>
+  </dl>
+
+  <div class="why"><p>The Engineer cares about water before anything else. Steel wears slowly and stone settles slowly, but water works fast: it softens the formation, it pumps fine mud up through the ballast until the stone no longer drains, and it lifts the track in frost. Almost every track fault that is not simply age began as a drainage fault. When the Engineer walks the line, the ditches get the first look and the rails the second.</p></div>
+
+  <h2 id="c1-1"><span class="num">1.1</span> The Railway's standards</h2>
+  <p>The Railway builds to one standard so that any length of track can be maintained with the same tools and the same drawings. The figures below are the standard for the Ashgrove–Wending line and for every line that follows it.</p>
+  <table>
+    <thead><tr><th>Item</th><th>Standard</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td>Gauge</td><td class="mono-cell">1435 mm</td><td>Between the inner faces of the rail heads, measured 14 mm below the running surface.</td></tr>
+      <tr><td>Rail</td><td class="mono-cell">54 kg/m flat-bottom</td><td>Continuously welded on the running line; jointed only at switches and at the buffer stops.</td></tr>
+      <tr><td>Rail inclination</td><td class="mono-cell">1 in 20</td><td>Each rail leans inward to meet the cone of the wheel tread.</td></tr>
+      <tr><td>Sleepers</td><td class="mono-cell">Concrete, 600 mm centres</td><td>1,667 sleepers to the kilometre.</td></tr>
+      <tr><td>Ballast</td><td class="mono-cell">300 mm below the sleeper</td><td>Crushed hard stone, 32 to 50 mm, shoulders 400 mm wide beyond the sleeper ends.</td></tr>
+      <tr><td>Cess</td><td class="mono-cell">Both sides, 1 m walking width</td><td>With a cess drain along each, falling to the nearest culvert.</td></tr>
+      <tr><td>Overhead line</td><td class="mono-cell">1.5 kV DC, contact wire 5.3 m above rail</td><td>Wired throughout, headshunts included. The masts stand in the cess, clear of the walking width.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note"><p>This first edition describes the line as built and the signs that stand on it. The Engineer's procedures for inspecting, maintaining and taking possession of the line are being written as the Railway learns what its track needs, and will be issued in a later edition with its own amendment slip. The Books grow with the Railway.</p></div>
+</section>
+
+<!-- 2 THE LINE -->
+<section class="page chapter" id="c2" data-folio="Book P · 2 The line">
+  <h1><span class="num">§ 2</span> The line</h1>
+  <p class="lead">One line, two stations, three kilometres and a little more. It is small enough to know every metre of, which is the point.</p>
+
+  <p>The Ashgrove–Wending line runs 3.3 km south to north up the Wend valley, from the market town at the foot of the valley to the mill village by the weir. It is a single line. In plan it is straight for the whole of this edition, with the loops at each station laid parallel to the running line at 5 m centres. It is electrified throughout at 1.5 kV DC by overhead line.</p>
+  <p>Kilometrage counts from the buffer stop at Ashgrove, km 0.000, to the buffer stop at Wending, km 3.300. <span class="term">Down</span> is the direction of increasing kilometrage, Ashgrove towards Wending; <span class="term">Up</span> is the other. The ground is marked every 100 m by a hectometre post and every full kilometre by a kilometre post, standing on the left of the line in the Down direction and moved outward past track 2 where a loop exists. The posts, their lettering and how a position is quoted from them are described in <a href="book-s.html">Book S</a>; this Book only insists that they are the Engineer's first instrument, since every fault is reported and every drawing is read by the post nearest to it.</p>
+
+  <table>
+    <thead><tr><th>Place</th><th>km</th><th>What is there</th></tr></thead>
+    <tbody>
+      <tr><td>Ashgrove</td><td class="mono-cell">0.000 – 0.450</td><td>Buffer stop at 0.000, headshunt, loop with switches AG B (0.080) and AG A (0.340), platform on track 1 at 0.130–0.290, station limits to 0.450.</td></tr>
+      <tr><td>Plain line</td><td class="mono-cell">0.450 – 2.850</td><td>Single line, 50 km/h, the climb of § 3.</td></tr>
+      <tr><td>Wending</td><td class="mono-cell">2.850 – 3.300</td><td>Station limits from 2.850, loop with switches WD A (2.960) and WD B (3.220), platform on track 1 at 3.010–3.170, headshunt, buffer stop at 3.300.</td></tr>
+    </tbody>
+  </table>
+  <p class="small">The Duty 101 line is the same ground without the loops and signals: one plain track from buffer to buffer, with the same posts and the same profile.</p>
+</section>
+
+<!-- 3 THE PROFILE -->
+<section class="page chapter" id="c3" data-folio="Book P · 3 The profile">
+  <h1><span class="num">§ 3</span> The profile</h1>
+  <p class="lead">A map shows where a line goes. A profile shows how hard it is to get there. Ours climbs the valley from Ashgrove to Wending, gently, and then stops climbing.</p>
+
+  <figure class="profile-fig">
+    <div class="figure-frame">
+      <svg viewBox="0 0 720 250" width="720" height="250" role="img" aria-label="Gradient diagram of the Ashgrove–Wending line">
+        <!-- height grid -->
+        <g stroke="#D9D2C0" stroke-width="1">
+          <line x1="60" y1="180" x2="690" y2="180"/>
+          <line x1="60" y1="132.4" x2="690" y2="132.4" stroke-dasharray="3 4"/>
+          <line x1="60" y1="84.8" x2="690" y2="84.8" stroke-dasharray="3 4"/>
+          <line x1="60" y1="60" x2="690" y2="60" stroke-dasharray="3 4"/>
+        </g>
+        <g font-size="11" fill="#4A5560" text-anchor="end">
+          <text x="52" y="184">0 m</text>
+          <text x="52" y="136">10 m</text>
+          <text x="52" y="89">20 m</text>
+          <text x="52" y="64">25.2 m</text>
+        </g>
+        <!-- ground fill -->
+        <polygon points="60,180 155.5,180 518.2,71.4 594.5,60 690,60 690,180" fill="#1F4B3F" opacity="0.08"/>
+        <!-- the profile line -->
+        <polyline points="60,180 155.5,180 518.2,71.4 594.5,60 690,60" fill="none" stroke="#1F4B3F" stroke-width="3" stroke-linejoin="round"/>
+        <!-- changes of grade -->
+        <g stroke="#B5913F" stroke-width="1.5">
+          <line x1="155.5" y1="180" x2="155.5" y2="196"/>
+          <line x1="518.2" y1="71.4" x2="518.2" y2="196"/>
+          <line x1="594.5" y1="60" x2="594.5" y2="196"/>
+        </g>
+        <g fill="#B5913F">
+          <circle cx="155.5" cy="180" r="4"/>
+          <circle cx="518.2" cy="71.4" r="4"/>
+          <circle cx="594.5" cy="60" r="4"/>
+        </g>
+        <!-- section labels -->
+        <g font-size="14" font-weight="700" fill="#1F4B3F" text-anchor="middle" letter-spacing="1">
+          <text x="107" y="168">LEVEL</text>
+          <text x="336" y="112">RISING 12‰</text>
+          <text x="556" y="52">6‰</text>
+          <text x="642" y="52">LEVEL</text>
+        </g>
+        <g font-size="11" fill="#4A5560" text-anchor="middle">
+          <text x="336" y="126">1.9 km · 22.8 m</text>
+          <text x="556" y="38">0.4 km · 2.4 m</text>
+        </g>
+        <!-- stations -->
+        <g fill="#D9D2C0" stroke="#4A5560" stroke-width="1">
+          <rect x="84.8" y="172" width="30.6" height="6"/>
+          <rect x="634.6" y="52" width="30.6" height="6"/>
+        </g>
+        <g font-size="12" font-weight="700" fill="#1A1A1A" text-anchor="middle" letter-spacing="1.5">
+          <text x="100" y="205">ASHGROVE</text>
+          <text x="650" y="205">WENDING</text>
+        </g>
+        <!-- gradient post labels -->
+        <g font-size="10" fill="#B5913F" text-anchor="middle" letter-spacing="1">
+          <text x="155.5" y="208">POST 0.5</text>
+          <text x="518.2" y="208">POST 2.4</text>
+          <text x="594.5" y="208">POST 2.8</text>
+        </g>
+        <!-- km axis -->
+        <line x1="60" y1="222" x2="690" y2="222" stroke="#1A1A1A" stroke-width="1.5"/>
+        <g stroke="#1A1A1A" stroke-width="1.5">
+          <line x1="60" y1="216" x2="60" y2="228"/>
+          <line x1="250.9" y1="216" x2="250.9" y2="228"/>
+          <line x1="441.8" y1="216" x2="441.8" y2="228"/>
+          <line x1="632.7" y1="216" x2="632.7" y2="228"/>
+          <line x1="690" y1="218" x2="690" y2="226"/>
+        </g>
+        <g stroke="#4A5560" stroke-width="1">
+          <line x1="155.5" y1="219" x2="155.5" y2="225"/><line x1="346.4" y1="219" x2="346.4" y2="225"/><line x1="537.3" y1="219" x2="537.3" y2="225"/>
+        </g>
+        <g font-size="11" fill="#1A1A1A" text-anchor="middle" font-family="IBM Plex Mono, Menlo, monospace">
+          <text x="60" y="243">km 0</text>
+          <text x="250.9" y="243">km 1</text>
+          <text x="441.8" y="243">km 2</text>
+          <text x="632.7" y="243">km 3</text>
+          <text x="690" y="243">3.3</text>
+        </g>
+        <!-- direction -->
+        <g stroke="#4A5560" stroke-width="1.5" fill="none">
+          <path d="M 300 20 L 420 20"/><path d="M 412 15 L 420 20 L 412 25"/>
+        </g>
+        <text x="360" y="12" text-anchor="middle" font-size="11" fill="#4A5560" letter-spacing="2.5">DOWN · CLIMBING</text>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 3.1</span> The gradient diagram. Heights are drawn twenty times larger than distances, as gradient diagrams always are; on the ground the climb is barely visible and entirely felt.</figcaption>
+  </figure>
+
+  <table>
+    <thead><tr><th>From</th><th>To</th><th>Length</th><th>Gradient</th><th>Rise</th><th>Height at end</th></tr></thead>
+    <tbody>
+      <tr><td class="mono-cell">0.000</td><td class="mono-cell">0.500</td><td class="mono-cell">500 m</td><td>Level</td><td class="mono-cell">0 m</td><td class="mono-cell">0.0 m</td></tr>
+      <tr><td class="mono-cell">0.500</td><td class="mono-cell">2.400</td><td class="mono-cell">1,900 m</td><td>Rising 12‰</td><td class="mono-cell">22.8 m</td><td class="mono-cell">22.8 m</td></tr>
+      <tr><td class="mono-cell">2.400</td><td class="mono-cell">2.800</td><td class="mono-cell">400 m</td><td>Rising 6‰</td><td class="mono-cell">2.4 m</td><td class="mono-cell">25.2 m</td></tr>
+      <tr><td class="mono-cell">2.800</td><td class="mono-cell">3.300</td><td class="mono-cell">500 m</td><td>Level</td><td class="mono-cell">0 m</td><td class="mono-cell">25.2 m</td></tr>
+    </tbody>
+  </table>
+  <p>Gradients are given in the direction of increasing kilometrage, so a positive figure rises towards Wending. Both stations stand on the level, the whole of their limits included, so that a train stabled at a platform or standing at a signal has nothing pulling at it. The climb begins at post 0.5, holds 12‰ for 1.9 km up the valley, eases to 6‰ for the last 400 m to the weir, and Wending stands 25.2 m above Ashgrove. <strong>Down trains climb, Up trains descend.</strong></p>
+
+  <h2 id="c3-1"><span class="num">3.1</span> Reading a gradient</h2>
+  <p>We give gradients in per mille: metres of rise or fall in every thousand metres of line. On the 12‰ section the rails climb 12 m in each kilometre, 1.2 m in each hectometre between the posts, and 26 cm over the length of a Class 1 car. The figure is small enough to say quickly on the telephone and large enough to feel from the cab.</p>
+  <div class="note"><p>Some railways write the same slope as a ratio, one unit up in so many along. 12‰ is 1 in 83, 6‰ is 1 in 167. We prefer the per-mille figure because it adds and compares directly: a 12‰ grade is twice a 6‰ grade, and gravity on it is twice as strong.</p></div>
+
+  <h2 id="c3-2"><span class="num">3.2</span> What a gradient does to a train</h2>
+  <p>On a slope, part of a train's weight pulls along the rails instead of into them. The share is the gradient itself: on 12‰ it is twelve thousandths of the weight. For the Class 1 car of Duty 101, 38 t, that is 4.5 kN, about a tenth of what its motors can give; for the Class 4 and its coach, 94 t together, it is 11 kN against a locomotive that can pull 140 kN. Neither notices the climb as effort. Both notice it as a hand on the coupling the moment the brakes come off: a train left unbraked on 12‰ moves, and keeps moving, at once and without a sound.</p>
+  <p>This is why the driver's rules for starting on a rise and for the parking brake exist, and why they are written in <a href="book-d.html#D20">Book D</a> rather than here. The Engineer's part of the bargain is to keep the station limits level, so that the places where trains stand are the places where gravity has nothing to say.</p>
+</section>
+
+<!-- 4 GRADIENT POSTS -->
+<section class="page chapter" id="c4" data-folio="Book P · 4 Gradient posts">
+  <h1><span class="num">§ 4</span> Gradient posts</h1>
+  <p class="lead">The profile of § 3 is on paper. On the ground it is written on three small posts, one at each place where the slope changes.</p>
+
+  <div class="rule" id="P10">
+    <span class="rule-num">Rule P 10</span><span class="rule-title">Gradient posts</span>
+    <p>A gradient post stands at every change of grade. Its arms carry the grade on each side in per mille, L for level; the arm on the side you travel towards shows the grade ahead. Posts carry no instruction.</p>
+  </div>
+
+  <p>The post is the standard slate post of the hectometre posts, with a small ivory disc at its head and two black arms fixed to the disc, one reaching along the line each way. Each arm is tilted with the grade on its own side of the post: an arm on a rising section slopes up as it leaves the disc, an arm on a falling section slopes down, and an arm on the level is horizontal. Each arm is lettered with its grade in per mille, and a level arm with the letter L. The post stands on the same side of the line as the hectometre posts, on the left in the Down direction, at the exact kilometre of the change. Dimensions and lettering are given in <a href="book-i.html">Book I</a>; the post also appears in the catalogue of boards in <a href="book-s.html">Book S</a>, where its place among the things that stand beside the line is fixed.</p>
+
+  <figure>
+    <div class="figure-frame">
+      <svg viewBox="0 0 440 210" width="440" height="210" role="img" aria-label="The gradient post at km 0.5, seen from the line">
+        <!-- ground line -->
+        <line x1="20" y1="182" x2="420" y2="182" stroke="#D9D2C0" stroke-width="2"/>
+        <!-- post -->
+        <rect x="216" y="70" width="8" height="112" fill="#4A5560"/>
+        <!-- left arm: level -->
+        <line x1="220" y1="70" x2="120" y2="70" stroke="#1A1A1A" stroke-width="9" stroke-linecap="round"/>
+        <!-- right arm: rising 12‰, exaggerated for legibility -->
+        <line x1="220" y1="70" x2="318" y2="44" stroke="#1A1A1A" stroke-width="9" stroke-linecap="round"/>
+        <!-- disc -->
+        <circle cx="220" cy="70" r="16" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="3"/>
+        <!-- lettering on the arms -->
+        <text x="150" y="60" text-anchor="middle" font-size="22" font-weight="700" fill="#1A1A1A" font-family="Barlow Condensed, Arial Narrow, sans-serif">L</text>
+        <text x="288" y="36" text-anchor="middle" font-size="22" font-weight="700" fill="#1A1A1A" font-family="Barlow Condensed, Arial Narrow, sans-serif">12‰</text>
+        <!-- direction labels -->
+        <g font-size="11" fill="#4A5560" letter-spacing="2" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+          <text x="60" y="200" text-anchor="middle">TOWARDS ASHGROVE</text>
+          <text x="380" y="200" text-anchor="middle">TOWARDS WENDING</text>
+          <text x="220" y="130" text-anchor="middle">POST 0.5</text>
+        </g>
+        <g stroke="#4A5560" stroke-width="1.5" fill="none">
+          <path d="M 300 160 L 400 160"/><path d="M 392 155 L 400 160 L 392 165"/>
+          <path d="M 140 160 L 40 160"/><path d="M 48 155 L 40 160 L 48 165"/>
+        </g>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 4.1</span> The post at km 0.5 seen from the line. The tilt of the arms is drawn larger than life so that it reads on the page; on the post itself it is set to the true grade.</figcaption>
+  </figure>
+
+  <h3>Reading a post in either direction</h3>
+  <p>Stand on the line and look at the post. The arm pointing the way you are going tells you the grade ahead, and the way it leans tells you which kind: tilted up and away from you, the line rises; down and away, it falls; level, it is level. The arm behind you tells you the grade you have just left, which matters to the rear of a long train that is still on it. A Down train passing post 0.5 reads L on the arm behind and 12‰ rising on the arm ahead; an Up train at the same post reads 12‰ on the arm it has just come down and L on the arm ahead, and the tilt of the 12‰ arm, up and away from the Up train, confirms that what it has just done is descend.</p>
+
+  <table>
+    <thead><tr><th>Post</th><th>Ashgrove side</th><th>Wending side</th><th>A Down train reads</th><th>An Up train reads</th></tr></thead>
+    <tbody>
+      <tr><td class="mono-cell">0.5</td><td>L</td><td>12‰ rising</td><td>Climb begins, 12‰</td><td>Climb over, level ahead</td></tr>
+      <tr><td class="mono-cell">2.4</td><td>12‰ rising</td><td>6‰ rising</td><td>Climb eases to 6‰</td><td>Descent steepens to 12‰</td></tr>
+      <tr><td class="mono-cell">2.8</td><td>6‰ rising</td><td>L</td><td>Climb over, level ahead</td><td>Descent begins, 6‰</td></tr>
+    </tbody>
+  </table>
+  <div class="why"><p>A post at every change of grade, and only there, keeps the ground and the profile in agreement. If a post says 12‰ ahead, the next post is the only place that can say otherwise. A driver who knows the three posts knows the whole line, and a driver on a strange line can learn it from the cab window without a diagram.</p></div>
+</section>
+
+<!-- 5 SPEEDS AND WARNING DISTANCES -->
+<section class="page chapter" id="c5" data-folio="Book P · 5 Speeds and warning distances">
+  <h1><span class="num">§ 5</span> Speeds and warning distances</h1>
+  <p class="lead">Where a speed board stands is a question for the Signal Engineer. How far before it the advance board must stand is a question for the profile, and so it is answered here.</p>
+
+  <div class="rule" id="P12">
+    <span class="rule-num">Rule P 12</span><span class="rule-title">Warning distance</span>
+    <p>The advance speed board stands 200 m before the speed board it announces where the approach is level or rising, and 250 m where the approach falls at 10‰ or more.</p>
+  </div>
+
+  <p>The approach is the stretch a train covers while slowing, measured back from the speed board over the warning distance itself. A falling approach lengthens every braking distance, so on a falling approach of 10‰ or more the advance board is set out a further 50 m. Rises to a higher limit carry no advance board, since nothing has to be lost to obey them.</p>
+
+  <table>
+    <thead><tr><th>Direction</th><th>Advance board</th><th>Speed board</th><th>Warning distance</th><th>Approach grade</th></tr></thead>
+    <tbody>
+      <tr><td>Up, into Ashgrove</td><td class="mono-cell">0.700 · 25</td><td class="mono-cell">0.450 · 25</td><td class="mono-cell">250 m</td><td>Falling 12‰ to post 0.5, then level</td></tr>
+      <tr><td>Down, into Wending</td><td class="mono-cell">2.650 · 25</td><td class="mono-cell">2.850 · 25</td><td class="mono-cell">200 m</td><td>Rising 6‰ to post 2.8, then level</td></tr>
+      <tr><td>Down, leaving Ashgrove</td><td>none</td><td class="mono-cell">0.450 · 50</td><td>—</td><td>A rise in speed is not announced</td></tr>
+      <tr><td>Up, leaving Wending</td><td>none</td><td class="mono-cell">2.850 · 50</td><td>—</td><td>A rise in speed is not announced</td></tr>
+    </tbody>
+  </table>
+
+  <div class="why"><p>The arithmetic is short. At the Railway's service deceleration of 0.5 m/s² a train loses the 25 km/h between 50 and 25 in about 145 m on the level. Down a 12‰ fall, gravity takes back 0.12 m/s² of that braking, and the same speed comes off in about 190 m. Two hundred metres would leave the Up driver ten metres of margin; two hundred and fifty leaves sixty, which is what the level approach enjoys. The remainder of the warning distance is not the Engineer's; it is the driver's allowance for the moment of reaction, and for fog and snow, when the advance board is braked at without waiting to see the speed board.</p></div>
+  <p>The whole-train rule for speed limits, and the conduct of a train between the two boards, are <a href="book-r.html#R10">Rule R 10</a>; the method of braking for a reduction is in Book D. This Book only fixes where the boards must stand so that those rules can be kept.</p>
+</section>
+
+<!-- 6 LOOKING AFTER THE LINE -->
+<section class="page chapter" id="c6" data-folio="Book P · 6 Looking after the line">
+  <h1><span class="num">§ 6</span> Looking after the line</h1>
+  <p class="lead">Track does not fail; it wears, settles and drowns, all of them slowly and all of them visibly to someone who walks it. This chapter says what to look for. The procedures for putting it right are for the next edition.</p>
+
+  <h3>What wears</h3>
+  <ul>
+    <li><strong>The rail head.</strong> Every wheel polishes it and every braking wheel heats it. On a straight line it wears evenly and slowly; at the switches, where wheels strike the switch blades, it wears fastest.</li>
+    <li><strong>The ballast.</strong> It settles under traffic, and where water stands it fouls with mud until it no longer drains and the sleepers begin to pump. A wet, dark patch of ballast is the first sign.</li>
+    <li><strong>The drainage.</strong> Ditches silt, culverts choke with leaves, and the water that should be in them is in the formation instead.</li>
+    <li><strong>The fastenings.</strong> Clips loosen with vibration and pads wear thin. A loose clip is quiet; a hundred loose clips are a gauge fault.</li>
+  </ul>
+
+  <h3>What the Engineer walks the line for</h3>
+  <p>The Engineer, or the ganger for the length, walks the whole line at intervals, always from the same end so that every post is passed in the same order and nothing is missed. The walk looks at the ditches first, then at the ballast, then along the rails for dips and kinks by eye, and at the switches for the fit of the blades. The gauge is measured at the posts and at every switch. What is seen is written down against the post nearest to it, and the written record, not the memory, is what decides when work is done.</p>
+
+  <h3>What drivers report</h3>
+  <p>The people who pass over the track most often are the drivers, and a train tells its driver a great deal: a lurch, a rough ride, a sound that was not there yesterday. Such things are reported to the Box at the next stop and written in the Incident Book, not as a fault of the driver but as a note for the Engineer, and by the post nearest to them: "rough riding at 1.7", "water on the ballast at 2.3".</p>
+
+  <div class="rule" id="P14">
+    <span class="rule-num">Rule P 14</span><span class="rule-title">Reporting</span>
+    <p>Report anything wrong with the line to the Box by the last post passed.</p>
+  </div>
+  <div class="note"><p>Inspection intervals, the measuring of track geometry, temporary speed restrictions, possessions of the line for work, and the vehicles the Engineer uses will be issued with a later edition of this Book, once the Railway has run long enough to know what its track needs. Until then the line is walked, watched and reported on, and that is most of the work anyway.</p></div>
+</section>
+
+<!-- 7 GLOSSARY -->
+<section class="page chapter" id="c7" data-folio="Book P · 7 Glossary">
+  <h1><span class="num">§ 7</span> Glossary</h1>
+  <dl class="dl">
+    <dt>Formation</dt><dd>The prepared ground on which the ballast and track are laid.</dd>
+    <dt>Ballast</dt><dd>The bed of broken stone that holds the sleepers, spreads the load and drains the track.</dd>
+    <dt>Cess</dt><dd>The walking strip and drain along each side of the formation.</dd>
+    <dt>Gradient</dt><dd>The slope of the line along its length, given in per mille in the Down direction.</dd>
+    <dt>Per mille</dt><dd>Metres of rise or fall in every thousand metres of line; 12‰ is 1 in 83.</dd>
+    <dt>Profile</dt><dd>The line drawn as height against distance: the gradient diagram of § 3.</dd>
+    <dt>Change of grade</dt><dd>A place where one gradient ends and another begins; marked by a gradient post.</dd>
+    <dt>Warning distance</dt><dd>The distance from an advance speed board to the speed board it announces: 200 m, or 250 m on a falling approach of 10‰ or more.</dd>
+    <dt>Hectometre post</dt><dd>A plate every 100 m giving the kilometrage; the Engineer's and the driver's reference for every position.</dd>
+    <dt>Gradient post</dt><dd>A post at a change of grade whose two arms give the grade on each side.</dd>
+  </dl>
+</section>
+
+<!-- COLOPHON -->
+<section class="page colophon" id="colophon" data-folio="Book P · Colophon">
+  <img class="mark" src="../brand/mark-green.svg" alt="">
+  <p><strong>Book P — Permanent Way.</strong> First edition, September 2026. Issued by the Engineer's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
+  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes nothing.</p>
+  <p>Amendments are issued as numbered slips; paste them in at the page indicated. Rules P 10 to P 14 are cited by number in other Books and must not be renumbered without a general amendment.</p>
+  <p>Companion volumes: <a href="book-i.html">Book I, Identity</a> · <a href="book-r.html">Book R, Rules of Operation</a> · <a href="book-s.html">Book S, Signalling</a> · <a href="book-d.html">Book D, Driving</a>.</p>
+</section>
+
+<section class="back-cover">
+  <img class="mark" src="../brand/mark-ivory.svg" alt="">
+  <div>The Meridian Railway · On the line, on time</div>
+</section>
+
+</div>
+</body>
+</html>

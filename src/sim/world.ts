@@ -53,6 +53,8 @@ export class World {
   skipUntil: number | null = null;
   private prevLead = new Map<Consist, { pos: Position; v: number }>();
   private flags = { doorsMoving: false, lightsBad: false, overspeed: false, shortStop: new Set<string>() };
+  /** per-consist bookkeeping for rolling back, running away and dragging the parking brake */
+  private motion = new Map<Consist, { intended: number; wrong: number; flagged: boolean; drag: number; dragFlagged: boolean }>();
   finished: string | null = null;
 
   constructor(layout: Layout, startTime: number, trainVehicle: Vehicle, driver: DriverLocation) {
@@ -168,7 +170,7 @@ export class World {
           const applies = o.type === "main" ? c.isTrain : !c.isTrain;
           items.push({ kind: "signal", label: o.id, dist: d, obj: o, aspect: o.aspect, applies });
         } else {
-          const label = o.board === "stop" ? `Stop board ${o.label}` : o.board === "limitOfShunt" ? "Limit of Shunt" : o.board === "speed" ? `Speed ${o.value}` : o.board === "speedAdvance" ? `Speed ${o.value} ahead` : "Buffer stop";
+          const label = o.board === "stop" ? `Stop board ${o.label}` : o.board === "limitOfShunt" ? "Limit of Shunt" : o.board === "speed" ? `Speed ${o.value}` : o.board === "speedAdvance" ? `Speed ${o.value} ahead` : o.board === "gradient" ? `Gradient post · ${o.value === 0 ? "level" : `${Math.abs(o.value!)}‰ ${o.value! > 0 ? "rising" : "falling"}`} ahead` : "Buffer stop";
           const applies = o.board === "stop" ? c.isTrain : o.board === "limitOfShunt" ? !c.isTrain : true;
           items.push({ kind: o.board === "buffer" ? "buffer" : "board", label, dist: d, obj: o, applies });
         }
@@ -188,6 +190,28 @@ export class World {
     // keep only the nearest vehicle end
     let seenVehicle = false;
     return items.filter((i) => { if (i.kind !== "vehicle") return true; if (seenVehicle) return false; seenVehicle = true; return true; });
+  }
+
+  /** Gradient in per mille under a vehicle's centre, positive = rising Down. */
+  gradeUnder(v: Vehicle): number {
+    return this.layout.gradientAt((kmOf(v.pos) + kmOf(v.posB)) / 2);
+  }
+  /** Downhill force on the consist, signed in the consist reference direction (N). */
+  gravityOn(c: Consist): number {
+    const f = c.frontEnd();
+    const refDown = kmDirOf(f.vehicle.endPos(f.end)); // +1 when the reference direction is Down
+    let F = 0;
+    for (const v of c.vehicles) F += -v.mass * 1000 * 9.81 * (this.gradeUnder(v) / 1000) * refDown;
+    return F;
+  }
+  /** Gradient ahead of a cab in the direction it faces, per mille, positive = rising ahead. */
+  gradeAhead(vehicle: Vehicle, cab: Cab): number {
+    const p = vehicle.endPos(cab.end);
+    return this.layout.gradientAt(kmOf(p)) * kmDirOf(p);
+  }
+  setParkingBrake(on: boolean) {
+    const c = this.requireCab(); if (!c) return;
+    c.vehicle.parkingBrake = on;
   }
 
   /** Speed limit for a consist right now: the lowest limit under any part of it (Rule R 10). */
@@ -292,6 +316,8 @@ export class World {
     if (cab.notch > 0) return "power controller is not at 0";
     if (cab.reverser !== "N") return "reverser is not in Neutral";
     if (cab.brake < 4) return "train brake is not fully applied";
+    const d = this.driver;
+    if (d.kind === "cab" && this.gradeUnder(d.vehicle) !== 0 && !d.vehicle.parkingBrake) return "parking brake is not applied and the vehicle stands on a gradient";
     return null;
   }
   leaveCab() {
@@ -472,7 +498,7 @@ export class World {
     for (const c of this.consists.slice()) {
       const sign = c.v !== 0 ? Math.sign(c.v) : 0;
       const before = sign !== 0 ? c.leadingPos(sign) : null;
-      const r = stepConsist(c, dt);
+      const r = stepConsist(c, dt, this.gravityOn(c));
       if (r.hitBuffer) { this.incident("BUFFER", `${c.vehicles.map((v) => v.number).join("+")} struck the buffer stop (Rule D 16)`); }
       if (r.trailed) this.incident("TRAILED", `Ran through switch ${r.trailed} set against the move`);
       if (before && Math.abs(c.v) > 0) this.checkPassings(c, before, Math.abs(c.v) * dt);
@@ -540,6 +566,27 @@ export class World {
       if (wasStill && c.v !== 0) {
         const ctl = c.control;
         if (ctl && this.time - ctl.vehicle.lastHorn > 25) this.incident("HORN", "Moved from rest without one short blast (Rule R 18)");
+      }
+      // rolling back, running away, dragging the parking brake
+      {
+        const ctl = c.control;
+        const intended = ctl ? c.cabForwardSign(ctl.index, ctl.cab) * (ctl.cab.reverser === "F" ? 1 : ctl.cab.reverser === "R" ? -1 : 0) : 0;
+        let m = this.motion.get(c);
+        if (!m) { m = { intended, wrong: 0, flagged: false, drag: 0, dragFlagged: false }; this.motion.set(c, m); }
+        if (wasStill && c.v !== 0) { m.intended = intended; m.wrong = 0; m.flagged = false; }
+        if (c.v !== 0) {
+          const wrongWay = m.intended === 0 || Math.sign(c.v) !== m.intended;
+          if (wrongWay) m.wrong += Math.abs(c.v) * dt; else m.wrong = 0;
+          if (!m.flagged && m.wrong > 0.5) {
+            m.flagged = true;
+            if (m.intended === 0) this.incident("RUNAWAY", `${c.vehicles.map((v) => v.number).join("+")} ran away: moved with no direction set (Rule D 22)`);
+            else this.incident("ROLLBACK", `${c.vehicles.map((v) => v.number).join("+")} rolled back on the gradient (Rule D 20)`);
+          }
+          if (c.vehicles.some((v) => v.parkingBrake)) {
+            m.drag += Math.abs(c.v) * dt;
+            if (!m.dragFlagged && m.drag > 3) { m.dragFlagged = true; this.incident("PARKING-DRAG", `${c.vehicles.map((v) => v.number).join("+")} moved with the parking brake applied (Rule D 22)`); }
+          } else { m.drag = 0; m.dragFlagged = false; }
+        }
       }
       this.prevLead.set(c, { pos: c.leadingPos(c.v >= 0 ? 1 : -1), v: c.v });
       // automatic coach lights

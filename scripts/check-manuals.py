@@ -21,7 +21,7 @@ ok = True
 def fail(msg):
     global ok; ok = False; print("FAIL", msg)
 
-for letter in "irsd":
+for letter in "irsdp":
     book = os.path.join(ROOT, f"book-{letter}.html")
     s = open(book).read()
     b = Balance(); b.feed(s)
@@ -40,4 +40,10 @@ for letter in "irsd":
         if f"amendments/{slip}" not in s: fail(f"book-{letter}: colophon does not link {slip}")
         print(f"book-{letter}: {edition} · {slip}: {n} entries")
     if not slips: print(f"book-{letter}: {edition} · no slips")
+# cross-book links: book-x.html#anchor must resolve
+allids = {l: set(re.findall(r'id="([^"]+)"', open(os.path.join(ROOT, f"book-{l}.html")).read())) for l in "irsdp"}
+for l in "irsdp":
+    t = open(os.path.join(ROOT, f"book-{l}.html")).read()
+    for target, anchor in re.findall(r'href="book-([irsdp])\.html#([^"]+)"', t):
+        if anchor not in allids[target]: fail(f"book-{l}: link to book-{target}.html#{anchor} does not resolve")
 print("OK" if ok else "PROBLEMS FOUND"); sys.exit(0 if ok else 1)

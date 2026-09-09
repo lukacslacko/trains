@@ -120,6 +120,12 @@ manual that describes exactly what is playable.
   couple at walking pace, brake continuity check, depart on signal + baton.
 - Rules: signal passed at danger, shunting speed, coupling speed, brake test.
 
+### M1.5 — Gradients (done 2026-09-09)
+- Gradient profile on the line (level, 12‰, 6‰, level), gravity in the
+  physics, gradient posts at every change of grade, parking brake, rules
+  D 20 (starting on a rise) and D 22 (parking brake), warning distances by
+  approach grade, profile ribbon in the line diagram, Book P first edition.
+
 ### M2 — Intermediate stations and the block
 - A three-station line with a passing station in the middle.
 - Block working between stations (line-clear exchange), single-line token
@@ -152,7 +158,8 @@ manual that describes exactly what is playable.
 
 ### M6 — Earthworks and construction
 - Terrain with elevation; cuttings, embankments, culverts, bridges.
-- Track-laying tools, gradients affect the physics, drainage affects wear.
+- Track-laying tools, drainage affects wear (gradients themselves arrived
+  with M1.5).
 - Player role: **engineer / works supervisor**.
 
 ### Later and someday

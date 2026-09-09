@@ -205,6 +205,29 @@ export class WorldRenderer {
 
   private drawBoard(ctx: CanvasRenderingContext2D, b: Board, s: number) {
     const { p, t, n } = this.sideOf(b);
+    if (b.board === "gradient") {
+      // one physical post per change of grade, drawn from the Down-facing object, on the post side of the line (-y)
+      if (b.pos.dir * b.pos.edge.kmDir !== 1) return;
+      const after = b.value ?? 0, before = Number(b.label ?? 0);
+      // it stands beyond the hectometre plate that shares its kilometre, so the two never overlap
+      const cx = p.x, cy = p.y - 9.0;
+      ctx.strokeStyle = C.slate; ctx.lineWidth = 0.3;
+      ctx.beginPath(); ctx.moveTo(cx, p.y - 5.2); ctx.lineTo(cx, cy); ctx.stroke();
+      // two arms: the left arm follows the grade behind, the right arm the grade ahead (rising Down = up to the right)
+      const arm = 2.6, k = 0.12;
+      ctx.strokeStyle = C.ink; ctx.lineWidth = 0.45; ctx.lineCap = "round";
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx - arm, cy + before * k); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + arm, cy - after * k); ctx.stroke();
+      ctx.fillStyle = C.ivory; ctx.strokeStyle = C.ink; ctx.lineWidth = 0.15;
+      ctx.beginPath(); ctx.arc(cx, cy, 0.55, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      if (s >= 2) {
+        ctx.fillStyle = C.ink; ctx.font = `700 1.4px ${DISPLAY}`; ctx.textAlign = "center";
+        const txt = (g: number) => (g === 0 ? "L" : `${Math.abs(g)}‰`);
+        ctx.fillText(txt(before), cx - arm + 0.4, cy + before * k - 1.0);
+        ctx.fillText(txt(after), cx + arm - 0.4, cy - after * k - 1.0);
+      }
+      return;
+    }
     if (b.board === "buffer") {
       ctx.strokeStyle = C.red; ctx.lineWidth = 1.2; ctx.lineCap = "butt";
       ctx.beginPath(); ctx.moveTo(p.x - n.x * 1.8, p.y - n.y * 1.8); ctx.lineTo(p.x + n.x * 1.8, p.y + n.y * 1.8); ctx.stroke();

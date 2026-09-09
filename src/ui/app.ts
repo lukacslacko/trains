@@ -197,6 +197,7 @@ export class App {
       case "n": w.setReverser("N"); break;
       case "r": w.setReverser("R"); break;
       case "p": w.togglePanto(); break;
+      case "b": w.setParkingBrake(!cab.vehicle.parkingBrake); break;
       case "l": w.setLights(c.lights === "off" ? "tail" : c.lights === "tail" ? "head" : "off"); break;
       case "o": w.toggleDoors(); break;
       case "h": w.horn(); break;

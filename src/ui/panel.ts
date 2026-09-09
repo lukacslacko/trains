@@ -23,7 +23,7 @@ export class SidePanel {
 
   constructor(root: HTMLElement, world: World, duty: DutyTracker) {
     this.root = root; this.world = world; this.duty = duty;
-    root.innerHTML = `<div class="cab"></div><div class="ahead"></div><div class="tabs"></div><div class="tabpane"></div><div class="keys">W/S power · A/D brake · Space emergency · F/N/R reverser · P panto · L lights · O doors · H horn · C cab · Home re-centre</div>`;
+    root.innerHTML = `<div class="cab"></div><div class="ahead"></div><div class="tabs"></div><div class="tabpane"></div><div class="keys">W/S power · A/D brake · Space emergency · B parking brake · F/N/R reverser · P panto · L lights · O doors · H horn · C cab · Home re-centre</div>`;
     this.cabEl = root.querySelector(".cab")!;
     this.aheadEl = root.querySelector(".ahead")!;
     this.tabsEl = root.querySelector(".tabs")!;
@@ -41,6 +41,7 @@ export class SidePanel {
       case "notch": w.setNotch(Number(v)); break;
       case "brake": w.setBrake(Number(v) as BrakeStep); break;
       case "panto": w.togglePanto(); break;
+      case "park": w.setParkingBrake(v === "on"); break;
       case "lights": w.setLights(v as LightState); break;
       case "doors": w.toggleDoors(); break;
       case "horn": w.horn(); break;
@@ -110,6 +111,11 @@ export class SidePanel {
         <div class="gauge ${speed > lim + 2 ? "warn" : ""}"><div class="lbl">Speed</div><div class="val">${speed.toFixed(0)}<small>km/h · limit ${lim}</small></div></div>
         <div class="gauge"><div class="lbl">Brake pipe</div><div class="val">${pipe.toFixed(1)}<small>bar</small></div></div>
         <div class="gauge"><div class="lbl">Notch</div><div class="val">${cab.notch}<small>/4 · ${cab.reverser === "F" ? "Fwd" : cab.reverser === "R" ? "Rev" : "Neutral"}</small></div></div>
+      </div>
+      <div class="gauges">
+        <div class="gauge"><div class="lbl">Gradient ahead</div><div class="val">${(() => { const g = w.gradeAhead(v, cab); return g === 0 ? "Level" : `${g > 0 ? "↗" : "↘"} ${Math.abs(g)}<small>‰ ${g > 0 ? "rising" : "falling"}</small>`; })()}</div></div>
+        <div class="gauge ${v.parkingBrake ? "warn" : ""}"><div class="lbl">Parking brake</div><div class="val">${v.parkingBrake ? "On" : "Off"}</div></div>
+        <div class="gauge"><div class="lbl">Height</div><div class="val">${w.layout.elevationAt(kmOf(v.pos)).toFixed(0)}<small>m</small></div></div>
       </div>`;
     const lamps = `
       <div class="lamps">
@@ -123,6 +129,7 @@ export class SidePanel {
       <div class="ctl"><div class="lbl">Reverser<span class="k">R N F</span></div><div class="opts">${b("rev", "R", "Rev", cab.reverser === "R")}${b("rev", "N", "N", cab.reverser === "N")}${b("rev", "F", "Fwd", cab.reverser === "F")}</div></div>
       <div class="ctl"><div class="lbl">Power<span class="k">W S</span></div><div class="opts">${[0, 1, 2, 3, 4].map((n) => b("notch", String(n), String(n), cab.notch === n)).join("")}</div></div>
       <div class="ctl"><div class="lbl">Train brake<span class="k">A D</span></div><div class="opts">${BRAKE_NAMES.map((n, i) => b("brake", String(i), i === 0 ? "Rel" : i === 5 ? "Emerg" : n, cab.brake === i, i === 5 ? "red" : "")).join("")}</div></div>
+      <div class="ctl"><div class="lbl">Parking brake<span class="k">B</span></div><div class="opts">${b("park", "off", "Off", !v.parkingBrake)}${b("park", "on", "On", v.parkingBrake, v.parkingBrake ? "red" : "")}</div></div>
       <div class="ctl"><div class="lbl">Pantograph<span class="k">P</span></div><div class="opts">${b("panto", "", v.panto === "up" || v.panto === "raising" ? "Up" : "Down", v.panto === "up")}</div></div>
       <div class="ctl"><div class="lbl">Lights ${cab.end}<span class="k">L</span></div><div class="opts">${b("lights", "off", "Off", cab.lights === "off")}${b("lights", "tail", "Tail", cab.lights === "tail", cab.lights === "tail" ? "red" : "")}${b("lights", "head", "Head", cab.lights === "head")}</div></div>
       <div class="ctl"><div class="lbl">Doors<span class="k">O</span></div><div class="opts">${b("doors", "", c.anyDoorsOpen() ? "Open" : "Closed", c.anyDoorsOpen())}${b("horn", "", "Horn", false)}${b("test", "", "Prove brake", false)}</div></div>
