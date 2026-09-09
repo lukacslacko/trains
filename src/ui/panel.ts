@@ -1,5 +1,5 @@
-import { World } from "../sim/world";
-import { DutyTracker } from "../sim/duty";
+import { World, type Route } from "../sim/world";
+import { DutyTracker, BoxDuty, type Box, type Movement, type Side } from "../sim/duty";
 import { BRAKE_NAMES, type BrakeStep, type LightState, type Reverser } from "../stock/vehicles";
 import { fmtTime, parseTime } from "../core/util";
 import { kmOf } from "../track/graph";
@@ -13,21 +13,23 @@ export class SidePanel {
   aheadEl: HTMLElement;
   tabsEl: HTMLElement;
   paneEl: HTMLElement;
+  keysEl: HTMLElement;
   tab: "messages" | "sheet" | "incidents" = "messages";
   private lastCab = "";
   private lastAhead = "";
   private lastPane = "";
   private msgCount = -1;
   world: World;
-  duty: DutyTracker;
+  duty: DutyTracker | BoxDuty;
 
-  constructor(root: HTMLElement, world: World, duty: DutyTracker) {
+  constructor(root: HTMLElement, world: World, duty: DutyTracker | BoxDuty) {
     this.root = root; this.world = world; this.duty = duty;
     root.innerHTML = `<div class="col drive"><div class="cab"></div><div class="ahead"></div></div><div class="col work"><div class="tabs"></div><div class="tabpane"></div></div><div class="keys">W/S power · A/D brake · Space emergency · B parking brake · F/N/R reverser · P panto · L lights · O doors · H horn (hold for a long blast) · C cab · Home re-centre</div>`;
     this.cabEl = root.querySelector(".cab")!;
     this.aheadEl = root.querySelector(".ahead")!;
     this.tabsEl = root.querySelector(".tabs")!;
     this.paneEl = root.querySelector(".tabpane")!;
+    this.keysEl = root.querySelector(".keys")!;
     root.addEventListener("click", (e) => this.onClick(e));
     // the horn button sounds while it is held down
     root.addEventListener("pointerdown", (e) => {
@@ -59,19 +61,37 @@ export class SidePanel {
       case "uncouple": w.uncouple(); break;
       case "connect": w.connectPipe(); break;
       case "tab": this.tab = v as SidePanel["tab"]; this.lastPane = ""; break;
-      case "skipto": { const l = this.duty.legs[Number(v)]; if (l) w.skipTo(parseTime(l.leg.dep)); break; }
+      case "skipto": { if (this.duty.kind === "train") { const l = this.duty.legs[Number(v)]; if (l) w.skipTo(parseTime(l.leg.dep)); } break; }
+      case "skipbox": w.skipTo(Number(v), 0); break;
+      // the signaller's chair
+      case "lineclear": { const box = this.playerBox; const [train, side] = v.split("|"); if (box) box.giveLineClear(w, train, side as Side); break; }
+      case "ask": { const box = this.playerBox; const [train, side] = v.split("|"); if (box) box.askLineClear(w, train, side as Side); break; }
+      case "route": this.playerBox?.pullRoute(w, v); break;
+      case "replace": this.playerBox?.replace(w, v); break;
+      case "baton": this.playerBox?.showBaton(w, v); break;
+      case "cancel": this.playerBox?.cancelWarrant(w, v as Side); break;
     }
     this.update(true);
   }
 
+  /** the box the player works, when in the signaller's chair */
+  get playerBox(): Box | null {
+    const d = this.world.driver;
+    return d.kind === "box" ? this.world.boxes.find((b) => b.code === d.code) ?? null : null;
+  }
+
   update(force = false) {
+    const keys = this.world.driver.kind === "box"
+      ? "Click a lever to set a route · Replace puts a signal back to STOP · drag to pan, wheel to zoom · Home re-centre"
+      : "W/S power · A/D brake · Space emergency · B parking brake · F/N/R reverser · P panto · L lights · O doors · H horn (hold for a long blast) · C cab · Home re-centre";
+    if (this.keysEl.textContent !== keys) this.keysEl.textContent = keys;
     const cab = this.renderCab();
     if (force || cab !== this.lastCab) { this.cabEl.innerHTML = cab; this.lastCab = cab; }
     const ahead = this.renderAhead();
     if (force || ahead !== this.lastAhead) { this.aheadEl.innerHTML = ahead; this.lastAhead = ahead; }
     const tabs = (["messages", "sheet", "incidents"] as const).map((t) => {
       const n = t === "incidents" ? this.world.incidents.filter((i) => !i.note).length : 0;
-      const label = t === "messages" ? "Messages" : t === "sheet" ? "Duty sheet" : `Incident Book${n ? ` (${n})` : ""}`;
+      const label = t === "messages" ? "Messages" : t === "sheet" ? (this.duty.kind === "box" ? "Register" : "Duty sheet") : `Incident Book${n ? ` (${n})` : ""}`;
       return `<button class="${this.tab === t ? "on" : ""}" data-a="tab" data-v="${t}">${label}</button>`;
     }).join("");
     if (this.tabsEl.innerHTML !== tabs) this.tabsEl.innerHTML = tabs;
@@ -88,6 +108,7 @@ export class SidePanel {
     const w = this.world;
     const d = w.driver;
     const dc = w.driverCab;
+    if (d.kind === "box") return this.renderBox();
     if (d.kind === "walking") {
       const left = Math.max(0, d.duration - d.t);
       const target = d.target.kind === "cab" ? `Cab ${d.target.end} of ${d.target.vehicle.number}` : `coupling ${d.target.consist.vehicles[d.target.index].number}–${d.target.consist.vehicles[d.target.index + 1].number}`;
@@ -146,8 +167,117 @@ export class SidePanel {
     return `<h4>Cab ${cab.end} · ${v.type.cls} ${v.number} <span class="where">${esc(otherLights)}</span></h4>${gauges}${lamps}${ctl}`;
   }
 
+  /* ---------- the signaller's chair ---------- */
+
+  private renderBox(): string {
+    const w = this.world, box = this.playerBox; if (!box) return "";
+    const sideName = (s: Side | undefined) => box.sideName(w, s);
+    const aspCol = (a: string) => a === "clear" ? "#2E9E5B" : a === "caution" ? "#D9A21B" : a === "shunt" ? "#fff" : "#C6321E";
+    // the block: one card per section, with what is asked, out, or ready to ask
+    const secs = (["S", "N", "B"] as Side[]).filter((s) => box.sections[s]).map((s) => {
+      const sec = box.sections[s]!;
+      const out = w.warrants.get(sec);
+      const clear = w.sectionClear(sec);
+      const state = out ? `warrant ${sec} out to ${out}` : clear ? "clear · no warrant" : "occupied · no warrant";
+      let rows = "";
+      for (const rq of box.requests.filter((r) => r.from === s && !r.granted)) {
+        const why = box.refusal(w, sec, rq.train);
+        rows += `<div class="row"><span>${esc(sideName(s))} asks: is line clear for <b>${rq.train}</b>?</span><button data-a="lineclear" data-v="${rq.train}|${s}" ${why ? `disabled title="${esc(why)}"` : ""}>Line clear</button></div>`;
+      }
+      if (out) {
+        const arr = box.arrived.find((a) => a.train === out && a.side === s);
+        rows += `<div class="row"><span><b>${out}</b> ${arr ? "arrived complete" : "in section"}</span><button data-a="cancel" data-v="${s}" class="${arr ? "" : "red"}" title="${arr ? "Train out of section: cancel the warrant" : "The train has not arrived complete"}">Train out of section</button></div>`;
+      }
+      for (const m of box.movements.filter((x) => x.state === "ready" && x.visit.to === s && x.visit.depart && box.standsAlone(w, x))) {
+        rows += `<div class="row"><span><b>${m.visit.train}</b> booked ${m.visit.depart} to ${esc(sideName(s))}</span><button data-a="ask" data-v="${m.visit.train}|${s}">Ask ${esc(sideName(s))}</button></div>`;
+      }
+      return `<div class="sec"><div class="sec-head"><span>Section ${sec} · ${esc(sideName(s))}</span><span class="state ${out ? "out" : clear ? "ok" : "busy"}">${state}</span></div>${rows}</div>`;
+    }).join("");
+    // the frame: levers grouped under the signal they clear
+    const groups = new Map<string, Route[]>();
+    for (const r of box.frameRoutes(w)) { const sid = r.signals[0][0].id; if (!groups.has(sid)) groups.set(sid, []); groups.get(sid)!.push(r); }
+    const frame = [...groups.entries()].map(([sid, rs]) => {
+      const sig = w.signal(sid);
+      const live = rs.some((r) => r.live);
+      const btns = rs.map((r) => {
+        const why = r.live ? null : box.routeBlocked(w, r.id);
+        return `<button data-a="route" data-v="${r.id}" class="${r.live ? "on" : ""}" ${why ? `disabled title="${esc(why)}"` : ""}>${esc(box.routeLabel(w, r.id))}</button>`;
+      }).join("");
+      return `<div class="ctl"><div class="lbl"><span class="asp" style="background:${aspCol(sig.aspect)}"></span>${sid}<small>${esc(box.signalRole(w, sid))}</small></div><div class="opts">${btns}${live ? `<button data-a="replace" data-v="${sid}" class="red" title="Put the signal back to STOP">Replace</button>` : ""}</div></div>`;
+    }).join("");
+    // the baton
+    const stn = w.station(box.code);
+    const batons = box.movements.filter((m) => m.visit.depart && ["ready", "lineClear", "starterCleared", "departing"].includes(m.state) && box.standsAlone(w, m)).map((m) => {
+      const tr = box.trainOf(w, m.visit.train); if (!tr) return "";
+      const shown = stn.baton.has(m.visit.train);
+      const starter = box.starterFor(m)?.id ?? "the starter";
+      const st = m.state === "starterCleared" ? `${starter} cleared` : m.state === "lineClear" ? `warrant in hand · ${starter} at STOP` : m.state === "ready" ? "no line clear yet" : "leaving";
+      const doors = tr.anyDoorsOpen() ? "doors open" : "doors closed";
+      const why = m.state !== "starterCleared" ? `${starter} is not cleared` : tr.anyDoorsOpen() ? "the doors are open" : null;
+      return `<div class="row"><span><b>${m.visit.train}</b> platform ${m.visit.track} · ${m.visit.depart} to ${esc(sideName(m.visit.to))} · ${st} · ${doors}</span>${shown ? `<span class="lamp on"><span class="baton"></span>Shown</span>` : `<button data-a="baton" data-v="${m.visit.train}" ${why ? `disabled title="${esc(why)}"` : ""}>Show baton</button>`}</div>`;
+    }).join("") || `<div class="row dim">No train waiting to leave.</div>`;
+    return `<h4>${esc(box.name)} Box <span class="where">the signaller's chair</span></h4><div class="box"><h5>Block</h5>${secs}<h5>Lever frame</h5>${frame}<h5>Baton</h5>${batons}</div>`;
+  }
+
+  /** what the working says to do next for a movement */
+  private advice(box: Box, m: Movement): string {
+    const w = this.world, v = m.visit;
+    const name = (s: Side | undefined) => box.sideName(w, s);
+    const homeId = box.homeRouteFor(m);
+    const home = homeId ? w.routes.find((r) => r.id === homeId) : undefined;
+    switch (m.state) {
+      case "offered": return box.requests.some((r) => r.train === v.train && r.from === v.from && !r.granted)
+        ? `${name(v.from)} asks for line clear: give it when section ${box.sections[v.from!]} is clear`
+        : `${name(v.from)} will ask for line clear before ${v.arr ?? "arrival"}`;
+      case "expecting": return home?.live ? `${home.signals[0][0].id} cleared: the train is on its way` : `Set ${home?.signals[0][0].id ?? "the home"} for platform ${v.track}${v.joinTo ? ` as a call-on behind ${v.joinTo}` : ""}`;
+      case "ready": {
+        if (!v.depart) return "Terminates here";
+        if (!box.standsAlone(w, m)) return `Waits to be uncoupled from ${v.splitFrom}`;
+        const sec = v.from ? box.sections[v.from] : undefined;
+        const pending = sec && w.warrants.get(sec) === v.train;
+        return `${pending ? `Cancel warrant ${sec}, then ask` : "Ask"} ${name(v.to)} for line clear before ${v.depart}`;
+      }
+      case "lineClear": return `Warrant in hand: clear ${box.starterFor(m)?.id ?? "the starter"} towards ${name(v.to)}`;
+      case "starterCleared": return `Show the baton at ${v.depart} when the doors are closed`;
+      case "departing": return "Leaving";
+      default: return "Run-round in progress";
+    }
+  }
+
+  private renderWorking(): string {
+    const w = this.world, box = this.playerBox;
+    if (!box || this.duty.kind !== "box") return "";
+    const sideName = (s: Side | undefined) => box.sideName(w, s);
+    const rows = this.duty.rows.filter((m) => m.state !== "done").slice(0, 4).map((m) => {
+      const v = m.visit;
+      const from = v.from ? `from ${sideName(v.from)}${v.arr ? ` ${v.arr}` : ""}` : "starts here";
+      const to = v.depart ? `${v.depart} to ${sideName(v.to)}` : v.joinTo ? `couples to ${v.joinTo}` : "terminates";
+      return `<tr><td><b>${v.train}</b> ${esc(from)} · platform ${v.track} · ${esc(to)}<div class="advice">${esc(this.advice(box, m))}</div></td></tr>`;
+    }).join("");
+    return `<h4>The working <span class="where">${fmtTime(w.time)}</span></h4><table>${rows || "<tr><td>Nothing more booked.</td></tr>"}</table>`;
+  }
+
+  private renderRegister(): string {
+    const w = this.world;
+    if (this.duty.kind !== "box") return "";
+    const d = this.duty, box = d.box;
+    const name = (s: Side | undefined) => box.sideName(w, s);
+    const rows = d.rows.map((m) => {
+      const v = m.visit;
+      const cls = m.state === "done" ? "done" : m.state !== "offered" && m.state !== "ready" ? "cur" : "";
+      const code = (s: Side | undefined) => { const n = name(s); const st = w.stations.find((x) => x.name === n); return st ? `<span title="${esc(n)}">${st.code}</span>` : esc(n); };
+      return `<tr class="${cls}"><td>${v.train}</td><td>${code(v.from)}</td><td>${v.arr ?? ""}</td><td>${m.arrivedAt !== undefined ? fmtTime(m.arrivedAt) : ""}</td><td>${v.track}</td><td>${v.depart ?? ""}</td><td>${m.departedAt !== undefined ? fmtTime(m.departedAt) : ""}</td><td>${code(v.to)}</td></tr>`;
+    }).join("");
+    const next = d.nextEvent(w);
+    const skip = w.skipUntil !== null ? `<p class="hint skipping">Clock advancing…</p>`
+      : next ? `<p class="hint"><button class="skip" data-a="skipbox" data-v="${next.ready}">${fmtTime(next.ready)} ▸</button> brings the clock to just before ${esc(next.label)} (${fmtTime(next.t)}), if nothing is moving.</p>` : "";
+    const prep = d.prep.map((p) => `<li>${esc(p)}</li>`).join("");
+    return `<div class="sheet"><table><thead><tr><th>Train</th><th>From</th><th>Arr</th><th>Act.</th><th>Pl</th><th>Dep</th><th>Act.</th><th>To</th></tr></thead><tbody>${rows}</tbody></table>${skip}<h4>The duty in brief</h4><ol>${prep}</ol></div>`;
+  }
+
   private renderAhead(): string {
     const w = this.world;
+    if (w.driver.kind === "box") return this.renderWorking();
     const c = w.driverConsist;
     if (!c || w.driver.kind !== "cab") return "";
     const items = w.ahead(c).slice(0, 5);
@@ -169,6 +299,7 @@ export class SidePanel {
   }
 
   private renderSheet(): string {
+    if (this.duty.kind === "box") return this.renderRegister();
     const d = this.duty;
     const w = this.world;
     const rows = d.legs.map((l, i) => {

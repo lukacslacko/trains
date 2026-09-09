@@ -12,6 +12,8 @@ html, body { height: 100%; margin: 0; background: var(--ivory); color: var(--ink
 button { font-family: var(--display); font-size: 14px; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; border: 1px solid var(--green); background: var(--paper); color: var(--green); padding: 5px 9px; border-radius: 3px; }
 button:hover { background: #fff; }
 button.on { background: var(--green); color: var(--ivory); }
+button:disabled { opacity: .4; cursor: not-allowed; }
+button:disabled:hover { background: var(--paper); }
 button.red { border-color: var(--red); color: var(--red); }
 button.red.on { background: var(--red); color: var(--ivory); }
 button:disabled { opacity: .4; cursor: default; }
@@ -85,6 +87,23 @@ button:disabled { opacity: .4; cursor: default; }
 .ahead td { padding: 2px 0; border-bottom: 1px dotted var(--chalk); }
 .ahead td.d { font-family: var(--mono); text-align: right; color: var(--slate); width: 64px; }
 .ahead .dim { opacity: .45; }
+.ahead .advice { font-style: italic; color: var(--green); font-size: 12px; margin-top: 1px; }
+/* the signaller's chair */
+.box h5 { font-family: var(--display); font-weight: 600; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--slate); margin: 10px 0 4px; border-bottom: 1px solid var(--chalk); }
+.box .sec { margin-bottom: 6px; }
+.box .sec-head { display: flex; justify-content: space-between; gap: 8px; font-family: var(--display); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--green); padding: 2px 0; }
+.box .sec-head .state { text-transform: none; letter-spacing: 0; font-family: var(--mono); font-size: 11.5px; }
+.box .state.ok { color: var(--green); }
+.box .state.out { color: var(--brass); }
+.box .state.busy { color: var(--red); }
+.box .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 3px 0; border-bottom: 1px dotted var(--chalk); font-size: 12.5px; }
+.box .row button { flex-shrink: 0; font-size: 11.5px; padding: 3px 7px; }
+.box .row.dim { color: var(--slate); font-style: italic; }
+.box .ctl { grid-template-columns: 118px 1fr; }
+.box .ctl .lbl { color: var(--ink); font-size: 12px; }
+.box .ctl .lbl small { display: block; font-family: var(--text); font-size: 10.5px; letter-spacing: 0; text-transform: none; color: var(--slate); font-style: italic; }
+.box .ctl .opts button { font-size: 11.5px; padding: 3px 6px; }
+.box .ctl .opts button.red { border-color: var(--red); color: var(--red); }
 .asp { display: inline-block; width: 10px; height: 10px; border-radius: 50%; border: 1px solid var(--ink); vertical-align: -1px; margin-right: 5px; }
 .tabs { display: flex; border-bottom: 1px solid var(--chalk); }
 .tabs button { flex: 1; border: 0; border-radius: 0; background: var(--ivory); color: var(--slate); padding: 6px 4px; font-size: 12px; }

@@ -102,7 +102,13 @@ gatherers and a chapel).
 - **Station masters:** Ashgrove — T. Marrow. Wending — J. Pell. Coldwater —
   A. Ashby. Fernhollow — M. Thorne. Messages are signed "Marrow, Ashgrove"
   and so on. Colleagues driving other trains: R. Farrow (1003), E. Hale
-  (1004), W. Penrose (1001).
+  (1004), W. Penrose (1001), D. Corry (1002 when the player is not driving
+  it). **The signaller's chair:** the player may take any box in place of
+  its station master (Duties 501 and 502 put them in Wending Box); the box
+  then signs its messages with the station name alone ("— Wending"), and
+  the peer boxes address it as before. Each box is a small building at the
+  stop-board end of the station's first platform, on the platform side,
+  9.5 m off the rails; the manned one is picked out in Brass in the view.
 - **Electrification:** overhead line, 1.5 kV DC, wired throughout including
   headshunts. The Ashgrove and Coldwater feeds meet at a **neutral section**
   at km 4.19–4.21 (see §5).
@@ -441,6 +447,24 @@ authority.
   near end clears its starter only with the warrant in hand; the far box
   cancels the warrant when the train has arrived complete. One warrant, one
   train, one section.
+- **S 34 Line clear.** The exchange between boxes is in words: the near box
+  asks "Is line clear for 1002 to Wending?"; the far box answers "Line clear
+  for 1002 to Wending; warrant A issued" only when the section is clear of
+  vehicles and no warrant for it is out. The warrant is issued with the
+  answer, and the frame will not clear a starter into a section without
+  one.
+- **S 36 Train out of section.** A warrant is cancelled when its train has
+  arrived complete within station limits and stands, the tail lamp seen,
+  and not before. Cancelling a warrant earlier is an incident.
+- **S 38 Setting the road.** The home for a train given line clear is set
+  as soon as its platform is free, before the train reaches it; a train
+  stood at a home signal for a minute and a half is an incident. A route
+  set and not to be used is taken back by replacing its signal; the route
+  releases once nothing is approaching it.
+- **S 40 The baton from the box.** The baton is shown at the booked time,
+  with the starter cleared and the doors closed, and taken back as the train
+  leaves. A baton shown more than a minute after the booked time to a train
+  that stood ready is an incident.
 - **D 10 Coupling.** Approach at 5 km/h or less over the last 20 m; make
   contact at 2 km/h or less. After mechanical coupling, connect the brake
   pipe at the coupling (walk to it).
@@ -585,6 +609,27 @@ Coldwater with E. Hale; 1001 at Fernhollow with W. Penrose. Sim starts
 
 Duty complete when the pair is stabled at Ashgrove.
 
+**Duty 501 — The Wending Box.** The player in Wending Box; the traffic of
+Duty 301 with both cars driven by colleagues, 1002 by R. Farrow and 1003 by
+E. Hale. Sim starts 07:45. Ashgrove and Coldwater boxes ask for line clear
+two minutes before each departure; the player gives it (warrant issued),
+sets WD 1 and WD 8, cancels each warrant on arrival complete, asks the far
+box for the section ahead, clears WD 7 or WD 4 (WD 2/WD 9 as the platform
+requires), and shows the baton at the booked time. Duty complete when both
+cars have finished their legs and every movement in the register is done.
+
+**Duty 502 — The Junction Box.** The player in Wending Box; the traffic of
+Duty 401 with all four cars driven by colleagues (1002 by D. Corry, 1003 by
+R. Farrow, 1004 by E. Hale, 1001 by W. Penrose). Sim starts 09:45. Three
+sections; call-ons under WD 8 and WD 10 for the joins; split portions leave
+in the order they stand. Duty complete when every movement in the register
+is done and every car has finished.
+
+The working shown on the register (the box's duty sheet) is the same
+timetable as Duties 301 and 401; a signaller may receive a train on the
+other platform, and the visit then follows the train, but the working
+names the platform the timetable expects.
+
 ## 11. Incident Book entries (what the rules engine records)
 
 Early departure · Moved with doors open · Doors opened away from platform ·
@@ -597,6 +642,9 @@ Uncoupled with the brake not fully applied · Rolled back on the gradient ·
 Ran away (moved with no direction set) · Moved with the parking brake
 applied · Power through the neutral section · Collision · Emergency brake
 used (noted, not a fault).
+
+In the signaller's chair: Warrant cancelled early (Rule S 36) · Train held
+at the home (Rule S 38) · Baton shown late (Rule S 40).
 
 A colleague's incidents are not written in the player's book.
 

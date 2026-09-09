@@ -1,8 +1,8 @@
 import { World } from "./world";
-import { type Leg, legDir, stopFor } from "./duty";
+import { type Leg, legDir } from "./duty";
 import { type Vehicle, type End, type BrakeStep } from "../stock/vehicles";
 import { parseTime } from "../core/util";
-import { distanceAlong } from "../track/graph";
+import { distanceAlong, type Position } from "../track/graph";
 
 type NpcState = "prep" | "riding" | "waiting" | "running" | "dwell" | "done";
 
@@ -56,6 +56,29 @@ export class NpcDriver {
     cab.lights = "head";
     if (this.vehicle.cabs[other]) this.vehicle.cabs[other]!.lights = "tail";
     cab.reverser = "N"; cab.notch = 0; cab.brake = 4;
+  }
+
+  /**
+   * Distance along the route as set to where this train stops at its destination: the stop board for its
+   * direction on whichever platform track the route leads to, or, where that track has none, the far end of
+   * its platform. Null while the route leads nowhere useful (the home still at STOP, say).
+   */
+  private distanceToStop(w: World, lead: Position, code: string, dir: 1 | -1): number | null {
+    const st = w.station(code);
+    let best: number | null = null;
+    const consider = (track: string, km: number) => {
+      let p: Position;
+      try { p = w.layout.graph.atKm(track, km, dir); } catch { return; }
+      const d = distanceAlong(lead, p.edge, p.s, 9000);
+      if (d !== null && (best === null || d < best)) best = d;
+    };
+    for (const s of st.stops) if (s.dir === dir) consider(s.track, s.km);
+    if (best !== null) return best;
+    for (const p of w.layout.platforms) {
+      if (!st.edges?.some((e) => e.track === p.track)) continue;
+      consider(p.track, dir === 1 ? p.kmTo - 0.004 : p.kmFrom + 0.004);
+    }
+    return best;
   }
 
   /** true when another vehicle's cab controls the consist this car stands in */
@@ -133,12 +156,10 @@ export class NpcDriver {
       case "running": {
         if (!leg || !cab) { this.state = "done"; return; }
         const dir = legDir(w, leg);
-        const stop = stopFor(w, leg.to, dir);
         const joining = this.opts.joinAt?.includes(leg.to) ?? false;
         const sign = c.v !== 0 ? Math.sign(c.v) : c.cabForwardSign(c.control!.index, cab);
         const lead = c.leadingPos(sign);
-        const stopPos = w.layout.graph.atKm(stop.track, stop.km, stop.dir);
-        const toStop = distanceAlong(lead, stopPos.edge, stopPos.s, 9000);
+        const toStop = this.distanceToStop(w, lead, leg.to, dir);
         const items = w.ahead(c, 1500);
         let target = toStop === null ? 1e9 : toStop - 0.6;
         for (const i of items) {

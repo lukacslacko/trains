@@ -1,6 +1,6 @@
 import { SCENARIOS, type Scenario } from "../scenarios/duties";
 import { World } from "../sim/world";
-import { DutyTracker } from "../sim/duty";
+import { DutyTracker, BoxDuty } from "../sim/duty";
 import { WorldRenderer } from "./render";
 import { LineDiagram } from "./diagram";
 import { SidePanel } from "./panel";
@@ -14,7 +14,7 @@ const MARK = "/brand/mark-ivory.svg";
 export class App {
   root: HTMLElement;
   private raf = 0;
-  private running: { world: World; duty: DutyTracker; scenario: Scenario; renderer: WorldRenderer; diagram: LineDiagram; panel: SidePanel; last: number; acc: number; seenIncidents: number; notices: Incident[] } | null = null;
+  private running: { world: World; duty: DutyTracker | BoxDuty; scenario: Scenario; renderer: WorldRenderer; diagram: LineDiagram; panel: SidePanel; last: number; acc: number; seenIncidents: number; notices: Incident[] } | null = null;
   private keyHandler = (e: KeyboardEvent) => this.onKey(e);
 
   constructor(root: HTMLElement) {
@@ -59,7 +59,7 @@ export class App {
           <div class="card book" onclick="location.hash='library'"><span class="letter">I R S D</span><div class="num">The Company's Books</div><h3>Read the manuals</h3><div class="sub">Identity · Rules · Signalling · Driving</div><p>Booklets in the house style, printable on A5. Every rule the railway enforces is written in one of them.</p></div>
         </div>
         <h2>The plan</h2>
-        <p>This is milestone M0/M1 of a long road: the shuttle and the run-round. The development plan and the fiction bible live in <span class="mono">docs/PLAN.md</span> and <span class="mono">docs/WORLD.md</span>.</p>
+        <p>Milestones M0 to M2d of a long road: the shuttle, the run-round, gradients, the block, the junction, and now the signaller's chair. The development plan and the fiction bible live in <span class="mono">docs/PLAN.md</span> and <span class="mono">docs/WORLD.md</span>.</p>
       </div>`;
   }
 
@@ -89,6 +89,8 @@ export class App {
         <div class="side" id="side"></div>
       </div>`;
     const renderer = new WorldRenderer(this.root.querySelector("#view")!);
+    // the signaller sees the whole station from the box
+    if (world.driver.kind === "box") renderer.cam.scale = 2.4;
     const diagram = new LineDiagram(this.root.querySelector("#diagram")!);
     const panel = new SidePanel(this.root.querySelector("#side")!, world, duty);
     const warpEl = this.root.querySelector("#warp")!;

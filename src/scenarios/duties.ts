@@ -1,5 +1,5 @@
 import { World } from "../sim/world";
-import { DutyTracker, Box, type Leg } from "../sim/duty";
+import { DutyTracker, Box, BoxDuty, type Leg } from "../sim/duty";
 import { NpcDriver } from "../sim/npc";
 import { shuttleLayout, valleyLayout } from "../track/layouts";
 import { Vehicle, Consist, CLASS_1, CLASS_4, TYPE_C4 } from "../stock/vehicles";
@@ -12,7 +12,67 @@ export interface Scenario {
   subtitle: string;
   blurb: string;
   legs: Leg[];
-  create(): { world: World; duty: DutyTracker };
+  create(): { world: World; duty: DutyTracker | BoxDuty };
+}
+
+/* ---------- the traffic of the crossing (Duties 301 and 501) ---------- */
+
+/** 1003's legs: Up to Ashgrove and back to Coldwater */
+const CROSSING_LEGS_1003: Leg[] = [
+  { from: "CW", to: "WD", dep: "08:00", arr: "08:08" },
+  { from: "WD", to: "AG", dep: "08:12", arr: "08:21" },
+  { from: "AG", to: "WD", dep: "08:40", arr: "08:49" },
+  { from: "WD", to: "CW", dep: "08:53", arr: "09:01" },
+];
+/** the boxes' working for the crossing: 1002 Down to Coldwater and back, 1003 the other way */
+function planCrossing(ag: Box, wd: Box, cw: Box) {
+  ag.plan({ train: "1002", arrive: false, track: "1", depart: "08:00", to: "N" });
+  wd.plan({ train: "1002", arrive: true, from: "S", track: "1", arr: "08:07", depart: "08:12", to: "N" });
+  cw.plan({ train: "1002", arrive: true, from: "S", track: "1", arr: "08:21", depart: "08:40", to: "S" });
+  wd.plan({ train: "1002", arrive: true, from: "N", track: "2", arr: "08:49", depart: "08:53", to: "S" });
+  ag.plan({ train: "1002", arrive: true, from: "N", track: "1", arr: "09:01", depart: null });
+  cw.plan({ train: "1003", arrive: false, track: "1", depart: "08:00", to: "S" });
+  wd.plan({ train: "1003", arrive: true, from: "N", track: "2", arr: "08:08", depart: "08:12", to: "S" });
+  ag.plan({ train: "1003", arrive: true, from: "N", track: "1", arr: "08:21", depart: "08:40", to: "N" });
+  wd.plan({ train: "1003", arrive: true, from: "S", track: "1", arr: "08:49", depart: "08:53", to: "N" });
+  cw.plan({ train: "1003", arrive: true, from: "S", track: "1", arr: "09:01", depart: null });
+}
+
+/* ---------- the traffic of the junction (Duties 401 and 502) ---------- */
+
+const JUNCTION_LEGS_1003: Leg[] = [{ from: "WD", to: "FH", dep: "10:16", arr: "10:24" }, { from: "FH", to: "WD", dep: "10:44", arr: "10:53" }];
+const JUNCTION_LEGS_1004: Leg[] = [{ from: "CW", to: "WD", dep: "10:00", arr: "10:08" }, { from: "WD", to: "AG", dep: "10:18", arr: "10:27" }, { from: "AG", to: "WD", dep: "10:40", arr: "10:47" }, { from: "WD", to: "CW", dep: "10:56", arr: "11:05" }];
+const JUNCTION_LEGS_1001: Leg[] = [{ from: "FH", to: "WD", dep: "10:02", arr: "10:11" }, { from: "WD", to: "FH", dep: "10:54", arr: "11:02" }];
+/** the boxes' working for the junction: two pairs, each split at Wending once and joined there once */
+function planJunction(ag: Box, wd: Box, cw: Box, fh: Box) {
+  // trains 7 and 31: the pair from Ashgrove, split at Wending
+  ag.plan({ train: "1002", arrive: false, track: "1", depart: "10:00", to: "N" });
+  wd.plan({ train: "1002", arrive: true, from: "S", track: "1", arr: "10:07", depart: "10:14", to: "N" });
+  wd.plan({ train: "1003", arrive: false, splitFrom: "1002", track: "1", arr: "10:07", depart: "10:16", to: "B" });
+  cw.plan({ train: "1002", arrive: true, from: "S", track: "1", arr: "10:23", depart: "10:40", to: "S" });
+  fh.plan({ train: "1003", arrive: true, from: "S", track: "1", arr: "10:24", depart: "10:44", to: "S" });
+  // trains 8 and 32: the cars from Coldwater and Fernhollow, joined at Wending
+  cw.plan({ train: "1004", arrive: false, track: "1", depart: "10:00", to: "S" });
+  fh.plan({ train: "1001", arrive: false, track: "1", depart: "10:02", to: "S" });
+  wd.plan({ train: "1004", arrive: true, from: "N", track: "2", arr: "10:08", depart: "10:18", to: "S" });
+  wd.plan({ train: "1001", arrive: true, from: "B", track: "2", arr: "10:11", joinTo: "1004", depart: null });
+  ag.plan({ train: "1004", arrive: true, from: "N", track: "1", arr: "10:27", depart: "10:40", to: "N" });
+  // trains 9 and 33: the pair back up the valley, split at Wending; 1001 stands at the Down end now, so it leaves first
+  wd.plan({ train: "1004", arrive: true, from: "S", track: "1", arr: "10:47", depart: "10:56", to: "N" });
+  wd.plan({ train: "1001", arrive: false, splitFrom: "1004", track: "1", arr: "10:47", depart: "10:54", to: "B" });
+  cw.plan({ train: "1004", arrive: true, from: "S", track: "1", arr: "11:05", depart: null });
+  fh.plan({ train: "1001", arrive: true, from: "S", track: "1", arr: "11:02", depart: null });
+  // trains 10 and 34: the first pair joined at Wending and home
+  wd.plan({ train: "1002", arrive: true, from: "N", track: "2", arr: "10:49", depart: "11:00", to: "S" });
+  wd.plan({ train: "1003", arrive: true, from: "B", track: "2", arr: "10:53", joinTo: "1002", depart: null });
+  ag.plan({ train: "1002", arrive: true, from: "N", track: "1", arr: "11:09", depart: null });
+}
+
+/** everything the boxes planned has happened and every colleague has finished */
+function trafficDone(w: World): boolean {
+  if (!w.boxes.every((b) => b.register.every((m) => m.state === "done"))) return false;
+  if (!w.consists.every((c) => c.v === 0)) return false;
+  return (w.npcDrivers as NpcDriver[]).every((d) => d.state === "done" || d.state === "riding");
 }
 
 export const DUTY_101: Scenario = {
@@ -113,25 +173,8 @@ export const DUTY_301: Scenario = {
     world.consists.push(c1, c2);
     const ag = new Box(world, layout, "AG"), wd = new Box(world, layout, "WD"), cw = new Box(world, layout, "CW");
     Box.link(ag, wd); Box.link(wd, cw);
-    // the player's 1002: Down to Coldwater and back
-    ag.plan({ train: "1002", arrive: false, track: "1", depart: "08:00", to: "N" });
-    wd.plan({ train: "1002", arrive: true, from: "S", track: "1", depart: "08:12", to: "N" });
-    cw.plan({ train: "1002", arrive: true, from: "S", track: "1", depart: "08:40", to: "S" });
-    wd.plan({ train: "1002", arrive: true, from: "N", track: "2", depart: "08:53", to: "S" });
-    ag.plan({ train: "1002", arrive: true, from: "N", track: "1", depart: null });
-    // the colleague's 1003: Up to Ashgrove and back
-    const otherLegs: Leg[] = [
-      { from: "CW", to: "WD", dep: "08:00", arr: "08:08" },
-      { from: "WD", to: "AG", dep: "08:12", arr: "08:21" },
-      { from: "AG", to: "WD", dep: "08:40", arr: "08:49" },
-      { from: "WD", to: "CW", dep: "08:53", arr: "09:01" },
-    ];
-    cw.plan({ train: "1003", arrive: false, track: "1", depart: "08:00", to: "S" });
-    wd.plan({ train: "1003", arrive: true, from: "N", track: "2", depart: "08:12", to: "S" });
-    ag.plan({ train: "1003", arrive: true, from: "N", track: "1", depart: "08:40", to: "N" });
-    wd.plan({ train: "1003", arrive: true, from: "S", track: "1", depart: "08:53", to: "N" });
-    cw.plan({ train: "1003", arrive: true, from: "S", track: "1", depart: null });
-    new NpcDriver(world, other, otherLegs);
+    planCrossing(ag, wd, cw);
+    new NpcDriver(world, other, CROSSING_LEGS_1003, { name: "Farrow" });
     world.say("General Manager's Office", "Duty 301. Car 1002 is stabled at Ashgrove; car 1003 stands at Coldwater with your colleague Ms Farrow. Both are booked away at 08:00 and cross at Wending at 08:12; you return from Coldwater at 08:40 and cross again at Wending at 08:53. The block is worked by Line Warrants: no starter clears without one. Whistle for Millers' Crossing at post 4.7 and shut off power through the neutral section at post 4.2.", "system");
     world.say("Ashgrove Box", "Good morning. AG 1 will be cleared at 07:58 once Wending gives line clear for section A. — Marrow, Ashgrove");
     const duty = new DutyTracker(world, DUTY_301.legs,
@@ -175,30 +218,10 @@ export const DUTY_401: Scenario = {
     world.consists.push(pair, new Consist("c2", [c1004], [false]), new Consist("c3", [c1001], [false]));
     const ag = new Box(world, layout, "AG"), wd = new Box(world, layout, "WD"), cw = new Box(world, layout, "CW"), fh = new Box(world, layout, "FH");
     Box.link(ag, wd); Box.link(wd, cw); Box.link(wd, fh, true);
-    // trains 7 and 31: the player's pair, split at Wending
-    ag.plan({ train: "1002", arrive: false, track: "1", depart: "10:00", to: "N" });
-    wd.plan({ train: "1002", arrive: true, from: "S", track: "1", depart: "10:14", to: "N" });
-    wd.plan({ train: "1003", arrive: false, splitFrom: "1002", track: "1", depart: "10:16", to: "B" });
-    cw.plan({ train: "1002", arrive: true, from: "S", track: "1", depart: "10:40", to: "S" });
-    fh.plan({ train: "1003", arrive: true, from: "S", track: "1", depart: "10:44", to: "S" });
-    // trains 8 and 32: the colleagues' cars, joined at Wending
-    cw.plan({ train: "1004", arrive: false, track: "1", depart: "10:00", to: "S" });
-    fh.plan({ train: "1001", arrive: false, track: "1", depart: "10:02", to: "S" });
-    wd.plan({ train: "1004", arrive: true, from: "N", track: "2", depart: "10:18", to: "S" });
-    wd.plan({ train: "1001", arrive: true, from: "B", track: "2", joinTo: "1004", depart: null });
-    ag.plan({ train: "1004", arrive: true, from: "N", track: "1", depart: "10:40", to: "N" });
-    // trains 9 and 33: the colleagues' pair back up the valley, split at Wending; 1001 stands at the Down end now, so it leaves first
-    wd.plan({ train: "1004", arrive: true, from: "S", track: "1", depart: "10:56", to: "N" });
-    wd.plan({ train: "1001", arrive: false, splitFrom: "1004", track: "1", depart: "10:54", to: "B" });
-    cw.plan({ train: "1004", arrive: true, from: "S", track: "1", depart: null });
-    fh.plan({ train: "1001", arrive: true, from: "S", track: "1", depart: null });
-    // trains 10 and 34: the player's pair joined at Wending and home
-    wd.plan({ train: "1002", arrive: true, from: "N", track: "2", depart: "11:00", to: "S" });
-    wd.plan({ train: "1003", arrive: true, from: "B", track: "2", joinTo: "1002", depart: null });
-    ag.plan({ train: "1002", arrive: true, from: "N", track: "1", depart: null });
-    new NpcDriver(world, mate, [{ from: "WD", to: "FH", dep: "10:16", arr: "10:24" }, { from: "FH", to: "WD", dep: "10:44", arr: "10:53" }], { joinAt: ["WD"], name: "Farrow" });
-    new NpcDriver(world, c1004, [{ from: "CW", to: "WD", dep: "10:00", arr: "10:08" }, { from: "WD", to: "AG", dep: "10:18", arr: "10:27" }, { from: "AG", to: "WD", dep: "10:40", arr: "10:47" }, { from: "WD", to: "CW", dep: "10:56", arr: "11:05" }], { splitAfterLeg: [2], name: "Hale" });
-    new NpcDriver(world, c1001, [{ from: "FH", to: "WD", dep: "10:02", arr: "10:11" }, { from: "WD", to: "FH", dep: "10:54", arr: "11:02" }], { joinAt: ["WD"], name: "Penrose" });
+    planJunction(ag, wd, cw, fh);
+    new NpcDriver(world, mate, JUNCTION_LEGS_1003, { joinAt: ["WD"], name: "Farrow" });
+    new NpcDriver(world, c1004, JUNCTION_LEGS_1004, { splitAfterLeg: [2], name: "Hale" });
+    new NpcDriver(world, c1001, JUNCTION_LEGS_1001, { joinAt: ["WD"], name: "Penrose" });
     world.say("General Manager's Office", "Duty 401. Cars 1002 and 1003 stand coupled on Ashgrove track 1 as train 7, you in 1002 at the Down end, Ms Farrow riding in 1003. Booked away at 10:00. At Wending uncouple 1003: you continue to Coldwater at 10:14 as train 7, Farrow follows to Fernhollow at 10:16 as train 31. Return from Coldwater at 10:40 to Wending platform 2; 1003 will be called on behind you at 10:53; prove the brake and take the pair home at 11:00. Ms Hale and Mr Penrose work the other pair: 1004 and 1001 join at Wending at 10:11 and split there again at 10:47, 1001 leaving first for Fernhollow at 10:54 and 1004 for Coldwater at 10:56.", "system");
     world.say("Ashgrove Box", "Good morning. AG 1 will be cleared at 09:58 once Wending gives line clear for section A. — Marrow, Ashgrove");
     const duty = new DutyTracker(world, DUTY_401.legs,
@@ -212,4 +235,74 @@ export const DUTY_401: Scenario = {
   },
 };
 
-export const SCENARIOS = [DUTY_101, DUTY_201, DUTY_301, DUTY_401];
+/* ---------- the signaller's chair ---------- */
+
+export const DUTY_501: Scenario = {
+  id: "duty501",
+  number: "501",
+  title: "The Wending Box",
+  subtitle: "The signaller's chair at Wending · two cars crossing twice · Line Warrants · the lever frame",
+  blurb: "You take Wending Box from Mr Pell for the morning. Ms Farrow brings 1002 up from Ashgrove and Mr Hale brings 1003 down from Coldwater; they cross at Wending at 08:12 and again at 08:53. Give line clear only when the section is yours to give, set the homes before the trains reach them, ask the next box for the sections ahead, clear the starters, and show the baton at the booked time.",
+  legs: [],
+  create() {
+    const layout = valleyLayout();
+    const g = layout.graph;
+    const car = new Vehicle("v1002", "1002", CLASS_1, g.atKm("1", 0.157, 1));
+    car.parkingBrake = true;
+    const other = new Vehicle("v1003", "1003", CLASS_1, g.atKm("1", 6.243, -1));
+    other.parkingBrake = true;
+    const world = new World(layout, parseTime("07:45"), car, { kind: "box", code: "WD" });
+    world.vehicles.push(car, other);
+    world.consists.push(new Consist("c1", [car], [false]), new Consist("c2", [other], [false]));
+    const ag = new Box(world, layout, "AG"), wd = new Box(world, layout, "WD"), cw = new Box(world, layout, "CW");
+    Box.link(ag, wd); Box.link(wd, cw);
+    wd.mode = "player";
+    planCrossing(ag, wd, cw);
+    new NpcDriver(world, car, DUTY_301.legs, { name: "Farrow" });
+    new NpcDriver(world, other, CROSSING_LEGS_1003, { name: "Hale" });
+    world.say("General Manager's Office", "Duty 501. You have Wending Box from 07:45; Mr Pell is at Ashgrove Works for the day. Car 1002 leaves Ashgrove at 08:00 with Ms Farrow and 1003 leaves Coldwater at 08:00 with Mr Hale; both are booked into Wending, 1002 on platform 1 and 1003 on platform 2, and away again at 08:12, 1002 to Coldwater and 1003 to Ashgrove. They cross here again at 08:53, the other way round. Ashgrove and Coldwater will ask you for line clear; you ask them. No starter clears without a warrant, and no warrant is cancelled until its train has arrived complete. The working is on your register.", "system");
+    const duty = new BoxDuty(world, wd,
+      ["Answer Ashgrove and Coldwater when they ask for line clear: the warrant is issued with it", "Set WD 1 and WD 8 for the platforms before the trains reach them", "Cancel each warrant when its train has arrived complete", "Ask the next box for line clear, clear the starter, show the baton at the booked time", "The same again at 08:53, the other way round"],
+      (w) => trafficDone(w) ? "Duty 501 complete. Both cars home, and Wending Box handed back to Mr Pell. Thank you." : null);
+    return { world, duty };
+  },
+};
+
+export const DUTY_502: Scenario = {
+  id: "duty502",
+  number: "502",
+  title: "The Junction Box",
+  subtitle: "Wending Box · four cars · the branch · call-ons · splits and joins",
+  blurb: "The traffic of Duty 401 from the other side of the glass. One pair of cars comes up from Ashgrove and splits at Wending for Coldwater and Fernhollow; the other comes down from both and joins at Wending; then each does the reverse. You work the junction: line clear on three sections, homes for two platforms, call-ons under WD 8 and WD 10, and portions leaving in the order they stand.",
+  legs: [],
+  create() {
+    const layout = valleyLayout();
+    const g = layout.graph;
+    const car = new Vehicle("v1002", "1002", CLASS_1, g.atKm("1", 0.179, 1));
+    const mate = new Vehicle("v1003", "1003", CLASS_1, g.atKm("1", 0.157, 1));
+    car.parkingBrake = true;
+    const pair = new Consist("c1", [car, mate], [false, false]);
+    pair.control = { vehicle: car, cab: car.cabs.A!, index: 0 };
+    const c1004 = new Vehicle("v1004", "1004", CLASS_1, g.atKm("1", 6.243, -1));
+    const c1001 = new Vehicle("v1001", "1001", CLASS_1, g.atKm("b1", 2.233, -1));
+    c1004.parkingBrake = true; c1001.parkingBrake = true;
+    const world = new World(layout, parseTime("09:45"), car, { kind: "box", code: "WD" });
+    world.vehicles.push(car, mate, c1004, c1001);
+    world.consists.push(pair, new Consist("c2", [c1004], [false]), new Consist("c3", [c1001], [false]));
+    const ag = new Box(world, layout, "AG"), wd = new Box(world, layout, "WD"), cw = new Box(world, layout, "CW"), fh = new Box(world, layout, "FH");
+    Box.link(ag, wd); Box.link(wd, cw); Box.link(wd, fh, true);
+    wd.mode = "player";
+    planJunction(ag, wd, cw, fh);
+    new NpcDriver(world, car, DUTY_401.legs, { splitAfterLeg: [0], name: "Corry" });
+    new NpcDriver(world, mate, JUNCTION_LEGS_1003, { joinAt: ["WD"], name: "Farrow" });
+    new NpcDriver(world, c1004, JUNCTION_LEGS_1004, { splitAfterLeg: [2], name: "Hale" });
+    new NpcDriver(world, c1001, JUNCTION_LEGS_1001, { joinAt: ["WD"], name: "Penrose" });
+    world.say("General Manager's Office", "Duty 502. You have Wending Box from 09:45. Train 7, cars 1002 and 1003 with Ms Corry and Ms Farrow, leaves Ashgrove at 10:00 for platform 1; it splits here, 1002 away to Coldwater at 10:14 and 1003 to Fernhollow at 10:16. Car 1004 with Mr Hale leaves Coldwater at 10:00 for platform 2, and 1001 with Mr Penrose leaves Fernhollow at 10:02 to be called on behind it under WD 10; the pair leaves for Ashgrove at 10:18. At 10:47 that pair is back on platform 1 and splits, 1001 first to Fernhollow at 10:54 and 1004 to Coldwater at 10:56; at 10:49 1002 is back on platform 2, 1003 is called on behind it under WD 10 at 10:53, and the pair leaves for Ashgrove at 11:00. Three sections, three boxes to answer and to ask.", "system");
+    const duty = new BoxDuty(world, wd,
+      ["Three sections, A, B and C: give and ask for line clear on each", "Homes WD 1, WD 8 and WD 10: platform 1 for Down trains, platform 2 for Up trains", "Call-ons: the subsidiary under WD 8 or WD 10 brings a car onto an occupied platform", "Split trains leave in the order they stand: the first portion under the starter, the second after it", "Show the baton at the booked time; cancel each warrant on arrival complete"],
+      (w) => trafficDone(w) ? "Duty 502 complete. Four cars home, and Wending Box handed back to Mr Pell. Thank you." : null);
+    return { world, duty };
+  },
+};
+
+export const SCENARIOS = [DUTY_101, DUTY_201, DUTY_301, DUTY_401, DUTY_501, DUTY_502];

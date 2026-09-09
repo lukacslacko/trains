@@ -1,6 +1,7 @@
 import { World } from "./world";
 import { type ValleyLayout, type StationLayout, type Signal, type Stop } from "../track/layouts";
 import { type Edge, type SwitchState, type Switch, kmOf } from "../track/graph";
+import { type Route } from "./world";
 import { fmtTime, parseTime } from "../core/util";
 import { type Consist, type Vehicle } from "../stock/vehicles";
 
@@ -28,6 +29,7 @@ export function frontKm(c: Consist, dir: 1 | -1): number {
 
 /** Watches the player's train against the booked legs and keeps the duty sheet. */
 export class DutyTracker {
+  readonly kind = "train";
   legs: LegState[];
   index = 0;
   private lastDoorsOpen = false;
@@ -120,7 +122,10 @@ export interface Visit {
   loco?: string;
   arrive: boolean;
   from?: Side;
+  /** the platform track of the working; a signaller may receive the train on the other one, and the visit then follows the train */
   track: "1" | "2";
+  /** booked arrival, for the register */
+  arr?: string;
   depart: string | null;
   to?: Side;
   runRound?: boolean;
@@ -130,9 +135,22 @@ export interface Visit {
   joinTo?: string;
 }
 
-type MoveState = "offered" | "expecting" | "arrived" | "toHeadshunt" | "viaTrack2" | "toCouple" | "ready" | "lineClear" | "starterCleared" | "departing" | "done";
+export type MoveState = "offered" | "expecting" | "arrived" | "toHeadshunt" | "viaTrack2" | "toCouple" | "ready" | "lineClear" | "starterCleared" | "departing" | "done";
 
-interface Movement { visit: Visit; state: MoveState; said: Set<string> }
+export interface Movement {
+  visit: Visit; state: MoveState; said: Set<string>;
+  arrivedAt?: number; batonAt?: number; departedAt?: number;
+  /** standing at the home signal since (a manned box) */
+  heldSince?: number; heldFlagged?: boolean;
+}
+
+/** A peer box asking a manned box for line clear, waiting for the signaller's answer. */
+export interface LineClearRequest { train: string; from: Side; since: number; granted: boolean }
+/** A train that has arrived complete at a manned box, its warrant not yet cancelled. */
+export interface Arrival { train: string; side: Side; at: number }
+
+/** Who works the box: the station master (an NPC) or the player in the signaller's chair. */
+export type BoxMode = "npc" | "player";
 
 interface Roles {
   homeS?: Signal; homeN?: Signal; homeB?: Signal;
@@ -149,9 +167,17 @@ export class Box {
   master: string;
   st: StationLayout;
   roles: Roles;
+  /** the movements still in hand */
   movements: Movement[] = [];
+  /** every movement planned, in the order planned: the train register */
+  register: Movement[] = [];
   peers: Partial<Record<Side, Box>> = {};
   sections: Partial<Record<Side, string>> = {};
+  mode: BoxMode = "npc";
+  /** peers' requests for line clear awaiting the signaller (player mode) */
+  requests: LineClearRequest[] = [];
+  /** trains arrived complete whose warrant the signaller has not yet cancelled (player mode) */
+  arrived: Arrival[] = [];
 
   constructor(w: World, layout: ValleyLayout, code: string) {
     this.code = code;
@@ -165,6 +191,7 @@ export class Box {
       if (sec.to === code) this.sections.S = sec.id;
     }
     this.defineRoutes(w);
+    w.boxes.push(this);
     w.hooks.push((world) => this.step(world));
   }
 
@@ -174,7 +201,9 @@ export class Box {
   }
 
   plan(v: Visit) {
-    this.movements.push({ visit: v, state: v.arrive ? "offered" : "ready", said: new Set() });
+    const m: Movement = { visit: v, state: v.arrive ? "offered" : "ready", said: new Set() };
+    this.movements.push(m);
+    this.register.push(m);
   }
 
   private buildRoles(): Roles {
@@ -187,12 +216,16 @@ export class Box {
     }
   }
 
-  private sign(text: string) { return `${text} — ${this.master}, ${this.name}`; }
+  private sign(text: string) { return this.mode === "player" ? `${text} — ${this.name}` : `${text} — ${this.master}, ${this.name}`; }
   private say(w: World, m: Movement, key: string, text: string) {
     if (m.said.has(key)) return;
     m.said.add(key);
     w.say(`${this.name} Box`, this.sign(text));
   }
+  /** a line from the box in its own voice, not tied to a movement */
+  private tell(w: World, text: string) { w.say(`${this.name} Box`, this.sign(text)); }
+  /** a note from the frame or the warrant book: something refused */
+  private refuse(w: World, text: string) { w.say(`${this.name} Box`, text, "system"); }
 
   private defineRoutes(w: World) {
     const c = this.code, e = this.st.edges, r = this.roles, swS = this.st.switchS, swN = this.st.switchN, swJ = this.st.switchJ;
@@ -245,14 +278,49 @@ export class Box {
   private starter(track: "1" | "2", to: Side) {
     return to === "S" ? (track === "1" ? this.roles.starter1S : this.roles.starter2S) : (track === "1" ? this.roles.starter1N : this.roles.starter2N);
   }
+  /** the starting signal a movement leaves under */
+  starterFor(m: Movement): Signal | undefined { return m.visit.to ? this.starter(m.visit.track, m.visit.to) : undefined; }
+  /** the side of `peer` on which this box lies */
+  private sideAt(peer: Box): Side { return peer.peers.S === this ? "S" : peer.peers.B === this ? "B" : "N"; }
+  /** the name of the station on a side: the peer box, or the far end of the section when no box is planned there */
+  sideName(w: World, side: Side | undefined): string {
+    if (!side) return "";
+    const peer = this.peers[side];
+    if (peer) return peer.name;
+    const sec = this.sections[side];
+    if (!sec) return "";
+    const s = w.section(sec);
+    return w.station(s.from === this.code ? s.to : s.from)?.name ?? "";
+  }
+  /** the route id that receives a movement's train from its side into its track */
+  homeRouteFor(m: Movement): string | null {
+    const v = m.visit;
+    return v.from ? `${this.code}:home${v.from}→${v.track}${v.joinTo ? "c" : ""}` : null;
+  }
+  /** the route id that sends a movement's train on its way */
+  starterRouteFor(m: Movement): string | null {
+    const v = m.visit;
+    return v.to ? `${this.code}:${v.track}→${v.to}` : null;
+  }
 
   /** The peer box asks: may train `train` enter the section towards us? */
   acceptTrain(w: World, train: string, fromSide: Side): boolean {
+    if (this.mode === "player") {
+      // the signaller answers; until then the request stands
+      let req = this.requests.find((r) => r.train === train && r.from === fromSide);
+      if (!req) {
+        req = { train, from: fromSide, since: w.time, granted: false };
+        this.requests.push(req);
+        const peer = this.peers[fromSide];
+        if (peer) w.say(`${peer.name} Box`, `Is line clear for ${train} to ${this.name}? — ${peer.master}, ${peer.name}`);
+      }
+      return req.granted;
+    }
     const m = this.movements.find((x) => x.visit.train === train && x.state === "offered" && x.visit.from === fromSide);
     if (!m) return false;
     const sec = this.sections[fromSide]!;
     if (!w.lineClear(sec, train)) return false;
-    const routeId = `${this.code}:home${fromSide}→${m.visit.track}${m.visit.joinTo ? "c" : ""}`;
+    const routeId = this.homeRouteFor(m)!;
     if (!w.setRoute(routeId)) { w.warrants.delete(sec); return false; }
     m.state = "expecting";
     const home = this.home(fromSide)!;
@@ -262,11 +330,155 @@ export class Box {
     return true;
   }
 
-  private trainOf(w: World, number: string): Consist | null {
+  /* ---------- the signaller's actions (player mode; the NPC box does the same things by itself) ---------- */
+
+  /** why a section cannot be given to a train, or null when it can */
+  refusal(w: World, sec: string, train: string): string | null {
+    const out = w.warrants.get(sec);
+    if (out && out !== train) return `warrant ${sec} is out to ${out}`;
+    if (!out && !w.sectionClear(sec)) return `section ${sec} is occupied`;
+    return null;
+  }
+
+  /** Give line clear for a train offered from `from`: the warrant is issued with it (Rule S 34). */
+  giveLineClear(w: World, train: string, from: Side): boolean {
+    const sec = this.sections[from];
+    if (!sec) return false;
+    const why = this.refusal(w, sec, train);
+    if (why) { this.refuse(w, `Line clear for ${train} refused: ${why}.`); return false; }
+    w.lineClear(sec, train);
+    const req = this.requests.find((r) => r.train === train && r.from === from);
+    if (req) req.granted = true;
+    const m = this.movements.find((x) => x.visit.train === train && x.state === "offered" && x.visit.from === from);
+    if (m) m.state = "expecting";
+    else {
+      // a train the working does not show: enter it in the register so that its arrival is watched
+      const nm: Movement = { visit: { train, arrive: true, from, track: "1", depart: null }, state: "expecting", said: new Set() };
+      this.movements.push(nm); this.register.push(nm);
+    }
+    this.tell(w, `Line clear for ${train} to ${this.name}; warrant ${sec} issued.`);
+    return true;
+  }
+
+  /** Ask the box on side `to` for line clear for a train standing here and booked that way. */
+  askLineClear(w: World, train: string, to: Side): boolean {
+    const peer = this.peers[to];
+    const m = this.movements.find((x) => x.visit.train === train && x.state === "ready" && x.visit.to === to);
+    if (!peer || !m) return false;
+    const fromSide = this.sideAt(peer);
+    if (peer.acceptTrain(w, train, fromSide)) { m.state = "lineClear"; return true; }
+    const sec = this.sections[to]!;
+    const why = peer.refusal(w, sec, train)
+      ?? (peer.mode === "npc" && !peer.movements.some((x) => x.visit.train === train && x.state === "offered" && x.visit.from === fromSide) ? `I have no working for ${train} from ${this.name}` : null);
+    if (why) w.say(`${peer.name} Box`, `Not yet for ${train}: ${why}. — ${peer.master}, ${peer.name}`);
+    return false;
+  }
+
+  /** for a starter route, the block section it leads into */
+  starterSection(id: string): string | null {
+    const mm = /^[12]→([SNB])$/.exec(id.split(":")[1] ?? "");
+    return mm ? this.sections[mm[1] as Side] ?? null : null;
+  }
+  /** why a lever cannot be pulled, or null: the frame's checks, and no starter without a warrant (Rule S 28) */
+  routeBlocked(w: World, id: string): string | null {
+    const r = w.routes.find((x) => x.id === id);
+    if (!r) return "no such route";
+    if (r.live) return null;
+    const sec = this.starterSection(id);
+    if (sec) {
+      // the warrant must be one issued for a departure this way, not an arriving train's warrant still uncancelled
+      const t = w.warrants.get(sec);
+      const forDeparture = !!t && this.movements.some((m) => m.visit.train === t && m.visit.to && this.sections[m.visit.to] === sec && (m.state === "lineClear" || m.state === "starterCleared" || m.state === "departing"));
+      if (!forDeparture) return t ? `warrant ${sec} is out to ${t} arriving, not for a departure` : `no warrant for section ${sec}`;
+    }
+    return w.routeBlocked(id);
+  }
+  /** Pull a lever: set a route. */
+  pullRoute(w: World, id: string): boolean {
+    const why = this.routeBlocked(w, id);
+    if (why) { this.refuse(w, `${this.routeLabel(w, id)}: ${why}.`); return false; }
+    return w.setRoute(id);
+  }
+  /** Put a signal back to STOP; its route releases once nothing is approaching it. */
+  replace(w: World, signalId: string) { w.replaceSignal(signalId); }
+
+  /** Show the baton to a train standing here under a cleared starter with its doors closed (Rule S 40). */
+  showBaton(w: World, train: string): boolean {
+    const m = this.movements.find((x) => x.visit.train === train && x.visit.depart && (x.state === "ready" || x.state === "lineClear" || x.state === "starterCleared"));
+    const tr = this.trainOf(w, train);
+    if (!m || !tr) return false;
+    if (m.state !== "starterCleared") { this.refuse(w, `${this.starterFor(m)?.id ?? "The starter"} is not cleared for ${train}.`); return false; }
+    if (tr.anyDoorsOpen()) { this.refuse(w, `${train} still has its doors open.`); return false; }
+    w.station(this.code).baton.add(train);
+    m.state = "departing"; m.batonAt = w.time;
+    this.tell(w, `Baton shown to ${train}.`);
+    return true;
+  }
+
+  /** Train out of section: cancel the warrant on a side. Early, and it is written in the Incident Book (Rule S 36). */
+  cancelWarrant(w: World, side: Side): boolean {
+    const sec = this.sections[side]; if (!sec) return false;
+    const train = w.warrants.get(sec); if (!train) return false;
+    const i = this.arrived.findIndex((a) => a.train === train && a.side === side);
+    if (i < 0) w.incident("WARRANT-EARLY", `Warrant ${sec} cancelled before ${train} had arrived complete at ${this.name} (Rule S 36)`);
+    else this.arrived.splice(i, 1);
+    w.trainOutOfSection(sec);
+    this.requests = this.requests.filter((r) => !(r.train === train && r.from === side));
+    this.tell(w, `${train} arrived complete at ${this.name}; warrant ${sec} cancelled.`);
+    return true;
+  }
+
+  /** the lever's label on the frame */
+  routeLabel(w: World, id: string): string {
+    const name = id.split(":")[1] ?? id;
+    const peer = (s: string) => this.sideName(w, s as Side) || s;
+    let mm: RegExpExecArray | null;
+    if ((mm = /^home[SNB]→([12])(c?)$/.exec(name))) return mm[2] ? `Call on to ${mm[1]}` : `→ Platform ${mm[1]}`;
+    if ((mm = /^([12])→([SNB])$/.exec(name))) return `→ ${peer(mm[2])}`;
+    const hs = this.roles.hsEdge?.track === "hs" ? "headshunt" : "stub";
+    if (name === "1→hs") return `1 → ${hs}`;
+    if (name === "hs→2→stub") return `${hs} → 2 → stub`;
+    if (name === "stub→1") return "stub → 1";
+    return name;
+  }
+  /** what a signal is for, in the frame's words */
+  signalRole(w: World, sid: string): string {
+    const r = this.roles;
+    const peer = (s: Side) => this.sideName(w, s);
+    // where a branch leaves, the levers name the destinations and the role only says which way
+    const north = this.sections.B ? "northwards" : `to ${peer("N")}`;
+    if (r.homeS?.id === sid) return `home from ${peer("S")}`;
+    if (r.homeN?.id === sid) return `home from ${peer("N")}`;
+    if (r.homeB?.id === sid) return `home from ${peer("B")}`;
+    if (r.starter1S?.id === sid) return `platform 1 to ${peer("S")}`;
+    if (r.starter2S?.id === sid) return `platform 2 to ${peer("S")}`;
+    if (r.starter1N?.id === sid) return `platform 1 ${north}`;
+    if (r.starter2N?.id === sid) return `platform 2 ${north}`;
+    if (r.toHs?.id === sid) return `platform 1 to the ${r.hsEdge?.track === "hs" ? "headshunt" : "stub"}`;
+    if (r.hsIn?.id === sid) return `from the ${r.hsEdge?.track === "hs" ? "headshunt" : "stub"}`;
+    if (r.stubIn?.id === sid) return "from the stub";
+    return "";
+  }
+  /** the routes of this box's frame, in frame order */
+  frameRoutes(w: World): Route[] { return w.routes.filter((r) => r.station === this.code); }
+
+  trainOf(w: World, number: string): Consist | null {
     const v = w.vehicles.find((x) => x.number === number);
     return v ? w.consistOf(v) : null;
   }
   private trainVehicle(w: World, number: string): Vehicle | undefined { return w.vehicles.find((x) => x.number === number); }
+  /** a portion of a split train stands on its own (or the visit is not a split) */
+  standsAlone(w: World, m: Movement): boolean {
+    const v = m.visit;
+    if (!v.splitFrom) return true;
+    const other = this.trainOf(w, v.splitFrom);
+    return !other || other !== this.trainOf(w, v.train);
+  }
+  /** any end of the train within 30 m of the signal, on its edge */
+  private standsAt(train: Consist, sig: Signal): boolean {
+    for (const v of train.vehicles) for (const p of [v.pos, v.posB]) if (p.edge === sig.pos.edge && Math.abs(p.s - sig.pos.s) < 30) return true;
+    return false;
+  }
 
   private step(w: World) {
     for (const m of this.movements) this.stepMovement(w, m);
@@ -278,27 +490,41 @@ export class Box {
     const train = this.trainOf(w, v.train);
     if (!train) return;
     const e = this.st.edges, r = this.roles;
-    const track = v.track === "1" ? e.t1 : e.t2!;
+    const platforms = [e.t1, e.t2].filter((x): x is Edge => !!x);
     const booked = v.depart ? parseTime(v.depart) : null;
     const loco = v.loco ? this.trainVehicle(w, v.loco) : undefined;
     const locoConsist = loco ? w.consistOf(loco) : null;
     const stn = w.station(this.code);
     const t = w.time;
+    const player = this.mode === "player";
 
     switch (m.state) {
       case "offered": break;
       case "expecting": {
-        if (w.whollyOn(train, [track]) && Math.abs(train.v) < 0.01 && (!v.joinTo || train.vehicles.length > 1)) {
-          w.trainOutOfSection(this.sections[v.from!]!);
+        const on = platforms.find((tr) => w.whollyOn(train, [tr]));
+        if (on && Math.abs(train.v) < 0.01 && (!v.joinTo || train.vehicles.length > 1)) {
+          v.track = on === e.t1 ? "1" : "2";
+          m.arrivedAt = t;
+          const sec = this.sections[v.from!]!;
+          if (player) this.arrived.push({ train: v.train, side: v.from!, at: t });
+          else w.trainOutOfSection(sec);
           if (v.joinTo) {
             m.state = "done";
-            this.say(w, m, "joined", `${v.train} coupled to ${v.joinTo} at platform ${v.track}; warrant ${this.sections[v.from!]} cancelled. Connect the pipe and prove the brake before ${v.joinTo} leaves.`);
+            if (!player) this.say(w, m, "joined", `${v.train} coupled to ${v.joinTo} at platform ${v.track}; warrant ${sec} cancelled. Connect the pipe and prove the brake before ${v.joinTo} leaves.`);
             break;
           }
           m.state = v.runRound ? "arrived" : "ready";
+          if (player) break;
           const hsName = r.hsEdge && r.hsEdge.track === "hs" ? "headshunt" : "stub";
-          if (v.runRound) this.say(w, m, "arr", `Welcome to ${this.name}. Warrant ${this.sections[v.from!]} cancelled. When you have uncoupled and are back in the cab, I will clear ${r.toHs!.id} for the loco to the ${hsName}.`);
-          else this.say(w, m, "arr", `Train ${v.train} arrived complete at ${this.name}; warrant ${this.sections[v.from!]} cancelled.${v.depart ? ` ${this.starter(v.track, v.to!)?.id} will be cleared at ${fmtTime(booked! - 120)} for the ${v.depart} departure${v.to === "B" ? " to Fernhollow" : v.to === "N" ? " to Coldwater" : ""}.` : ""}`);
+          if (v.runRound) this.say(w, m, "arr", `Welcome to ${this.name}. Warrant ${sec} cancelled. When you have uncoupled and are back in the cab, I will clear ${r.toHs!.id} for the loco to the ${hsName}.`);
+          else this.say(w, m, "arr", `Train ${v.train} arrived complete at ${this.name}; warrant ${sec} cancelled.${v.depart ? ` ${this.starter(v.track, v.to!)?.id} will be cleared at ${fmtTime(booked! - 120)} for the ${v.depart} departure${v.to === "B" ? " to Fernhollow" : v.to === "N" ? " to Coldwater" : ""}.` : ""}`);
+        } else if (player) {
+          // a train stood at the home signal is a train the signaller is holding
+          const home = v.from ? this.home(v.from) : undefined;
+          if (home && home.aspect === "stop" && Math.abs(train.v) < 0.01 && this.standsAt(train, home)) {
+            if (m.heldSince === undefined) m.heldSince = t;
+            else if (!m.heldFlagged && t - m.heldSince > 90) { m.heldFlagged = true; w.incident("HELD-AT-HOME", `${v.train} held at ${home.id} for ${Math.round(t - m.heldSince)} s (Rule S 38)`); }
+          } else m.heldSince = undefined;
         }
         break;
       }
@@ -342,18 +568,15 @@ export class Box {
       case "ready": {
         if (!booked) { m.state = "done"; break; }
         // a portion of a split train waits until it stands on its own
-        if (v.splitFrom) {
-          const other = this.trainOf(w, v.splitFrom);
-          if (other && other === this.trainOf(w, v.train)) {
-            if (t >= booked - 240) this.say(w, m, "split", `${v.train} to be uncoupled from ${v.splitFrom} for the ${v.depart} departure${v.to === "B" ? " to Fernhollow" : ""}.`);
-            break;
-          }
+        if (!this.standsAlone(w, m)) {
+          if (!player && t >= booked - 240) this.say(w, m, "split", `${v.train} to be uncoupled from ${v.splitFrom} for the ${v.depart} departure${v.to === "B" ? " to Fernhollow" : ""}.`);
+          break;
         }
+        if (player) break;
         if (t >= booked - 120) {
           const to = v.to!, peer = this.peers[to];
           if (!peer) { m.state = "done"; break; }
-          const fromSide: Side = to === "S" ? (peer.peers.S === this ? "S" : peer.peers.B === this ? "B" : "N") : "S";
-          if (peer.acceptTrain(w, v.train, fromSide)) m.state = "lineClear";
+          if (peer.acceptTrain(w, v.train, this.sideAt(peer))) m.state = "lineClear";
           else this.say(w, m, "stblk", `Waiting for line clear from ${peer.name} for the ${v.depart} departure of ${v.train}.`);
         }
         break;
@@ -361,7 +584,12 @@ export class Box {
       case "lineClear": {
         // the warrant is in hand; the starter route may still be held by a movement ahead
         const to = v.to!, sec = this.sections[to]!;
-        if (w.setRoute(`${this.code}:${v.track}→${to}`)) {
+        const id = this.starterRouteFor(m)!;
+        if (player) {
+          if (w.routes.find((x) => x.id === id)?.live) m.state = "starterCleared";
+          break;
+        }
+        if (w.setRoute(id)) {
           m.state = "starterCleared";
           this.say(w, m, "st", `Warrant ${sec} in hand. ${this.starter(v.track, to)!.id} cleared for the ${v.depart} departure${to === "B" ? " to Fernhollow: switch WD J lies for the branch" : to === "N" && this.code === "WD" ? " to Coldwater: switch WD J lies straight" : ""}. I will show the baton at the booked time when your doors are closed.`);
         } else {
@@ -370,25 +598,81 @@ export class Box {
         break;
       }
       case "starterCleared": {
+        if (player) break;
         if (t >= booked!) {
           const tr = this.trainOf(w, v.train)!;
           if (!tr.anyDoorsOpen() && Math.abs(tr.v) < 0.01 && !stn.baton.has(v.train)) {
             if (tr.vehicles.length > 1 && !tr.brakeProved) this.say(w, m, "bp", `Prove the brake before I show the baton (Rule D 14).`);
-            else { stn.baton.add(v.train); m.state = "departing"; this.say(w, m, "bat", `Baton shown to ${v.train}. Ready to start.`); }
+            else { stn.baton.add(v.train); m.state = "departing"; m.batonAt = t; this.say(w, m, "bat", `Baton shown to ${v.train}. Ready to start.`); }
           }
         }
         break;
       }
       case "departing": {
+        const track = v.track === "1" ? e.t1 : e.t2!;
         const starter = this.starter(v.track, v.to!)!;
-        if (starter.aspect === "stop" && !w.isOccupied(track)) { stn.baton.delete(v.train); m.state = "done"; }
-        else if (starter.aspect === "stop" && v.splitFrom === undefined && this.movements.some((o) => o !== m && o.visit.splitFrom === v.train)) {
-          // the first portion has left; the platform still holds the second
-          stn.baton.delete(v.train); m.state = "done";
+        let gone = false;
+        if (starter.aspect === "stop" && !w.isOccupied(track)) gone = true;
+        else if (starter.aspect === "stop" && v.splitFrom === undefined && this.movements.some((o) => o !== m && o.visit.splitFrom === v.train)) gone = true; // the first portion has left; the platform still holds the second
+        if (gone) {
+          stn.baton.delete(v.train); m.state = "done"; m.departedAt = t;
+          if (player && m.batonAt !== undefined && booked !== null) {
+            const ref = Math.max(booked, (m.arrivedAt ?? -1e9) + 60);
+            if (m.batonAt - ref > 60) w.incident("BATON-LATE", `Baton shown to ${v.train} at ${fmtTime(m.batonAt)}, booked away ${v.depart} (Rule S 40)`);
+          }
         }
         break;
       }
       case "done": break;
     }
+  }
+}
+
+/* ---------------- The signaller's duty ---------------- */
+
+/** The player's duty in a box: the register, what comes next, and completion. */
+export class BoxDuty {
+  readonly kind = "box";
+  box: Box;
+  prep: string[];
+  completion: (w: World) => string | null;
+
+  constructor(w: World, box: Box, prep: string[], completion: (w: World) => string | null) {
+    this.box = box; this.prep = prep; this.completion = completion;
+    w.hooks.push((world) => this.step(world));
+  }
+
+  private step(w: World) {
+    if (w.finished) return;
+    const msg = this.completion(w);
+    if (msg) { w.finished = msg; w.say("General Manager's Office", msg, "system"); }
+  }
+
+  /** the booked time a movement is first felt at the box */
+  static timeOf(m: Movement): number {
+    const v = m.visit;
+    return v.arr ? parseTime(v.arr) : v.depart ? parseTime(v.depart) : 1e9;
+  }
+  /** the register in time order */
+  get rows(): Movement[] { return this.box.register.slice().sort((a, b) => BoxDuty.timeOf(a) - BoxDuty.timeOf(b)); }
+  /** the next booked event still to come, and the moment the signaller should be ready for it */
+  nextEvent(w: World): { t: number; ready: number; label: string } | null {
+    let best: { t: number; ready: number; label: string } | null = null;
+    for (const m of this.box.register) {
+      if (m.state === "done") continue;
+      const v = m.visit;
+      const cands: { t: number; ready: number; label: string }[] = [];
+      if (v.arr && m.arrivedAt === undefined && m.state === "offered") {
+        // the peer asks for line clear two minutes before its booked departure: that is the first thing to answer
+        const arr = parseTime(v.arr);
+        const peer = v.from ? this.box.peers[v.from] : undefined;
+        const pm = peer?.register.filter((x) => x.visit.train === v.train && x.visit.depart && parseTime(x.visit.depart) < arr).sort((a, b) => parseTime(b.visit.depart!) - parseTime(a.visit.depart!))[0];
+        if (pm) { const t = parseTime(pm.visit.depart!) - 120; cands.push({ t, ready: t - 30, label: `${this.box.sideName(w, v.from)} asking line clear for ${v.train}` }); }
+        else cands.push({ t: arr, ready: arr - 150, label: `${v.train} due from ${this.box.sideName(w, v.from)}` });
+      }
+      if (v.depart && (m.state === "ready" || m.state === "expecting" || m.state === "arrived" || m.state === "toCouple")) { const t = parseTime(v.depart); cands.push({ t, ready: t - 150, label: `${v.train} away to ${this.box.sideName(w, v.to)}` }); }
+      for (const c of cands) if (c.ready > w.time + 20 && (!best || c.ready < best.ready)) best = c;
+    }
+    return best;
   }
 }

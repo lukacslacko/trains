@@ -66,7 +66,7 @@ export class WorldRenderer {
     ctx.fillRect(0, 0, w, h);
 
     if (this.cam.follow) {
-      const p = world.driverPoint();
+      const p = world.viewPoint();
       const far = Math.hypot(p.x - this.cam.cx, p.y - this.cam.cy) > 150;
       const k = far ? 1 : 0.2;
       this.cam.cx += (p.x - this.cam.cx) * k;
@@ -91,6 +91,7 @@ export class WorldRenderer {
       else this.drawBoard(ctx, o, s);
     }
     this.drawBaton(ctx, world);
+    this.drawBoxes(ctx, world);
     for (const v of world.vehicles) this.drawVehicle(ctx, world, v, s);
     this.drawDriver(ctx, world, s);
     ctx.restore();
@@ -506,6 +507,28 @@ export class WorldRenderer {
       ctx.save(); if (Math.cos(ang) < 0) ctx.rotate(Math.PI); ctx.fillText("♪", 0, -W / 2 - 1.2); ctx.restore();
     }
     ctx.restore();
+  }
+
+  /** The signal boxes: a small building at each station that has one, the player's picked out in brass. */
+  private drawBoxes(ctx: CanvasRenderingContext2D, world: World) {
+    for (const b of world.boxes) {
+      const p = world.boxPoint(b.code);
+      const t = world.boxTangent(b.code);
+      const mine = world.driver.kind === "box" && world.driver.code === b.code;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      const ang = Math.atan2(t.y, t.x);
+      ctx.rotate(Math.cos(ang) < 0 ? ang + Math.PI : ang);
+      ctx.fillStyle = mine ? C.brass : C.ivory; ctx.strokeStyle = C.ink; ctx.lineWidth = 0.25;
+      ctx.beginPath(); ctx.rect(-3, -2, 6, 4); ctx.fill(); ctx.stroke();
+      ctx.strokeStyle = C.ink; ctx.lineWidth = 0.15;
+      ctx.beginPath(); ctx.moveTo(-3, 0); ctx.lineTo(3, 0); ctx.stroke();
+      ctx.fillStyle = mine ? C.ink : C.slate;
+      for (const x of [-2.2, -0.5, 1.2]) ctx.fillRect(x, -1.6, 1, 0.7);
+      ctx.fillStyle = C.ink; ctx.font = `600 1.3px ${DISPLAY}`; ctx.textAlign = "center";
+      ctx.fillText(`${b.code} BOX`, 0, 3.6);
+      ctx.restore();
+    }
   }
 
   private drawDriver(ctx: CanvasRenderingContext2D, world: World, s: number) {

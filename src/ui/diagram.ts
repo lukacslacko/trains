@@ -185,11 +185,17 @@ export class LineDiagram {
       ctx.beginPath(); ctx.moveTo(x, base); ctx.lineTo(x, base + tall); ctx.stroke();
       if (p.major) ctx.fillText(p.line === "branch" ? `F ${p.label}` : `km ${p.label}`, x, base + 16);
     }
-    // driver: a brass ring on the line
-    const dv = world.driver.kind === "cab" ? world.driver.vehicle : world.trainVehicle;
-    const dLine = dv.pos.edge.line, dkm = kmOf(dv.pos);
-    ctx.fillStyle = C.ivory; ctx.strokeStyle = C.brass; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.arc(Xof(dLine, dkm), dLine === "branch" ? yB : y0, 3.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    // the player: a brass ring on the line at their train, or at their box
+    if (world.driver.kind === "box") {
+      const stop = world.station(world.driver.code).stops[0];
+      ctx.fillStyle = C.ivory; ctx.strokeStyle = C.brass; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(Xof(stop.line, stop.km), stop.line === "branch" ? yB : y0, 3.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    } else {
+      const dv = world.driver.kind === "cab" ? world.driver.vehicle : world.trainVehicle;
+      const dLine = dv.pos.edge.line, dkm = kmOf(dv.pos);
+      ctx.fillStyle = C.ivory; ctx.strokeStyle = C.brass; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(Xof(dLine, dkm), dLine === "branch" ? yB : y0, 3.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    }
     // direction, in the gap between the last two stations' names
     const stns = world.stations;
     const gapKm = stns.length >= 2 ? (stns[stns.length - 2].stops[0].km + stns[stns.length - 1].stops[0].km) / 2 : world.layout.kmMax / 2;

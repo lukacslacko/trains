@@ -1,6 +1,60 @@
-import { DUTY_101, DUTY_201, DUTY_301, DUTY_401 } from "../scenarios/duties";
+import { DUTY_101, DUTY_201, DUTY_301, DUTY_401, DUTY_501, DUTY_502 } from "../scenarios/duties";
 import { Autopilot } from "./autopilot";
 import { parseTime } from "../core/util";
+import { type Box, type BoxDuty } from "../sim/duty";
+import { World } from "../sim/world";
+
+/** A signaller who does what the working says, through the player's own actions: for testing a manned box. */
+class AutoSignaller {
+  private noted = new Set<string>();
+  constructor(private w: World, private box: Box, private log: (s: string) => void) {}
+  /** note a blocked lever once per reason, for the report */
+  private blocked(id: string): boolean {
+    const why = this.box.routeBlocked(this.w, id);
+    if (why) { const k = `${id}: ${why}`; if (!this.noted.has(k)) { this.noted.add(k); this.log(`lever ${k}`); } }
+    return !!why;
+  }
+  tick() {
+    const w = this.w, b = this.box;
+    for (const rq of b.requests) if (!rq.granted && !b.refusal(w, b.sections[rq.from]!, rq.train)) b.giveLineClear(w, rq.train, rq.from);
+    for (const m of b.movements.slice()) {
+      const v = m.visit;
+      if (m.state === "expecting") {
+        // the home is set for a train still out in the section, never again once it is inside the station
+        const tr = b.trainOf(w, v.train);
+        const inside = !!tr && (w.station(b.code).edges ?? []).some((e) => tr.vehicles.some((veh) => w.edgesOf(veh).includes(e)));
+        const id = b.homeRouteFor(m)!;
+        if (!inside && !w.routes.find((x) => x.id === id)?.live && !this.blocked(id)) b.pullRoute(w, id);
+      }
+      if (m.state === "ready" && v.depart && v.to && b.standsAlone(w, m) && w.time >= parseTime(v.depart) - 120) {
+        const peer = b.peers[v.to]!, sec = b.sections[v.to]!;
+        if (!peer.refusal(w, sec, v.train)) b.askLineClear(w, v.train, v.to);
+      }
+      if (m.state === "lineClear") { const id = b.starterRouteFor(m)!; if (!this.blocked(id)) b.pullRoute(w, id); }
+      if (m.state === "starterCleared" && v.depart && w.time >= parseTime(v.depart)) {
+        const tr = b.trainOf(w, v.train);
+        if (tr && !tr.anyDoorsOpen() && (tr.vehicles.length < 2 || tr.brakeProved)) b.showBaton(w, v.train);
+      }
+    }
+    for (const a of b.arrived.slice()) b.cancelWarrant(w, a.side);
+  }
+}
+
+function playBox(scenario: typeof DUTY_501, until: string) {
+  const { world: w, duty } = scenario.create();
+  const a = new Autopilot(w);
+  last = a;
+  const box = (duty as BoxDuty).box;
+  const s = new AutoSignaller(w, box, (t) => a.say(t));
+  let lastTick = -1;
+  w.hooks.push(() => { const t = Math.floor(w.time); if (t !== lastTick) { lastTick = t; s.tick(); } });
+  const end = parseTime(until);
+  a.until(() => !!w.finished || w.time >= end, end - w.time + 10);
+  a.say(`finished: ${w.finished ?? "NO"}; register ${box.register.map((m) => `${m.visit.train}:${m.state}`).join(" ")}`);
+  return a.report();
+}
+export function play501() { return playBox(DUTY_501, "09:20"); }
+export function play502() { return playBox(DUTY_502, "11:30"); }
 
 /** the autopilot of the run in progress, for reports after a failure */
 export let last: Autopilot | null = null;

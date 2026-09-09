@@ -5,6 +5,7 @@ import { type Position, type Edge, type Pt, type Dir, type Switch, type SwitchSt
 const CAB_DOOR_INWARD = 2.6, SEAT_INWARD = 1.4, ASIDE = 2.6;
 import { Vehicle, Consist, type End, type Cab, type LightState, type BrakeStep, type Reverser, stepConsist } from "../stock/vehicles";
 import { fmtTime, kmh } from "../core/util";
+import { type Box } from "./duty";
 
 export interface Message { t: number; from: string; text: string; kind: "box" | "system" | "driver" }
 export interface Incident { t: number; code: string; text: string; note?: boolean }
@@ -16,7 +17,9 @@ export type Anchor =
 export type DriverLocation =
   | { kind: "cab"; vehicle: Vehicle; end: End }
   | { kind: "ground"; at: Anchor }
-  | { kind: "walking"; from: Pt; target: Anchor; t: number; duration: number };
+  | { kind: "walking"; from: Pt; target: Anchor; t: number; duration: number }
+  /** the player in the signaller's chair of a station's box */
+  | { kind: "box"; code: string };
 
 export interface Route {
   id: string;
@@ -50,6 +53,8 @@ export class World {
   incidents: Incident[] = [];
   stations: Station[];
   routes: Route[] = [];
+  /** the boxes of the line, in the order they were built */
+  boxes: Box[] = [];
   /** the passenger train the duty is about */
   trainVehicle: Vehicle;
   brakeTest: { consist: Consist; t: number } | null = null;
@@ -161,10 +166,36 @@ export class World {
   seatPoint(vehicle: Vehicle, end: End): Pt {
     return this.besideTrack(vehicle.endPos(end), SEAT_INWARD, 0);
   }
+  /** The signal box of a station: at the stop-board end of its first platform, on the platform side, clear of the posts. */
+  boxPoint(code: string): Pt {
+    const stop = this.station(code).stops[0];
+    const pos = this.layout.graph.atKm(stop.track, stop.km, 1);
+    const p = worldPoint(pos);
+    const t = tangentAt(pos.edge, pos.s);
+    const tt = pos.edge.kmDir === 1 ? t : { x: -t.x, y: -t.y };
+    const n = { x: -tt.y * stop.platform.side, y: tt.x * stop.platform.side };
+    const along = stop.dir * 16, out = 9.5;
+    return { x: p.x + tt.x * along + n.x * out, y: p.y + tt.y * along + n.y * out };
+  }
+  /** the tangent of the track beside a box, for drawing it square to the line */
+  boxTangent(code: string): Pt {
+    const stop = this.station(code).stops[0];
+    const pos = this.layout.graph.atKm(stop.track, stop.km, 1);
+    return tangentAt(pos.edge, pos.s);
+  }
+  /** Where the view follows: the driver, or, from the box, the middle of the station's first platform. */
+  viewPoint(): Pt {
+    const d = this.driver;
+    if (d.kind !== "box") return this.driverPoint();
+    const stop = this.station(d.code).stops[0];
+    const km = (stop.platform.kmFrom + stop.platform.kmTo) / 2;
+    return worldPoint(this.layout.graph.atKm(stop.track, km, 1));
+  }
   driverPoint(): Pt {
     const d = this.driver;
     if (d.kind === "cab") return this.seatPoint(d.vehicle, d.end);
     if (d.kind === "ground") return this.anchorPoint(d.at);
+    if (d.kind === "box") return this.boxPoint(d.code);
     const to = this.anchorPoint(d.target);
     const t = Math.min(1, d.t / d.duration);
     return { x: d.from.x + (to.x - d.from.x) * t, y: d.from.y + (to.y - d.from.y) * t };
@@ -331,6 +362,29 @@ export class World {
     }
   }
   replaceSignal(id: string) { this.signal(id).aspect = "stop"; }
+  /** Why a route cannot be set now, in the frame's words, or null when it can. */
+  routeBlocked(id: string): string | null {
+    const r = this.routes.find((x) => x.id === id);
+    if (!r) return "no such route";
+    if (r.live) return null;
+    for (const [sw, st] of r.switches) {
+      if (sw.state === st) continue;
+      if (sw.locks.size > 0) return `switch ${sw.id} is held by another route`;
+      if (!this.switchClear(sw)) return `switch ${sw.id} is fouled`;
+    }
+    const occ = r.clear.find((e) => this.isOccupied(e));
+    if (occ) return `${this.edgeName(occ)} is occupied`;
+    return null;
+  }
+  /** a piece of track in words */
+  edgeName(e: Edge): string {
+    if (/^[12]$/.test(e.track)) return `track ${e.track}`;
+    if (e.track === "hs") return "the headshunt";
+    if (e.track === "sw") return "the switch";
+    if (e.track === "main") return "the main line";
+    if (e.track === "b1" || e.track === "bm") return "the branch";
+    return `track ${e.track}`;
+  }
 
   /* ---------- block working ---------- */
   section(id: string) { const s = this.layout.sections.find((x) => x.id === id); if (!s) throw new Error(`no section ${id}`); return s; }

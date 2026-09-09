@@ -144,13 +144,25 @@ manual that describes exactly what is playable.
   pairs passing at Wending twice.
 - Books S, R, D, I, P, T reissued.
 
-### M2d — The signaller's chair (next)
-- The player may take the box at any station instead of a cab: a lever
-  frame panel with the routes the NPC boxes use, the line-clear exchange
-  and the Line Warrants, the baton, and NPC drivers working every train.
-- Books: S (working a box), a new Book B (Box Working) or a chapter in S.
+### M2d — The signaller's chair (done 2026-09-09)
+- A box has two modes: the station master (NPC) or the player. In player
+  mode the decisions become actions on a panel (give line clear, ask for
+  it, pull a lever, replace a signal, show the baton, cancel a warrant)
+  while the observations (arrived complete, gone) keep running; peer boxes
+  and NPC drivers carry on unchanged.
+- The panel: the block (one card per section: requests, warrants out,
+  trains to ask for), the lever frame (routes grouped under their signals,
+  levers lit when set, blocked levers say why), the baton; the working
+  (what to do next for each movement) and the register (the box's duty
+  sheet, with a clock skip to the next event).
+- Incidents for the signaller: warrant cancelled early (S 36), train held
+  at the home (S 38), baton shown late (S 40). Rule S 34 words the
+  line-clear exchange.
+- Duty 501 (the crossing from Wending Box) and Duty 502 (the junction from
+  Wending Box); a headless auto-signaller plays both through the player's
+  own actions. Books S and R reissued.
 
-### M3 — Timetable and autonomous traffic
+### M3 — Timetable and autonomous traffic (next)
 - Working timetable editor; trains run automatically to it.
 - The player's train fits into the running traffic; conflicts are handled
   by the signallers (NPC or player).
