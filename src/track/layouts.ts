@@ -30,6 +30,9 @@ export interface Platform { name: string; track: string; kmFrom: number; kmTo: n
 /** A hectometre or kilometre post: a position reference, not a signal. */
 export interface Post { km: number; x: number; y: number; major: boolean; label: string }
 
+/** Lateral lane of the hectometre plates: beyond the signals and boards (which stand about 3 m out). */
+export const POST_LANE = 6.8;
+
 /** Posts every 100 m from km 0.0, on the left of the line in the Down direction (-y), clear of any loop track. */
 function hectometrePosts(kmMax: number, postY: (km: number) => number): Post[] {
   const out: Post[] = [];
@@ -37,7 +40,7 @@ function hectometrePosts(kmMax: number, postY: (km: number) => number): Post[] {
     const km = i / 10;
     if (km > kmMax + 1e-9) break;
     const major = i % 10 === 0;
-    out.push({ km, x: km * 1000, y: postY(km), major, label: major ? String(i / 10) : `${Math.floor(i / 10)}.${i % 10}` });
+    out.push({ km, x: km * 1000, y: postY(km), major, label: `${Math.floor(i / 10)}.${i % 10}` });
   }
   return out;
 }
@@ -192,7 +195,7 @@ export function shuttleLayout(): Layout {
   return {
     name: "Ashgrove–Wending (single line)",
     graph: g, objects, platforms, kmMax: KM_MAX, speedZones, limitAt, limitOver, zones, profile, gradientAt, elevationAt,
-    posts: hectometrePosts(KM_MAX, () => -3.6),
+    posts: hectometrePosts(KM_MAX, () => -POST_LANE),
     stations: [
       { code: "AG", name: "Ashgrove", stopBoardKm: 0.135, platform: platforms[0], arriveDir: -1 },
       { code: "WD", name: "Wending", stopBoardKm: 3.165, platform: platforms[1], arriveDir: 1 },
@@ -308,7 +311,7 @@ export function loopLayout(): Layout & { loops: Record<string, LoopStation> } {
   return {
     name: "Ashgrove–Wending (loops and signals)",
     graph: g, objects, platforms, kmMax: KM_MAX, speedZones, limitAt, limitOver, zones, loops, profile, gradientAt, elevationAt,
-    posts: hectometrePosts(KM_MAX, (km) => (inLoop(km) ? T2 - 3.6 : -3.6)),
+    posts: hectometrePosts(KM_MAX, (km) => (inLoop(km) ? T2 - POST_LANE : -POST_LANE)),
     stations: [
       { code: "AG", name: "Ashgrove", master: "Marrow", stopBoardKm: 0.135, platform: platforms[0], arriveDir: -1 },
       { code: "WD", name: "Wending", master: "Pell", stopBoardKm: 3.165, platform: platforms[1], arriveDir: 1 },

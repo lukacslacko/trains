@@ -247,8 +247,9 @@ stop (km 0.0) to the end of the line, on the left of the line in the Down
 direction, clear of any loop track. An ivory plate on a slate post carries
 the distance in black figures: the kilometre, a point, and the hectometre
 digit, so the post at 1.4 km reads **1.4**. Every full kilometre has a
-larger **kilometre post**: an ivory plate with a green border and a green
-numeral under the small word KM, reading **2**. Posts are a position
+larger **kilometre post**: the same plate on a larger scale, reading the
+kilometre with its zero (**2.0**) in the same black figures, distinguished
+only by a green rim. Posts are a position
 reference, not a signal: they carry no instruction. They are used to name
 where things stand (the Wending stop board is between posts 3.1 and 3.2),
 to report a position to the Box ("stopped at 2.7"), and to judge distance

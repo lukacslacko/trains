@@ -6,6 +6,18 @@ import { type Vehicle, type End } from "../stock/vehicles";
 const C = { green: "#1F4B3F", ivory: "#F4EFE3", paper: "#FBF8F0", red: "#C6321E", brass: "#B5913F", ink: "#1A1A1A", slate: "#4A5560", chalk: "#D9D2C0", amber: "#D9A21B", lamp: "#2E9E5B", white: "#FFFFFF" };
 const DISPLAY = "'Barlow Condensed', 'Arial Narrow', sans-serif";
 
+/** A label on a translucent ivory plate, so it reads over rails, sleepers and platforms. */
+function label(ctx: CanvasRenderingContext2D, text: string, x: number, y: number, size: number, align: CanvasTextAlign = "center", color = C.ink, weight = 600) {
+  ctx.font = `${weight} ${size}px ${DISPLAY}`;
+  ctx.textAlign = align;
+  const w = ctx.measureText(text).width + size * 0.6, h = size * 1.15;
+  const x0 = align === "center" ? x - w / 2 : align === "left" ? x - size * 0.3 : x - w + size * 0.3;
+  ctx.fillStyle = "rgba(251,248,240,.86)";
+  ctx.beginPath(); ctx.roundRect(x0, y - h * 0.78, w, h, size * 0.2); ctx.fill();
+  ctx.fillStyle = color;
+  ctx.fillText(text, x, y);
+}
+
 export class Camera {
   scale = 6;          // px per metre
   cx = 0; cy = 0;     // world centre
@@ -90,20 +102,16 @@ export class WorldRenderer {
       // the post itself, a slate dot, stands 1.2 m nearer the track than the plate
       ctx.fillStyle = C.slate;
       ctx.beginPath(); ctx.arc(p.x, p.y + 1.2, 0.28, 0, Math.PI * 2); ctx.fill();
-      const w = p.major ? 3.6 : 3.2, h = p.major ? 2.4 : 1.8;
+      // every plate reads the distance the same way (1.0, 1.1, …); a full kilometre gets a larger plate with a green rim
+      const w = p.major ? 3.8 : 3.2, h = p.major ? 2.2 : 1.8;
       ctx.fillStyle = C.ivory;
       ctx.strokeStyle = p.major ? C.green : C.ink;
-      ctx.lineWidth = p.major ? 0.3 : 0.15;
+      ctx.lineWidth = p.major ? 0.28 : 0.15;
       ctx.beginPath(); ctx.roundRect(p.x - w / 2, p.y - h / 2, w, h, 0.25); ctx.fill(); ctx.stroke();
       if (s >= 1.2) {
-        ctx.fillStyle = p.major ? C.green : C.ink;
-        ctx.textAlign = "center";
-        if (p.major) {
-          ctx.font = `600 0.8px ${DISPLAY}`; ctx.fillText("KM", p.x, p.y - 0.55);
-          ctx.font = `700 1.7px ${DISPLAY}`; ctx.fillText(p.label, p.x, p.y + 1.0);
-        } else {
-          ctx.font = `600 1.5px ${DISPLAY}`; ctx.fillText(p.label, p.x, p.y + 0.55);
-        }
+        ctx.fillStyle = C.ink; ctx.textAlign = "center";
+        ctx.font = `${p.major ? 700 : 600} ${p.major ? 1.7 : 1.5}px ${DISPLAY}`;
+        ctx.fillText(p.label, p.x, p.y + (p.major ? 0.62 : 0.55));
       }
     }
   }
@@ -210,19 +218,23 @@ export class WorldRenderer {
       ctx.beginPath(); ctx.moveTo(bx - d.x * 0.6, by - d.y * 0.6); ctx.lineTo(bx + d.x * 0.6, by + d.y * 0.6); ctx.stroke();
       ctx.strokeStyle = C.slate; ctx.lineWidth = 0.2;
       ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx + nrm.x * divSide * 1.6, by + nrm.y * divSide * 1.6); ctx.stroke();
-      if (s >= 2) {
-        ctx.fillStyle = C.slate; ctx.font = `600 2.2px ${DISPLAY}`; ctx.textAlign = "center";
-        ctx.fillText(sw.id, bx, by - nrm.y * divSide * 2.6 + (divSide * nrm.y < 0 ? 0.8 : 0.8));
-      }
+      if (s >= 2) label(ctx, sw.id, bx, by - nrm.y * divSide * 2.6 + 0.8, 2.2, "center", C.slate);
     }
   }
 
-  /** side offset: objects stand on the right of the direction they face */
+  /**
+   * Where a lineside object stands: t points the way it faces, n points to its side of the track.
+   * Objects on a loop track stand on its outer side (track 1: the platform side, track 2: the far side);
+   * on plain line they stand on the right of the direction they face.
+   */
   private sideOf(o: Signal | Board): { p: Pt; t: Pt; n: Pt } {
     const p = worldPoint(o.pos);
     const t0 = tangentAt(o.pos.edge, o.pos.s);
     const t = o.pos.dir === 1 ? t0 : { x: -t0.x, y: -t0.y };
-    const n = { x: -t.y, y: t.x }; // right-hand normal (screen y down)
+    const right = { x: -t.y, y: t.x }; // right-hand normal (screen y down)
+    const track = o.pos.edge.track;
+    const wantY = track === "2" ? -1 : track === "1" ? 1 : Math.sign(right.y) || 1;
+    const n = Math.sign(right.y) === wantY ? right : { x: -right.x, y: -right.y };
     return { p, t, n };
   }
 
@@ -239,7 +251,7 @@ export class WorldRenderer {
       ctx.fillStyle = col; ctx.beginPath(); ctx.arc(cx, cy, 1.0, 0, Math.PI * 2); ctx.fill();
       // a small pointer showing which way it faces
       ctx.fillStyle = C.ink; ctx.beginPath();
-      ctx.moveTo(cx + t.x * 1.5, cy + t.y * 1.5); ctx.lineTo(cx + t.x * 2.6 + n.x * 0.7, cy + t.y * 2.6 + n.y * 0.7); ctx.lineTo(cx + t.x * 2.6 - n.x * 0.7, cy + t.y * 2.6 - n.y * 0.7); ctx.fill();
+      ctx.moveTo(cx + t.x * 2.7, cy + t.y * 2.7); ctx.lineTo(cx + t.x * 1.6 + n.x * 0.7, cy + t.y * 1.6 + n.y * 0.7); ctx.lineTo(cx + t.x * 1.6 - n.x * 0.7, cy + t.y * 1.6 - n.y * 0.7); ctx.fill();
     } else {
       // ground signal: black box with two white lamps
       ctx.fillStyle = C.ink;
@@ -253,18 +265,11 @@ export class WorldRenderer {
         ctx.beginPath(); ctx.arc(cx + 0.7, cy, 0.35, 0, Math.PI * 2); ctx.fill();
       }
       ctx.fillStyle = C.ink; ctx.beginPath();
-      ctx.moveTo(cx + t.x * 1.6, cy + t.y * 1.6); ctx.lineTo(cx + t.x * 2.5 + n.x * 0.5, cy + t.y * 2.5 + n.y * 0.5); ctx.lineTo(cx + t.x * 2.5 - n.x * 0.5, cy + t.y * 2.5 - n.y * 0.5); ctx.fill();
+      ctx.moveTo(cx + t.x * 2.6, cy + t.y * 2.6); ctx.lineTo(cx + t.x * 1.7 + n.x * 0.5, cy + t.y * 1.7 + n.y * 0.5); ctx.lineTo(cx + t.x * 1.7 - n.x * 0.5, cy + t.y * 1.7 - n.y * 0.5); ctx.fill();
     }
     if (s >= 1.6) {
-      ctx.fillStyle = C.ink; ctx.font = `600 2.4px ${DISPLAY}`;
-      if (sig.type === "main") {
-        // main signals are labelled behind the head, along the track, so they never collide with a ground signal alongside
-        ctx.textAlign = t.x > 0 ? "right" : "left";
-        ctx.fillText(sig.id, cx - t.x * 2.6, cy - t.y * 2.6 + 0.9);
-      } else {
-        ctx.textAlign = "center";
-        ctx.fillText(sig.id, cx + n.x * 3.2, cy + n.y * 3.2 + 0.9);
-      }
+      // labelled behind the head along the track, on a plate, so it never lies over rails or another signal
+      label(ctx, sig.id, cx - t.x * (sig.type === "main" ? 2.6 : 2.4), cy - t.y * 2.6 + 0.85, 2.3, t.x > 0 ? "right" : "left");
     }
   }
 
@@ -275,10 +280,10 @@ export class WorldRenderer {
       // one physical post per change of grade, drawn from the Down-facing object, on the post side of the line (-y)
       if (b.pos.dir * b.pos.edge.kmDir !== 1) return;
       const after = b.value ?? 0, before = Number(b.label ?? 0);
-      // it stands beyond the hectometre plate that shares its kilometre, so the two never overlap
-      const cx = p.x, cy = p.y - 9.0;
+      // it stands beyond the hectometre plate lane, so the two never overlap
+      const cx = p.x, cy = p.y - 12.4;
       ctx.strokeStyle = C.slate; ctx.lineWidth = 0.3;
-      ctx.beginPath(); ctx.moveTo(cx, p.y - 5.2); ctx.lineTo(cx, cy); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(cx, p.y - 8.3); ctx.lineTo(cx, cy); ctx.stroke();
       // two arms: the left arm follows the grade behind, the right arm the grade ahead (rising Down = up to the right)
       const arm = 2.6, k = 0.12;
       ctx.strokeStyle = C.ink; ctx.lineWidth = 0.45; ctx.lineCap = "round";
@@ -287,10 +292,9 @@ export class WorldRenderer {
       ctx.fillStyle = C.ivory; ctx.strokeStyle = C.ink; ctx.lineWidth = 0.15;
       ctx.beginPath(); ctx.arc(cx, cy, 0.55, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
       if (s >= 2) {
-        ctx.fillStyle = C.ink; ctx.font = `700 1.4px ${DISPLAY}`; ctx.textAlign = "center";
         const txt = (g: number) => (g === 0 ? "L" : `${Math.abs(g)}‰`);
-        ctx.fillText(txt(before), cx - arm + 0.4, cy + before * k - 1.0);
-        ctx.fillText(txt(after), cx + arm - 0.4, cy - after * k - 1.0);
+        label(ctx, txt(before), cx - arm + 0.4, cy + before * k - 1.0, 1.4, "center", C.ink, 700);
+        label(ctx, txt(after), cx + arm - 0.4, cy - after * k - 1.0, 1.4, "center", C.ink, 700);
       }
       return;
     }
@@ -311,9 +315,13 @@ export class WorldRenderer {
       ctx.fillStyle = C.ink; ctx.fillRect(-0.5, -0.35, 1.0, 0.7);
     } else if (b.board === "limitOfShunt") {
       ctx.fillStyle = C.ivory; ctx.strokeStyle = C.ink; ctx.lineWidth = 0.2;
-      ctx.fillRect(-0.5, -1.6, 1.0, 3.2); ctx.strokeRect(-0.5, -1.6, 1.0, 3.2);
-      ctx.strokeStyle = C.red; ctx.lineWidth = 0.5;
-      ctx.beginPath(); ctx.moveTo(-0.5, 1.4); ctx.lineTo(0.5, -1.4); ctx.stroke();
+      ctx.fillRect(-0.5, -1.6, 1.0, 3.2);
+      // the red band is painted on the board, so it is clipped to it
+      ctx.save(); ctx.beginPath(); ctx.rect(-0.5, -1.6, 1.0, 3.2); ctx.clip();
+      ctx.fillStyle = C.red;
+      ctx.beginPath(); ctx.moveTo(-0.5, 1.6); ctx.lineTo(-0.5, 0.9); ctx.lineTo(0.5, -1.6); ctx.lineTo(0.5, -0.9); ctx.closePath(); ctx.fill();
+      ctx.restore();
+      ctx.strokeRect(-0.5, -1.6, 1.0, 3.2);
     } else if (b.board === "speed") {
       ctx.fillStyle = C.white; ctx.strokeStyle = C.ink; ctx.lineWidth = 0.3;
       ctx.beginPath(); ctx.arc(0, 0, 1.4, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
@@ -329,10 +337,10 @@ export class WorldRenderer {
       ctx.fillText(String(b.value), 0, 1.0);
     }
     ctx.restore();
-    if (s >= 2.5 && b.board !== "speed" && b.board !== "speedAdvance") {
-      ctx.fillStyle = C.slate; ctx.font = `600 2px ${DISPLAY}`; ctx.textAlign = "center";
-      const label = b.board === "stop" ? `STOP · ${b.label}` : "LIMIT OF SHUNT";
-      ctx.fillText(label, cx + n.x * 3.4, cy + n.y * 3.4 + 0.7);
+    if (s >= 2.5 && (b.board === "stop" || b.board === "limitOfShunt")) {
+      // behind the board, along the way trains approach it: beside the standing train, on a plate so it reads on a platform
+      const text = b.board === "stop" ? `STOP · ${b.label}` : "LIMIT OF SHUNT";
+      label(ctx, text, cx - t.x * 1.4, cy - t.y * 1.4 + 0.7, 2, t.x > 0 ? "right" : "left", C.slate);
     }
   }
 
