@@ -29,6 +29,8 @@ export interface Edge {
   kmDir: Dir;
   /** logical track name for placing things: "main" | "1" | "2" | "hs" ... */
   track: string;
+  /** the line whose kilometrage this edge carries: "main" or "branch" */
+  line: string;
 }
 
 export type SwitchState = "normal" | "reverse";
@@ -41,6 +43,8 @@ export interface Switch {
   state: SwitchState;
   /** set while a route holds it */
   locked: boolean;
+  /** ids of the live routes holding this switch in its position */
+  locks: Set<string>;
 }
 
 export interface Position {
@@ -202,11 +206,11 @@ export class TrackGraph {
     return n;
   }
 
-  edge(id: string, a: Node, b: Node, opts: { kmA: number; kmDir: Dir; track: string; pts?: Pt[] }): Edge {
+  edge(id: string, a: Node, b: Node, opts: { kmA: number; kmDir: Dir; track: string; pts?: Pt[]; line?: string }): Edge {
     const pts = opts.pts ?? [{ x: a.x, y: a.y }, { x: b.x, y: b.y }];
     const cum = [0];
     for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y));
-    const e: Edge = { id, a, b, pts, cum, length: cum[cum.length - 1], kmA: opts.kmA, kmDir: opts.kmDir, track: opts.track };
+    const e: Edge = { id, a, b, pts, cum, length: cum[cum.length - 1], kmA: opts.kmA, kmDir: opts.kmDir, track: opts.track, line: opts.line ?? "main" };
     a.edges.push(e);
     b.edges.push(e);
     this.edges.push(e);
@@ -214,7 +218,7 @@ export class TrackGraph {
   }
 
   switch(id: string, node: Node, toe: Edge, normal: Edge, reverse: Edge): Switch {
-    const sw: Switch = { id, node, toe, normal, reverse, state: "normal", locked: false };
+    const sw: Switch = { id, node, toe, normal, reverse, state: "normal", locked: false, locks: new Set() };
     node.switch = sw;
     this.switches.push(sw);
     return sw;
@@ -232,6 +236,20 @@ export class TrackGraph {
       }
     }
     throw new Error(`no edge on track ${track} at km ${km}`);
+  }
+
+  /** Find the position at a kilometre on a line (any track of that line, plain running edges first). */
+  atKmOn(line: string, km: number, kmDir: Dir): Position {
+    const candidates = this.edges.filter((e) => e.line === line && e.track !== "sw").concat(this.edges.filter((e) => e.line === line && e.track === "sw"));
+    for (const e of candidates) {
+      const kmB = e.kmA + (e.kmDir * e.length) / 1000;
+      const lo = Math.min(e.kmA, kmB), hi = Math.max(e.kmA, kmB);
+      if (km >= lo - 1e-9 && km <= hi + 1e-9) {
+        const s = ((km - e.kmA) * e.kmDir) * 1000;
+        return { edge: e, s: Math.max(0, Math.min(e.length, s)), dir: (e.kmDir * kmDir) as Dir };
+      }
+    }
+    throw new Error(`no edge on line ${line} at km ${km}`);
   }
 
   byId(id: string): Edge {

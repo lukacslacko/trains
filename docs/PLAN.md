@@ -133,23 +133,18 @@ manual that describes exactly what is playable.
   resume boards; a whistle board and Millers' Crossing; a colleague driving
   the other train; Duty 301, the crossing. Book T first edition.
 
-### M2c — The junction and the split trains (next)
-- From Wending a second line branches to a fourth station (name to be
-  chosen with the valley's geography; a side valley).
-- A train of two coupled Class 1 motor cars runs from Ashgrove; at Wending
-  it is split, one car continuing to Coldwater and the other to the branch
-  terminus; in the opposite direction the two cars are joined at Wending
-  and run to Ashgrove as one train.
-- Wending's layout is enlarged so that two such split trains can pass, with
-  track geometry and signal protection that lets the half-trains to and
-  from Coldwater and the branch reach their tracks safely: a junction
-  switch with its own signals, routes that lock against each other, and a
-  box plan for the splitting and joining moves.
-- Books: S (junction signalling, joining and splitting under signals),
-  D (multiple working of Class 1 cars, splitting and joining), T (the
-  branch timetable), P (the branch's profile).
+### M2c — The junction and the split trains (done 2026-09-09)
+- The Fernhollow branch leaves Wending at junction switch WD J with its own
+  kilometrage (F posts), a 40 km/h line speed, a 10‰ climb and a simple
+  terminus. Section C and Fernhollow Box.
+- Multiple working of Class 1 cars; splitting and joining at Wending under
+  the boxes: call-on subsidiaries on the northern homes, route locking at
+  the junction, portions leaving in the order they stand. Colleagues
+  split, join, ride and drive. Duty 401, the junction, with two split
+  pairs passing at Wending twice.
+- Books S, R, D, I, P, T reissued.
 
-### M2d — The signaller's chair (after M2c)
+### M2d — The signaller's chair (next)
 - The player may take the box at any station instead of a cab: a lever
   frame panel with the routes the NPC boxes use, the line-clear exchange
   and the Line Warrants, the baton, and NPC drivers working every train.

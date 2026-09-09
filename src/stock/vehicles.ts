@@ -111,6 +111,8 @@ export class Consist {
   hasMovedSinceStop = false;
   /** the cab whose brake valve and controller act on this consist (may be unattended) */
   control: { vehicle: Vehicle; cab: Cab; index: number } | null = null;
+  /** passed a home signal on its subsidiary: proceed at shunting speed to the vehicles ahead */
+  callOn = false;
 
   constructor(id: string, vehicles: Vehicle[], flip: boolean[]) {
     this.id = id; this.vehicles = vehicles; this.flip = flip;
@@ -215,7 +217,10 @@ export function stepConsist(c: Consist, dt: number, gravityN = 0): { hitBuffer: 
     if (vehicle.powered && cab.reverser !== "N" && cab.notch > 0 && !doorsOpen) {
       const sign = c.cabForwardSign(index, cab) * (cab.reverser === "F" ? 1 : -1);
       const vabs = Math.abs(c.v);
-      const te = Math.min(vehicle.type.maxTE * 1000, (vehicle.type.powerKW * 1000) / Math.max(vabs, 1.5));
+      // in multiple working every powered car in the pipe group answers the leading controller
+      const group = c.pipeGroups().find((g) => g.includes(vehicle)) ?? [vehicle];
+      let te = 0;
+      for (const v of group) if (v.powered && v.type.powerKW > 0) te += Math.min(v.type.maxTE * 1000, (v.type.powerKW * 1000) / Math.max(vabs, 1.5));
       // taper to zero above max speed
       const vmax = vehicle.type.maxSpeed / 3.6;
       const taper = clamp((vmax - vabs) / 2, 0, 1);

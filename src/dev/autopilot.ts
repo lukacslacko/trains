@@ -29,7 +29,7 @@ export class Autopilot {
   drive(c: Consist, targetKm: number, dir: 1 | -1, opts: { couple?: boolean; max?: number } = {}) {
     const w = this.w;
     let t = 0; const max = opts.max ?? 900;
-    const zones = w.layout.speedZones;
+    const zonesOf = (line: string) => w.layout.lines[line]?.speedZones ?? w.layout.speedZones;
     const n0 = w.consists.length;
     while (t < max) {
       if (opts.couple && w.consists.length < n0) break;
@@ -50,7 +50,8 @@ export class Autopilot {
       const v = Math.abs(c.v);
       let lim = w.limitFor(c) / 3.6;
       // the next zone boundary ahead where the limit drops
-      for (const [a, b, l] of zones) {
+      const line = c.leadingPos(dir === 1 ? 1 : -1).edge.line;
+      for (const [a, b, l] of zonesOf(line)) {
         const boundary = dir === 1 ? a : b;
         const dZone = (boundary - front) * dir * 1000;
         if (dZone > 0 && l / 3.6 < lim && dZone < (v * v) / (2 * 0.5) + 20) lim = Math.min(lim, l / 3.6);

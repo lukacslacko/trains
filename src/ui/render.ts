@@ -100,36 +100,48 @@ export class WorldRenderer {
   private drawPosts(ctx: CanvasRenderingContext2D, world: World, left: number, right: number, s: number) {
     for (const p of world.layout.posts) {
       if (p.x < left || p.x > right) continue;
-      // the post itself, a slate dot, stands 1.2 m nearer the track than the plate
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.angle);
+      // the post itself, a slate dot, stands 1.2 m nearer the track than the plate (the track lies to the right of a Down-facing plate)
       ctx.fillStyle = C.slate;
-      ctx.beginPath(); ctx.arc(p.x, p.y + 1.2, 0.28, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(0, 1.2, 0.28, 0, Math.PI * 2); ctx.fill();
       // every plate reads the distance the same way (1.0, 1.1, …); a full kilometre gets a larger plate with a green rim
       const w = p.major ? 3.8 : 3.2, h = p.major ? 2.2 : 1.8;
       ctx.fillStyle = C.ivory;
       ctx.strokeStyle = p.major ? C.green : C.ink;
       ctx.lineWidth = p.major ? 0.28 : 0.15;
-      ctx.beginPath(); ctx.roundRect(p.x - w / 2, p.y - h / 2, w, h, 0.25); ctx.fill(); ctx.stroke();
+      ctx.beginPath(); ctx.roundRect(-w / 2, -h / 2, w, h, 0.25); ctx.fill(); ctx.stroke();
       if (s >= 1.2) {
         ctx.fillStyle = C.ink; ctx.textAlign = "center";
         ctx.font = `${p.major ? 700 : 600} ${p.major ? 1.7 : 1.5}px ${DISPLAY}`;
-        ctx.fillText(p.label, p.x, p.y + (p.major ? 0.62 : 0.55));
+        ctx.fillText((p.line === "branch" ? "F " : "") + p.label, 0, p.major ? 0.62 : 0.55);
       }
+      ctx.restore();
     }
   }
 
+  /** Platforms follow their track: a strip 2.2 to 7.2 m to the platform's side of the rails. */
   private drawPlatforms(ctx: CanvasRenderingContext2D, world: World) {
     for (const p of world.layout.platforms) {
-      const x0 = p.kmFrom * 1000, x1 = p.kmTo * 1000;
-      const off = p.track === "2" ? -5 : 0;
-      const y = p.side * 2.2 + off, hgt = p.side * 5;
-      ctx.fillStyle = C.chalk;
-      ctx.fillRect(x0, Math.min(y, y + hgt), x1 - x0, Math.abs(hgt));
-      ctx.strokeStyle = C.slate; ctx.lineWidth = 0.15;
-      ctx.strokeRect(x0, Math.min(y, y + hgt), x1 - x0, Math.abs(hgt));
-      ctx.fillStyle = C.green;
-      ctx.font = `600 4px ${DISPLAY}`;
-      ctx.textAlign = "center";
-      ctx.fillText(p.name.toUpperCase().split("").join(" "), (x0 + x1) / 2, y + hgt / 2 + 1.4 + (p.track === "2" ? -5 : 0));
+      let a, b;
+      try { a = world.layout.graph.atKm(p.track, p.kmFrom, 1); b = world.layout.graph.atKm(p.track, p.kmTo, 1); } catch { continue; }
+      const pa = worldPoint(a), pb = worldPoint(b);
+      const t = tangentAt(a.edge, a.s);
+      const tt = a.edge.kmDir === 1 ? t : { x: -t.x, y: -t.y };
+      const n = { x: -tt.y * p.side, y: tt.x * p.side };
+      const quad = [
+        { x: pa.x + n.x * 2.2, y: pa.y + n.y * 2.2 }, { x: pb.x + n.x * 2.2, y: pb.y + n.y * 2.2 },
+        { x: pb.x + n.x * 7.2, y: pb.y + n.y * 7.2 }, { x: pa.x + n.x * 7.2, y: pa.y + n.y * 7.2 },
+      ];
+      ctx.fillStyle = C.chalk; ctx.strokeStyle = C.slate; ctx.lineWidth = 0.15;
+      ctx.beginPath(); quad.forEach((q, i) => (i ? ctx.lineTo(q.x, q.y) : ctx.moveTo(q.x, q.y))); ctx.closePath(); ctx.fill(); ctx.stroke();
+      ctx.save();
+      ctx.translate((pa.x + pb.x) / 2 + n.x * 4.7, (pa.y + pb.y) / 2 + n.y * 4.7);
+      ctx.rotate(Math.atan2(tt.y, tt.x) + (tt.x < 0 ? Math.PI : 0));
+      ctx.fillStyle = C.green; ctx.font = `600 4px ${DISPLAY}`; ctx.textAlign = "center";
+      ctx.fillText(p.name.toUpperCase().split("").join(" "), 0, 1.4);
+      ctx.restore();
     }
   }
 
@@ -382,7 +394,10 @@ export class WorldRenderer {
         // beside the platform, level with the train's leading end
         const c = world.consistOf(v);
         const stop = st.stops.find((s) => world.atPlatform(c) && s.platform.track === v.pos.edge.track) ?? st.stops[0];
-        const x = stop.km * 1000 - stop.dir * 6, y = stop.platform.side * 4.5 + (stop.platform.track === "2" ? -5 : 0);
+        let pos; try { pos = world.layout.graph.atKm(stop.track, stop.km - stop.dir * 0.006, 1); } catch { continue; }
+        const pt = worldPoint(pos), t = tangentAt(pos.edge, pos.s);
+        const n = { x: -t.y * stop.platform.side, y: t.x * stop.platform.side };
+        const x = pt.x + n.x * 4.5, y = pt.y + n.y * 4.5;
         ctx.fillStyle = C.lamp; ctx.strokeStyle = C.ivory; ctx.lineWidth = 0.3;
         ctx.beginPath(); ctx.arc(x, y, 1.2, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
         label(ctx, "READY TO START", x, y + 3.6, 2.2, "center", C.green, 700);

@@ -37,11 +37,23 @@ export class LineDiagram {
     const y0 = 46;                 // track 1 / single line
     const yT2 = y0 - 16;           // track 2
     const yLab = 15;               // station names along the top
+    // the branch: its own ribbon below the main line, from the junction, at the same scale
+    const branch = world.layout.lines.branch;
+    const yB = y0 + 104;
+    const pxPerKm = X(1) - X(0);
+    const XB = (km: number) => (branch ? X(branch.junctionKm ?? 0) + km * pxPerKm : 0);
+    const Xof = (line: string, km: number) => (line === "branch" ? XB(km) : X(km));
+    const yOfLine = (line: string, track: string) => (line === "branch" ? yB : track === "2" ? yT2 : y0);
 
     // edges: draw by track with schematic y
     const yOf = (track: string) => (track === "2" ? yT2 : y0);
     ctx.lineWidth = 2; ctx.strokeStyle = C.ivory; ctx.lineCap = "round";
+    if (branch) {
+      // the junction connector and the branch ribbon
+      ctx.beginPath(); ctx.moveTo(X(branch.junctionKm ?? 0), y0); ctx.lineTo(XB(0.1), yB); ctx.lineTo(XB(branch.kmMax), yB); ctx.stroke();
+    }
     for (const e of world.layout.graph.edges) {
+      if (e.line === "branch") continue;
       const kmA = e.kmA, kmB = e.kmA + (e.kmDir * e.length) / 1000;
       if (e.track === "sw") {
         // a switch branch: drawn faint when the switch is set the other way
@@ -61,19 +73,25 @@ export class LineDiagram {
     ctx.lineWidth = 4; ctx.strokeStyle = C.brass;
     for (const v of world.vehicles) {
       const a = kmOf(v.pos), b = kmOf(v.posB);
-      const track = v.pos.edge.track;
-      const y = track === "2" ? yT2 : (track === "sw" ? (Math.abs(v.pos.edge.a.y) > 1 || Math.abs(v.pos.edge.b.y) > 1 ? (y0 + yT2) / 2 : y0) : y0);
-      ctx.beginPath(); ctx.moveTo(X(Math.min(a, b)), y); ctx.lineTo(X(Math.max(a, b)), y); ctx.stroke();
+      const track = v.pos.edge.track, line = v.pos.edge.line;
+      const y = line === "branch" ? yB : track === "2" ? yT2 : (track === "sw" ? (Math.abs(v.pos.edge.a.y) > 1 || Math.abs(v.pos.edge.b.y) > 1 ? (y0 + yT2) / 2 : y0) : y0);
+      ctx.beginPath(); ctx.moveTo(Xof(line, Math.min(a, b)), y); ctx.lineTo(Xof(line, Math.max(a, b)), y); ctx.stroke();
     }
     // platforms
     ctx.fillStyle = "rgba(244,239,227,.25)";
-    for (const p of world.layout.platforms) ctx.fillRect(X(p.kmFrom), y0 + 3, X(p.kmTo) - X(p.kmFrom), 3);
+    for (const p of world.layout.platforms) {
+      const line = p.track.startsWith("b") ? "branch" : "main";
+      const yy = line === "branch" ? yB : y0;
+      ctx.fillRect(Xof(line, p.kmFrom), yy + 3, Xof(line, p.kmTo) - Xof(line, p.kmFrom), 3);
+    }
     // stations
     ctx.fillStyle = C.ivory; ctx.font = `600 13px ${DISPLAY}`; ctx.textAlign = "center";
     for (const st of world.stations) {
-      const p = st.stops[0].platform;
-      ctx.fillText(st.name.toUpperCase(), (X(p.kmFrom) + X(p.kmTo)) / 2, yLab);
-      if (st.baton.size > 0) { ctx.fillStyle = C.lamp; ctx.beginPath(); ctx.arc((X(p.kmFrom) + X(p.kmTo)) / 2 + 46, yLab - 4, 4, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = C.ivory; }
+      const s0 = st.stops[0], p = s0.platform;
+      const yy = s0.line === "branch" ? yB - 31 : yLab;
+      const xm = (Xof(s0.line, p.kmFrom) + Xof(s0.line, p.kmTo)) / 2;
+      ctx.fillText(st.name.toUpperCase(), xm, yy);
+      if (st.baton.size > 0) { ctx.fillStyle = C.lamp; ctx.beginPath(); ctx.arc(xm + 50, yy - 4, 4, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = C.ivory; }
     }
     // crossings and neutral sections
     for (const x of world.layout.crossings) { ctx.strokeStyle = C.chalk; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(X(x.km), y0 - 5); ctx.lineTo(X(x.km), y0 + 5); ctx.stroke(); }
@@ -81,11 +99,11 @@ export class LineDiagram {
     // signals and boards
     for (const o of world.layout.objects) {
       const km = kmOf(o.pos);
-      const track = o.pos.edge.track;
-      const y = track === "2" ? yT2 : y0;
+      const track = o.pos.edge.track, line = o.pos.edge.line;
+      const y = yOfLine(line, track);
       const facingDown = o.pos.edge.kmDir * o.pos.dir === 1;
       const side = facingDown ? -1 : 1; // Down-facing above the line, Up-facing below
-      const x = X(km);
+      const x = Xof(line, km);
       if (o.kind === "board" && o.board === "switchIndicator") continue;
       if (o.kind === "signal") {
         const col = o.aspect === "clear" ? C.lamp : o.aspect === "caution" ? C.amber : o.aspect === "shunt" ? C.white : C.red;
@@ -161,16 +179,17 @@ export class LineDiagram {
     // hectometre ticks and kilometre numerals along the bottom
     ctx.strokeStyle = C.slate; ctx.lineWidth = 1; ctx.fillStyle = C.chalk; ctx.font = `9px ${MONO}`; ctx.textAlign = "center";
     for (const p of world.layout.posts) {
-      const x = X(p.km);
+      const x = Xof(p.line, p.km);
       const tall = p.major ? 8 : Math.round(p.km * 10) % 5 === 0 ? 5 : 3;
-      ctx.beginPath(); ctx.moveTo(x, y0 + 56); ctx.lineTo(x, y0 + 56 + tall); ctx.stroke();
-      if (p.major) ctx.fillText(`km ${p.label}`, x, y0 + 72);
+      const base = p.line === "branch" ? yB + 8 : y0 + 56;
+      ctx.beginPath(); ctx.moveTo(x, base); ctx.lineTo(x, base + tall); ctx.stroke();
+      if (p.major) ctx.fillText(p.line === "branch" ? `F ${p.label}` : `km ${p.label}`, x, base + 16);
     }
     // driver: a brass ring on the line
-    const dp = world.driverPoint();
-    const dkm = dp.x / 1000;
+    const dv = world.driver.kind === "cab" ? world.driver.vehicle : world.trainVehicle;
+    const dLine = dv.pos.edge.line, dkm = kmOf(dv.pos);
     ctx.fillStyle = C.ivory; ctx.strokeStyle = C.brass; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.arc(X(dkm), y0, 3.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.arc(Xof(dLine, dkm), dLine === "branch" ? yB : y0, 3.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
     // direction, in the gap between the last two stations' names
     const stns = world.stations;
     const gapKm = stns.length >= 2 ? (stns[stns.length - 2].stops[0].km + stns[stns.length - 1].stops[0].km) / 2 : world.layout.kmMax / 2;

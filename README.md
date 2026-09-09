@@ -33,6 +33,7 @@ Incident Book and the station masters' messages):
 node scripts/play.mjs 101
 node scripts/play.mjs 201
 node scripts/play.mjs 301
+node scripts/play.mjs 401
 ```
 
 ## What is here (milestones M0 and M1)
@@ -49,6 +50,12 @@ node scripts/play.mjs 301
   Warrants, distant signals, a neutral section, a whistle board for Millers'
   Crossing, and a colleague driving car 1003 the other way. You cross at
   Wending twice.
+- **Duty 401 — the junction.** A branch to Fernhollow leaves Wending at a
+  junction. You bring two Class 1 cars up from Ashgrove in multiple, split
+  them at Wending, run to Coldwater while your colleague takes the branch,
+  and on the way back the branch car is called on behind you and coupled
+  up. Another pair does the same the other way round, so two split trains
+  pass at Wending twice.
 - **The Library.** Book I (Identity), Book R (Rules of Operation), Book S
   (Signalling), Book D (Driving), Book P (Permanent Way), Book T
   (Timetabling). HTML booklets with a print stylesheet (A5) in

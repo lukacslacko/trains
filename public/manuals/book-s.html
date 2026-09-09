@@ -18,7 +18,7 @@
 <nav class="desk-bar">
   <a href="index.html">← Library</a>
   <span class="spacer"></span>
-  <span>Book S · Sixth edition · September 2026</span>
+  <span>Book S · Seventh edition · September 2026</span>
   <a href="#" onclick="window.print();return false;">Print booklet</a>
 </nav>
 
@@ -32,7 +32,7 @@
   <div class="book-letter"><small>Book</small>S</div>
   <h1 class="title">Signalling Manual</h1>
   <p class="subtitle">Signals, boards and hand signals of the Meridian Railway, and the routes they protect.</p>
-  <div class="edition">Sixth edition · September 2026 · The Coldwater extension · Issued by the Signal Engineer's Office</div>
+  <div class="edition">Seventh edition · September 2026 · The Fernhollow branch · Issued by the Signal Engineer's Office</div>
   <div class="motto">On the line, on time.</div>
 </section>
 
@@ -61,14 +61,18 @@
     <li class="sub"><span class="num">6.3</span><a href="#c6-3">Wending</a><span class="dots"></span><span class="pg">17</span></li>
     <li class="sub"><span class="num">6.4</span><a href="#c6-4">Section B: Wending to Coldwater</a><span class="dots"></span><span class="pg">20</span></li>
     <li class="sub"><span class="num">6.5</span><a href="#c6-5">Coldwater</a><span class="dots"></span><span class="pg">21</span></li>
+    <li class="sub"><span class="num">6.6</span><a href="#c6-6">Section C: the Fernhollow branch</a><span class="dots"></span><span class="pg">23</span></li>
+    <li class="sub"><span class="num">6.7</span><a href="#c6-7">Fernhollow</a><span class="dots"></span><span class="pg">24</span></li>
     <li><span class="num">7</span><a href="#c7">Routes and the box</a><span class="dots"></span><span class="pg">23</span></li>
     <li class="sub"><span class="num">7.3</span><a href="#c7-3">A worked example: the run-round at Wending</a><span class="dots"></span><span class="pg">25</span></li>
     <li class="sub"><span class="num">7.4</span><a href="#c7-4">Block working and the Line Warrant</a><span class="dots"></span><span class="pg">27</span></li>
     <li class="sub"><span class="num">7.5</span><a href="#c7-5">A worked example: the crossing at Wending</a><span class="dots"></span><span class="pg">29</span></li>
-    <li><span class="num">8</span><a href="#c8">One Train Working</a><span class="dots"></span><span class="pg">31</span></li>
-    <li><span class="num">9</span><a href="#c9">Failures and doubt</a><span class="dots"></span><span class="pg">32</span></li>
-    <li><span class="num">10</span><a href="#c10">Glossary</a><span class="dots"></span><span class="pg">34</span></li>
-    <li><span class="num">—</span><a href="#colophon">Colophon</a><span class="dots"></span><span class="pg">37</span></li>
+    <li class="sub"><span class="num">7.6</span><a href="#c7-6">Route locking</a><span class="dots"></span><span class="pg">31</span></li>
+    <li class="sub"><span class="num">7.7</span><a href="#c7-7">A worked example: the split and the join at Wending</a><span class="dots"></span><span class="pg">32</span></li>
+    <li><span class="num">8</span><a href="#c8">One Train Working</a><span class="dots"></span><span class="pg">34</span></li>
+    <li><span class="num">9</span><a href="#c9">Failures and doubt</a><span class="dots"></span><span class="pg">35</span></li>
+    <li><span class="num">10</span><a href="#c10">Glossary</a><span class="dots"></span><span class="pg">37</span></li>
+    <li><span class="num">—</span><a href="#colophon">Colophon</a><span class="dots"></span><span class="pg">40</span></li>
   </ol>
 </section>
 
@@ -76,7 +80,8 @@
 <section class="page chapter" id="c1" data-folio="Book S · 1 Principles">
   <h1><span class="num">§ 1</span> Principles</h1>
   <p class="lead">This book describes how the Railway speaks to its drivers from the lineside: with lights, with boards and, on the platform, with a disc held in a hand. It was written from first principles rather than inherited, and it tries to say everything once.</p>
-  <div class="note"><p><strong>The Coldwater extension.</strong> This sixth edition is the largest since the first. The line now runs beyond Wending to Coldwater at the head of the valley, Wending has become a through station with a platform on each loop track, and two trains may be on the line at once. That has brought distant signals, subsidiaries under two starting signals, two block sections worked by Line Warrants, a neutral section with its boards, and a whistle board for a farm crossing. Everything the earlier editions said about a signal's meaning is still true; what has grown is the number of places where it is said.</p></div>
+  <div class="note"><p><strong>The Fernhollow branch.</strong> This seventh edition opens the Railway's first junction. At the north end of Wending the line now divides: straight on to Coldwater, or over the Fernhollow branch into the side valley. A junction is a switch that chooses between lines, and everything in this edition that is new follows from that: a home signal for each line converging on it, routes that hold the junction for one movement at a time (§ 7.6), a subsidiary under two home signals that calls a train on to an occupied platform so that two cars can be joined (§ 2.4), and trains that arrive as one and leave as two (§ 7.7). Nothing that the earlier editions said has changed its meaning.</p></div>
+  <div class="note"><p><strong>The Coldwater extension.</strong> The sixth edition was the largest since the first. The line now runs beyond Wending to Coldwater at the head of the valley, Wending has become a through station with a platform on each loop track, and two trains may be on the line at once. That has brought distant signals, subsidiaries under two starting signals, two block sections worked by Line Warrants, a neutral section with its boards, and a whistle board for a farm crossing. Everything the earlier editions said about a signal's meaning is still true; what has grown is the number of places where it is said.</p></div>
   <blockquote class="epigraph">A signal is a promise. The box promises that the road is yours; you promise to go no further than the promise.<span class="who">Notice pinned above the frame, Wending Box</span></blockquote>
 
   <h2 id="c1-1"><span class="num">1.1</span> Eight principles</h2>
@@ -93,18 +98,19 @@
     <li><strong>The signal stands where you stop.</strong> The position of a signal is the stopping place for a train it holds. There is no allowance for overlap to remember and no distance to estimate; the front of the train stops at the post.</li>
   </ol>
   <p>To these the Coldwater extension added a ninth, which belongs with the other eight: <strong>one warrant, one train, one section.</strong> A train enters the single line between two stations only holding that section's Line Warrant, of which there is exactly one; while it holds it, nothing else can (§ 7.4).</p>
+  <p>The Fernhollow branch added a tenth: <strong>one movement over a junction at a time.</strong> A junction is a switch that chooses between lines, and every movement over it is one route, which holds the switch from the clearing of its signal until the movement has passed clear (§ 7.6). Two trains may stand at Wending together; they may not both be at the junction.</p>
 
   <div class="why"><p>Older railways accumulated their signalling one accident at a time, and their rulebooks show it: exceptions to exceptions, aspects that mean one thing on a branch and another on the main line. We had the rare good fortune of starting with a blank sheet and a valley to fill. We chose to spend that fortune on simplicity, because a simple rule is one that is obeyed at four in the morning in the rain.</p></div>
 
   <h2 id="c1-2"><span class="num">1.2</span> Who speaks, who listens</h2>
   <dl class="dl">
-    <dt>The box</dt><dd>Each station has a signal box, named for the station: <strong>Ashgrove Box</strong>, <strong>Wending Box</strong> and <strong>Coldwater Box</strong>. The box holds the frame that sets switches and clears signals, and the register in which the Line Warrants are entered. At every station the station master works the box in person.</dd>
-    <dt>The station master</dt><dd>At Ashgrove, T. Marrow; at Wending, J. Pell; at Coldwater, A. Ashby. The station master sets routes, holds the baton, exchanges line clear with the neighbouring boxes, and is the authority for every movement within station limits. Messages from the box are signed "Marrow, Ashgrove", "Pell, Wending" or "Ashby, Coldwater".</dd>
+    <dt>The box</dt><dd>Each station has a signal box, named for the station: <strong>Ashgrove Box</strong>, <strong>Wending Box</strong>, <strong>Coldwater Box</strong> and <strong>Fernhollow Box</strong>. The box holds the frame that sets switches and clears signals, and the register in which the Line Warrants are entered. At every station the station master works the box in person.</dd>
+    <dt>The station master</dt><dd>At Ashgrove, T. Marrow; at Wending, J. Pell; at Coldwater, A. Ashby; at Fernhollow, M. Thorne. The station master sets routes, holds the baton, exchanges line clear with the neighbouring boxes, and is the authority for every movement within station limits. Messages from the box are signed "Marrow, Ashgrove", "Pell, Wending", "Ashby, Coldwater" or "Thorne, Fernhollow". Wending Box, with a box on each of three sides, exchanges line clear with all three.</dd>
     <dt>The driver</dt><dd>Obeys every signal and board that faces them, obeys the baton, and drives no faster than the boards allow. Where the driver is in doubt, the driver stops. Book D describes the driver's work in full.</dd>
     <dt>The Signal Engineer</dt><dd>Owns this book, the signals, and the frame. Nobody else alters a signal or its meaning.</dd>
   </dl>
 
-  <div class="note"><p>Directions are as defined in <a href="book-r.html">Book R</a>: <strong>Down</strong> is the direction of increasing kilometrage, from Ashgrove through Wending towards Coldwater; <strong>Up</strong> is the direction of decreasing kilometrage. Kilometrage counts from the buffer stop at Ashgrove, km 0.000, to the buffer stop at Coldwater, km 6.400. Wending lies between, km 2.850 to 3.400 within its limits.</p></div>
+  <div class="note"><p>Directions are as defined in <a href="book-r.html">Book R</a>: <strong>Down</strong> is the direction of increasing kilometrage, from Ashgrove through Wending towards Coldwater; <strong>Up</strong> is the direction of decreasing kilometrage. Kilometrage counts from the buffer stop at Ashgrove, km 0.000, to the buffer stop at Coldwater, km 6.400. Wending lies between, km 2.850 to 3.500 within its limits. The Fernhollow branch has a kilometrage of its own, counted from the junction switch WD J (main km 3.360) to the Fernhollow buffer stop at branch km 2.320, and written with the letter F: <span class="mono">F 0.8</span>. On the branch, Down is away from Wending.</p></div>
 </section>
 
 <!-- 2 MAIN SIGNALS -->
@@ -199,14 +205,14 @@
   <h2><span class="num">2.3</span> Kinds of main signal</h2>
   <p>Main signals are all the same to look at; they are named for what they do.</p>
   <dl class="dl">
-    <dt>Home signal</dt><dd>Stands on the single line at the approach to a station and governs entry. Ashgrove's home is AG 2; Wending has two, WD 1 from the Ashgrove side and WD 8 from the Coldwater side; Coldwater's is CW 1. A train held at a home signal stands outside station limits.</dd>
-    <dt>Starting signal</dt><dd>Stands at the end of a platform track and governs departure onto the single line. Ashgrove's starter is AG 1; Coldwater's is CW 2; Wending, with two platform tracks and a single line at each end, has four: WD 2 and WD 4 towards Ashgrove from tracks 1 and 2, WD 7 and WD 9 towards Coldwater from tracks 1 and 2. A starting signal is cleared only with the Line Warrant for the section ahead in the box's hand (§ 7.4).</dd>
+    <dt>Home signal</dt><dd>Stands on the single line at the approach to a station and governs entry. Ashgrove's home is AG 2; Wending has three, WD 1 from the Ashgrove side, WD 8 from the Coldwater side and WD 10 from the Fernhollow side; Coldwater's is CW 1; Fernhollow's is FH 1. WD 8 and WD 10 carry a subsidiary that can call a train on to an occupied platform (§ 2.4). A train held at a home signal stands outside station limits.</dd>
+    <dt>Starting signal</dt><dd>Stands at the end of a platform track and governs departure onto the single line. Ashgrove's starter is AG 1; Coldwater's is CW 2; Fernhollow's is FH 2; Wending, with two platform tracks and a single line at each end, has four: WD 2 and WD 4 towards Ashgrove from tracks 1 and 2, WD 7 and WD 9 northwards from tracks 1 and 2. A northward starter at Wending reads over the junction WD J, so it is the starter for Coldwater and for Fernhollow alike; the switch indicator at WD J and the box's message say which (§ 6.3). A starting signal is cleared only with the Line Warrant for the section ahead in the box's hand (§ 7.4).</dd>
     <dt>Distant signal</dt><dd>Not a main signal but the repeater of one: it stands one warning distance before a home signal and tells the driver what the home is showing. It has two lamps, never shows STOP, and is named for its home with a D. § 2.5.</dd>
   </dl>
   <p>Every main signal carries a telephone to its box at the foot of the post. If you are stopped at a signal and the box has not spoken to you, use it.</p>
 
-  <h2 id="c2-4"><span class="num">2.4</span> Subsidiaries</h2>
-  <p>Two of Wending's starting signals, WD 4 on track 2 and WD 7 on track 1, carry a <strong>subsidiary</strong>: a small black box beside the head with two white lamps, the same lamps as a ground signal. Normally they are dark. When the box clears a shunt route that begins at that signal, the main head stays at STOP and the two white lamps light diagonally, rising to the right: the <strong>SHUNT</strong> indication. It means exactly what SHUNT means on a ground signal (§ 3): proceed as a shunting movement, at shunting speed, prepared to stop short of anything, as far as the route goes. It means nothing at all to a train.</p>
+  <h2 id="c2-4"><span class="num">2.4</span> Subsidiaries and the call-on</h2>
+  <p>Four of Wending's main signals carry a <strong>subsidiary</strong>: the starting signals WD 4 on track 2 and WD 7 on track 1, and the home signals WD 8 and WD 10. At the starters it is a shunting indication; at the homes it is also a <em>call-on</em>, which is described after the figure. A subsidiary is a small black box beside the head with two white lamps, the same lamps as a ground signal. Normally they are dark. When the box clears a shunt route that begins at that signal, the main head stays at STOP and the two white lamps light diagonally, rising to the right: the <strong>SHUNT</strong> indication. It means exactly what SHUNT means on a ground signal (§ 3): proceed as a shunting movement, at shunting speed, prepared to stop short of anything, as far as the route goes. It means nothing at all to a train.</p>
 
   <figure class="sig-fig">
     <div class="figure-frame">
@@ -253,6 +259,15 @@
 
   <p>Why not a separate ground signal beside the starter, as at the other stations? Because the two would stand on the same post for the same track, facing the same way, and a driver reading two signals at one place is a driver who may read the wrong one. The subsidiary puts the shunting indication on the starter itself, where it is the only thing to read. At Wending the run-round leaves track 1 under WD 7's subsidiary towards the north stub, and leaves track 2 under WD 4's towards the south stub (§ 7.3). WD 3 of the earlier editions, which did the first of those jobs, has been withdrawn.</p>
   <div class="note"><p>A lit subsidiary is still a main signal at STOP. A train standing at WD 7 with the white lamps lit has not been given the road, and departs only when the amber or the green shows and the baton is raised.</p></div>
+
+  <h3 id="c2-4-callon">The call-on at WD 8 and WD 10</h3>
+  <p>Two of Wending's home signals carry the same two white lamps, and there they mean one thing more. WD 8, the home from Coldwater, and WD 10, the home from Fernhollow, are marked for <strong>call-on</strong>. When the box has a train standing in the platform and a second train is to be coupled to it, the frame cannot clear the home to CAUTION, because the platform is occupied. Instead the main head stays at STOP and the subsidiary lights SHUNT for the arriving <em>train</em>. To that train it says: the platform ahead is occupied; you are called on; enter at shunting speed, prepared to stop short of the vehicles standing there, and couple to them only as the box has instructed you. The train becomes, for the length of the platform, a shunting movement, and the speed and the care of a shunting movement apply to it (<a href="book-d.html#D10">Rule D 10</a> for the coupling itself).</p>
+  <div class="rule" id="S30">
+    <span class="rule-num">Rule S 30</span><span class="rule-title">Call-on</span>
+    <p>A home signal's subsidiary lit for a train is a call-on: the platform ahead is occupied. Pass at shunting speed prepared to stop short of the vehicles standing there, and couple to them only as the box has instructed. Only WD 8 and WD 10 are marked for call-on; at every other subsidiary a train is at STOP.</p>
+  </div>
+  <p>The box says what it is doing before the driver sees it: "Line clear for 1003 to Wending. Warrant C issued; WD 10 shows its subsidiary: call on to platform 2 and couple to 1002 standing there." A driver who sees the white lamps at WD 10 without having been told so treats them as a failure and stops (§ 9).</p>
+  <div class="why"><p>Joining two cars in a platform is the whole purpose of the branch: a train from Ashgrove is split at Wending into a Coldwater portion and a Fernhollow portion, and on the way back the two portions are made one again. The second portion has to enter a platform that already holds the first. A ground signal could do it, but a ground signal cannot govern a train, and a train is what the second portion is, with its passengers aboard. So the home signal itself calls the train on, at a shunting movement's speed, and the box has told the driver whom to expect.</p></div>
 
   <h2 id="c2-5"><span class="num">2.5</span> Distant signals</h2>
   <p>A <strong>distant signal</strong> stands one warning distance before a home signal and repeats what the home is showing, so that a driver running at line speed learns it early enough to stop at the home if the home is at STOP. It has two lamps on a slate post, <strong>green at the top, amber at the bottom</strong>, and behind the head an ivory <strong>chevron plate</strong>, point up, so that it can never be mistaken for a main signal even with its lamps out. It is named for the home it repeats with the letter D: <span class="mono">WD 1D</span> is the distant for WD 1.</p>
@@ -307,7 +322,7 @@
   </div>
 
   <p>A distant shows CLEAR only when its home shows CLEAR. Since every home on the Railway admits its trains to a platform where they stop, and therefore shows CAUTION at best (§ 2.2), every distant on the Railway shows CAUTION to every train that is booked to stop. This is not a fault and not a waste: the distant at CAUTION is telling the truth, that the driver must be ready to stop at the home, and the home at CAUTION then tells them they may come in. The day a train is booked through Wending without stopping, WD 1D will show green to it and mean it.</p>
-  <p>The distant stands one <span class="term">warning distance</span> before its home, and the warning distance is the one the advance speed boards use (§ 4.2): 200 m where the approach to the home is level or rising, 250 m where it falls at 10‰ or more. So AG 2D stands at km 0.670, 250 m before AG 2, because an Up train comes down the 12‰ grade to it; WD 1D at 2.680 and CW 1D at 5.780 stand 200 m before their homes on rising and level approaches; WD 8D at 3.520 stands 200 m before WD 8, because the 8‰ fall from Coldwater is under the 10‰ that earns the longer distance. Each distant stands within a few metres of the advance speed board for the same station, and the two are read together: the triangle says slow to 25, the chevron says be ready to stop.</p>
+  <p>The distant stands one <span class="term">warning distance</span> before its home, and the warning distance is the one the advance speed boards use (§ 4.2): 200 m where the approach to the home is level or rising, 250 m where it falls at 10‰ or more. So AG 2D stands at km 0.670, 250 m before AG 2, because an Up train comes down the 12‰ grade to it; WD 1D at 2.680 and CW 1D at 5.780 stand 200 m before their homes on rising and level approaches; WD 8D at 3.640 stands 200 m before WD 8, because the 8‰ fall from Coldwater is under the 10‰ that earns the longer distance; WD 10D at F 0.330 stands 250 m before WD 10, because the branch falls at 10‰ to it; FH 1D at F 1.830 stands 200 m before FH 1 on the climb. Each distant stands within a few metres of the advance speed board for the same station, and the two are read together: the triangle says slow to 25, the chevron says be ready to stop.</p>
   <div class="why"><p>On the shuttle a driver could see the home from the advance speed board and needed no repeater. With two trains on the line a home may be at STOP because the other train is still coming, and a driver who learns that only at the home has 145 m too little. The distant moves the news back to where the braking starts. We put it on a chevron plate and gave it no red lamp so that nobody, seeing amber on a plate, would ever stop there and wait for it to change: it will not, and the road behind them belongs to the block.</p></div>
 </section>
 
@@ -679,12 +694,13 @@
   <p class="lead">The two termini, Ashgrove and Coldwater, are laid out the same way, mirrored: a platform track and a loop, a switch at each end, a headshunt beyond the inner switch and a stub of the single line beyond the outer one. Wending, between them, is a through station: the same loop, but with a platform on each track and a stub of single line at each end. Here is every signal, board and switch, named and placed.</p>
 
   <h2 id="c6-1"><span class="num">6.1</span> The numbering rule</h2>
-  <p>Every signal is named by its <strong>station code</strong> and a <strong>number</strong>, written with a space: <span class="mono">AG 2</span>, <span class="mono">WD 5</span>. Station codes are two letters: Ashgrove <strong>AG</strong>, Wending <strong>WD</strong>, Coldwater <strong>CW</strong>.</p>
+  <p>Every signal is named by its <strong>station code</strong> and a <strong>number</strong>, written with a space: <span class="mono">AG 2</span>, <span class="mono">WD 5</span>. Station codes are two letters: Ashgrove <strong>AG</strong>, Wending <strong>WD</strong>, Coldwater <strong>CW</strong>, Fernhollow <strong>FH</strong>.</p>
   <ul>
     <li><strong>Odd numbers face Down</strong> (they govern trains moving towards increasing kilometrage). <strong>Even numbers face Up.</strong></li>
-    <li><strong>Main signals take the lowest numbers.</strong> At the termini, 1 and 2, and the ground signals take 3 to 6. At Wending, with two homes and four starters, the main signals are 1, 2, 4, 7, 8 and 9, and the ground signals 5 and 6.</li>
-    <li><strong>A distant signal takes its home's number with the letter D:</strong> <span class="mono">AG 2D</span>, <span class="mono">WD 1D</span>, <span class="mono">WD 8D</span>, <span class="mono">CW 1D</span>. It faces the way its home faces.</li>
-    <li>Switches are named by station code and a letter: <span class="mono">A</span> is the switch at the Ashgrove end of the loop and <span class="mono">B</span> the switch at the Coldwater end; at a terminus one of them is the switch on the single-line side and the other the switch on the headshunt side. A switch is <span class="term">normal</span> when set for track 1 and <span class="term">reverse</span> when set for track 2. Every switch carries a switch indicator at its toe, which shows the way it lies (§ 3.3).</li>
+    <li><strong>Main signals take the lowest numbers.</strong> At the termini, 1 and 2, and the ground signals take 3 to 6. At Wending, with three homes and four starters, the main signals are 1, 2, 4, 7, 8, 9 and 10, and the ground signals 5 and 6. At Fernhollow, which has no loop, there are only FH 1 and FH 2.</li>
+    <li><strong>A distant signal takes its home's number with the letter D:</strong> <span class="mono">AG 2D</span>, <span class="mono">WD 1D</span>, <span class="mono">WD 8D</span>, <span class="mono">WD 10D</span>, <span class="mono">CW 1D</span>, <span class="mono">FH 1D</span>. It faces the way its home faces.</li>
+    <li>Switches are named by station code and a letter: <span class="mono">A</span> is the switch at the Ashgrove end of the loop and <span class="mono">B</span> the switch at the Coldwater end; at a terminus one of them is the switch on the single-line side and the other the switch on the headshunt side. A switch is <span class="term">normal</span> when set for track 1 and <span class="term">reverse</span> when set for track 2. The junction switch at Wending is <span class="mono">WD J</span>: normal for the main line to Coldwater, reverse for the Fernhollow branch. Every switch carries a switch indicator at its toe, which shows the way it lies (§ 3.3).</li>
+    <li><strong>The branch has its own kilometrage,</strong> counted from WD J and written with the letter F. A signal on the branch is placed by its branch kilometre: WD 10 stands at F 0.080, FH 1 at F 2.030. The letter belongs to the place, not to the signal; the branch's signals are named like every other.</li>
   </ul>
   <p>So a driver who hears "AG 3" on the telephone knows at once that it is at Ashgrove, that it faces Down, and that it is a ground signal, before they have looked at a diagram; and "WD 8D" is at Wending, faces Up, and is the distant for WD 8.</p>
 
@@ -828,53 +844,58 @@
   </table>
 
   <h2 id="c6-3"><span class="num">6.3</span> Wending</h2>
-  <p>Wending is a through station by the weir, halfway up the valley. The single line arrives from Ashgrove at its south end and leaves for Coldwater at its north end; there is no buffer stop and no headshunt, but a stub of single line at each end between the outer switch and the Limit of Shunt board. Both loop tracks have a platform: <strong>platform 1</strong> on track 1 is used by Down trains, <strong>platform 2</strong> on track 2 by Up trains, so that two trains meeting here each have a platform and a starter of their own. Down is to the right.</p>
+  <p>Wending is a through station by the weir, halfway up the valley, and since the seventh edition a junction. The single line arrives from Ashgrove at its south end; at its north end the north stub runs from WD B to the junction switch <strong>WD J</strong>, where the line divides, straight on to Coldwater or over the branch to Fernhollow. There is no buffer stop and no headshunt, but a stub of single line at each end between the outer switch and the Limit of Shunt board. Both loop tracks have a platform: <strong>platform 1</strong> on track 1 is used by Down trains, <strong>platform 2</strong> on track 2 by Up trains, so that two trains meeting here each have a platform and a starter of their own. Down is to the right.</p>
 
   <figure class="layout-fig">
     <div class="figure-frame">
-      <svg viewBox="0 0 780 250" width="780" height="250" role="img" aria-label="Schematic layout of Wending station as a through station">
+      <svg viewBox="0 0 860 300" width="860" height="300" role="img" aria-label="Schematic layout of Wending station as a through station with the Fernhollow junction at its north end">
         <text x="14" y="26" fill="#1F4B3F" font-size="18" font-weight="700" letter-spacing="3">WENDING</text>
-        <text x="100" y="26" fill="#4A5560" font-size="12" letter-spacing="1.5" font-family="IBM Plex Mono, Menlo, monospace">KM 2.850 – 3.400 · BOX: J. PELL</text>
+        <text x="100" y="26" fill="#4A5560" font-size="12" letter-spacing="1.5" font-family="IBM Plex Mono, Menlo, monospace">KM 2.850 – 3.500 · BRANCH F 0.000 – 0.140 · BOX: J. PELL</text>
 
         <!-- tracks -->
-        <line x1="12" y1="150" x2="768" y2="150" stroke="#1A1A1A" stroke-width="3"/>
-        <line x1="160" y1="150" x2="200" y2="90" stroke="#1A1A1A" stroke-width="3"/>
-        <line x1="200" y1="90" x2="580" y2="90" stroke="#1A1A1A" stroke-width="3"/>
-        <line x1="580" y1="90" x2="620" y2="150" stroke="#1A1A1A" stroke-width="3"/>
+        <line x1="12" y1="190" x2="848" y2="190" stroke="#1A1A1A" stroke-width="3"/>
+        <line x1="160" y1="190" x2="200" y2="130" stroke="#1A1A1A" stroke-width="3"/>
+        <line x1="200" y1="130" x2="580" y2="130" stroke="#1A1A1A" stroke-width="3"/>
+        <line x1="580" y1="130" x2="620" y2="190" stroke="#1A1A1A" stroke-width="3"/>
+        <!-- the branch leaves WD J -->
+        <line x1="700" y1="190" x2="848" y2="72" stroke="#1A1A1A" stroke-width="3"/>
         <!-- platforms -->
-        <rect x="240" y="160" width="300" height="16" fill="#D9D2C0" stroke="#4A5560" stroke-width="1"/>
-        <text x="390" y="172" text-anchor="middle" fill="#4A5560" font-size="11" letter-spacing="2.5">PLATFORM 1 · KM 3.010 – 3.170</text>
-        <rect x="240" y="64" width="300" height="16" fill="#D9D2C0" stroke="#4A5560" stroke-width="1"/>
-        <text x="390" y="76" text-anchor="middle" fill="#4A5560" font-size="11" letter-spacing="2.5">PLATFORM 2 · KM 3.010 – 3.170</text>
-        <text x="390" y="104" text-anchor="middle" fill="#4A5560" font-size="11" letter-spacing="2">TRACK 2 · UP TRAINS</text>
-        <text x="390" y="143" text-anchor="middle" fill="#4A5560" font-size="11" letter-spacing="2">TRACK 1 · DOWN TRAINS</text>
-        <text x="96" y="132" text-anchor="middle" fill="#4A5560" font-size="10" letter-spacing="1.5">SOUTH STUB</text>
-        <text x="690" y="132" text-anchor="middle" fill="#4A5560" font-size="10" letter-spacing="1.5">NORTH STUB</text>
-        <text x="14" y="244" fill="#1F4B3F" font-size="11" font-weight="600" letter-spacing="2">← UP · TO ASHGROVE</text>
-        <text x="768" y="244" text-anchor="end" fill="#1F4B3F" font-size="11" font-weight="600" letter-spacing="2">DOWN · TO COLDWATER →</text>
+        <rect x="240" y="200" width="300" height="16" fill="#D9D2C0" stroke="#4A5560" stroke-width="1"/>
+        <text x="390" y="212" text-anchor="middle" fill="#4A5560" font-size="11" letter-spacing="2.5">PLATFORM 1 · KM 3.010 – 3.170</text>
+        <rect x="240" y="104" width="300" height="16" fill="#D9D2C0" stroke="#4A5560" stroke-width="1"/>
+        <text x="390" y="116" text-anchor="middle" fill="#4A5560" font-size="11" letter-spacing="2.5">PLATFORM 2 · KM 3.010 – 3.170</text>
+        <text x="390" y="144" text-anchor="middle" fill="#4A5560" font-size="11" letter-spacing="2">TRACK 2 · UP TRAINS</text>
+        <text x="390" y="183" text-anchor="middle" fill="#4A5560" font-size="11" letter-spacing="2">TRACK 1 · DOWN TRAINS</text>
+        <text x="96" y="172" text-anchor="middle" fill="#4A5560" font-size="10" letter-spacing="1.5">SOUTH STUB</text>
+        <text x="662" y="172" text-anchor="middle" fill="#4A5560" font-size="10" letter-spacing="1.5">NORTH STUB</text>
+        <text x="14" y="290" fill="#1F4B3F" font-size="11" font-weight="600" letter-spacing="2">← UP · TO ASHGROVE</text>
+        <text x="848" y="290" text-anchor="end" fill="#1F4B3F" font-size="11" font-weight="600" letter-spacing="2">DOWN · TO COLDWATER →</text>
+        <text x="848" y="60" text-anchor="end" fill="#1F4B3F" font-size="11" font-weight="600" letter-spacing="2">THE BRANCH · TO FERNHOLLOW ↗</text>
 
         <!-- switches -->
-        <circle cx="160" cy="150" r="4" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="2"/>
-        <text x="160" y="172" text-anchor="middle" fill="#1F4B3F" font-size="12" font-weight="700" letter-spacing="1">WD A</text>
-        <circle cx="620" cy="150" r="4" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="2"/>
-        <text x="620" y="172" text-anchor="middle" fill="#1F4B3F" font-size="12" font-weight="700" letter-spacing="1">WD B</text>
+        <circle cx="160" cy="190" r="4" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="2"/>
+        <text x="160" y="212" text-anchor="middle" fill="#1F4B3F" font-size="12" font-weight="700" letter-spacing="1">WD A</text>
+        <circle cx="620" cy="190" r="4" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="2"/>
+        <text x="620" y="212" text-anchor="middle" fill="#1F4B3F" font-size="12" font-weight="700" letter-spacing="1">WD B</text>
+        <circle cx="700" cy="190" r="4" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="2"/>
+        <text x="700" y="212" text-anchor="middle" fill="#1F4B3F" font-size="12" font-weight="700" letter-spacing="1">WD J</text>
 
         <!-- Speed boards, far left, below -->
-        <g transform="translate(24,150)">
+        <g transform="translate(24,190)">
           <line x1="0" y1="0" x2="0" y2="14" stroke="#4A5560" stroke-width="2"/>
           <circle cx="0" cy="21" r="7" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.5"/>
           <text x="0" y="24.5" text-anchor="middle" fill="#1A1A1A" font-size="9" font-weight="700">25</text>
           <text x="0" y="41" text-anchor="middle" fill="#1A1A1A" font-size="11" font-weight="700" letter-spacing="1">25 ↓ · 50 ↑</text>
         </g>
         <!-- WD 1 home, Down, above -->
-        <g transform="translate(58,150)">
+        <g transform="translate(58,190)">
           <line x1="0" y1="0" x2="0" y2="-20" stroke="#4A5560" stroke-width="2"/>
           <circle cx="0" cy="-26" r="6" fill="#1F4B3F"/>
           <polygon points="9,-30 16,-26 9,-22" fill="#1F4B3F"/>
           <text x="0" y="-38" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">WD 1</text>
         </g>
         <!-- Limit of shunt S, Up, below -->
-        <g transform="translate(96,150)">
+        <g transform="translate(96,190)">
           <line x1="0" y1="0" x2="0" y2="14" stroke="#4A5560" stroke-width="2"/>
           <rect x="-9" y="14" width="18" height="14" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.5"/>
           <line x1="-8" y1="27" x2="8" y2="15" stroke="#C6321E" stroke-width="3"/>
@@ -882,7 +903,7 @@
           <text x="0" y="41" text-anchor="middle" fill="#1A1A1A" font-size="11" font-weight="700" letter-spacing="1">LIMIT OF SHUNT</text>
         </g>
         <!-- WD 5 ground, Down, south stub, above -->
-        <g transform="translate(132,150)">
+        <g transform="translate(132,190)">
           <line x1="0" y1="0" x2="0" y2="-14" stroke="#4A5560" stroke-width="2"/>
           <rect x="-8" y="-27" width="16" height="12" fill="#1A1A1A"/>
           <circle cx="-3.5" cy="-21" r="1.8" fill="#fff"/><circle cx="3.5" cy="-21" r="1.8" fill="#fff"/>
@@ -890,14 +911,14 @@
           <text x="0" y="-33" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">WD 5</text>
         </g>
         <!-- WD 2 main, Up, track 1, below -->
-        <g transform="translate(206,150)">
+        <g transform="translate(206,190)">
           <line x1="0" y1="0" x2="0" y2="20" stroke="#4A5560" stroke-width="2"/>
           <circle cx="0" cy="26" r="6" fill="#1F4B3F"/>
           <polygon points="-9,22 -16,26 -9,30" fill="#1F4B3F"/>
           <text x="0" y="46" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">WD 2</text>
         </g>
         <!-- WD 4 main with subsidiary, Up, track 2, above -->
-        <g transform="translate(206,90)">
+        <g transform="translate(206,130)">
           <line x1="0" y1="0" x2="0" y2="-20" stroke="#4A5560" stroke-width="2"/>
           <circle cx="0" cy="-26" r="6" fill="#1F4B3F"/>
           <rect x="8" y="-32" width="12" height="9" fill="#1A1A1A"/><circle cx="11" cy="-27.5" r="1.4" fill="#fff"/><circle cx="17" cy="-27.5" r="1.4" fill="#fff"/>
@@ -905,7 +926,7 @@
           <text x="0" y="-38" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">WD 4</text>
         </g>
         <!-- Stop board track 2, Up, below track 2 -->
-        <g transform="translate(250,90)">
+        <g transform="translate(250,130)">
           <line x1="0" y1="0" x2="0" y2="14" stroke="#4A5560" stroke-width="2"/>
           <rect x="-9" y="14" width="18" height="14" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.5"/>
           <rect x="-7" y="19.5" width="14" height="3" fill="#1A1A1A"/>
@@ -913,7 +934,7 @@
           <text x="0" y="40" text-anchor="middle" fill="#1A1A1A" font-size="11" font-weight="700" letter-spacing="1">STOP · UP</text>
         </g>
         <!-- Stop board track 1, Down, above track 1 -->
-        <g transform="translate(530,150)">
+        <g transform="translate(530,190)">
           <line x1="0" y1="0" x2="0" y2="-14" stroke="#4A5560" stroke-width="2"/>
           <rect x="-9" y="-28" width="18" height="14" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.5"/>
           <rect x="-7" y="-22.5" width="14" height="3" fill="#1A1A1A"/>
@@ -921,7 +942,7 @@
           <text x="0" y="-34" text-anchor="middle" fill="#1A1A1A" font-size="11" font-weight="700" letter-spacing="1">STOP · DOWN</text>
         </g>
         <!-- WD 7 main with subsidiary, Down, track 1, below -->
-        <g transform="translate(575,150)">
+        <g transform="translate(575,190)">
           <line x1="0" y1="0" x2="0" y2="20" stroke="#4A5560" stroke-width="2"/>
           <circle cx="0" cy="26" r="6" fill="#1F4B3F"/>
           <rect x="-20" y="22" width="12" height="9" fill="#1A1A1A"/><circle cx="-17" cy="26.5" r="1.4" fill="#fff"/><circle cx="-11" cy="26.5" r="1.4" fill="#fff"/>
@@ -929,14 +950,14 @@
           <text x="0" y="46" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">WD 7</text>
         </g>
         <!-- WD 9 main, Down, track 2, above -->
-        <g transform="translate(575,90)">
+        <g transform="translate(575,130)">
           <line x1="0" y1="0" x2="0" y2="-20" stroke="#4A5560" stroke-width="2"/>
           <circle cx="0" cy="-26" r="6" fill="#1F4B3F"/>
           <polygon points="9,-30 16,-26 9,-22" fill="#1F4B3F"/>
           <text x="0" y="-38" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">WD 9</text>
         </g>
         <!-- WD 6 ground, Up, north stub, above -->
-        <g transform="translate(646,150)">
+        <g transform="translate(640,190)">
           <line x1="0" y1="0" x2="0" y2="-14" stroke="#4A5560" stroke-width="2"/>
           <rect x="-8" y="-27" width="16" height="12" fill="#1A1A1A"/>
           <circle cx="-3.5" cy="-21" r="1.8" fill="#fff"/><circle cx="3.5" cy="-21" r="1.8" fill="#fff"/>
@@ -944,30 +965,46 @@
           <text x="0" y="-33" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">WD 6</text>
         </g>
         <!-- Limit of shunt N, Down, below -->
-        <g transform="translate(684,150)">
+        <g transform="translate(672,190)">
           <line x1="0" y1="0" x2="0" y2="14" stroke="#4A5560" stroke-width="2"/>
           <rect x="-9" y="14" width="18" height="14" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.5"/>
           <line x1="-8" y1="27" x2="8" y2="15" stroke="#C6321E" stroke-width="3"/>
           <polygon points="12,17 19,21 12,25" fill="#4A5560"/>
           <text x="0" y="41" text-anchor="middle" fill="#1A1A1A" font-size="11" font-weight="700" letter-spacing="1">LIMIT OF SHUNT</text>
         </g>
-        <!-- WD 8 home, Up, above -->
-        <g transform="translate(722,150)">
-          <line x1="0" y1="0" x2="0" y2="-20" stroke="#4A5560" stroke-width="2"/>
-          <circle cx="0" cy="-26" r="6" fill="#1F4B3F"/>
-          <polygon points="-9,-30 -16,-26 -9,-22" fill="#1F4B3F"/>
-          <text x="0" y="-38" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">WD 8</text>
+        <!-- WD 8 home with subsidiary (call-on), Up, main line beyond the junction, below -->
+        <g transform="translate(770,190)">
+          <line x1="0" y1="0" x2="0" y2="20" stroke="#4A5560" stroke-width="2"/>
+          <circle cx="0" cy="26" r="6" fill="#1F4B3F"/>
+          <rect x="8" y="22" width="12" height="9" fill="#1A1A1A"/><circle cx="11" cy="26.5" r="1.4" fill="#fff"/><circle cx="17" cy="26.5" r="1.4" fill="#fff"/>
+          <polygon points="-9,22 -16,26 -9,30" fill="#1F4B3F"/>
+          <text x="0" y="46" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">WD 8</text>
         </g>
         <!-- Speed boards, far right, below -->
-        <g transform="translate(756,150)">
+        <g transform="translate(836,190)">
           <line x1="0" y1="0" x2="0" y2="14" stroke="#4A5560" stroke-width="2"/>
           <circle cx="0" cy="21" r="7" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.5"/>
           <text x="0" y="24.5" text-anchor="middle" fill="#1A1A1A" font-size="9" font-weight="700">25</text>
           <text x="0" y="41" text-anchor="middle" fill="#1A1A1A" font-size="11" font-weight="700" letter-spacing="1">25 ↑ · 50 ↓</text>
         </g>
+        <!-- WD 10 home with subsidiary (call-on), Up, on the branch, above the branch -->
+        <g transform="translate(772,133)">
+          <line x1="0" y1="0" x2="0" y2="-20" stroke="#4A5560" stroke-width="2"/>
+          <circle cx="0" cy="-26" r="6" fill="#1F4B3F"/>
+          <rect x="8" y="-32" width="12" height="9" fill="#1A1A1A"/><circle cx="11" cy="-27.5" r="1.4" fill="#fff"/><circle cx="17" cy="-27.5" r="1.4" fill="#fff"/>
+          <polygon points="-9,-30 -16,-26 -9,-22" fill="#1F4B3F"/>
+          <text x="0" y="-38" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">WD 10</text>
+        </g>
+        <!-- Branch speed boards, above the branch -->
+        <g transform="translate(834,84)">
+          <line x1="0" y1="0" x2="0" y2="-12" stroke="#4A5560" stroke-width="2"/>
+          <circle cx="0" cy="-19" r="7" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.5"/>
+          <text x="0" y="-15.5" text-anchor="middle" fill="#1A1A1A" font-size="9" font-weight="700">25</text>
+          <text x="0" y="-32" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="700" letter-spacing="1">25 ↑ · 40 ↓</text>
+        </g>
       </svg>
     </div>
-    <figcaption><span class="fig">Fig. 6.2</span> Wending as a through station. Not to scale. The distants WD 1D (km 2.680) and WD 8D (km 3.520) stand off the drawing on either side. WD 4 and WD 7 carry subsidiaries, drawn as the small two-lamp box beside the head. Read the table against the posts: the Down stop board at 3.165 stands between posts 3.1 and 3.2, the Up stop board at 3.015 just past post 3.0, and WD 1 at 2.88 between 2.8 and 2.9.</figcaption>
+    <figcaption><span class="fig">Fig. 6.2</span> Wending as a through station and a junction. Not to scale. The north stub runs from WD B to the junction switch WD J; beyond it the main line continues to Coldwater under WD 8 and the branch leaves for Fernhollow under WD 10. The distants WD 1D (km 2.680), WD 8D (km 3.640) and WD 10D (F 0.330) stand off the drawing. WD 4 and WD 7 carry subsidiaries for shunting; WD 8 and WD 10 carry subsidiaries for the call-on (§ 2.4). Read the table against the posts: the Down stop board at 3.165 stands between posts 3.1 and 3.2, WD J at 3.360 between 3.3 and 3.4, and WD 10 just before post F 0.1.</figcaption>
   </figure>
 
   <table class="signals">
@@ -990,16 +1027,23 @@
       <tr><td>WD 9</td><td class="mono">3.185</td><td>Down</td><td>track 2</td><td>Starting signal: track 2 onto the single line towards Coldwater.</td></tr>
       <tr><td>Switch WD B</td><td class="mono">3.220</td><td>toe faces Down</td><td>—</td><td>Normal = track 1, reverse = track 2. Switch indicator at the toe, read from the north stub, track 1 and track 2 (§ 3.3).</td></tr>
       <tr><td>WD 6</td><td class="mono">3.230</td><td>Up</td><td>single line (north stub)</td><td>Shunt from the north stub into the station.</td></tr>
-      <tr><td>Limit of Shunt</td><td class="mono">3.280</td><td>Down</td><td>single line (north stub)</td><td>Shunting movements from the station stop short.</td></tr>
-      <tr><td>WD 8</td><td class="mono">3.320</td><td>Up</td><td>single line</td><td>Home signal: entry to Wending from Coldwater, into track 2 or track 1.</td></tr>
-      <tr><td>Speed boards</td><td class="mono">3.400</td><td>25 Up · 50 Down</td><td>single line</td><td>North edge of station limits.</td></tr>
-      <tr><td>Gradient post</td><td class="mono">3.400</td><td>both</td><td>single line</td><td>Level ↔ 8‰: the climb to the quarries begins.</td></tr>
-      <tr><td>WD 8D</td><td class="mono">3.520</td><td>Up</td><td>single line</td><td>Distant for WD 8, 200 m before it: the 8‰ fall is under 10‰.</td></tr>
-      <tr><td>Advance speed board</td><td class="mono">3.600</td><td>Up</td><td>single line</td><td>Announces the 25 board at 3.400, 200 m ahead.</td></tr>
+      <tr><td>Limit of Shunt</td><td class="mono">3.280</td><td>Down</td><td>single line (north stub)</td><td>Shunting movements from the station stop short. The run-round never reaches the junction.</td></tr>
+      <tr><td>Switch WD J</td><td class="mono">3.360</td><td>toe faces Up</td><td>—</td><td>The junction. Normal = the main line to Coldwater, reverse = the Fernhollow branch. Switch indicator at the toe, read from the north stub, from the main line and from the branch (§ 3.3).</td></tr>
+      <tr><td>Gradient post</td><td class="mono">3.400</td><td>both</td><td>main line</td><td>Level ↔ 8‰: the climb to the quarries begins.</td></tr>
+      <tr><td>WD 8</td><td class="mono">3.440</td><td>Up</td><td>main line</td><td>Home signal: entry to Wending from Coldwater, over WD J into track 2 or track 1. Subsidiary: call-on to an occupied platform (§ 2.4).</td></tr>
+      <tr><td>Speed boards</td><td class="mono">3.500</td><td>25 Up · 50 Down</td><td>main line</td><td>North edge of station limits on the main line.</td></tr>
+      <tr><td>WD 8D</td><td class="mono">3.640</td><td>Up</td><td>main line</td><td>Distant for WD 8, 200 m before it: the 8‰ fall is under 10‰.</td></tr>
+      <tr><td>Advance speed board</td><td class="mono">3.700</td><td>Up</td><td>main line</td><td>Announces the 25 board at 3.500, 200 m ahead.</td></tr>
+      <tr><td>WD 10</td><td class="mono">F 0.080</td><td>Up</td><td>branch</td><td>Home signal: entry to Wending from Fernhollow, over WD J into track 2 or track 1. Subsidiary: call-on to an occupied platform (§ 2.4).</td></tr>
+      <tr><td>Speed boards</td><td class="mono">F 0.140</td><td>25 Up · 40 Down</td><td>branch</td><td>Edge of station limits on the branch; beyond it the branch speed of 40 km/h.</td></tr>
+      <tr><td>Gradient post</td><td class="mono">F 0.300</td><td>both</td><td>branch</td><td>Level ↔ 10‰: the branch begins to climb.</td></tr>
+      <tr><td>WD 10D</td><td class="mono">F 0.330</td><td>Up</td><td>branch</td><td>Distant for WD 10, 250 m before it: the 10‰ fall from the side valley earns the longer distance.</td></tr>
+      <tr><td>Advance speed board</td><td class="mono">F 0.390</td><td>Up</td><td>branch</td><td>Announces the 25 board at F 0.140, 250 m ahead.</td></tr>
     </tbody>
   </table>
 
   <div class="note"><p><strong>Which platform.</strong> Down trains are booked into track 1 and Up trains into track 2, so that two trains crossing here each have a platform, and so that a driver knows before the home signal which stop board to look for. The box can admit a train to either track and the homes read into both; the convention is the timetable's (<a href="book-t.html">Book T</a>), not the frame's. <strong>WD 3 is withdrawn</strong>: its move, track 1 towards the north stub, is now the subsidiary of WD 7 (§ 2.4).</p></div>
+  <div class="note"><p><strong>The junction.</strong> WD 7 and WD 9 are the starters for both lines: the same CLEAR takes a train to Coldwater with WD J normal or to Fernhollow with WD J reverse. Two things tell the driver which. The box says it when it clears the signal ("WD 7 cleared for the 10:16 departure to Fernhollow: switch WD J lies for the branch"), and the indicator at WD J shows it as the train approaches (Rule S 22). A driver who finds the indicator disagreeing with the message stops short of the junction and speaks to the box. Arriving trains converge on the junction from two homes: WD 8 on the main line and WD 10 on the branch, each with its own distant and its own approach; only one of them is ever cleared at a time, because both routes hold WD J (§ 7.6).</p></div>
 
   <h2 id="c6-4"><span class="num">6.4</span> Section B: Wending to Coldwater</h2>
   <p>Between Wending's north speed boards and Coldwater's south ones lie 2.55 km of single line, climbing at 8‰ to post 5.6 and then level. Nothing on it is a signal; everything on it is a board or a post, and a train runs it under its Line Warrant (§ 7.4) from home signal to home signal.</p>
@@ -1145,6 +1189,82 @@
   </table>
 
   <div class="note"><p>At Coldwater, as at Ashgrove, track 2 has no platform. It is a loop for running round, and no passenger train is booked to stand on it.</p></div>
+
+  <h2 id="c6-6"><span class="num">6.6</span> Section C: the Fernhollow branch</h2>
+  <p>The branch leaves the junction switch WD J at main km 3.360, curves away from the main line over its first hundred metres and then climbs the side valley at 10‰ to the fern gatherers' hamlet. Its kilometrage is its own, counted from WD J and written with the letter F, and its line speed is <strong>40 km/h</strong>, not the main line's 50: the boards at F 0.140 and F 2.000 say 40, not 50, on their faces turned away from the stations. Block section C runs from WD 10 at F 0.080 to FH 1 at F 2.030, worked by Wending Box and Fernhollow Box under one Line Warrant like the others (§ 7.4). Between its speed boards there is nothing on the branch but boards and posts.</p>
+  <table class="signals">
+    <thead><tr><th>Board or feature</th><th class="mono">branch km</th><th>Faces</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td>Speed boards</td><td class="mono">F 0.140</td><td>25 Up · 40 Down</td><td>Wending's station limit on the branch; 40 km/h beyond it.</td></tr>
+      <tr><td>Gradient post</td><td class="mono">F 0.300</td><td>both</td><td>Level ↔ 10‰: the side valley climb.</td></tr>
+      <tr><td>WD 10D · Advance speed board</td><td class="mono">F 0.330 · F 0.390</td><td>Up</td><td>The distant for WD 10 and the advance board for the 25 at F 0.140, both 250 m out because the approach falls at 10‰.</td></tr>
+      <tr><td>Advance speed board</td><td class="mono">F 1.800</td><td>Down</td><td>Announces the 25 board at F 2.000, 200 m ahead: the approach rises.</td></tr>
+      <tr><td>FH 1D</td><td class="mono">F 1.830</td><td>Down</td><td>Distant for FH 1, 200 m before it.</td></tr>
+      <tr><td>Gradient post</td><td class="mono">F 1.900</td><td>both</td><td>10‰ ↔ level: the top of the branch.</td></tr>
+      <tr><td>Speed boards</td><td class="mono">F 2.000</td><td>25 Down · 40 Up</td><td>Fernhollow's station limit.</td></tr>
+    </tbody>
+  </table>
+  <div class="note"><p>Fernhollow stands 41.2 m above Ashgrove, a little below Coldwater; the branch does its climbing in one steady 10‰ pull from F 0.3 to F 1.9. An Up train leaving Fernhollow therefore descends the whole way to WD 10D, which is why that distant and its advance board stand 250 m out (§ 2.5, § 4.2).</p></div>
+
+  <h2 id="c6-7"><span class="num">6.7</span> Fernhollow</h2>
+  <p>Fernhollow is the Railway's smallest station: a single platform track ending at a buffer stop, with no loop, no switch and no shunting. A car arrives under FH 1, stops at the FERNHOLLOW board, its driver changes ends, and it leaves under FH 2 the way it came. Down is to the right, away from Wending.</p>
+  <figure class="layout-fig">
+    <div class="figure-frame">
+      <svg viewBox="0 0 560 190" width="560" height="190" role="img" aria-label="Schematic layout of Fernhollow: one platform track ending at a buffer stop">
+        <text x="14" y="26" fill="#1F4B3F" font-size="18" font-weight="700" letter-spacing="3">FERNHOLLOW</text>
+        <text x="140" y="26" fill="#4A5560" font-size="12" letter-spacing="1.5" font-family="IBM Plex Mono, Menlo, monospace">F 2.000 – 2.320 · BOX: M. THORNE</text>
+        <line x1="12" y1="120" x2="530" y2="120" stroke="#1A1A1A" stroke-width="3"/>
+        <rect x="240" y="130" width="230" height="16" fill="#D9D2C0" stroke="#4A5560" stroke-width="1"/>
+        <text x="355" y="142" text-anchor="middle" fill="#4A5560" font-size="11" letter-spacing="2.5">PLATFORM · F 2.100 – 2.260</text>
+        <text x="14" y="180" fill="#1F4B3F" font-size="11" font-weight="600" letter-spacing="2">← UP · TO WENDING</text>
+        <!-- buffer -->
+        <rect x="528" y="108" width="8" height="24" fill="#C6321E"/>
+        <text x="500" y="100" text-anchor="end" fill="#1A1A1A" font-size="11" font-weight="700" letter-spacing="1">BUFFER STOP · F 2.320</text>
+        <!-- speed boards -->
+        <g transform="translate(30,120)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#4A5560" stroke-width="2"/>
+          <circle cx="0" cy="21" r="7" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.5"/>
+          <text x="0" y="24.5" text-anchor="middle" fill="#1A1A1A" font-size="9" font-weight="700">25</text>
+          <text x="0" y="41" text-anchor="middle" fill="#1A1A1A" font-size="11" font-weight="700" letter-spacing="1">25 ↓ · 40 ↑</text>
+        </g>
+        <!-- FH 1 home, Down, above -->
+        <g transform="translate(80,120)">
+          <line x1="0" y1="0" x2="0" y2="-20" stroke="#4A5560" stroke-width="2"/>
+          <circle cx="0" cy="-26" r="6" fill="#1F4B3F"/>
+          <polygon points="9,-30 16,-26 9,-22" fill="#1F4B3F"/>
+          <text x="0" y="-38" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">FH 1</text>
+        </g>
+        <!-- FH 2 starter, Up, below -->
+        <g transform="translate(215,120)">
+          <line x1="0" y1="0" x2="0" y2="20" stroke="#4A5560" stroke-width="2"/>
+          <circle cx="0" cy="26" r="6" fill="#1F4B3F"/>
+          <polygon points="-9,22 -16,26 -9,30" fill="#1F4B3F"/>
+          <text x="0" y="46" text-anchor="middle" fill="#1A1A1A" font-size="12" font-weight="700" letter-spacing="1">FH 2</text>
+        </g>
+        <!-- Stop board, Down, above -->
+        <g transform="translate(462,120)">
+          <line x1="0" y1="0" x2="0" y2="-14" stroke="#4A5560" stroke-width="2"/>
+          <rect x="-9" y="-28" width="18" height="14" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.5"/>
+          <rect x="-7" y="-22.5" width="14" height="3" fill="#1A1A1A"/>
+          <polygon points="12,-25 19,-21 12,-17" fill="#4A5560"/>
+          <text x="0" y="-34" text-anchor="middle" fill="#1A1A1A" font-size="11" font-weight="700" letter-spacing="1">STOP · DOWN</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 6.4</span> Fernhollow. Not to scale. FH 1D stands at F 1.830, off the drawing to the left. There is nothing to run round with and nothing to run round: a motor car simply changes ends.</figcaption>
+  </figure>
+  <table class="signals">
+    <thead><tr><th>Signal or board</th><th class="mono">branch km</th><th>Faces</th><th>Stands on</th><th>Governs</th></tr></thead>
+    <tbody>
+      <tr><td>FH 1D</td><td class="mono">F 1.830</td><td>Down</td><td>branch</td><td>Distant for FH 1, 200 m before it.</td></tr>
+      <tr><td>Speed boards</td><td class="mono">F 2.000</td><td>25 Down · 40 Up</td><td>branch</td><td>Edge of station limits.</td></tr>
+      <tr><td>FH 1</td><td class="mono">F 2.030</td><td>Down</td><td>branch</td><td>Home signal: entry to Fernhollow's one platform track. Shows CAUTION when cleared, never CLEAR.</td></tr>
+      <tr><td>FH 2</td><td class="mono">F 2.085</td><td>Up</td><td>platform track</td><td>Starting signal: the platform track onto the branch towards Wending, with warrant C in hand.</td></tr>
+      <tr><td>Stop board FERNHOLLOW</td><td class="mono">F 2.255</td><td>Down</td><td>platform track</td><td>Down trains stop here.</td></tr>
+      <tr><td>Buffer stop</td><td class="mono">F 2.320</td><td>—</td><td>platform track</td><td>End of track; red lamp.</td></tr>
+    </tbody>
+  </table>
+  <div class="note"><p>Fernhollow Box has two levers and a register. M. Thorne asks Wending for line clear before clearing FH 2, and gives Wending line clear for a car coming up the branch by setting FH 1 into the platform. With no switch to hold, Fernhollow's routes lock nothing but the signals themselves.</p></div>
 </section>
 
 <!-- 7 ROUTES AND THE BOX -->
@@ -1162,9 +1282,10 @@
     <p>Move only when the governing signal has been cleared for the move you are about to make, and only as far as the route goes: to the next signal facing you, to a Limit of Shunt board, to a stop board, or to the end of the track. When the movement is complete, stop and wait; the route will be taken back behind you and the next one set.</p>
   </div>
 
-  <div class="note"><p><strong>The one deliberate exception.</strong> A shunt route whose purpose is coupling is cleared into an occupied track. The frame permits this only for the routes marked "for coupling" in the tables below, only for a ground signal, and only when the occupied section is the last one on the route. The driver approaches under <a href="book-d.html#D10">Rule D 10</a>.</p></div>
+  <div class="note"><p><strong>Two deliberate exceptions.</strong> A shunt route whose purpose is coupling is cleared into an occupied track. The frame permits this only for the routes marked "for coupling" in the tables below, only for a ground signal or a subsidiary, and only when the occupied section is the last one on the route. The driver approaches under <a href="book-d.html#D10">Rule D 10</a>. The second exception is the same thing done for a train: the <strong>call-on</strong> routes at WD 8 and WD 10, which admit a train to an occupied platform under the home's subsidiary so that two portions can be joined (§ 2.4, Rule S 30).</p></div>
+  <p>Once a route is cleared it is also <span class="term">locked</span>: its switches cannot be moved, by that box or by any other route, until the movement it was set for has passed clear of them. § 7.6 says exactly when that is. At a station with one switch at each end this is scarcely noticed; at Wending, where three switches and a junction are shared by movements to three neighbours, it is what keeps the station honest.</p>
 
-  <h2 id="c7-2"><span class="num">7.2</span> The routes at the three stations</h2>
+  <h2 id="c7-2"><span class="num">7.2</span> The routes at the four stations</h2>
   <table>
     <thead><tr><th>Route</th><th>Switches</th><th>Governing signal</th><th>Cleared to</th><th>Purpose</th></tr></thead>
     <tbody>
@@ -1177,12 +1298,20 @@
       <tr><td colspan="5" style="font-family:var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--green);font-weight:600">Wending</td></tr>
       <tr><td class="mono">Home S → 1</td><td>WD A normal</td><td>WD 1</td><td>CAUTION</td><td>Down train from Ashgrove into platform 1.</td></tr>
       <tr><td class="mono">Home S → 2</td><td>WD A reverse</td><td>WD 1</td><td>CAUTION</td><td>Down train from Ashgrove into platform 2 (not booked).</td></tr>
-      <tr><td class="mono">Home N → 2</td><td>WD B reverse</td><td>WD 8</td><td>CAUTION</td><td>Up train from Coldwater into platform 2.</td></tr>
-      <tr><td class="mono">Home N → 1</td><td>WD B normal</td><td>WD 8</td><td>CAUTION</td><td>Up train from Coldwater into platform 1 (not booked).</td></tr>
+      <tr><td class="mono">Home N → 2</td><td>WD J normal, WD B reverse</td><td>WD 8</td><td>CAUTION</td><td>Up train from Coldwater over the junction into platform 2.</td></tr>
+      <tr><td class="mono">Home N → 1</td><td>WD J normal, WD B normal</td><td>WD 8</td><td>CAUTION</td><td>Up train from Coldwater into platform 1.</td></tr>
+      <tr><td class="mono">Home N → 2 (call-on)</td><td>WD J normal, WD B reverse</td><td>WD 8 subsidiary</td><td>SHUNT (call-on)</td><td>Train from Coldwater called on to platform 2 to couple to the train standing there. <em>Cleared into occupied track 2.</em></td></tr>
+      <tr><td class="mono">Home N → 1 (call-on)</td><td>WD J normal, WD B normal</td><td>WD 8 subsidiary</td><td>SHUNT (call-on)</td><td>As above, to platform 1.</td></tr>
+      <tr><td class="mono">Home B → 2</td><td>WD J reverse, WD B reverse</td><td>WD 10</td><td>CAUTION</td><td>Up train from Fernhollow over the junction into platform 2.</td></tr>
+      <tr><td class="mono">Home B → 1</td><td>WD J reverse, WD B normal</td><td>WD 10</td><td>CAUTION</td><td>Up train from Fernhollow into platform 1.</td></tr>
+      <tr><td class="mono">Home B → 2 (call-on)</td><td>WD J reverse, WD B reverse</td><td>WD 10 subsidiary</td><td>SHUNT (call-on)</td><td>Train from Fernhollow called on to platform 2 to couple to the train standing there. <em>Cleared into occupied track 2.</em></td></tr>
+      <tr><td class="mono">Home B → 1 (call-on)</td><td>WD J reverse, WD B normal</td><td>WD 10 subsidiary</td><td>SHUNT (call-on)</td><td>As above, to platform 1.</td></tr>
       <tr><td class="mono">1 → S</td><td>WD A normal</td><td>WD 2</td><td>CLEAR</td><td>Up train departs towards Ashgrove, with warrant A in hand.</td></tr>
       <tr><td class="mono">2 → S</td><td>WD A reverse</td><td>WD 4</td><td>CLEAR</td><td>Up train departs from platform 2 towards Ashgrove, with warrant A in hand.</td></tr>
-      <tr><td class="mono">1 → N</td><td>WD B normal</td><td>WD 7</td><td>CLEAR</td><td>Down train departs towards Coldwater, with warrant B in hand.</td></tr>
-      <tr><td class="mono">2 → N</td><td>WD B reverse</td><td>WD 9</td><td>CLEAR</td><td>Down train departs from platform 2 towards Coldwater, with warrant B in hand.</td></tr>
+      <tr><td class="mono">1 → N</td><td>WD B normal, WD J normal</td><td>WD 7</td><td>CLEAR</td><td>Down train departs over the junction towards Coldwater, with warrant B in hand.</td></tr>
+      <tr><td class="mono">1 → B</td><td>WD B normal, WD J reverse</td><td>WD 7</td><td>CLEAR</td><td>Down train departs over the junction towards Fernhollow, with warrant C in hand.</td></tr>
+      <tr><td class="mono">2 → N</td><td>WD B reverse, WD J normal</td><td>WD 9</td><td>CLEAR</td><td>Down train departs from platform 2 towards Coldwater, with warrant B in hand.</td></tr>
+      <tr><td class="mono">2 → B</td><td>WD B reverse, WD J reverse</td><td>WD 9</td><td>CLEAR</td><td>Down train departs from platform 2 towards Fernhollow, with warrant C in hand.</td></tr>
       <tr><td class="mono">1 → North stub</td><td>WD B normal</td><td>WD 7 subsidiary</td><td>SHUNT</td><td>Locomotive off the train onto the north stub.</td></tr>
       <tr><td class="mono">North stub → 2 → South stub</td><td>WD B reverse, WD A reverse</td><td>WD 6 and WD 4 subsidiary</td><td>SHUNT</td><td>Locomotive round the loop to the south stub.</td></tr>
       <tr><td class="mono">South stub → 1</td><td>WD A normal</td><td>WD 5</td><td>SHUNT</td><td>Locomotive onto the train. <em>For coupling: cleared into occupied track 1.</em></td></tr>
@@ -1192,10 +1321,13 @@
       <tr><td class="mono">1 → Headshunt</td><td>CW B normal</td><td>CW 3</td><td>SHUNT</td><td>Locomotive off the train into the headshunt.</td></tr>
       <tr><td class="mono">Headshunt → 2 → Stub</td><td>CW B reverse, CW A reverse</td><td>CW 6 and CW 4</td><td>SHUNT</td><td>Locomotive round the loop to the stub.</td></tr>
       <tr><td class="mono">Stub → 1</td><td>CW A normal</td><td>CW 5</td><td>SHUNT</td><td>Locomotive onto the train. <em>For coupling: cleared into occupied track 1.</em></td></tr>
+      <tr><td colspan="5" style="font-family:var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--green);font-weight:600">Fernhollow</td></tr>
+      <tr><td class="mono">Home S → 1</td><td>none</td><td>FH 1</td><td>CAUTION</td><td>Down car from Wending into the platform track.</td></tr>
+      <tr><td class="mono">1 → S</td><td>none</td><td>FH 2</td><td>CLEAR</td><td>Up car departs towards Wending, with warrant C in hand.</td></tr>
     </tbody>
   </table>
 
-  <p><strong>The sections between the stations</strong> are not routes; they are block sections, and they are worked by Line Warrants. That is the subject of § 7.4.</p>
+  <p><strong>The sections between the stations</strong> are not routes; they are block sections, and they are worked by Line Warrants. That is the subject of § 7.4. Notice that WD 7 and WD 9 each govern two routes, one to each line beyond the junction: the signal is the same, the switch position is not, and the driver is told which (§ 6.3).</p>
 
   <h2 id="c7-3"><span class="num">7.3</span> A worked example: the run-round at Wending</h2>
   <p>Service 201 is a Class 4 locomotive with one Type C4 coach. It arrives at Wending from Ashgrove, locomotive leading, and must leave for Ashgrove with the locomotive leading again. Here is what the driver sees and does, signal by signal. The driver's side of it, cab by cab, is in <a href="book-d.html">Book D</a>.</p>
@@ -1203,7 +1335,7 @@
   <ol class="steps">
     <li><strong>Arrival.</strong> WD 1D at km 2.680 shows CAUTION: be ready to stop at WD 1. Having begun to brake at the advance speed board at km 2.650, the train passes the 25 speed board at km 2.850 already down to 25 km/h and sees WD 1 at CAUTION: platform 1 is cleared for the train, and the next signal, WD 7, is at STOP. The train passes WD 5 at SHUNT STOP without regard to it (§ 3.2), runs through WD A set normal onto track 1, and stops with its front level with the Down WENDING stop board at km 3.165. The locomotive now stands at the Down end of the coach, facing WD 7 and the north stub. Wending Box cancels warrant A: the train is out of section.</li>
     <li><strong>Station work.</strong> Doors open, passengers alight. The driver secures the locomotive, walks to the coupling, disconnects the brake pipe (both parts' brakes apply of their own accord) and parts the coupler (<a href="book-d.html#D12">Rule D 12</a>), then returns to the cab facing the north stub.</li>
-    <li><strong>Onto the north stub.</strong> Wending Box sets <span class="mono">1 → North stub</span>: WD B is already normal; WD 7 stays at STOP and its subsidiary lights SHUNT (§ 2.4). The driver reads WD B's indicator from track 1: the bar lies straight, the switch is for them. The locomotive draws forward at shunting speed under the subsidiary, through WD B onto the north stub, and stops clear of the switch and short of the Limit of Shunt board at km 3.280 (Rule S 12): the stub is 60 m long and the locomotive 16 m, which is room enough and no more. The subsidiary goes dark behind it.</li>
+    <li><strong>Onto the north stub.</strong> Wending Box sets <span class="mono">1 → North stub</span>: WD B is already normal; WD 7 stays at STOP and its subsidiary lights SHUNT (§ 2.4). The driver reads WD B's indicator from track 1: the bar lies straight, the switch is for them. The locomotive draws forward at shunting speed under the subsidiary, through WD B onto the north stub, and stops clear of the switch and short of the Limit of Shunt board at km 3.280 (Rule S 12): the stub is 60 m long and the locomotive 16 m, which is room enough and no more. The junction WD J lies 80 m further on and the run-round never reaches it. The subsidiary goes dark behind it.</li>
     <li><strong>Round the loop.</strong> The driver changes ends. The box sets <span class="mono">North stub → 2 → South stub</span>: WD B reverse, WD A reverse, both locked; WD 6 changes to SHUNT and WD 4's subsidiary lights. Before setting back, the driver reads WD B's indicator from the stub: the bar leans towards track 2, which is where the move is going (Rule S 22). The locomotive runs Up through WD B onto track 2, along platform 2 past the standing coach on the other track, passes WD 4 under its subsidiary, reads WD A's indicator leaning towards track 2 as it trails through onto the south stub, and stops short of the Limit of Shunt board at km 2.900. It is now clear of WD A. WD 6 returns to SHUNT STOP and WD 4's subsidiary goes dark.</li>
     <li><strong>Onto the train.</strong> The driver changes ends again. The box sets <span class="mono">South stub → 1</span> for coupling: WD A normal, locked; WD 5 changes to SHUNT although track 1 is occupied. The driver reads WD A's indicator from the toe: the bar lies straight, so the switch will take the locomotive onto track 1 and not back onto track 2. The locomotive runs Down through WD A onto track 1 and approaches the coach at 5 km/h over the last 20 m, touching at 2 km/h or less. The coupler engages. The driver walks to the coupling, connects the brake pipe, returns to the cab and proves the brake through the train (<a href="book-d.html#D14">Rule D 14</a>). WD 5 returns to SHUNT STOP.</li>
     <li><strong>Departure.</strong> Two minutes before time, Wending Box asks Ashgrove Box for the line. Ashgrove finds section A clear and no warrant out, issues warrant A to the train, sets <span class="mono">Main → 1</span> so that AG 2 shows CAUTION, and answers. Wending sets <span class="mono">1 → S</span> and WD 2 shows CLEAR. At the booked time, doors closed, J. Pell shows the green baton from platform 1. The driver sounds one short blast and takes the train away, Up, towards Ashgrove, holding warrant A until Ashgrove cancels it on arrival.</li>
@@ -1214,7 +1346,7 @@
   <div class="why"><p>Six signals and two switches per station is more than a small terminus strictly needs; a single ground signal and a promise would do. But every one of these signals stands where a driver has to make a decision, and a signal at that spot means the decision is never made alone. We would rather buy six lamps than one misunderstanding.</p></div>
 
   <h2 id="c7-4"><span class="num">7.4</span> Block working and the Line Warrant</h2>
-  <p>Between one station's home signal and the next lies a <span class="term">block section</span>: a length of single line on which two trains cannot be allowed at once, because there is nowhere for one to stand aside. The Railway has two, and they are named by letter: <strong>section A</strong> from Ashgrove to Wending, km 0.420 to 2.880, worked by Ashgrove Box and Wending Box; <strong>section B</strong> from Wending to Coldwater, km 3.320 to 5.980, worked by Wending Box and Coldwater Box. Each section has exactly one <strong>Line Warrant</strong>, a numbered card kept in a slot in the box's register, and a train enters the section only when the warrant has been issued to it.</p>
+  <p>Between one station's home signal and the next lies a <span class="term">block section</span>: a length of single line on which two trains cannot be allowed at once, because there is nowhere for one to stand aside. The Railway has three, and they are named by letter: <strong>section A</strong> from Ashgrove to Wending, km 0.420 to 2.880, worked by Ashgrove Box and Wending Box; <strong>section B</strong> from Wending to Coldwater, km 3.440 to 5.980, worked by Wending Box and Coldwater Box; <strong>section C</strong> from Wending to Fernhollow, branch km F 0.080 to F 2.030, worked by Wending Box and Fernhollow Box. Sections B and C both begin at the junction, and the same starter at Wending, WD 7 or WD 9, leads into either; it is cleared with the warrant for the section the switch is set for. Each section has exactly one <strong>Line Warrant</strong>, a numbered card kept in a slot in the box's register, and a train enters the section only when the warrant has been issued to it.</p>
 
   <p>The exchange runs like this, and it runs the same way for every train in every direction.</p>
   <ol class="steps">
@@ -1238,12 +1370,41 @@
   <ol class="steps">
     <li><strong>07:58, two requests.</strong> Ashgrove Box asks Wending for line clear for 1002 into section A; Coldwater Box asks Wending for line clear for 1003 into section B. Wending finds both sections clear and both warrants in their slots, issues warrant A to 1002 and warrant B to 1003, and sets two routes: <span class="mono">Home S → 1</span> so that WD 1 shows CAUTION into platform 1, and <span class="mono">Home N → 2</span> so that WD 8 shows CAUTION into platform 2. The two routes do not touch, and the frame allows both at once. Ashgrove clears AG 1; Coldwater clears CW 2.</li>
     <li><strong>08:00, two batons.</strong> T. Marrow shows the green baton to 1002 at Ashgrove; A. Ashby shows it to 1003 at Coldwater. Each driver sounds one short blast and leaves. Two trains are now on the line, one in each section, each holding its own warrant.</li>
-    <li><strong>The approaches.</strong> 1002 climbs the valley, reads WD 1D at CAUTION at km 2.680, brakes at the advance board, and sees WD 1 at CAUTION: in it comes to platform 1, stopping at the Down board at 3.165. 1003 comes down the 8‰ from Coldwater, shuts off power at the section board at 4.300 and takes it again at the resume board at 4.100, sounds one long blast at the whistle board at 4.900 for Millers' Crossing, reads WD 8D at CAUTION at 3.520 and WD 8 at CAUTION, and comes in to platform 2, stopping at the Up board at 3.015. Wending cancels warrant A as 1002 comes to a stand, and warrant B as 1003 does; both sections are free.</li>
+    <li><strong>The approaches.</strong> 1002 climbs the valley, reads WD 1D at CAUTION at km 2.680, brakes at the advance board, and sees WD 1 at CAUTION: in it comes to platform 1, stopping at the Down board at 3.165. 1003 comes down the 8‰ from Coldwater, shuts off power at the section board at 4.300 and takes it again at the resume board at 4.100, sounds one long blast at the whistle board at 4.900 for Millers' Crossing, reads WD 8D at CAUTION at 3.640 and WD 8 at CAUTION, and comes in to platform 2, stopping at the Up board at 3.015. Wending cancels warrant A as 1002 comes to a stand, and warrant B as 1003 does; both sections are free.</li>
     <li><strong>08:10, two more requests.</strong> Wending asks Coldwater for line clear for 1002 into section B, and Ashgrove for line clear for 1003 into section A. Both are given: each section was cleared by the arrival of the other train. Coldwater sets CW 1 into its platform, Ashgrove sets AG 2 into its; Wending clears WD 7 for 1002 and WD 4 for 1003.</li>
     <li><strong>08:12, two batons again.</strong> J. Pell shows the baton to each train in turn from its own platform. 1002 leaves Down towards Coldwater under WD 7; 1003 leaves Up towards Ashgrove under WD 4. Each carries a warrant for a section that the other has just left, and neither will meet anything until it meets a platform.</li>
   </ol>
   <p>At 08:53 they do it all again the other way round, 1003 into platform 1 and 1002 into platform 2. The whole afternoon, and the whole of Book T, is this figure repeated.</p>
   <div class="note"><p>Notice what the two platforms buy. With one platform, the second train to arrive would have to wait outside at the home signal until the first had left, and every crossing would cost a train the length of a dwell. With a platform on each track the two trains stand side by side, and the crossing costs nobody anything but the meeting itself.</p></div>
+
+  <h2 id="c7-6"><span class="num">7.6</span> Route locking</h2>
+  <p>A route is more than a signal cleared over switches set the right way. From the moment its signal is cleared the route <span class="term">holds</span> its switches: they cannot be moved by any lever, and no other route that needs one of them in the other position can be set, until the movement has passed clear. The frame does this by itself; no station master remembers it. This is <span class="term">route locking</span>, and it is the reason the junction at Wending can be worked from one box by one person without ever moving a switch under a train.</p>
+  <p>A route is released, and its switches freed, when all of these are true, and not before:</p>
+  <ol class="steps">
+    <li><strong>Its signal has been replaced to STOP.</strong> A signal is replaced the moment the movement passes it; a cleared signal that no train has yet reached keeps its route held.</li>
+    <li><strong>The approach is empty.</strong> The stretch from the signal to the first switch has no vehicle on it. A train that has passed the signal and is running towards the switch still holds the route.</li>
+    <li><strong>The sections of the route are empty,</strong> except the one the movement was cleared into, where it now stands: a train standing in the platform it was admitted to does not hold the home route behind it, and a train that has left for the section ahead does not hold the starting route once it has cleared the station's last switch.</li>
+    <li><strong>No vehicle stands within 12 m of any switch on the route,</strong> on any of its three legs, and none stands across it.</li>
+  </ol>
+  <div class="rule" id="S32">
+    <span class="rule-num">Rule S 32</span><span class="rule-title">Route locking</span>
+    <p>A route holds its switches from the clearing of its signal until the movement has passed clear of them; no switch is moved under a route. Another route may share a switch only in the same position.</p>
+  </div>
+  <p>Two routes that need the same switch in the same position may be set together; the routes into platforms 1 and 2 from the south, for instance, share WD A in opposite positions and so exclude each other, while <span class="mono">Home S → 1</span> and <span class="mono">1 → North stub</span> share nothing and may stand together. At the junction it is simpler to say what may not: <span class="mono">1 → N</span> holds WD J normal, so <span class="mono">1 → B</span>, which needs it reverse, waits until the Coldwater portion has passed the junction and cleared the section beyond by the length of the lock; then WD J is free, the box sets the branch route, and WD 7 clears a second time. That waiting is what the second portion's driver sees as a starter still at STOP a minute after its time, and it is the frame doing its work.</p>
+  <div class="why"><p>An interlocking that only prevents a signal being cleared over a wrongly set switch protects the moment of clearing and nothing after it. The danger at a junction is the minute after: a switch moved for the next movement while the last is still on it. Locking the route until the train has passed clear closes that minute. We chose the 12 m and the empty approach over a track circuit for every metre because they can be checked by eye from the box as well as by the frame, and the eye is the frame's inspector.</p></div>
+
+  <h2 id="c7-7"><span class="num">7.7</span> A worked example: the split and the join at Wending</h2>
+  <p>Train 7 of the working timetable (<a href="book-t.html">Book T</a>) is two Class 1 motor cars in multiple, 1002 at the Down end driven from its cab and 1003 behind it. It leaves Ashgrove at 10:00 and is <span class="term">split</span> at Wending: 1002 continues to Coldwater as train 7, 1003 follows over the branch to Fernhollow as train 31. In the afternoon the two portions come back and are <span class="term">joined</span> at Wending into train 10 for Ashgrove. The driving is in <a href="book-d.html">Book D</a>; the order in which the portions leave is the timetable's, in Book T. Here is what the signals do.</p>
+  <ol class="steps">
+    <li><strong>Arrival, 10:07.</strong> Under WD 1D at CAUTION and WD 1 at CAUTION, train 7 runs into platform 1 and stops with the front of 1002 at the Down board at 3.165. Both cars stand on track 1. Wending Box cancels warrant A.</li>
+    <li><strong>The split.</strong> The driver secures 1002, walks to the coupling between the cars, parts the brake pipe and the coupler (<a href="book-d.html#D12">Rule D 12</a>), and returns to the cab. 1003 now stands behind, braked, with its own driver aboard. Nothing has been cleared yet; the box waits until it is told the train is in two.</li>
+    <li><strong>First portion, 10:12.</strong> Wending asks Coldwater for line clear for 1002 into section B; Coldwater issues warrant B and sets CW 1. Wending sets <span class="mono">1 → N</span>: WD B normal and WD J normal, both now held, and WD 7 clears. The box says so, and says that WD J lies straight. At 10:14 J. Pell shows the baton to 1002; it leaves, reads WD J's indicator lying along the track as it approaches, and runs over the junction onto the main line.</li>
+    <li><strong>The lock does its work.</strong> At 10:14 Wending also asks Fernhollow for line clear for 1003 into section C; Fernhollow issues warrant C and sets FH 1 into its platform. But <span class="mono">1 → B</span> needs WD J reverse, and WD J is held normal by the route 1002 is still passing over. The box tells 1003: "Warrant C in hand; WD 7 will clear once the route ahead is free." Once 1002 has passed the junction and drawn clear of it, <span class="mono">1 → N</span> releases; the box sets <span class="mono">1 → B</span>, WD J goes reverse and is held again, and WD 7 clears a second time, this time for the branch. The box says that WD J lies for the branch. At 10:16 the baton is shown to 1003, its driver reads the indicator at WD J leaning towards the branch, and it climbs away to Fernhollow.</li>
+    <li><strong>The join, afternoon.</strong> 1002 comes back from Coldwater under WD 8 at CAUTION into platform 2 and stands at the Up board at 3.015; warrant B is cancelled. Fernhollow asks for line clear for 1003 into section C towards Wending. Wending issues warrant C and sets <span class="mono">Home B → 2 (call-on)</span>: WD J reverse and WD B reverse, held; and WD 10, the main head staying at STOP, lights its subsidiary. The box tells 1003's driver: "WD 10 shows its subsidiary: call on to platform 2 and couple to 1002 standing there." 1003 comes down the branch under WD 10D at CAUTION, passes WD 10 under its subsidiary as a shunting movement at 15 km/h, runs over the junction and through WD B onto track 2, and approaches 1002 at 5 km/h over the last 20 m, touching at 2 km/h or less (<a href="book-d.html#D10">Rule D 10</a>). The coupler engages; the pipe is connected; the brake is proved through the pair (<a href="book-d.html#D14">Rule D 14</a>). Wending cancels warrant C: 1003 has arrived complete, as part of another train.</li>
+    <li><strong>Departure as one, 11:00.</strong> Wending asks Ashgrove for line clear for the pair into section A, receives warrant A, sets <span class="mono">2 → S</span> and clears WD 4. The baton is shown to 1002's driver, who takes both cars home.</li>
+  </ol>
+  <p>While all this happens on platform 1 and then platform 2, the other pair, 1004 and 1001, is doing the same thing the other way about on the other platform: joined at 10:11 by a call-on under WD 10 into platform 2, split again at 10:47 on platform 1. Two split trains pass at Wending because the two platforms, the junction's lock and the call-on together let each portion reach its own line without ever meeting another on the north stub.</p>
+  <div class="note"><p><strong>Which portion leaves first.</strong> A pair that has turned round at a terminus comes back with its cars the other way about: the branch car may now be at the Down end. The portion at the Down end must leave first, whichever line it is for, because the other cannot pass it. The timetable knows this; the frame merely refuses to let it be forgotten.</p></div>
 </section>
 
 <!-- 8 ONE TRAIN WORKING -->
@@ -1281,6 +1442,8 @@
     <li>A board that is missing, turned, or contradicts the last board you passed.</li>
     <li>A distant that shows <strong>CLEAR</strong> while the home it repeats shows anything but CLEAR. The home is right; the distant is reported.</li>
     <li>A starter at CLEAR when the box has <strong>not said "warrant in hand"</strong>, or a warrant the register cannot account for. The train waits until the two boxes agree.</li>
+    <li>A junction indicator that <strong>disagrees with the box</strong>: WD J showing the branch when the box has said Coldwater, or the reverse. Stop short of the junction; the indicator is what the switch is doing, and the switch is what the train will do.</li>
+    <li>A home signal's subsidiary lit for a train that has <strong>not been told it is called on</strong>. Treat it as STOP and speak to the box.</li>
   </ul>
 
   <h2><span class="num">9.2</span> What to do</h2>
@@ -1307,19 +1470,22 @@
     <dt>Advance speed board</dt><dd>A black numeral on an ivory triangle, announcing a lower limit one warning distance ahead. Be at that speed when the front of the train reaches the speed board it announces.</dd>
     <dt>Aspect</dt><dd>What a main signal shows: STOP, CAUTION or CLEAR. Ground signals show <em>indications</em>: SHUNT STOP or SHUNT.</dd>
     <dt>Baton</dt><dd>The station master's hand-held disc, green one side and red the other, with a lamp. Green held steady means <em>Ready to start</em>.</dd>
-    <dt>Block section</dt><dd>The single line between one station's home signal and the next: section A, Ashgrove to Wending; section B, Wending to Coldwater. One train at a time, under the section's Line Warrant.</dd>
-    <dt>Box</dt><dd>The signal box: the room, the frame, the register and the person working it. Ashgrove Box, Wending Box, Coldwater Box.</dd>
+    <dt>Block section</dt><dd>The single line between one station's home signal and the next: section A, Ashgrove to Wending; section B, Wending to Coldwater; section C, Wending to Fernhollow. One train at a time, under the section's Line Warrant.</dd>
+    <dt>Box</dt><dd>The signal box: the room, the frame, the register and the person working it. Ashgrove Box, Wending Box, Coldwater Box, Fernhollow Box.</dd>
+    <dt>Branch</dt><dd>The Fernhollow branch: the line that leaves the main line at WD J and climbs the side valley to Fernhollow, with its own kilometrage lettered F, a line speed of 40 km/h and its own block section, C.</dd>
+    <dt>Call-on</dt><dd>A home signal's subsidiary lit for a train: the platform ahead is occupied; enter at shunting speed prepared to stop short of the vehicles, and couple only as instructed. Only WD 8 and WD 10. Rule S 30.</dd>
     <dt>Crossing</dt><dd>A place where a road or track crosses the line on the level: Millers' Crossing, km 4.700. Announced to the driver by a whistle board 200 m before it in each direction.</dd>
     <dt>Distant signal</dt><dd>A two-lamp signal, green over amber, on an ivory chevron plate, one warning distance before a home signal, repeating what the home shows. CAUTION: be ready to stop at the home. CLEAR: the station is clear. Never at STOP. Named for its home with a D.</dd>
     <dt>Cleared</dt><dd>Of a signal: changed from STOP to a proceed aspect, or from SHUNT STOP to SHUNT. Of a route: set and its signal cleared.</dd>
     <dt>Facing move</dt><dd>A movement over a switch from its toe, which the switch may send one way or the other. The indicator shows which.</dd>
-    <dt>Down, Up</dt><dd>Down is towards increasing kilometrage (Ashgrove through Wending to Coldwater); Up is towards decreasing. Odd signals face Down, even face Up.</dd>
+    <dt>Down, Up</dt><dd>Down is towards increasing kilometrage (Ashgrove through Wending to Coldwater; on the branch, away from Wending); Up is towards decreasing. Odd signals face Down, even face Up.</dd>
     <dt>Frame</dt><dd>The row of interlocked levers in the box that set switches and clear signals.</dd>
     <dt>Gradient post</dt><dd>A slate post with a small ivory disc and two black arms at every change of grade, each arm tilted with the grade on its side and lettered in per mille (L for level). The arm on the side you are travelling towards shows the grade ahead. Information only.</dd>
     <dt>Ground signal</dt><dd>A low black signal with two white lamps, governing shunting movements only.</dd>
     <dt>Headshunt</dt><dd>The dead-end track beyond the inner switch of a terminus, used to run round. Ends at the buffer stop. Wending has none; its north stub serves.</dd>
-    <dt>Hectometre post</dt><dd>An ivory plate on a slate post every 100 m, reading the distance from the Ashgrove buffer stop as kilometre, point, hectometre digit (1.4). A position reference, not a signal.</dd>
-    <dt>Home signal</dt><dd>The main signal governing entry to a station from the single line: AG 2, WD 1 and WD 8, CW 1.</dd>
+    <dt>Hectometre post</dt><dd>An ivory plate on a slate post every 100 m, reading the distance from the Ashgrove buffer stop as kilometre, point, hectometre digit (1.4). On the branch the plates count from the junction and carry the letter F (F 0.8). A position reference, not a signal.</dd>
+    <dt>Home signal</dt><dd>The main signal governing entry to a station from the single line: AG 2; WD 1, WD 8 and WD 10; CW 1; FH 1.</dd>
+    <dt>Junction</dt><dd>A switch that chooses between lines: WD J, at km 3.360, normal for Coldwater and reverse for the Fernhollow branch. Every movement over it is one route, which holds it until the movement has passed clear.</dd>
     <dt>Kilometre post</dt><dd>The larger, green-rimmed plate at each full kilometre, reading the kilometre with its zero in the same black figures as the hectometre posts (2.0). A position reference, not a signal.</dd>
     <dt>Limit of Shunt</dt><dd>A board on the single line beyond the outer switch, which shunting movements must not pass.</dd>
     <dt>Line Warrant</dt><dd>The one numbered card for a block section, kept in the register of the box at the far end and issued over the telephone to one train at a time. No starter into the section clears without it; it is cancelled when the train has arrived complete. Rule S 28.</dd>
@@ -1329,23 +1495,25 @@
     <dt>One Train Working</dt><dd>Working a line with a single vehicle and no signals, the driver departing on their own authority. Now used only between Ashgrove and Wending.</dd>
     <dt>Resume board</dt><dd>A black square with a white bar along the line, 90 m beyond a neutral section: power may be taken again.</dd>
     <dt>Per mille</dt><dd>The Railway's unit of gradient, ‰: metres of rise or fall in each kilometre. The valley grade is 12‰, that is 12 m in every kilometre.</dd>
+    <dt>Portion</dt><dd>One of the parts of a train that is split at a junction station, each going its own way; and one of the parts that are joined there into a train.</dd>
     <dt>Proceed aspect</dt><dd>CAUTION or CLEAR. Either gives the road as far as the next signal.</dd>
     <dt>Route</dt><dd>A path through a station with its switch positions, governed by one signal (or a pair of ground signals).</dd>
+    <dt>Route locking</dt><dd>The holding of a route's switches from the clearing of its signal until the movement has passed clear of them. No switch is moved under a route; another route may share a switch only in the same position. Rule S 32.</dd>
     <dt>Run through</dt><dd>To pass over a switch from a branch when the switch is set for the other branch, forcing the blades open. Damages the switch, can derail the tail of the move, and is always recorded (Rule S 22).</dd>
     <dt>Section board</dt><dd>A black square with a white bar across the line, 90 m before a neutral section: shut off power.</dd>
     <dt>Shunting movement</dt><dd>A movement within station limits under ground signals or a subsidiary, at up to 15 km/h, prepared to stop short of anything. It obeys main signals too.</dd>
     <dt>Signal passed at danger</dt><dd>Passing a main signal at STOP or a ground signal at SHUNT STOP without authority. Always recorded.</dd>
-    <dt>Starting signal</dt><dd>The main signal governing departure from a platform track onto the single line: AG 1; WD 2, WD 4, WD 7 and WD 9; CW 2. Cleared only with the Line Warrant in hand.</dd>
+    <dt>Starting signal</dt><dd>The main signal governing departure from a platform track onto the single line: AG 1; WD 2, WD 4, WD 7 and WD 9; CW 2; FH 2. Cleared only with the Line Warrant in hand. WD 7 and WD 9 read over the junction and serve both lines beyond it.</dd>
     <dt>Station limits</dt><dd>Everything between the speed boards at a station: the stub, the loop, the headshunt. Speed 25 km/h, shunting 15 km/h.</dd>
     <dt>Stop board</dt><dd>The ivory board with a black bar at the end of a platform, where the front of an arriving train stops.</dd>
     <dt>Stub</dt><dd>The short length of single line between a station's outer switch and its Limit of Shunt board. Wending has one at each end, the south stub and the north stub.</dd>
-    <dt>Subsidiary</dt><dd>Two small white lamps beside the head of a main signal (WD 4, WD 7). Lit diagonally with the main at STOP they show SHUNT to a shunting movement; to a train the signal is still at STOP.</dd>
+    <dt>Subsidiary</dt><dd>Two small white lamps beside the head of a main signal (WD 4, WD 7, WD 8, WD 10). Lit diagonally with the main at STOP they show SHUNT to a shunting movement; to a train the signal is still at STOP, except at WD 8 and WD 10, where the lit subsidiary is a call-on.</dd>
     <dt>Switch indicator</dt><dd>A black box on a short post at the toe of every switch, with a white bar on each face that lies the way the switch lies: along the track for the straight route, leaning towards the diverging track for the diverging route. Read from every leg. Not a signal.</dd>
     <dt>Through station</dt><dd>A station with the single line at both ends, which trains pass through: Wending, with a platform on each loop track.</dd>
     <dt>Track section</dt><dd>A length of track, or a switch, that reports to the frame whether a vehicle stands on it.</dd>
     <dt>Trailing move</dt><dd>A movement over a switch from one of its branches towards the toe. The switch must be set for that branch; its indicator shows whether it is.</dd>
     <dt>Train movement</dt><dd>A movement made under main signals, from station to station.</dd>
-    <dt>Warning distance</dt><dd>The distance between an advance speed board and the speed board it announces, and between a distant signal and its home: 200 m where the approach is level or rising, 250 m where it falls at 10‰ or more. On this line, 250 m on the Up approach to Ashgrove and 200 m at every other approach.</dd>
+    <dt>Warning distance</dt><dd>The distance between an advance speed board and the speed board it announces, and between a distant signal and its home: 200 m where the approach is level or rising, 250 m where it falls at 10‰ or more. On this line, 250 m on the Up approach to Ashgrove and on the Up approach to Wending from the branch, and 200 m at every other approach.</dd>
     <dt>Whistle board</dt><dd>A black W on an ivory disc, 200 m before a crossing: sound one long blast.</dd>
   </dl>
 </section>
@@ -1353,9 +1521,9 @@
 <!-- COLOPHON -->
 <section class="page colophon" id="colophon" data-folio="Book S · Colophon">
   <img class="mark" src="../brand/mark-green.svg" alt="">
-  <p><strong>Book S — Signalling Manual.</strong> Sixth edition, September 2026: the Coldwater extension. Issued by the Signal Engineer's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
-  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes the fifth edition of September 2026. What changed is listed in <a href="amendments/book-s-ed6.html">Amendment Slip S-6</a>; earlier changes are in <a href="amendments/book-s-ed5.html">Amendment Slip S-5</a> (fourth to fifth), <a href="amendments/book-s-ed4.html">Amendment Slip S-4</a> (third to fourth), <a href="amendments/book-s-ed3.html">Amendment Slip S-3</a> (second to third) and <a href="amendments/book-s-ed2.html">Amendment Slip S-2</a> (first to second).</p>
-  <p>Amendments are issued as numbered slips; paste them in at the page indicated. Rules S 10 to S 28 are cited by number in Books R, D and T and must not be renumbered without a general amendment.</p>
+  <p><strong>Book S — Signalling Manual.</strong> Seventh edition, September 2026: the Fernhollow branch. Issued by the Signal Engineer's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
+  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes the sixth edition of September 2026. What changed is listed in <a href="amendments/book-s-ed7.html">Amendment Slip S-7</a>; earlier changes are in <a href="amendments/book-s-ed6.html">Amendment Slip S-6</a> (fifth to sixth), <a href="amendments/book-s-ed5.html">Amendment Slip S-5</a> (fourth to fifth), <a href="amendments/book-s-ed4.html">Amendment Slip S-4</a> (third to fourth), <a href="amendments/book-s-ed3.html">Amendment Slip S-3</a> (second to third) and <a href="amendments/book-s-ed2.html">Amendment Slip S-2</a> (first to second).</p>
+  <p>Amendments are issued as numbered slips; paste them in at the page indicated. Rules S 10 to S 32 are cited by number in Books R, D and T and must not be renumbered without a general amendment.</p>
   <p>Companion volumes: <a href="book-i.html">Book I, Identity</a> · <a href="book-r.html">Book R, Rules of Operation</a> · <a href="book-d.html">Book D, Driving</a> · <a href="book-p.html">Book P, Permanent Way</a> · <a href="book-t.html">Book T, Timetabling</a>.</p>
 </section>
 

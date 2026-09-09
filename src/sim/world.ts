@@ -25,6 +25,10 @@ export interface Route {
   signals: [Signal, Signal["aspect"]][];
   /** edges that must be unoccupied */
   clear: Edge[];
+  /** the edge the movement ends on or continues along; not watched for release */
+  dest?: Edge;
+  /** set while the route holds its switches */
+  live?: boolean;
 }
 
 export interface AheadItem { kind: "signal" | "board" | "vehicle" | "buffer"; label: string; dist: number; obj?: Trackside; aspect?: string; applies: boolean }
@@ -53,7 +57,12 @@ export class World {
   /** when set, the UI runs the world quickly until this time (a "wait for departure" convenience) */
   skipUntil: number | null = null;
   private prevLead = new Map<Consist, { pos: Position; v: number }>();
-  private flags = { doorsMoving: false, lightsBad: false, overspeed: false, shortStop: new Set<string>() };
+  private flagsOf = new Map<Consist, { doorsMoving: boolean; lightsBad: boolean; overspeed: boolean }>();
+  private flagsFor(c: Consist) {
+    let f = this.flagsOf.get(c);
+    if (!f) { f = { doorsMoving: false, lightsBad: false, overspeed: false }; this.flagsOf.set(c, f); }
+    return f;
+  }
   /** per-consist bookkeeping for rolling back, running away and dragging the parking brake */
   private motion = new Map<Consist, { intended: number; wrong: number; flagged: boolean; drag: number; dragFlagged: boolean }>();
   finished: string | null = null;
@@ -190,7 +199,7 @@ export class World {
             if (o.approach === "toe") {
               const far = set.a === o.sw.node ? set.b : set.a;
               const onward = far.edges.find((e) => e !== set);
-              label = `Switch ${o.sw.id} · lies ${o.sw.state === "normal" ? "straight" : "diverging"}${onward && onward.track !== "sw" ? ` (to ${onward.track === "hs" ? "the headshunt" : onward.track === "main" ? "the main line" : "track " + onward.track})` : ""}`;
+              label = `Switch ${o.sw.id} · lies ${o.sw.state === "normal" ? "straight" : "diverging"}${onward && onward.track !== "sw" ? ` (to ${onward.track === "hs" ? "the headshunt" : onward.track === "main" ? "the main line" : onward.line === "branch" ? "the Fernhollow branch" : "track " + onward.track})` : ""}`;
             }
             else label = `Switch ${o.sw.id} · ${o.approach === o.sw.state ? "set for you" : "SET AGAINST YOU"}`;
           }
@@ -217,7 +226,9 @@ export class World {
 
   /** Gradient in per mille under a vehicle's centre, positive = rising Down. */
   gradeUnder(v: Vehicle): number {
-    return this.layout.gradientAt((kmOf(v.pos) + kmOf(v.posB)) / 2);
+    const a = v.pos, b = v.posB;
+    if (a.edge.line === b.edge.line) return this.layout.gradientAt((kmOf(a) + kmOf(b)) / 2, a.edge.line);
+    return this.layout.gradientAt(kmOf(a), a.edge.line);
   }
   /** Downhill force on the consist, signed in the consist reference direction (N). */
   gravityOn(c: Consist): number {
@@ -230,7 +241,7 @@ export class World {
   /** Gradient ahead of a cab in the direction it faces, per mille, positive = rising ahead. */
   gradeAhead(vehicle: Vehicle, cab: Cab): number {
     const p = vehicle.endPos(cab.end);
-    return this.layout.gradientAt(kmOf(p)) * kmDirOf(p);
+    return this.layout.gradientAt(kmOf(p), p.edge.line) * kmDirOf(p);
   }
   setParkingBrake(on: boolean) {
     const c = this.requireCab(); if (!c) return;
@@ -240,20 +251,84 @@ export class World {
   /** Speed limit for a consist right now: the lowest limit under any part of it (Rule R 10). */
   limitFor(c: Consist): number {
     const f = c.frontEnd(), r = c.rearEnd();
-    let lim = this.layout.limitOver(kmOf(f.vehicle.endPos(f.end)), kmOf(r.vehicle.endPos(r.end)));
-    if (!c.isTrain) lim = Math.min(lim, 15);
+    const pf = f.vehicle.endPos(f.end), pr = r.vehicle.endPos(r.end);
+    let lim = pf.edge.line === pr.edge.line
+      ? this.layout.limitOver(kmOf(pf), kmOf(pr), pf.edge.line)
+      : Math.min(this.layout.limitAt(kmOf(pf), pf.edge.line), this.layout.limitAt(kmOf(pr), pr.edge.line));
+    if (!c.isTrain || c.callOn) lim = Math.min(lim, 15);
     return lim;
   }
 
   /* ---------- routes / interlocking ---------- */
 
+  /** No vehicle end within 12 m of the switch's node, and no vehicle standing across it. */
+  switchClear(sw: Switch): boolean {
+    const legs = [sw.toe, sw.normal, sw.reverse];
+    for (const v of this.vehicles) {
+      const occ = this.edgesOf(v);
+      if (occ.filter((e) => legs.includes(e)).length >= 2) return false;
+      for (const end of ["A", "B"] as End[]) {
+        const p = v.endPos(end);
+        if (!legs.includes(p.edge)) continue;
+        const dNode = p.edge.a === sw.node ? p.s : p.edge.length - p.s;
+        if (dNode < 12) return false;
+      }
+    }
+    return true;
+  }
+  /** Set a route: its switches must be free to move, its sections clear; it then holds its switches until the train has passed. */
   setRoute(id: string): boolean {
     const r = this.routes.find((x) => x.id === id);
     if (!r) throw new Error(`no route ${id}`);
+    if (r.live) return true;
+    for (const [sw, st] of r.switches) {
+      if (sw.state !== st && (sw.locks.size > 0 || !this.switchClear(sw))) return false;
+    }
     if (r.clear.some((e) => this.isOccupied(e))) return false;
-    for (const [sw, st] of r.switches) sw.state = st;
+    for (const [sw, st] of r.switches) { sw.state = st; sw.locks.add(r.id); sw.locked = true; }
     for (const [sig, asp] of r.signals) sig.aspect = asp;
+    r.live = true;
     return true;
+  }
+  /** Is any vehicle within the stretch [sA, sB] of an edge (an end inside it, or a vehicle spanning it)? */
+  private occupiedBetween(edge: Edge, sA: number, sB: number): boolean {
+    const lo = Math.min(sA, sB), hi = Math.max(sA, sB);
+    for (const v of this.vehicles) {
+      const pa = v.pos, pb = v.posB;
+      const onA = pa.edge === edge, onB = pb.edge === edge;
+      if (onA && pa.s >= lo && pa.s <= hi) return true;
+      if (onB && pb.s >= lo && pb.s <= hi) return true;
+      if (onA && onB && Math.min(pa.s, pb.s) < lo && Math.max(pa.s, pb.s) > hi) return true;
+      if (onA !== onB && this.edgesOf(v).includes(edge)) {
+        // one end off the edge: the vehicle covers from that end's side of the edge to its on-edge end
+        const on = onA ? pa : pb;
+        const towardsEnd = onA ? (pa.dir === 1 ? edge.length : 0) : (pb.dir === 1 ? edge.length : 0);
+        const a = Math.min(on.s, towardsEnd), b = Math.max(on.s, towardsEnd);
+        if (a < hi && b > lo) return true;
+      }
+    }
+    return false;
+  }
+  /** Release live routes whose signals have been passed and whose approach, switches and sections the train has cleared. */
+  private releaseRoutes() {
+    for (const r of this.routes) {
+      if (!r.live) continue;
+      if (r.signals.some(([sig]) => sig.aspect !== "stop")) continue;
+      const watch = new Set<Edge>(r.clear);
+      if (r.dest) watch.delete(r.dest);
+      if ([...watch].some((e) => this.isOccupied(e))) continue;
+      // the approach: from each signal to the end of its edge in the direction it faces
+      let approachBusy = false;
+      for (const [sig] of r.signals) {
+        const e = sig.pos.edge;
+        const end = sig.pos.dir === 1 ? e.length : 0;
+        if (this.occupiedBetween(e, sig.pos.s, end)) approachBusy = true;
+      }
+      if (approachBusy) continue;
+      if (r.switches.some(([sw]) => !this.switchClear(sw))) continue;
+      r.live = false;
+      for (const [sw] of r.switches) { sw.locks.delete(r.id); sw.locked = sw.locks.size > 0; }
+    }
   }
   replaceSignal(id: string) { this.signal(id).aspect = "stop"; }
 
@@ -412,6 +487,18 @@ export class World {
     if (c.v !== 0) { this.say("Driver", "The train is moving.", "system"); return; }
     const ctl = c.control;
     if (ctl && ctl.cab.brake < 4) this.incident("UNCOUPLE-UNBRAKED", "Uncoupled with the train brake not fully applied (Rule D 12)");
+    const [partA] = this.uncoupleAt(c, k);
+    // the driver stands at the parted coupling; anchor them to a parted end, preferring one with a cab
+    const partB = this.consists.find((x) => x !== partA && c.vehicles.slice(k + 1).every((v) => x.vehicles.includes(v)))!;
+    const endA: Anchor = { kind: "cab", vehicle: partA.vehicles[k], end: partA.flip[k] ? "A" : "B" };
+    const endB: Anchor = { kind: "cab", vehicle: partB.vehicles[0], end: partB.flip[0] ? "B" : "A" };
+    const hasCab = (a: Anchor) => a.kind === "cab" && !!a.vehicle.cabs[a.end];
+    this.driver = { kind: "ground", at: hasCab(endA) ? endA : hasCab(endB) ? endB : endA };
+    this.say("Driver", `Uncoupled ${c.vehicles[k].number} from ${c.vehicles[k + 1].number}. Brake pipe parted; both parts braked.`, "driver");
+  }
+  /** Part a consist at coupling k (between vehicles k and k+1); returns the two parts. */
+  uncoupleAt(c: Consist, k: number): [Consist, Consist] {
+    const ctl = c.control;
     const partA = new Consist(`${c.id}a`, c.vehicles.slice(0, k + 1), c.flip.slice(0, k + 1));
     const partB = new Consist(`${c.id}b`, c.vehicles.slice(k + 1), c.flip.slice(k + 1));
     partA.couplings = c.couplings.slice(0, k);
@@ -421,20 +508,19 @@ export class World {
     }
     this.consists = this.consists.filter((x) => x !== c).concat([partA, partB]);
     this.prevLead.delete(c);
-    // the driver stands at the parted coupling; anchor them to a parted end, preferring one with a cab
-    const endA: Anchor = { kind: "cab", vehicle: partA.vehicles[k], end: partA.flip[k] ? "A" : "B" };
-    const endB: Anchor = { kind: "cab", vehicle: partB.vehicles[0], end: partB.flip[0] ? "B" : "A" };
-    const hasCab = (a: Anchor) => a.kind === "cab" && !!a.vehicle.cabs[a.end];
-    this.driver = { kind: "ground", at: hasCab(endA) ? endA : hasCab(endB) ? endB : endA };
-    this.say("Driver", `Uncoupled ${c.vehicles[k].number} from ${c.vehicles[k + 1].number}. Brake pipe parted; both parts braked.`, "driver");
+    const rest = this.restKm.get(c);
+    if (rest !== undefined) { this.restKm.set(partA, rest); this.restKm.set(partB, rest); }
+    return [partA, partB];
   }
   /** Connect the brake pipe at the coupling the driver stands at. */
   connectPipe() {
     const d = this.driver; if (d.kind !== "ground" || d.at.kind !== "coupling") return;
-    const c = d.at.consist;
-    c.couplings[d.at.index].pipe = true;
-    c.brakeProved = false;
+    this.connectAt(d.at.consist, d.at.index);
     this.say("Driver", "Brake pipe and control line connected.", "driver");
+  }
+  connectAt(c: Consist, k: number) {
+    c.couplings[k].pipe = true;
+    c.brakeProved = false;
   }
 
   atPlatform(c: Consist): boolean {
@@ -496,8 +582,12 @@ export class World {
     const c1Coup = sign > 0 ? c1.couplings.slice() : c1.couplings.slice().reverse();
     const merged = new Consist(`${c1.id}+${c2.id}`, [...c2Vehicles, ...c1Vehicles], [...c2Flip, ...c1Flip]);
     merged.couplings = [...c2Coup, { pipe: false }, ...c1Coup];
-    const ctl = c1.control ?? c2.control;
+    // the standing train's driver keeps the train; the player's cab always wins
+    const player = this.driver.kind === "cab" ? this.driver.vehicle : null;
+    const playerCtl = player && (c1.control?.vehicle === player ? c1.control : c2.control?.vehicle === player ? c2.control : null);
+    const ctl = playerCtl ?? c2.control ?? c1.control;
     if (ctl) merged.control = { vehicle: ctl.vehicle, cab: ctl.cab, index: merged.vehicles.indexOf(ctl.vehicle) };
+    merged.callOn = false;
     merged.v = 0;
     merged.brakeProved = false;
     this.consists = this.consists.filter((x) => x !== c1 && x !== c2).concat([merged]);
@@ -547,13 +637,15 @@ export class World {
       if (this.consists.includes(c)) this.tryCouple(c);
     }
 
+    this.releaseRoutes();
+    for (const c of this.consists) if (c.callOn && c.v === 0) c.callOn = false;
     // distant signals repeat their home: CLEAR only when the home is CLEAR
     for (const s of this.signals) if (s.type === "distant" && s.distantOf) s.aspect = this.signal(s.distantOf).aspect === "clear" ? "clear" : "caution";
     // overhead line: no volts under a neutral section
     for (const v of this.vehicles) {
       if (!v.type.pantograph) continue;
       const km = (kmOf(v.pos) + kmOf(v.posB)) / 2;
-      v.lineVolts = !this.layout.neutral.some((n) => km >= n.kmFrom && km <= n.kmTo);
+      v.lineVolts = !this.layout.neutral.some((n) => n.line === v.pos.edge.line && km >= n.kmFrom && km <= n.kmTo);
     }
     this.checkContinuous(dt);
     for (const h of this.hooks) h(this, dt);
@@ -577,9 +669,12 @@ export class World {
     if (o.kind === "signal") {
       if (o.type === "distant") return; // information only; it follows its home
       if (o.type === "main") {
-        // a main signal governs every movement: trains need CAUTION or CLEAR, shunting moves may also take the subsidiary
-        const ok = o.aspect === "caution" || o.aspect === "clear" || (o.aspect === "shunt" && !c.isTrain);
+        // a main signal governs every movement: trains need CAUTION or CLEAR, shunting moves may also take the subsidiary,
+        // and a train may take a home's subsidiary as a call-on onto an occupied platform at shunting speed
+        const callOn = o.aspect === "shunt" && c.isTrain && !!o.callOn;
+        const ok = o.aspect === "caution" || o.aspect === "clear" || (o.aspect === "shunt" && !c.isTrain) || callOn;
         if (!ok) this.incident("SPAD", `${names} passed ${o.id} at STOP (Rule S 10)`, false, c);
+        if (callOn) c.callOn = true;
       } else if (!c.isTrain && o.aspect === "stop") {
         this.incident("SPAD", `${names} passed ${o.id} at SHUNT STOP (Rule S 10)`, false, c);
       }
@@ -595,7 +690,7 @@ export class World {
     if (o.board === "limitOfShunt" && !c.isTrain) this.incident("LOS", `${names} passed the Limit of Shunt (Rule S 12)`, false, c);
     if (o.board === "whistle") {
       const dir = kmDirOf(o.pos);
-      const crossing = this.layout.crossings.find((x) => (x.km - kmOf(o.pos)) * dir > 0 && (x.km - kmOf(o.pos)) * dir < 0.5);
+      const crossing = this.layout.crossings.find((x) => x.line === o.pos.edge.line && (x.km - kmOf(o.pos)) * dir > 0 && (x.km - kmOf(o.pos)) * dir < 0.5);
       if (crossing) this.whistleDue.set(c, { km: crossing.km, dir, since: this.time - 10 });
     }
   }
@@ -605,11 +700,12 @@ export class World {
     for (const c of this.consists) {
       const moving = Math.abs(c.v) > 0.05;
       const speed = c.speedKmh;
+      const flags = this.flagsFor(c);
       // overspeed
       const lim = this.limitFor(c);
       if (moving && speed > lim + 2) {
-        if (!this.flags.overspeed) { this.flags.overspeed = true; this.incident("OVERSPEED", `${c.vehicles.map((v) => v.number).join("+")} at ${speed.toFixed(0)} km/h where the limit is ${lim} (Rule R 10)`, false, c); }
-      } else if (speed < lim) this.flags.overspeed = false;
+        if (!flags.overspeed) { flags.overspeed = true; this.incident("OVERSPEED", `${c.vehicles.map((v) => v.number).join("+")} at ${speed.toFixed(0)} km/h where the limit is ${lim} (Rule R 10)`, false, c); }
+      } else if (speed < lim) flags.overspeed = false;
       // whistle boards: one long blast before the crossing
       const wd = this.whistleDue.get(c);
       if (wd) {
@@ -631,8 +727,8 @@ export class World {
       }
       // doors
       if (moving && c.anyDoorsOpen()) {
-        if (!this.flags.doorsMoving) { this.flags.doorsMoving = true; this.incident("DOORS-MOVING", "Moved with doors open (Rule R 14)", false, c); }
-      } else if (!c.anyDoorsOpen()) this.flags.doorsMoving = false;
+        if (!flags.doorsMoving) { flags.doorsMoving = true; this.incident("DOORS-MOVING", "Moved with doors open (Rule R 14)", false, c); }
+      } else if (!c.anyDoorsOpen()) flags.doorsMoving = false;
       // lights on the main line
       if (moving && c.isTrain && speed > 5) {
         const lead = c.leadingPos(Math.sign(c.v));
@@ -641,8 +737,8 @@ export class World {
           const front = c.v > 0 ? c.frontEnd() : c.rearEnd();
           const rear = c.v > 0 ? c.rearEnd() : c.frontEnd();
           const ok = front.vehicle.lightsAt(front.end) === "head" && rear.vehicle.lightsAt(rear.end) === "tail";
-          if (!ok) { if (!this.flags.lightsBad) { this.flags.lightsBad = true; this.incident("LIGHTS", `Incorrect lights on the main line: front shows ${front.vehicle.lightsAt(front.end).toUpperCase()}, rear shows ${rear.vehicle.lightsAt(rear.end).toUpperCase()} (Rule R 16)`, false, c); } }
-          else this.flags.lightsBad = false;
+          if (!ok) { if (!flags.lightsBad) { flags.lightsBad = true; this.incident("LIGHTS", `${c.vehicles.map((v) => v.number).join("+")}: incorrect lights on the main line: front shows ${front.vehicle.lightsAt(front.end).toUpperCase()}, rear shows ${rear.vehicle.lightsAt(rear.end).toUpperCase()} (Rule R 16)`, false, c); } }
+          else flags.lightsBad = false;
         }
       }
       // horn before moving from rest
@@ -675,6 +771,26 @@ export class World {
         }
       }
       this.prevLead.set(c, { pos: c.leadingPos(c.v >= 0 ? 1 : -1), v: c.v });
+      // in multiple working the other cars' cabs follow the driving cab: the leading end of the train shows head,
+      // the trailing end tail, coupled ends nothing
+      if (c.control && c.vehicles.length > 1) {
+        const ctl = c.control;
+        const drv = ctl.vehicle;
+        const lit = ctl.cab.lights !== "off";
+        const fwd = c.cabForwardSign(ctl.index, ctl.cab) * (ctl.cab.reverser === "R" ? -1 : 1);
+        const lead = fwd >= 0 ? c.frontEnd() : c.rearEnd();
+        const trail = fwd >= 0 ? c.rearEnd() : c.frontEnd();
+        for (let i = 0; i < c.vehicles.length; i++) {
+          const v = c.vehicles[i];
+          if (v === drv || v.type.cabs.length === 0) continue;
+          for (const end of v.type.cabs) {
+            const cab = v.cabs[end]!;
+            if (lead.vehicle === v && lead.end === end) cab.lights = lit ? "head" : "off";
+            else if (trail.vehicle === v && trail.end === end) cab.lights = lit ? "tail" : "off";
+            else cab.lights = "off";
+          }
+        }
+      }
       // automatic coach lights
       for (let i = 0; i < c.vehicles.length; i++) {
         const v = c.vehicles[i];

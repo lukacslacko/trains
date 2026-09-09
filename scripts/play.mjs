@@ -4,8 +4,12 @@ const which = process.argv[2] ?? "101";
 const server = await createServer({ server: { middlewareMode: true }, appType: "custom", logLevel: "error" });
 try {
   const mod = await server.ssrLoadModule("/src/dev/play.ts");
-  const res = which === "301" ? mod.play301() : which === "201" ? mod.play201() : mod.play101();
-  console.log(JSON.stringify(res, null, 1));
+  try {
+    const res = which === "401" ? mod.play401() : which === "301" ? mod.play301() : which === "201" ? mod.play201() : mod.play101();
+    console.log(JSON.stringify(res, null, 1));
+  } catch (e) {
+    console.log(JSON.stringify({ error: String(e.message), ...(mod.last ? mod.last.report() : {}) }, null, 1));
+  }
 } finally {
   await server.close();
 }

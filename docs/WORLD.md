@@ -49,7 +49,7 @@ Rules are cited as "Rule R 20" across books.
 | S | Signalling Manual | principles, main signals and subsidiaries, distant signals, ground signals, boards, switch indicators, hand signals and the baton, station layouts and signal numbering, routes, block working and Line Warrants, failures |
 | D | Driving Manual | the driver's person and locations, cab controls, preparing and stabling, running, stopping, gradients, neutral sections, changing ends, coupling and uncoupling, brake continuity test, the Class 1 car, the Class 4 locomotive, the Type C4 coach |
 | P | Permanent Way | what the permanent way is, the line and its profile (gradient diagram), gradient posts, hectometre posts, warning distances, the neutral section and the crossing; inspection and maintenance to follow with M4 |
-| T | Timetabling | the working timetable, train numbers, block sections, the crossing at Wending, duty sheets, the time–distance diagram |
+| T | Timetabling | the working timetable, train numbers, block sections, the crossing at Wending, portions and the branch, duty sheets, the time–distance diagram |
 
 Later: W (Workshop), B (Box Working).
 
@@ -83,35 +83,45 @@ and carries no slip.
 
 The Wend valley. The line runs south to north from **Ashgrove** (a market
 town at the foot of the valley) through **Wending** (a mill village by the
-weir) to **Coldwater** (a quarry village at the head of the valley).
+weir) to **Coldwater** (a quarry village at the head of the valley). At
+Wending the **Fernhollow branch** leaves the main line at the junction
+switch WD J and climbs a side valley to **Fernhollow** (a hamlet of fern
+gatherers and a chapel).
 
 - **Kilometrage** counts from the buffer stop at Ashgrove, km 0.000, to the
   buffer stop at Coldwater, km 6.400.
 - **Down** = direction of increasing kilometrage (Ashgrove → Coldwater).
   **Up** = decreasing. A signal "faces" the trains it governs: a Down signal
   governs Down trains.
-- **Station codes:** Ashgrove **AG**, Wending **WD**, Coldwater **CW**.
-  Signal boxes are "Ashgrove Box", "Wending Box", "Coldwater Box".
+- **Branch kilometrage** counts from the junction switch WD J (main km
+  3.360) to the Fernhollow buffer stop, branch km 2.320. Branch posts are
+  lettered F: **F 0.1 … F 2.3**. Down on the branch = away from Wending.
+- **Station codes:** Ashgrove **AG**, Wending **WD**, Coldwater **CW**,
+  Fernhollow **FH**. Signal boxes are "Ashgrove Box", "Wending Box",
+  "Coldwater Box", "Fernhollow Box".
 - **Station masters:** Ashgrove — T. Marrow. Wending — J. Pell. Coldwater —
-  A. Ashby. Messages are signed "Marrow, Ashgrove" / "Pell, Wending" /
-  "Ashby, Coldwater". The colleague driving the other train in Duty 301 is
-  R. Farrow.
+  A. Ashby. Fernhollow — M. Thorne. Messages are signed "Marrow, Ashgrove"
+  and so on. Colleagues driving other trains: R. Farrow (1003), E. Hale
+  (1004), W. Penrose (1001).
 - **Electrification:** overhead line, 1.5 kV DC, wired throughout including
   headshunts. The Ashgrove and Coldwater feeds meet at a **neutral section**
   at km 4.19–4.21 (see §5).
 - **Block sections:** A, Ashgrove–Wending (home signal to home signal:
   km 0.42–2.88, worked by Ashgrove and Wending boxes); B, Wending–Coldwater
-  (km 3.32–5.98). Each has one Line Warrant (§6, Rule S 28).
-- **Line speed:** 50 km/h. **Station limits:** 25 km/h. **Shunting:** 15
-  km/h. **Coupling approach:** 5 km/h in the last 20 m, contact at 2 km/h
-  or less.
+  (km 3.44–5.98); C, Wending–Fernhollow (WD 10 at branch km 0.08 to FH 1 at
+  F 2.03). Each has one Line Warrant (§6, Rule S 28).
+- **Line speed:** 50 km/h on the main line, **40 km/h on the branch**.
+  **Station limits:** 25 km/h. **Shunting:** 15 km/h. **Coupling approach:**
+  5 km/h in the last 20 m, contact at 2 km/h or less.
 - **Profile.** Gradients in per mille, positive = rising in the Down
   direction: km 0.0–0.5 level (Ashgrove station limits), 0.5–2.4 rising
   12‰, 2.4–2.8 rising 6‰ (easing towards the weir), 2.8–3.4 level (Wending
   station limits), 3.4–5.6 rising 8‰, 5.6–6.4 level (Coldwater). Wending
   stands 25.2 m and Coldwater 42.8 m above Ashgrove. Changes of grade, each
   marked by a gradient post: km 0.5, 2.4, 2.8, 3.4, 5.6. Down trains climb,
-  Up trains descend.
+  Up trains descend. **Branch profile:** F 0.0–0.3 level, 0.3–1.9 rising
+  10‰, 1.9–2.32 level; Fernhollow stands 41.2 m above Ashgrove; gradient
+  posts at F 0.3 and F 1.9.
 - **Millers' Crossing:** a farm crossing at km 4.70, with whistle boards at
   4.50 (Down) and 4.90 (Up).
 
@@ -177,20 +187,52 @@ platform 2 on track 2 for Up trains):
 | 3.015 | Stop board "WENDING" | Up | track 2 | Up trains, platform 2 |
 | 3.165 | Stop board "WENDING" | Down | track 1 | Down trains, platform 1 |
 | 3.185 | Starting signal **WD 7** | Down | track 1 | to Coldwater; with subsidiary (track 1 → north stub) |
-| 3.185 | Starting signal **WD 9** | Down | track 2 | to Coldwater |
+| 3.185 | Starting signal **WD 9** | Down | track 2 | to Coldwater or Fernhollow |
 | 3.220 | Switch **WD B** | toe faces Down | – | normal = track 1, reverse = track 2; switch indicator |
 | 3.230 | Ground signal **WD 6** | Up | single line | north stub → station |
 | 3.280 | Limit of Shunt board | Down | single line | north stub |
-| 3.320 | Home signal **WD 8** | Up | single line | from Coldwater |
-| 3.400 | Speed boards 25 (Up) / 50 (Down) | | | north station limit |
+| 3.360 | Junction switch **WD J** | toe faces Up (station side) | – | normal = main line to Coldwater, reverse = the branch; switch indicator |
 | 3.400 | Gradient post | both | | level ↔ 8‰ |
-| 3.520 | Distant signal **WD 8D** | Up | | 200 m before WD 8 (falling 8‰, under 10‰) |
-| 3.600 | Advance speed board 25 | Up | | |
+| 3.440 | Home signal **WD 8** | Up | main line | from Coldwater; with subsidiary for call-on |
+| 3.500 | Speed boards 25 (Up) / 50 (Down) | | | north station limit |
+| 3.640 | Distant signal **WD 8D** | Up | | 200 m before WD 8 (falling 8‰, under 10‰) |
+| 3.700 | Advance speed board 25 | Up | | |
+| F 0.080 | Home signal **WD 10** | Up | branch | from Fernhollow; with subsidiary for call-on |
+| F 0.140 | Speed boards 25 (Up) / 40 (Down) | | branch | branch station limit |
+| F 0.300 | Gradient post | both | branch | level ↔ 10‰ |
+| F 0.330 | Distant signal **WD 10D** | Up | branch | 250 m before WD 10 (falling 10‰) |
+| F 0.390 | Advance speed board 25 | Up | branch | |
+
+A Down train leaving Wending's track 1 or 2 towards the north takes WD 7 or
+WD 9 and is routed at WD J either straight to Coldwater or over the branch;
+the driver reads WD J's switch indicator and the Box's message to know
+which. Two arrivals from the north, from Coldwater under WD 8 and from
+Fernhollow under WD 10, converge at WD J.
 
 WD 3 of the first layout is withdrawn: its move (track 1 → north stub) is
 now the subsidiary of WD 7. The run-round at Wending (Duty 201): track 1 →
 north stub under WD 7's subsidiary, north stub → track 2 under WD 6, track
 2 → south stub under WD 4's subsidiary, south stub → track 1 under WD 5.
+The north stub (WD B to WD J) is shared by every northward and every
+arriving northern movement; the Box's routes lock it and WD J for one
+movement at a time.
+
+**Section C and Fernhollow** (the branch; positions in branch km):
+
+| km | object | faces | note |
+|----|--------|-------|------|
+| F 1.800 | Advance speed board 25 | Down | 200 m before the 25 board (rising approach) |
+| F 1.830 | Distant signal **FH 1D** | Down | 200 m before FH 1 |
+| F 1.900 | Gradient post | both | 10‰ ↔ level |
+| F 2.000 | Speed boards 25 (Down) / 40 (Up) | | Fernhollow station limit |
+| F 2.030 | Home signal **FH 1** | Down | into the platform track |
+| F 2.085 | Starting signal **FH 2** | Up | to Wending |
+| F 2.100–2.260 | Fernhollow platform | – | one platform track, no loop |
+| F 2.255 | Stop board "FERNHOLLOW" | Down | |
+| F 2.320 | buffer stop | – | |
+
+Fernhollow has no switches: a car arrives, its driver changes ends, and it
+leaves the way it came.
 
 **Section B**, km 3.40–5.95: section boards (power off) at 4.10 (Down) and
 4.30 (Up), resume boards (power on) at 4.30 (Down) and 4.10 (Up), the
@@ -221,7 +263,8 @@ Down/buffer end; the mirror of Ashgrove):
 Signal numbering rule: station code, space, number. Odd numbers face Down,
 even numbers face Up. Main signals take the lowest numbers, ground signals
 the rest; a distant signal takes its home's number with the letter D
-(WD 1D).
+(WD 1D). Fernhollow's signals belong to Fernhollow Box (FH 1, FH 2); the
+branch's home at Wending is Wending's (WD 10).
 
 ### 4.3 Routes
 
@@ -231,12 +274,25 @@ shunt route into an occupied track, which is cleared for coupling). A
 starter towards a block section is cleared only with the section's Line
 Warrant in hand.
 
+**Route locking (Rule S 32).** From the moment a route's signal is cleared
+its switches are held in position, and they stay held until the movement
+has passed clear of them: the signal replaced to STOP, the approach and the
+sections of the route empty, no vehicle within 12 m of the switch. Another
+route may share a switch only in the same position. A route into a platform
+releases once the train stands wholly in the platform; a departure route
+once the train has left the station's last switch behind.
+
 Ashgrove: `homeN→1` (AG 2 Caution), `1→N` (AG 1 Clear), run-round
 `1→hs` (AG 4), `hs→2→stub` (AG 5 and AG 3), `stub→1` (AG 6).
 Wending: `homeS→1` (WD 1), `homeS→2` (WD 1), `homeN→1` and `homeN→2`
-(WD 8), `1→S` (WD 2), `2→S` (WD 4), `1→N` (WD 7), `2→N` (WD 9), run-round
-`1→hs` (WD 7 subsidiary), `hs→2→stub` (WD 6 and WD 4 subsidiary), `stub→1`
-(WD 5). Coldwater mirrors Ashgrove with CW 1, CW 2, CW 3, CW 6, CW 4, CW 5.
+(WD 8, WD J straight), `homeB→1` and `homeB→2` (WD 10, WD J for the
+branch), call-on variants of the four northern home routes with WD 8 or
+WD 10 showing their subsidiary into an occupied platform, `1→S` (WD 2),
+`2→S` (WD 4), `1→N` (WD 7, WD J straight), `1→B` (WD 7, WD J for the
+branch), `2→N` and `2→B` (WD 9), run-round `1→hs` (WD 7 subsidiary),
+`hs→2→stub` (WD 6 and WD 4 subsidiary), `stub→1` (WD 5). Coldwater mirrors
+Ashgrove with CW 1, CW 2, CW 3, CW 6, CW 4, CW 5. Fernhollow: `homeS→1`
+(FH 1), `1→S` (FH 2).
 
 ## 5. Signals and boards (catalogue)
 
@@ -256,9 +312,12 @@ A home signal into a platform track where the train stops shows CAUTION
 when cleared, never CLEAR.
 
 **Subsidiary.** Two small white lamps beside the head of some main signals
-(WD 4, WD 7). Lit diagonally with the main at STOP they show **SHUNT**: a
-shunting move may pass at shunting speed as far as the route goes; for a
-train the signal is still at STOP.
+(WD 4, WD 7, WD 8, WD 10). Lit diagonally with the main at STOP they show
+**SHUNT**: a shunting move may pass at shunting speed as far as the route
+goes; for a train the signal is still at STOP, except at a home signal
+marked for **call-on** (WD 8, WD 10): there the lit subsidiary tells a train
+that the platform ahead is occupied and calls it on at shunting speed,
+prepared to stop short of the vehicles standing there (Rule S 30).
 
 **Distant signals.** Two lamps on a slate post, green top, amber bottom,
 with an ivory chevron plate behind the head; named after the home they
@@ -368,6 +427,12 @@ authority.
 - **S 24 Distant signals.** At a distant at CAUTION, reduce speed so as to be
   able to stop at the home signal it repeats. A distant at CLEAR promises a
   clear run through the station.
+- **S 30 Call-on.** A home signal's subsidiary lit for a train is a call-on:
+  the platform ahead is occupied. Pass at shunting speed prepared to stop
+  short of the vehicles, and couple to them only as the Box has instructed.
+- **S 32 Route locking.** A route holds its switches from the clearing of
+  its signal until the movement has passed clear of them; no switch is
+  moved under a route.
 - **S 28 Block working.** A train enters a block section only with the
   section's **Line Warrant**. The box at the far end issues the warrant when
   the section is clear and no other warrant for it is out; the box at the
@@ -396,11 +461,28 @@ authority.
 - **D 24 Neutral sections.** Shut off power at the section board and coast;
   take power again only after the resume board. Entering the neutral
   section with power applied is an incident.
+- **D 26 Multiple working.** Two Class 1 cars coupled with pipe and control
+  line connected work as one train from one cab, both pantographs up, both
+  cars' motors answering the controller; the other car's cabs show the
+  lights the leading cab calls for (head at the leading end, tail at the
+  trailing end, nothing at coupled ends). Prove the brake after every
+  coupling.
+- **D 28 Splitting and joining.** To split: stop at the board, secure the
+  cab, uncouple at the coupling (pipe first, then the coupler), set TAIL on
+  the new rear cab of your portion, and return to your cab; the other
+  portion's driver takes their cab. To join: the standing portion waits with
+  its train brake applied; the arriving car is called on at shunting speed
+  and makes contact at 2 km/h or less; its driver connects the pipe and
+  control line; the train is proved from the leading cab before it leaves.
+  Portions leave a station in the order they stand: the one nearest the exit
+  first.
 
 ## 7. Rolling stock
 
 **Class 1 motor car ("Lark").** Fleet 1001–1004; Duty 101 uses **1002**,
-Duty 301 uses 1002 and, driven by a colleague, **1003**.
+Duty 301 uses 1002 and, driven by a colleague, **1003**; Duty 401 uses all
+four: 1002 and 1003 as the player's pair, 1004 and 1001 as the colleagues'.
+Class 1 cars couple to each other and work in multiple (Rule D 26).
 Length 22 m, mass 38 t, two cabs (A and B), doors on both sides, one
 pantograph, two 150 kW motors, max tractive effort 45 kN, max speed 60 km/h.
 Automatic air brake, max service deceleration about 1.0 m/s². Parking
@@ -478,6 +560,28 @@ timetable (Book T; Down trains odd, Up trains even):
 
 Trains 3 and 4 cross at Wending at 08:12, trains 5 and 6 at 08:53. Duty
 complete when 1002 is stabled at Ashgrove.
+
+**Duty 401 — The junction.** Cars 1002 and 1003 coupled on Ashgrove track 1
+(1002 at the Down end, the player's; 1003 with R. Farrow riding); 1004 at
+Coldwater with E. Hale; 1001 at Fernhollow with W. Penrose. Sim starts
+09:45. Working timetable (branch trains 31–34):
+
+| train | cars | route | times |
+|-------|------|-------|-------|
+| 7 | 1002+1003 | Ashgrove–Wending | AG 10:00 → WD 10:07 (platform 1); split |
+| 7 | 1002 | Wending–Coldwater | WD 10:14 → CW 10:23 |
+| 31 | 1003 | Wending–Fernhollow | WD 10:16 → FH 10:24 |
+| 8 | 1004 | Coldwater–Wending | CW 10:00 → WD 10:08 (platform 2) |
+| 32 | 1001 | Fernhollow–Wending | FH 10:02 → WD 10:11 (platform 2, called on, joins 1004) |
+| 8 | 1004+1001 | Wending–Ashgrove | WD 10:18 → AG 10:27 |
+| 9 | 1004+1001 | Ashgrove–Wending | AG 10:40 → WD 10:47 (platform 1); split |
+| 33 | 1001 | Wending–Fernhollow | WD 10:54 → FH 11:02 (1001 stands at the Down end, leaves first) |
+| 9 | 1004 | Wending–Coldwater | WD 10:56 → CW 11:05 |
+| 10 | 1002 | Coldwater–Wending | CW 10:40 → WD 10:49 (platform 2) |
+| 34 | 1003 | Fernhollow–Wending | FH 10:44 → WD 10:53 (platform 2, called on, joins 1002) |
+| 10 | 1002+1003 | Wending–Ashgrove | WD 11:00 → AG 11:09 |
+
+Duty complete when the pair is stabled at Ashgrove.
 
 ## 11. Incident Book entries (what the rules engine records)
 

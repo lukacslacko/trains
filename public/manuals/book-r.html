@@ -23,7 +23,7 @@
 <nav class="desk-bar">
   <a href="index.html">← Library</a>
   <span class="spacer"></span>
-  <span>Book R · Fifth edition · September 2026</span>
+  <span>Book R · Sixth edition · September 2026</span>
   <a href="#" onclick="window.print();return false;">Print booklet</a>
 </nav>
 
@@ -37,7 +37,7 @@
   <div class="book-letter"><small>Book</small>R</div>
   <h1 class="title">Rules of Operation</h1>
   <p class="subtitle">The general rules by which the Meridian Railway is worked, and the Incident Book.</p>
-  <div class="edition">Fifth edition · September 2026 · Issued by the General Manager's Office</div>
+  <div class="edition">Sixth edition · September 2026 · Issued by the General Manager's Office</div>
   <div class="motto">On the line, on time.</div>
 </section>
 
@@ -58,6 +58,7 @@
     <li class="sub"><span class="num">R 12</span><a href="#R12">Stop boards</a><span class="dots"></span><span class="pg">9</span></li>
     <li class="sub"><span class="num">R 14</span><a href="#R14">Doors</a><span class="dots"></span><span class="pg">10</span></li>
     <li class="sub"><span class="num">R 20</span><a href="#R20">Departure of a passenger train</a><span class="dots"></span><span class="pg">11</span></li>
+    <li class="sub"><span class="num">5.5</span><a href="#c5-5">Portions</a><span class="dots"></span><span class="pg">12</span></li>
     <li><span class="num">6</span><a href="#c6">Lights and horn</a><span class="dots"></span><span class="pg">12</span></li>
     <li class="sub"><span class="num">R 16</span><a href="#R16">Lights</a><span class="dots"></span><span class="pg">12</span></li>
     <li class="sub"><span class="num">R 18</span><a href="#R18">Horn</a><span class="dots"></span><span class="pg">13</span></li>
@@ -127,6 +128,12 @@
         <text x="311" y="112" text-anchor="middle" font-size="11" fill="#4A5560" font-family="IBM Plex Mono, Menlo, monospace">km 3.1</text>
         <text x="582" y="98" text-anchor="middle" font-size="14" font-weight="600" fill="#1F4B3F" letter-spacing="2">COLDWATER · CW</text>
         <text x="582" y="112" text-anchor="middle" font-size="11" fill="#4A5560" font-family="IBM Plex Mono, Menlo, monospace">km 6.400</text>
+        <!-- the Fernhollow branch, leaving the junction at km 3.36 -->
+        <line x1="334" y1="62" x2="370" y2="98" stroke="#1A1A1A" stroke-width="2.5"/>
+        <rect x="370" y="97" width="6" height="8" fill="#C6321E" transform="rotate(45 373 101)"/>
+        <circle cx="370" cy="98" r="6" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="2.5"/>
+        <text x="382" y="102" text-anchor="start" font-size="11" font-weight="600" fill="#1F4B3F" letter-spacing="1.5">FERNHOLLOW · FH</text>
+        <text x="382" y="114" text-anchor="start" font-size="10" fill="#4A5560" font-family="IBM Plex Mono, Menlo, monospace">F 2.32 · section C</text>
         <!-- hectometre posts (ticks above the track) and kilometre posts (plates) -->
         <g stroke="#4A5560" stroke-width="1">
           <path d="M 48.8 52 v -5 M 57.5 52 v -5 M 66.2 52 v -5 M 75.0 52 v -5 M 83.8 52 v -5 M 92.5 52 v -5 M 101.2 52 v -5 M 110.0 52 v -5 M 118.8 52 v -5 M 136.2 52 v -5 M 145.0 52 v -5 M 153.8 52 v -5 M 162.5 52 v -5 M 171.2 52 v -5 M 180.0 52 v -5 M 188.8 52 v -5 M 197.5 52 v -5 M 206.2 52 v -5 M 223.8 52 v -5 M 232.5 52 v -5 M 241.2 52 v -5 M 250.0 52 v -5 M 258.8 52 v -5 M 267.5 52 v -5 M 276.2 52 v -5 M 285.0 52 v -5 M 293.8 52 v -5 M 311.2 52 v -5 M 320.0 52 v -5 M 328.8 52 v -5 M 337.5 52 v -5 M 346.2 52 v -5 M 355.0 52 v -5 M 363.8 52 v -5 M 372.5 52 v -5 M 381.2 52 v -5 M 398.8 52 v -5 M 407.5 52 v -5 M 416.2 52 v -5 M 425.0 52 v -5 M 433.8 52 v -5 M 442.5 52 v -5 M 451.2 52 v -5 M 460.0 52 v -5 M 468.8 52 v -5 M 486.2 52 v -5 M 495.0 52 v -5 M 503.8 52 v -5 M 512.5 52 v -5 M 521.2 52 v -5 M 530.0 52 v -5 M 538.8 52 v -5 M 547.5 52 v -5 M 556.2 52 v -5 M 573.8 52 v -5 M 582.5 52 v -5 M 591.2 52 v -5"/>
@@ -141,7 +148,7 @@
         </g>
       </svg>
     </div>
-    <figcaption><span class="fig">Fig. 2.1</span> The line. Kilometrage runs from the Ashgrove buffer stop to the Coldwater buffer stop at km 6.400; Down is towards Coldwater. Wending, a through station, lies between, and the two block sections A and B lie between the stations' home signals. The small ticks are the hectometre posts, one every 100 m; the green-rimmed plates are the kilometre posts, reading 1.0 to 6.0.</figcaption>
+    <figcaption><span class="fig">Fig. 2.1</span> The line. Kilometrage runs from the Ashgrove buffer stop to the Coldwater buffer stop at km 6.400; Down is towards Coldwater. Wending, a through station, lies between, and the two block sections A and B lie between the stations' home signals. The small ticks are the hectometre posts, one every 100 m; the green-rimmed plates are the kilometre posts, reading 1.0 to 6.0. From the junction switch WD J at km 3.36, beyond Wending's north switch, the Fernhollow branch climbs a side valley to Fernhollow at branch km F 2.32; it is section C, and it is drawn foreshortened.</figcaption>
   </figure>
 
   <dl class="dl">
@@ -150,8 +157,8 @@
     <dt>Kilometre post</dt><dd>The larger post at each full kilometre: the same ivory plate as the hectometre post on a larger scale, reading the kilometre with its zero in the same black figures, <span class="mono">2.0</span> for km 2.0, and distinguished only by a green rim. It takes the place of the hectometre post at that point.</dd>
     <dt>Down</dt><dd>The direction of increasing kilometrage: from Ashgrove through Wending towards Coldwater. A Down train is one travelling Down. A Down signal governs Down trains.</dd>
     <dt>Up</dt><dd>The direction of decreasing kilometrage: from Coldwater through Wending towards Ashgrove.</dd>
-    <dt>Station code</dt><dd>Two letters standing for a station on plates, in the timetable and in messages. Ashgrove is <span class="mono">AG</span>; Wending is <span class="mono">WD</span>; Coldwater is <span class="mono">CW</span>.</dd>
-    <dt>Box</dt><dd>The signal box at a station and, by extension, the station master on duty in it. "Ashgrove Box" is the place; a message from it is signed "Marrow, Ashgrove". There is a Box at each of the three stations.</dd>
+    <dt>Station code</dt><dd>Two letters standing for a station on plates, in the timetable and in messages. Ashgrove is <span class="mono">AG</span>; Wending is <span class="mono">WD</span>; Coldwater is <span class="mono">CW</span>; Fernhollow is <span class="mono">FH</span>.</dd>
+    <dt>Box</dt><dd>The signal box at a station and, by extension, the station master on duty in it. "Ashgrove Box" is the place; a message from it is signed "Marrow, Ashgrove". There is a Box at each of the four stations.</dd>
     <dt>Main line</dt><dd>The single line between stations, on which train movements run at line speed.</dd>
     <dt>Through station</dt><dd>A station the line runs through rather than ends at: Wending, with platform 1 on track 1 for Down trains and platform 2 on track 2 for Up trains. A terminus (Ashgrove, Coldwater) has a buffer stop at one end and a headshunt for running round.</dd>
     <dt>Block section</dt><dd>The single line between the home signals of two neighbouring stations, worked by their two Boxes so that it holds one train at a time. Section A runs from Ashgrove to Wending, section B from Wending to Coldwater. See § 3.5 and <a href="book-s.html#S28">Rule S 28</a>.</dd>
@@ -161,6 +168,11 @@
     <dt>Whistle board</dt><dd>A black W on an ivory disc, standing before a crossing. It asks for one long blast (<a href="#R18">Rule R 18</a>).</dd>
     <dt>Crossing</dt><dd>A place where a road crosses the line on the level. There is one, Millers' Crossing, at km 4.70, with whistle boards 200 m before it in each direction. The word also means two trains passing each other at a station; see § 9.5.</dd>
     <dt>Colleague</dt><dd>Another driver of the Railway, working another train in the same timetable. A colleague's train is subject to every rule in this Book, and a colleague's entries in the Incident Book are their own.</dd>
+    <dt>Branch</dt><dd>The Fernhollow branch: the line that leaves the main line at the junction switch WD J, beyond Wending's north switch, and climbs a side valley to Fernhollow. It has a kilometrage of its own, counted from the junction switch (main km 3.360) to the Fernhollow buffer stop at branch km 2.320, and its posts are lettered F: <span class="mono">F 0.1</span> to <span class="mono">F 2.3</span>. On the branch, Down is away from Wending and Up is towards it, as the F numbers grow and shrink. The branch is block section C.</dd>
+    <dt>Junction</dt><dd>The place where two lines meet: at Wending, the switch WD J on the single line north of the station, whose straight route leads to Coldwater and whose diverging route leads to Fernhollow. A junction is protected by home signals on each approach (WD 8 from Coldwater, WD 10 from Fernhollow) and read by the switch indicator at its toe.</dd>
+    <dt>Portion</dt><dd>One of the parts of a train that is booked to divide, or that has been joined from two. Each portion has its own train number, its own departure, its own baton and its own Line Warrant from the moment it stands on its own. See § 5.5.</dd>
+    <dt>Call-on</dt><dd>The subsidiary of a home signal lit for a train: the platform ahead is occupied, and the train is called on into it at shunting speed, prepared to stop short of the vehicles standing there, to couple to them only as the Box has instructed (<a href="book-s.html#S30">Rule S 30</a>).</dd>
+    <dt>Multiple working</dt><dd>Two Class 1 cars coupled with their pipe and control line connected and worked as one train from one cab, both pantographs up and both cars' motors answering the one controller (<a href="book-d.html#D26">Rule D 26</a>).</dd>
     <dt>Station limits</dt><dd>The part of the line that belongs to a station: from the speed board on the approach, or from the home signal where there is one, to the buffer stop. Within station limits the speed is 25 km/h and the station master's authority applies.</dd>
     <dt>Advance speed board</dt><dd>A black numeral on an ivory triangle, point up, standing one warning distance before a speed board that lowers the limit. It announces the lower limit; it does not impose it. The board it announces carries the same numeral (<a href="#c4-1">§ 4.1</a>, <a href="book-s.html">Book S</a>).</dd>
     <dt>Warning distance</dt><dd>The distance from an advance speed board to the speed board it announces: 200 m where the approach to the board is level or rising, 250 m where it falls at 10‰ or more. It is enough to lose the difference in speed at a steady service deceleration with a margin for reaction, fog and snow (<a href="#c4-1">§ 4.1</a>).</dd>
@@ -191,6 +203,7 @@
 
   <h2 id="c2-2"><span class="num">2.2</span> The profile</h2>
   <p>The line is not flat. The Wend valley climbs from Ashgrove to Coldwater, and the railway climbs with it: level through the station limits at Ashgrove, then 12‰ up the valley from post 0.5 to post 2.4, easing to 6‰ towards the weir, level through the station limits at Wending from post 2.8 to post 3.4, then 8‰ again to post 5.6, and level through Coldwater. Wending stands 25.2 m above Ashgrove and Coldwater 42.8 m. A Down train climbs all the way; an Up train descends all the way, arrives at the Wending speed board with the 8‰ fall still under it and at the Ashgrove speed board with the 12‰ fall.</p>
+  <p>The branch has a profile of its own, reckoned in branch kilometres from the junction: level from the junction to post F 0.3, then rising 10‰ up the side valley to post F 1.9, and level through Fernhollow, which stands 41.2 m above Ashgrove. Its gradient posts stand at F 0.3 and F 1.9, and an Up train from Fernhollow comes down the whole 10‰ to Wending's branch home, WD 10, which is why that home's distant stands the longer 250 m out.</p>
 
   <figure>
     <div class="figure-frame">
@@ -256,8 +269,10 @@
       <tr><td>Ashgrove</td><td class="mono">AG</td><td>T. Marrow</td><td>Marrow, Ashgrove</td></tr>
       <tr><td>Wending</td><td class="mono">WD</td><td>J. Pell</td><td>Pell, Wending</td></tr>
       <tr><td>Coldwater</td><td class="mono">CW</td><td>A. Ashby</td><td>Ashby, Coldwater</td></tr>
+      <tr><td>Fernhollow</td><td class="mono">FH</td><td>M. Thorne</td><td>Thorne, Fernhollow</td></tr>
     </tbody>
   </table>
+  <p>Fernhollow Box works the branch end of section C and its own two signals; the branch's home at Wending, WD 10, is Wending's. Three colleagues drive the other cars of the working timetable at the date of this edition: R. Farrow (car 1003), E. Hale (car 1004) and W. Penrose (car 1001). They keep the same Book you do.</p>
 
   <h2><span class="num">3.3</span> Instructions</h2>
   <p>Instructions from a Box are short, in plain words, and signed with the sender's name and station:</p>
@@ -287,6 +302,7 @@
       <thead><tr><th>Where</th><th class="mono">km/h</th><th>Begins</th></tr></thead>
       <tbody>
         <tr><td>Main line</td><td class="mono">50</td><td>Once the rear of the train has passed the speed board 50 on leaving station limits, until the front reaches the next speed board 25.</td></tr>
+        <tr><td>Branch</td><td class="mono">40</td><td>On the Fernhollow branch, once the rear of the train has passed the speed board 40 on leaving Wending's branch station limits at F 0.14, or Fernhollow's at F 2.0, until the front reaches the next speed board 25.</td></tr>
         <tr><td>Station limits</td><td class="mono">25</td><td>From the moment the front reaches the speed board 25 on the approach, or the home signal where there is one, and as far as the buffer stop. An advance speed board 25 stands one warning distance before it: 200 m on a level or rising approach, 250 m where the approach falls at 10‰ or more.</td></tr>
         <tr><td>Shunting move</td><td class="mono">15</td><td>Throughout any shunting move, wherever it is.</td></tr>
         <tr><td>Coupling approach</td><td class="mono">5</td><td>Over the last 20 m before a vehicle to be coupled.</td></tr>
@@ -435,6 +451,11 @@
   <p>The four conditions may become true in any order, and it is usual for the baton to come last, because the station master waits for the doors. What matters is that all four hold at the moment the train moves. If any ceases to hold before then, the baton turned to red, the signal returned to STOP, the train stays.</p>
   <div class="why"><p>Four conditions seem many for one departure. Each answers a different question. The doors ask whether the passengers are safe; the clock asks whether the passengers have had their chance; the signal asks whether the line is fit; the baton asks whether the platform is. No single person can answer all four, so no single person's word is enough.</p></div>
   <div class="note"><p>At an unstaffed halt, conditions 3 and 4 do not apply: the driver satisfies themselves that the doors are closed, the time is right and the platform is clear, and departs. Under One Train Working (<a href="#R24">Rule R 24</a>) both stations may be worked this way.</p></div>
+
+  <h2 id="c5-5"><span class="num">5.5</span> Portions</h2>
+  <p>Some trains are booked to divide at Wending, and some to be joined there. A train of two Class 1 cars comes up from Ashgrove as one train under one number; at Wending it is uncoupled into two <span class="term">portions</span>, one for Coldwater and one for Fernhollow, and from the moment they stand on their own each portion is a train in its own right: it has its own train number, its own booked departure, its own baton, and its own Line Warrant for the section it enters. Coming back, the two cars arrive at Wending one after the other into the same platform, the second called on behind the first, are coupled, and leave for Ashgrove as one train again under one number.</p>
+  <p>Portions leave a station in the order they stand: the one nearest the exit goes first, and the other waits for it. Which portion that is depends on which end of the train each car has come to stand at, and the working timetable is written with that in mind; a driver reads the order from the timetable and the Box, not from a habit. Everything the driver does at the coupling, and the whole of the joining move, is in <a href="book-d.html#D28">Rule D 28</a>; the numbering and the order are in <a href="book-t.html">Book T</a>.</p>
+  <div class="why"><p>A divided train is two trains, and we say so plainly because every rule in this Book is written for one train at a time: one baton, one warrant, one departure. The moment the coupler parts, the four conditions of Rule R 20 must be met twice over, once for each portion, and neither driver may borrow the other's.</p></div>
 </section>
 
 <!-- 6 LIGHTS AND HORN -->
@@ -568,7 +589,26 @@
       <tr><td>6 ↑</td><td>1002</td><td class="arr">arr 09:01</td><td class="arr">arr 08:49 · dep 08:53 · platform 2</td><td>dep 08:40</td></tr>
     </tbody>
   </table>
-  <p>Trains 3 and 4 cross at Wending at 08:12, trains 5 and 6 at 08:53. The full working timetable, with the block sections and the time–distance diagram, is <a href="book-t.html">Book T</a>.</p>
+  <p>Trains 3 and 4 cross at Wending at 08:12, trains 5 and 6 at 08:53.</p>
+  <p>With the Fernhollow branch open, a train may divide. Duty 401 works cars 1002 and 1003 up from Ashgrove as train 7, which divides at Wending into train 7 for Coldwater and train 31 for Fernhollow; the two come back as trains 10 and 34 and are joined at Wending into train 10. Colleagues work cars 1004 and 1001 the other way round as trains 8 and 32, joined at Wending into train 8, and back as train 9, divided into trains 9 and 33. Branch trains take the numbers 31 to 34.</p>
+  <table class="tt">
+    <thead><tr><th>Train</th><th>Cars</th><th>Ashgrove</th><th>Wending</th><th>Coldwater</th><th>Fernhollow</th></tr></thead>
+    <tbody>
+      <tr><td>7 ↓</td><td>1002+1003</td><td>dep 10:00</td><td class="arr">arr 10:07 · platform 1 · divides</td><td></td><td></td></tr>
+      <tr><td>7 ↓</td><td>1002</td><td></td><td>dep 10:14</td><td class="arr">arr 10:23</td><td></td></tr>
+      <tr><td>31 ↓</td><td>1003</td><td></td><td>dep 10:16</td><td></td><td class="arr">arr 10:24</td></tr>
+      <tr><td>8 ↑</td><td>1004</td><td></td><td class="arr">arr 10:08 · platform 2</td><td>dep 10:00</td><td></td></tr>
+      <tr><td>32 ↑</td><td>1001</td><td></td><td class="arr">arr 10:11 · platform 2 · called on, joins 1004</td><td></td><td>dep 10:02</td></tr>
+      <tr><td>8 ↑</td><td>1004+1001</td><td class="arr">arr 10:27</td><td>dep 10:18</td><td></td><td></td></tr>
+      <tr><td>9 ↓</td><td>1004+1001</td><td>dep 10:40</td><td class="arr">arr 10:47 · platform 1 · divides</td><td></td><td></td></tr>
+      <tr><td>33 ↓</td><td>1001</td><td></td><td>dep 10:54</td><td></td><td class="arr">arr 11:02</td></tr>
+      <tr><td>9 ↓</td><td>1004</td><td></td><td>dep 10:56</td><td class="arr">arr 11:05</td><td></td></tr>
+      <tr><td>10 ↑</td><td>1002</td><td></td><td class="arr">arr 10:49 · platform 2</td><td>dep 10:40</td><td></td></tr>
+      <tr><td>34 ↑</td><td>1003</td><td></td><td class="arr">arr 10:53 · platform 2 · called on, joins 1002</td><td></td><td>dep 10:44</td></tr>
+      <tr><td>10 ↑</td><td>1002+1003</td><td class="arr">arr 11:09</td><td>dep 11:00</td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <p>Train 33 leaves before train 9 because, after the pair has turned round at Ashgrove, car 1001 stands at the Down end of it and is nearest the exit (§ 5.5). The full working timetable, with the block sections and the time–distance diagram, is <a href="book-t.html">Book T</a>.</p>
 
   <h2><span class="num">9.2</span> Early and late</h2>
   <p>A departure before the booked time is an incident and is recorded. A late departure or arrival is noted in the margin of the timetable and is not an incident. The reasons are different in kind. A passenger who arrives at the booked time and finds the platform empty has been failed by the railway, and no explanation will reach them. A passenger who waits a few minutes has been inconvenienced, and the cause is very often outside the driver's hands; the cure for lateness is in the timetable, not in the Incident Book.</p>
@@ -583,6 +623,7 @@
 
   <h2 id="c9-5"><span class="num">9.5</span> Crossings</h2>
   <p>Where two trains are booked to pass each other at a through station, the timetable shows a <span class="term">crossing</span>: both arrive, both stand, and both leave, each into the section the other has just cleared. A crossing waits for the late train. The Box cannot clear a starter into a section until the train coming the other way has arrived complete and its warrant is cancelled, so if your colleague is late, your starter stays at STOP past the booked time, and the delay is theirs, not yours. Wait, and do not write it in the Book; the Box has already noted it.</p>
+  <p>Where two divided trains cross, as trains 7 and 8 do at Wending between 10:07 and 10:18 and trains 9 and 10 between 10:47 and 11:00, the crossing has four ends instead of two: one pair stands in platform 1 being divided while the other is being joined in platform 2, and the four departures and two arrivals are threaded through the one junction switch in the order the timetable gives. The Box holds each starter until the switch is free of the movement before it, and a portion that finds its starter at STOP at the booked time waits, as at any crossing: the delay belongs to the movement ahead.</p>
   <div class="why"><p>A crossing is the one place on a single line where the timetable and the block are the same thing. We put the crossing at Wending because it has two platforms and a Box, and we book a few minutes of stand at each, so that a train a minute or two late still meets its partner without either driver having to hurry.</p></div>
 </section>
 
@@ -630,6 +671,7 @@
   </table>
 
   <p>Each driver's entries are their own. A colleague's incidents, on a colleague's train, are written in the colleague's book and not in yours, even where the two trains shared a section that morning.</p>
+  <div class="note"><p>No new kind of entry comes with the branch. A call-on is a way of passing a home signal, not a way round it: a train that passes a home on a subsidiary that was not lit for it, or that passes any signal at STOP on the strength of a coupling to be made beyond it, has passed a signal at danger and is written up as such (<a href="book-s.html#S10">S 10</a>, <a href="book-s.html#S30">S 30</a>).</p></div>
 
   <h2><span class="num">10.3</span> What the Book is for</h2>
   <p>A clean duty is one with nothing written. That is the whole of the scoring on this railway: there are no points, and no one is ranked. The entries are read every week at the drawing office, in company, with the aim of improving the rules, the boards, the timetable or the vehicles. An entry that keeps appearing is a rule that is asking to be rewritten, or a board that is asking to be moved. Very rarely it is a person who is asking to be helped, and that is done quietly.</p>
@@ -646,7 +688,7 @@
   <table class="card-table">
     <thead><tr><th>Rule</th><th>In one line</th></tr></thead>
     <tbody>
-      <tr><td>R 10</td><td>Speeds: 50 on the main line, 25 within station limits, 15 shunting, 5 over the last 20 m to a coupling, 2 at contact. A limit applies to the whole train: lower from the front reaching the board, higher only once the rear has passed it. Advance board 200 m before a reduction, 250 m on a fall of 10‰ or more.</td></tr>
+      <tr><td>R 10</td><td>Speeds: 50 on the main line, 40 on the branch, 25 within station limits, 15 shunting, 5 over the last 20 m to a coupling, 2 at contact. A limit applies to the whole train: lower from the front reaching the board, higher only once the rear has passed it. Advance board 200 m before a reduction, 250 m on a fall of 10‰ or more.</td></tr>
       <tr><td>R 12</td><td>Stop with the front within 3 m short of the stop board.</td></tr>
       <tr><td>R 14</td><td>Doors open only when stationary at a platform; closed before moving.</td></tr>
       <tr><td>R 16</td><td>On the main line: HEAD at the front, TAIL at the rear, nothing at coupled ends.</td></tr>
@@ -659,6 +701,8 @@
       <tr><td>S 14</td><td>Move only on a cleared signal, and only as far as the route goes.</td></tr>
       <tr><td>S 24</td><td>A distant at CAUTION: be able to stop at the home it repeats.</td></tr>
       <tr><td>S 28</td><td>One warrant, one train, one section. The starter does not clear without it.</td></tr>
+      <tr><td>S 30</td><td>A home's subsidiary lit for you is a call-on: the platform is occupied; shunting speed, stop short, couple only as instructed.</td></tr>
+      <tr><td>S 32</td><td>A route holds its switches until the movement has passed clear of them; no switch moves under a route.</td></tr>
       <tr><td>D 10</td><td>Couple at 2 km/h or less; then connect the pipe at the coupling.</td></tr>
       <tr><td>D 12</td><td>Uncouple stationary, brake applied, from the coupling.</td></tr>
       <tr><td>D 14</td><td>After coupling, prove the brake before departing.</td></tr>
@@ -667,6 +711,8 @@
       <tr><td>D 20</td><td>Starting on a rise: hold on the train brake, apply power, release as the traction takes up. No rolling back.</td></tr>
       <tr><td>D 22</td><td>Parking brake: off before moving, on before leaving the cab on a gradient and whenever stabled.</td></tr>
       <tr><td>D 24</td><td>Power off at the section board; coast; power again only after the resume board.</td></tr>
+      <tr><td>D 26</td><td>Two cars in multiple: one cab drives both; the other car's lights follow it; prove the brake after coupling.</td></tr>
+      <tr><td>D 28</td><td>Split: secure, uncouple pipe then coupler, TAIL on the new rear cab. Join: called on at 2 km/h or less, connect, prove. Portions leave in the order they stand.</td></tr>
     </tbody>
   </table>
   <p class="small" style="color:var(--slate)">Where this page and the rule differ, the rule governs. Where the rule and a signal differ, the signal governs. Where a signal and your judgement differ, stop.</p>
@@ -675,8 +721,8 @@
 <!-- COLOPHON -->
 <section class="page colophon" id="colophon" data-folio="Book R · Colophon">
   <img class="mark" src="../brand/mark-green.svg" alt="">
-  <p><strong>Book R — Rules of Operation.</strong> Fifth edition, September 2026. Issued by the General Manager's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
-  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes the fourth edition of September 2026. The changes are listed in <a href="amendments/book-r-ed5.html">Amendment Slip R-5</a>: the line to Coldwater, the block and its Line Warrants, the long blast at a whistle board, the crossing at Wending and three new Incident Book entries. The earlier changes are in <a href="amendments/book-r-ed4.html">Amendment Slip R-4</a> (third edition to fourth: the kilometre plate), <a href="amendments/book-r-ed3.html">Amendment Slip R-3</a> (second edition to third: the profile, the warning distance and the parking brake) and <a href="amendments/book-r-ed2.html">Amendment Slip R-2</a> (first edition to second).</p>
+  <p><strong>Book R — Rules of Operation.</strong> Sixth edition, September 2026. Issued by the General Manager's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
+  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes the fifth edition of September 2026. The changes are listed in <a href="amendments/book-r-ed6.html">Amendment Slip R-6</a>: the Fernhollow branch and its kilometrage, the junction, portions and how they leave, the branch speed, the fourth Box and three colleagues, Duty 401 and the crossing of divided trains. The earlier changes are in <a href="amendments/book-r-ed5.html">Amendment Slip R-5</a> (fourth edition to fifth: the line to Coldwater, the block and its Line Warrants, the long blast at a whistle board, the crossing at Wending and three new Incident Book entries), <a href="amendments/book-r-ed4.html">Amendment Slip R-4</a> (third edition to fourth: the kilometre plate), <a href="amendments/book-r-ed3.html">Amendment Slip R-3</a> (second edition to third: the profile, the warning distance and the parking brake) and <a href="amendments/book-r-ed2.html">Amendment Slip R-2</a> (first edition to second).</p>
   <p>Companion volumes: <a href="book-i.html">Book I, Identity</a>; <a href="book-s.html">Book S, Signalling</a>; <a href="book-d.html">Book D, Driving</a>; <a href="book-p.html">Book P, Permanent Way</a>; <a href="book-t.html">Book T, Timetabling</a>. Amendments are issued as numbered slips; paste them in at the page indicated, and initial the margin.</p>
   <p>Every rule in this Book has been explained to at least one person who had never seen a railway. Where they did not understand, we rewrote the rule.</p>
 </section>

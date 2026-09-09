@@ -1,10 +1,14 @@
-import { DUTY_101, DUTY_201, DUTY_301 } from "../scenarios/duties";
+import { DUTY_101, DUTY_201, DUTY_301, DUTY_401 } from "../scenarios/duties";
 import { Autopilot } from "./autopilot";
 import { parseTime } from "../core/util";
+
+/** the autopilot of the run in progress, for reports after a failure */
+export let last: Autopilot | null = null;
 
 export function play101() {
   const { world: w } = DUTY_101.create();
   const a = new Autopilot(w);
+  last = a;
   const car = w.trainVehicle;
   w.enterCab(); w.setLights("tail"); w.leaveCab();
   a.toCab(car, "A");
@@ -25,6 +29,7 @@ export function play101() {
 export function play201() {
   const { world: w } = DUTY_201.create();
   const a = new Autopilot(w);
+  last = a;
   const loco = w.vehicles.find((v) => v.number === "4003")!;
   const lc = () => w.consistOf(loco);
   const runRound = (code: "AG" | "WD") => {
@@ -69,6 +74,7 @@ export function play201() {
 export function play301() {
   const { world: w } = DUTY_301.create();
   const a = new Autopilot(w);
+  last = a;
   const car = w.trainVehicle;
   w.enterCab(); w.setLights("tail"); w.leaveCab();
   a.toCab(car, "A");
@@ -90,5 +96,45 @@ export function play301() {
   w.leaveCab(); a.walkTo("Cab"); w.enterCab(); w.setLights("off"); a.step(40);
   const npcCar = w.vehicles.find((v) => v.number === "1003")!;
   a.say(`npc 1003 at km ${(npcCar.pos.edge.kmA + npcCar.pos.edge.kmDir * npcCar.pos.s / 1000).toFixed(3)}`);
+  return a.report();
+}
+
+export function play401() {
+  const { world: w } = DUTY_401.create();
+  const a = new Autopilot(w);
+  last = a;
+  const car = w.trainVehicle;
+  const npcState = () => (w.npcDrivers as { vehicle: { number: string }; state: string; index: number }[]).map((n) => `${n.vehicle.number}:${n.state}/${n.index}`).join(" ");
+  w.enterCab(); w.togglePanto(); a.until(() => car.panto === "up"); w.setLights("head"); w.setReverser("F"); w.setParkingBrake(false); a.prove(car);
+  a.say(`prep done; pair length ${w.train.vehicles.length}, proved ${w.train.brakeProved}`);
+  a.say(`baton AG: ${a.waitBaton("AG", parseTime("10:00"))} at ${w.time.toFixed(0)}`);
+  a.depart(car);
+  let r = a.drive(w.train, 3.165, 1, { max: 1200 }); a.say(`to WD ${JSON.stringify(r)} npc ${npcState()}`);
+  w.toggleDoors(); a.step(200); w.toggleDoors(); a.step(20);
+  // split: secure, walk to the coupling, uncouple, back to the cab
+  a.secure(); w.leaveCab(); a.walkTo("Coupling"); w.uncouple(); a.step(20);
+  w.enterCab(); w.setLights("tail"); w.leaveCab(); a.toCab(car, "A");
+  a.say(`split done: my train ${w.train.vehicles.length} car(s); npc ${npcState()}`);
+  a.say(`baton WD: ${a.waitBaton("WD", parseTime("10:14"))} at ${w.time.toFixed(0)} WD7=${w.signal("WD 7").aspect} J=${w.layout.graph.switches.find((s) => s.id === "WD J")!.state}`);
+  a.depart(car);
+  r = a.drive(w.train, 6.265, 1, { max: 1200 }); a.say(`to CW ${JSON.stringify(r)} npc ${npcState()}`);
+  w.toggleDoors(); a.step(200); w.toggleDoors(); a.step(20);
+  a.changeEnds(car, "B");
+  a.say(`baton CW: ${a.waitBaton("CW", parseTime("10:40"))} at ${w.time.toFixed(0)}`);
+  a.depart(car);
+  r = a.drive(w.train, 3.015, -1, { max: 1200 }); a.say(`to WD p2 ${JSON.stringify(r)} npc ${npcState()}`);
+  w.toggleDoors(); a.step(200); w.toggleDoors(); a.step(20);
+  a.secure();
+  a.say(`waiting for 1003 to join: ${a.until(() => w.train.vehicles.length === 2, 900)} at ${w.time.toFixed(0)} npc ${npcState()}`);
+  a.until(() => w.train.allPipesConnected(), 120);
+  a.prove(car); a.say(`proved ${w.train.brakeProved}, pipes ${w.train.allPipesConnected()}`);
+  w.setReverser("F");
+  a.say(`baton WD: ${a.waitBaton("WD", parseTime("11:00"))} at ${w.time.toFixed(0)}`);
+  a.depart(car);
+  r = a.drive(w.train, 0.135, -1, { max: 1200 }); a.say(`to AG ${JSON.stringify(r)} npc ${npcState()}`);
+  w.toggleDoors(); a.step(200); w.toggleDoors(); a.step(20);
+  a.secure(); w.setLights("off"); w.togglePanto(); a.until(() => car.panto === "down"); w.setParkingBrake(true);
+  w.leaveCab(); a.walkTo("Cab A of 1002"); w.enterCab(); w.setLights("off"); a.step(40);
+  a.say(`end: npc ${npcState()}`);
   return a.report();
 }

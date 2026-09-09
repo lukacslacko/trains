@@ -115,7 +115,7 @@ export class SidePanel {
       <div class="gauges">
         <div class="gauge"><div class="lbl">Gradient ahead</div><div class="val">${(() => { const g = w.gradeAhead(v, cab); return g === 0 ? "Level" : `${g > 0 ? "↗" : "↘"} ${Math.abs(g)}<small>‰ ${g > 0 ? "rising" : "falling"}</small>`; })()}</div></div>
         <div class="gauge ${v.parkingBrake ? "warn" : ""}"><div class="lbl">Parking brake</div><div class="val">${v.parkingBrake ? "On" : "Off"}</div></div>
-        <div class="gauge"><div class="lbl">Height</div><div class="val">${w.layout.elevationAt(kmOf(v.pos)).toFixed(0)}<small>m</small></div></div>
+        <div class="gauge"><div class="lbl">Height</div><div class="val">${w.layout.elevationAt(kmOf(v.pos), v.pos.edge.line).toFixed(0)}<small>m</small></div></div>
       </div>`;
     const lamps = `
       <div class="lamps">

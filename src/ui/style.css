@@ -40,7 +40,7 @@ button:disabled { opacity: .4; cursor: default; }
 .card.book .letter { font-family: var(--display); font-weight: 700; font-size: 56px; line-height: 1; float: right; margin: -6px 0 0 12px; }
 
 /* ---------- Duty screen ---------- */
-.duty { height: 100%; display: grid; grid-template-rows: 46px 122px 1fr; grid-template-columns: 1fr 380px; }
+.duty { height: 100%; display: grid; grid-template-rows: 46px 176px 1fr; grid-template-columns: 1fr 380px; }
 .topbar { grid-column: 1 / -1; background: var(--green); color: var(--ivory); display: flex; align-items: center; gap: 14px; padding: 0 14px; }
 .topbar img { width: 26px; height: 26px; }
 .topbar .brand { font-family: var(--display); font-weight: 700; letter-spacing: .2em; text-transform: uppercase; font-size: 15px; }

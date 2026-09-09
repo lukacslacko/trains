@@ -15,13 +15,15 @@
   .key span::before { content: ""; display: inline-block; width: 18px; height: 3px; vertical-align: middle; margin-right: 6px; }
   .key .down::before { background: var(--green); }
   .key .up::before { background: var(--brass); }
+  .key .slate::before { background: var(--slate); }
+  .key .red::before { background: var(--red); }
 </style>
 </head>
 <body>
 <nav class="desk-bar">
   <a href="index.html">← Library</a>
   <span class="spacer"></span>
-  <span>Book T · First edition · September 2026</span>
+  <span>Book T · Second edition · September 2026</span>
   <a href="#" onclick="window.print();return false;">Print booklet</a>
 </nav>
 
@@ -34,8 +36,8 @@
   <div class="company">The Meridian Railway</div>
   <div class="book-letter"><small>Book</small>T</div>
   <h1 class="title">Timetabling</h1>
-  <p class="subtitle">The working timetable of the Railway: how trains are numbered, timed, crossed and kept apart.</p>
-  <div class="edition">First edition · September 2026 · Issued by the Traffic Office</div>
+  <p class="subtitle">The working timetable of the Railway: how trains are numbered, timed, crossed, divided, joined and kept apart.</p>
+  <div class="edition">Second edition · September 2026 · Issued by the Traffic Office</div>
   <div class="motto">On the line, on time.</div>
 </section>
 
@@ -50,14 +52,17 @@
     <li class="sub"><span class="num">T 12</span><a href="#T12">Booking and line clear</a><span class="dots"></span><span class="pg">6</span></li>
     <li><span class="num">4</span><a href="#c4">The block and the crossing</a><span class="dots"></span><span class="pg">7</span></li>
     <li class="sub"><span class="num">T 14</span><a href="#T14">Crossing</a><span class="dots"></span><span class="pg">8</span></li>
-    <li><span class="num">5</span><a href="#c5">The working timetable, September 2026</a><span class="dots"></span><span class="pg">9</span></li>
-    <li class="sub"><span class="num">5.1</span><a href="#c5-1">The shuttle, Duty 101</a><span class="dots"></span><span class="pg">9</span></li>
-    <li class="sub"><span class="num">5.2</span><a href="#c5-2">The run-round, Duty 201</a><span class="dots"></span><span class="pg">10</span></li>
-    <li class="sub"><span class="num">5.3</span><a href="#c5-3">The crossing, Duty 301</a><span class="dots"></span><span class="pg">10</span></li>
-    <li><span class="num">6</span><a href="#c6">The time–distance diagram</a><span class="dots"></span><span class="pg">12</span></li>
-    <li><span class="num">7</span><a href="#c7">Duty sheets</a><span class="dots"></span><span class="pg">14</span></li>
-    <li><span class="num">8</span><a href="#c8">Glossary</a><span class="dots"></span><span class="pg">15</span></li>
-    <li><span class="num">—</span><a href="#colophon">Colophon</a><span class="dots"></span><span class="pg">16</span></li>
+    <li><span class="num">5</span><a href="#c5">Portions</a><span class="dots"></span><span class="pg">9</span></li>
+    <li class="sub"><span class="num">T 16</span><a href="#T16">Portions</a><span class="dots"></span><span class="pg">10</span></li>
+    <li><span class="num">6</span><a href="#c6">The working timetable, September 2026</a><span class="dots"></span><span class="pg">11</span></li>
+    <li class="sub"><span class="num">6.1</span><a href="#c6-1">The shuttle, Duty 101</a><span class="dots"></span><span class="pg">11</span></li>
+    <li class="sub"><span class="num">6.2</span><a href="#c6-2">The run-round, Duty 201</a><span class="dots"></span><span class="pg">12</span></li>
+    <li class="sub"><span class="num">6.3</span><a href="#c6-3">The crossing, Duty 301</a><span class="dots"></span><span class="pg">12</span></li>
+    <li class="sub"><span class="num">6.4</span><a href="#c6-4">The junction, Duty 401</a><span class="dots"></span><span class="pg">13</span></li>
+    <li><span class="num">7</span><a href="#c7">The time–distance diagram</a><span class="dots"></span><span class="pg">15</span></li>
+    <li><span class="num">8</span><a href="#c8">Duty sheets</a><span class="dots"></span><span class="pg">18</span></li>
+    <li><span class="num">9</span><a href="#c9">Glossary</a><span class="dots"></span><span class="pg">19</span></li>
+    <li><span class="num">—</span><a href="#colophon">Colophon</a><span class="dots"></span><span class="pg">20</span></li>
   </ol>
 </section>
 
@@ -77,7 +82,7 @@
   <p>The Railway keeps two documents from one set of figures.</p>
   <dl class="dl">
     <dt>Public timetable</dt><dd>Station, arrival, departure. Printed on the name boards and in the valley's post offices. It shows the passenger's minutes and nothing else.</dd>
-    <dt>Working timetable</dt><dd>The same trains with everything a passenger never sees: the train number, the car or the locomotive, the platform track, the dwell, the block section, the shunting moves, the recovery minutes and the crossing. Every driver and every box works from it. This Book prints it in § 5.</dd>
+    <dt>Working timetable</dt><dd>The same trains with everything a passenger never sees: the train number, the car or the locomotive, the platform track, the dwell, the block section, the shunting moves, the recovery minutes and the crossing. Every driver and every box works from it. This Book prints it in § 6.</dd>
   </dl>
   <div class="why"><p>We keep the two apart so that the public one can be read at a glance and the working one can be trusted to the minute. A figure that appears in both is the same figure; the working timetable is never allowed to drift from the promise.</p></div>
 </section>
@@ -95,6 +100,7 @@
 
   <h2 id="c2-1"><span class="num">2.1</span> The car and the train</h2>
   <p>The boxes speak of cars, because a box can see a car and cannot see a timetable: <em>Line clear for 1002 to Wending</em> names the vehicle that will stand in the section. The timetable speaks of trains, because a timetable is a plan and a plan is about paths, not paint. When car 1002 leaves Ashgrove at 08:00 it is train 3; when it leaves Coldwater at 08:40 it is train 6. The Incident Book, which records what happened to people and vehicles, names the car; the Traffic Office, which records how the day went against the plan, names the train.</p>
+  <p>A train that divides keeps its number on the main line and gives its branch portion a branch number: train 7 arrives at Wending as two cars and leaves it as train 7 for Coldwater and train 31 for Fernhollow. A train that is joined takes the number of the portion that stood waiting: train 32 from Fernhollow is called on to train 8 at Wending, and one train 8 leaves for Ashgrove. § 5 sets out the rules.</p>
   <div class="note"><p>Where a train is more than one vehicle, the timetable names the passenger vehicle that the boxes will watch for arrival: in Duty 201 the coach, 5107, since the locomotive leaves it to run round. A train has arrived complete when its last vehicle is within station limits and it has stopped; a box cancels a warrant on nothing less.</p></div>
 
   <h2 id="c2-2"><span class="num">2.2</span> Blocks of numbers</h2>
@@ -104,6 +110,7 @@
       <tr><td class="mono">1–9</td><td>Passenger trains over the full line, Ashgrove–Coldwater.</td></tr>
       <tr><td class="mono">11–19</td><td>The Ashgrove–Wending shuttle, worked before the block was opened.</td></tr>
       <tr><td class="mono">21–29</td><td>Locomotive-hauled trains that run round at each end.</td></tr>
+      <tr><td class="mono">31–39</td><td>Branch trains, Wending–Fernhollow: odd Down towards Fernhollow, even Up towards Wending. A branch portion of a main-line train carries a branch number from the moment it is uncoupled.</td></tr>
       <tr><td class="mono">91–99</td><td>Light engines, inspection trolleys and works trains (not yet in use).</td></tr>
     </tbody>
   </table>
@@ -123,6 +130,8 @@
       <tr><td>Wending–Coldwater</td><td class="mono">3.10 km</td><td class="mono">5 min</td><td class="mono">9 min</td><td>The 8‰ climb, the neutral section coasted, a long blast at post 4.5.</td></tr>
       <tr><td>Coldwater–Wending</td><td class="mono">3.25 km</td><td class="mono">5 min</td><td class="mono">9 min</td><td>Into platform 2 from the north; the neutral section coasted downhill.</td></tr>
       <tr><td>Wending–Ashgrove</td><td class="mono">2.88 km</td><td class="mono">4 min 40 s</td><td class="mono">8 min</td><td>Descending 12‰ to the Ashgrove distant; the advance board stands at 0.70.</td></tr>
+      <tr><td>Wending–Fernhollow</td><td class="mono">2.30 km</td><td class="mono">4 min 40 s</td><td class="mono">8 min</td><td>Through WD J to the branch, 40 km/h, climbing 10‰ from F 0.3 to F 1.9.</td></tr>
+      <tr><td>Fernhollow–Wending</td><td class="mono">2.30 km</td><td class="mono">6 min 20 s</td><td class="mono">9 min</td><td>Descending 10‰ to the WD 10 distant at F 0.33, then called on at shunting speed to couple: the last 200 m take two minutes.</td></tr>
     </tbody>
   </table>
 
@@ -135,6 +144,7 @@
   <dl class="dl">
     <dt>Calling dwell</dt><dd>One to two minutes at a platform for doors: enough for the doors, the step and a passenger with a bicycle.</dd>
     <dt>Crossing dwell</dt><dd>Four to five minutes at Wending. The first train to arrive waits for the second; the second needs a minute to arrive complete; then each needs line clear for the section the other has just left. See § 4.</dd>
+    <dt>Dividing and joining dwell</dt><dd>Seven minutes at Wending for a train that divides: the calling dwell, the uncoupling, the tail lights on the new rear cab, and two departures two minutes apart; and up to nine for a train that joins, since the standing portion must wait for the arriving one to be called on and coupled, and the brake to be proved. See § 5.</dd>
     <dt>Turnround dwell</dt><dd>Nineteen minutes at a terminus. Changing ends means walking the length of the car and setting the lights at both; running round means five shunting moves, two walks and a brake test. These take real minutes, and we book them so that they are taken calmly.</dd>
   </dl>
 
@@ -155,13 +165,15 @@
     <thead><tr><th>Section</th><th>Between</th><th>From home to home</th><th>Worked by</th></tr></thead>
     <tbody>
       <tr><td class="mono">A</td><td>Ashgrove–Wending</td><td class="mono">km 0.42 – 2.88</td><td>Ashgrove Box and Wending Box</td></tr>
-      <tr><td class="mono">B</td><td>Wending–Coldwater</td><td class="mono">km 3.32 – 5.98</td><td>Wending Box and Coldwater Box</td></tr>
+      <tr><td class="mono">B</td><td>Wending–Coldwater</td><td class="mono">km 3.44 – 5.98</td><td>Wending Box and Coldwater Box</td></tr>
+      <tr><td class="mono">C</td><td>Wending–Fernhollow</td><td class="mono">F 0.08 – F 2.03</td><td>Wending Box and Fernhollow Box</td></tr>
     </tbody>
   </table>
+  <p>Sections B and C both begin at Wending's north end, and they share the north stub and the junction switch WD J. The stub and the junction are worked as one route at a time under route locking (<a href="book-s.html#S32">Rule S 32</a>): a train leaving for Coldwater, a train leaving for Fernhollow, a train arriving from either, each holds WD J from the clearing of its signal until it has passed clear, and the next may not have the junction until then. The timetable therefore never books two movements over WD J in the same minute; where two portions leave in turn, or a train arrives as another leaves, they are booked two minutes apart.</p>
   <p>Each section has one Line Warrant. The box at the far end issues it when the section is clear and no other warrant for it is out; the box at the near end clears its starter only with the warrant in hand; the far box cancels it when the train has arrived complete. One warrant, one train, one section: the whole of <a href="book-s.html#S28">Rule S 28</a> in a sentence. The timetable plans around it; it never plans against it.</p>
 
   <h2 id="c4-2"><span class="num">4.2</span> What a crossing needs</h2>
-  <p>A crossing station must have two tracks that a passenger train can use, each with a platform, each with its own starting signal in each direction that trains will leave, and a home signal at each end that can be cleared into either track. Wending has all of these: platform 1 on track 1, kept for Down trains, and platform 2 on track 2, kept for Up trains; WD 2 and WD 4 starting Up, WD 7 and WD 9 starting Down; WD 1 and WD 8 as homes. A loop without a second platform can pass a train but cannot cross two that both call, and the timetable would have to send one of them through without stopping.</p>
+  <p>A crossing station must have two tracks that a passenger train can use, each with a platform, each with its own starting signal in each direction that trains will leave, and a home signal at each end that can be cleared into either track. Wending has all of these: platform 1 on track 1, kept for Down trains, and platform 2 on track 2, kept for Up trains; WD 2 and WD 4 starting Up, WD 7 and WD 9 starting Down; WD 1 and WD 8 as homes, and since the branch opened a third home, WD 10, for trains arriving off it. WD 8 and WD 10 carry a subsidiary so that a portion can be called on to a platform where its other half already stands (§ 5). A loop without a second platform can pass a train but cannot cross two that both call, and the timetable would have to send one of them through without stopping.</p>
   <div class="why"><p>Down trains to platform 1 and Up trains to platform 2 is a habit, not a law of nature. We keep it so that a passenger who uses Wending daily learns which side to stand, and so that the boxes' routes are the same every day and the drivers' expectations with them.</p></div>
 
   <h2 id="c4-3"><span class="num">4.3</span> The crossing, minute by minute</h2>
@@ -183,11 +195,33 @@
 </section>
 
 <!-- 5 -->
-<section class="page chapter" id="c5" data-folio="Book T · 5 The working timetable">
-  <h1><span class="num">§ 5</span> The working timetable, September 2026</h1>
-  <p class="lead">Three duties are worked at present. Each is set out as the boxes and the drivers read it: one row per station call, with the platform track and, where it matters, what happens in the dwell.</p>
+<section class="page chapter" id="c5" data-folio="Book T · 5 Portions">
+  <h1><span class="num">§ 5</span> Portions</h1>
+  <p class="lead">Since the Fernhollow branch opened, a train from Ashgrove may be two cars that part company at Wending, and a train to Ashgrove may be two cars that meet there. Each half is a portion. This chapter says how the timetable counts them, when each may leave, and how the two find each other again.</p>
 
-  <h2 id="c5-1"><span class="num">5.1</span> The shuttle, Duty 101</h2>
+  <h2 id="c5-1"><span class="num">5.1</span> Dividing</h2>
+  <p>Train 7 leaves Ashgrove as one train of two cars, 1002 and 1003, coupled with pipe and control line and worked from the leading cab under <a href="book-d.html#D26">Rule D 26</a>. It is one train the whole way to Wending: one number, one warrant, one baton. At Wending it is uncoupled as <a href="book-d.html#D28">Rule D 28</a> describes, and from that moment there are two trains standing on platform 1: train 7, which will go on to Coldwater, and train 31, which will go up the branch to Fernhollow. Each now needs its own line clear, its own warrant, its own cleared starter and its own baton; the box treats them as it would treat two trains that had arrived separately, except that they cannot both leave at once through the same starting signal.</p>
+  <div class="rule" id="T16">
+    <span class="rule-num">Rule T 16</span><span class="rule-title">Portions</span>
+    <p>A train that divides is one train until it is uncoupled; each portion then has its own departure, baton and warrant. Portions leave a station in the order they stand, the one nearest the exit first.</p>
+  </div>
+  <div class="why"><p>The order is not always the one you would guess from the destinations. On the way up the valley the Coldwater car leads and leaves first. But a pair that has turned round at Ashgrove comes back with its cars the other way about: train 9 arrives at Wending with the branch car, 1001, at the front. The branch portion, train 33, must therefore leave before the Coldwater portion can, and the timetable books 33 at 10:54 and 9 at 10:56, not the other way round. A timetable that ignored which car stands nearest the starter would book a departure the box could not give.</p></div>
+  <div class="note"><p>Two portions leaving through WD 7 in turn need the junction twice: WD J straight for Coldwater, WD J for the branch for Fernhollow. Under route locking (<a href="book-s.html#S32">Rule S 32</a>) the second route cannot be set until the first portion has passed clear of the switch, which is why the two departures are booked two minutes apart and not one.</p></div>
+
+  <h2 id="c5-2"><span class="num">5.2</span> Joining</h2>
+  <p>Joining is dividing in reverse, and it is booked around the portion that arrives first. The standing portion takes its platform, arrives complete, and waits with its train brake applied; its warrant is cancelled like any other. The arriving portion is not given a clear home: it is called on under the home signal's subsidiary (<a href="book-s.html#S30">Rule S 30</a>), which tells its driver that the platform is occupied and to proceed at shunting speed prepared to stop short of the vehicles. It couples to the standing portion at 2 km/h or less, its driver connects the pipe and control line, and the brake is proved from the leading cab. The joined train then leaves under the number of the portion that stood waiting, with one warrant and one baton: train 32 from Fernhollow is called on to train 8 at platform 2, and one train 8 leaves for Ashgrove; train 34 is called on to train 10, and train 10 takes the pair home.</p>
+  <div class="note"><p>The standing portion is always the one booked to arrive first, and it is always given the platform kept for its direction, so that the arriving portion comes in behind it and the joined train's leading cab is the one that has been there all along. If the arriving portion is late, the standing one waits: a joined train cannot leave as half of itself.</p></div>
+
+  <h2 id="c5-3"><span class="num">5.3</span> How the timetable shows it</h2>
+  <p>A train that divides has two rows under its number: one for the whole train as far as the station where it divides, and one for the portion that keeps the number beyond it; the other portion has a row of its own under its branch number. Train 7 in § 6.4 is written as <span class="mono">1002+1003 Ashgrove–Wending</span> and then <span class="mono">1002 Wending–Coldwater</span>, and train 31 as <span class="mono">1003 Wending–Fernhollow</span>. A train that is joined has a row for each portion arriving and one row for the whole under the standing portion's number: train 8 is <span class="mono">1004 Coldwater–Wending</span>, then, after train 32 has been called on, <span class="mono">1004+1001 Wending–Ashgrove</span>. The word <em>split</em> or <em>joins</em> in the times column says which.</p>
+</section>
+
+<!-- 6 -->
+<section class="page chapter" id="c6" data-folio="Book T · 6 The working timetable">
+  <h1><span class="num">§ 6</span> The working timetable, September 2026</h1>
+  <p class="lead">Four duties are worked at present. Each is set out as the boxes and the drivers read it: one row per station call, with the platform track and, where it matters, what happens in the dwell.</p>
+
+  <h2 id="c6-1"><span class="num">6.1</span> The shuttle, Duty 101</h2>
   <p>Car 1002 between Ashgrove and Wending, One Train Working, no signals. The shuttle predates the block and is worked under <a href="book-r.html#R24">Rule R 24</a>; its trains carry numbers in the 11–19 block.</p>
   <table class="wtt">
     <caption>Duty 101 · car 1002 · One Train Working</caption>
@@ -204,7 +238,7 @@
     </tbody>
   </table>
 
-  <h2 id="c5-2"><span class="num">5.2</span> The run-round, Duty 201</h2>
+  <h2 id="c6-2"><span class="num">6.2</span> The run-round, Duty 201</h2>
   <p>Locomotive 4003 and coach 5107. The train is named for the coach; the locomotive runs round at each end, at Wending using the north stub as far as the Limit of Shunt at post 3.28.</p>
   <table class="wtt">
     <caption>Duty 201 · loco 4003 + coach 5107</caption>
@@ -217,7 +251,7 @@
     </tbody>
   </table>
 
-  <h2 id="c5-3"><span class="num">5.3</span> The crossing, Duty 301</h2>
+  <h2 id="c6-3"><span class="num">6.3</span> The crossing, Duty 301</h2>
   <p>Cars 1002 and 1003 over the full line, crossing at Wending twice. Train 3 and train 6 are worked by 1002, trains 4 and 5 by 1003.</p>
   <table class="wtt">
     <caption>Duty 301 · cars 1002 and 1003 · block working</caption>
@@ -238,12 +272,34 @@
     </tbody>
   </table>
   <div class="note"><p>Train 4 is booked a minute longer over section B than train 3 is over section A: the descent from Coldwater is coasted through the neutral section and the approach to WD 8 is on a falling 8‰, where a driver rightly brakes a little early for the distant.</p></div>
+
+  <h2 id="c6-4"><span class="num">6.4</span> The junction, Duty 401</h2>
+  <p>Four cars over the main line and the branch. Cars 1002 and 1003 work trains 7, 31, 34 and 10; cars 1004 and 1001 work trains 8, 32, 9 and 33. Both pairs divide at Wending on the way up the valley and are joined there on the way down; the two pairs are in Wending at the same time twice, one dividing on platform 1 while the other is joined on platform 2. Branch trains carry numbers in the 31–39 block (§ 2.2).</p>
+  <table class="wtt">
+    <caption>Duty 401 · cars 1002, 1003, 1004, 1001 · block working with portions</caption>
+    <thead><tr><th>Train</th><th>Cars</th><th>Route</th><th>Times, platform and notes</th></tr></thead>
+    <tbody>
+      <tr><td>7</td><td>1002+1003</td><td class="stn">Ashgrove–Wending</td><td>AG 10:00 → WD 10:07 (platform 1); split</td></tr>
+      <tr><td>7</td><td>1002</td><td class="stn">Wending–Coldwater</td><td>WD 10:14 → CW 10:23</td></tr>
+      <tr><td>31</td><td>1003</td><td class="stn">Wending–Fernhollow</td><td>WD 10:16 → FH 10:24</td></tr>
+      <tr><td>8</td><td>1004</td><td class="stn">Coldwater–Wending</td><td>CW 10:00 → WD 10:08 (platform 2)</td></tr>
+      <tr><td>32</td><td>1001</td><td class="stn">Fernhollow–Wending</td><td>FH 10:02 → WD 10:11 (platform 2, called on, joins 1004)</td></tr>
+      <tr><td>8</td><td>1004+1001</td><td class="stn">Wending–Ashgrove</td><td>WD 10:18 → AG 10:27</td></tr>
+      <tr><td>9</td><td>1004+1001</td><td class="stn">Ashgrove–Wending</td><td>AG 10:40 → WD 10:47 (platform 1); split</td></tr>
+      <tr><td>33</td><td>1001</td><td class="stn">Wending–Fernhollow</td><td>WD 10:54 → FH 11:02 (1001 stands at the Down end, leaves first)</td></tr>
+      <tr><td>9</td><td>1004</td><td class="stn">Wending–Coldwater</td><td>WD 10:56 → CW 11:05</td></tr>
+      <tr><td>10</td><td>1002</td><td class="stn">Coldwater–Wending</td><td>CW 10:40 → WD 10:49 (platform 2)</td></tr>
+      <tr><td>34</td><td>1003</td><td class="stn">Fernhollow–Wending</td><td>FH 10:44 → WD 10:53 (platform 2, called on, joins 1002)</td></tr>
+      <tr><td>10</td><td>1002+1003</td><td class="stn">Wending–Ashgrove</td><td>WD 11:00 → AG 11:09</td></tr>
+    </tbody>
+  </table>
+  <div class="note"><p>Read the Wending minutes together. At 10:07 train 7 arrives on platform 1 and at 10:08 train 8 on platform 2; 32 is called on to 8 at 10:11 while 7 is being uncoupled; 7 leaves for Coldwater at 10:14 and 31 for Fernhollow at 10:16, two minutes apart for the junction; the joined 8 leaves for Ashgrove at 10:18 once its brake is proved. At 10:47 and 10:49 the same happens the other way about, with 33 leaving first at 10:54 because 1001 stands at the Down end, 9 at 10:56, and the joined 10 at 11:00. Section C carries one train at a time throughout; the branch is never the busy part of the day, the junction is.</p></div>
 </section>
 
 <!-- 6 -->
-<section class="page chapter" id="c6" data-folio="Book T · 6 The time–distance diagram">
-  <h1><span class="num">§ 6</span> The time–distance diagram</h1>
-  <p class="lead">The Traffic Office draws every timetable before it prints it. The drawing is a graph of distance against time, and a train on it is a line: steep where it runs, level where it stands. Two trains that meet on the drawing meet on the line, and the drawing says where.</p>
+<section class="page chapter" id="c7" data-folio="Book T · 7 The time–distance diagram">
+  <h1><span class="num">§ 7</span> The time–distance diagram</h1>
+  <p class="lead">The Traffic Office draws every timetable before it prints it. The drawing is a graph of distance against time, and a train on it is a line: steep where it runs, level where it stands. Two trains that meet on the drawing meet on the line, and the drawing says where. Two drawings follow: Duty 301, the crossing, and Duty 401, the junction.</p>
 
   <figure class="string-fig">
     <div class="figure-frame">
@@ -312,35 +368,117 @@
         <text x="412" y="410" text-anchor="middle" font-size="9" fill="#4A5560" letter-spacing="1">1003 CHANGES ENDS 08:21–08:40</text>
       </svg>
     </div>
-    <figcaption><span class="fig">Fig. 6.1</span> Time–distance diagram of Duty 301. Distance up the page from Ashgrove to Coldwater; time across. Down trains in Meridian Green, Up trains in Brass. The two circles are the crossings at Wending.</figcaption>
+    <figcaption><span class="fig">Fig. 7.1</span> Time–distance diagram of Duty 301. Distance up the page from Ashgrove to Coldwater; time across. Down trains in Meridian Green, Up trains in Brass. The two circles are the crossings at Wending.</figcaption>
   </figure>
   <div class="key"><span class="down">Down trains</span><span class="up">Up trains</span></div>
 
-  <h2 id="c6-1"><span class="num">6.1</span> Reading it</h2>
+  <figure class="string-fig">
+    <div class="figure-frame">
+      <svg viewBox="0 0 700 520" width="700" height="520">
+        <!-- station bands: branch above, main below -->
+        <rect x="60" y="36.0" width="620" height="24" fill="#F4EFE3"/>
+        <rect x="60" y="142.0" width="620" height="8" fill="#F4EFE3"/>
+        <rect x="60" y="190.0" width="620" height="24" fill="#F4EFE3"/>
+        <rect x="60" y="325.5" width="620" height="28" fill="#F4EFE3"/>
+        <rect x="60" y="470.0" width="620" height="10" fill="#F4EFE3"/>
+        <!-- the junction: the branch band hangs off the Wending line -->
+        <line x1="60" y1="150.0" x2="680" y2="150.0" stroke="#B5913F" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="676" y="147.0" text-anchor="end" font-size="9" fill="#B5913F" letter-spacing="1">JUNCTION WD J · F 0.0 · THE BRANCH, ABOVE, HANGS OFF THE WENDING LINE</text>
+        <!-- time grid -->
+        <g stroke="#D9D2C0" stroke-width="1"><line x1="96.5" y1="48" x2="96.5" y2="480"/><line x1="169.4" y1="48" x2="169.4" y2="480"/><line x1="242.4" y1="48" x2="242.4" y2="480"/><line x1="315.3" y1="48" x2="315.3" y2="480"/><line x1="388.2" y1="48" x2="388.2" y2="480"/><line x1="461.2" y1="48" x2="461.2" y2="480"/><line x1="534.1" y1="48" x2="534.1" y2="480"/><line x1="607.1" y1="48" x2="607.1" y2="480"/><line x1="680.0" y1="48" x2="680.0" y2="480"/></g>
+        <!-- axes -->
+        <line x1="60" y1="480" x2="680" y2="480" stroke="#1A1A1A" stroke-width="1.5"/>
+        <line x1="60" y1="48" x2="60" y2="480" stroke="#1A1A1A" stroke-width="1.5"/>
+        <g class="mono" font-size="10" fill="#4A5560" text-anchor="middle"><text x="96.5" y="496">09:50</text><text x="169.4" y="496">10:00</text><text x="242.4" y="496">10:10</text><text x="315.3" y="496">10:20</text><text x="388.2" y="496">10:30</text><text x="461.2" y="496">10:40</text><text x="534.1" y="496">10:50</text><text x="607.1" y="496">11:00</text><text x="680.0" y="496">11:10</text></g>
+        <g font-size="12" fill="#1F4B3F" text-anchor="end" letter-spacing="1">
+          <text x="54" y="52.0">FERNHOLLOW</text>
+          <text x="54" y="206.0">COLDWATER</text>
+          <text x="54" y="343.5">WENDING</text>
+          <text x="54" y="478.0">ASHGROVE</text>
+        </g>
+        <g class="mono" font-size="9" fill="#4A5560" text-anchor="end">
+          <text x="54" y="64.0">F 2.32</text>
+          <text x="54" y="218.0">km 6.4</text>
+          <text x="54" y="355.5">km 3.1</text>
+          <text x="54" y="490.0">km 0</text>
+        </g>
+        <!-- 1004, slate -->
+        <polyline points="169.4,190.0 227.8,339.5 300.7,339.5 366.4,480.0 461.2,480.0 512.2,339.5 577.9,339.5 643.5,190.0" fill="none" stroke="#4A5560" stroke-width="2.5" stroke-linejoin="round"/>
+        <!-- 1001, red: branch, then coupled to 1004, then branch again -->
+        <polyline points="184.0,48.0 249.6,150.0" fill="none" stroke="#C6321E" stroke-width="2.5" stroke-linejoin="round"/>
+        <line x1="249.6" y1="150.0" x2="249.6" y2="339.5" stroke="#C6321E" stroke-width="1" stroke-dasharray="2 2"/>
+        <polyline points="249.6,342.5 300.7,342.5 366.4,483.0 461.2,483.0 512.2,342.5 563.3,342.5" fill="none" stroke="#C6321E" stroke-width="1.6" stroke-linejoin="round"/>
+        <line x1="563.3" y1="339.5" x2="563.3" y2="150.0" stroke="#C6321E" stroke-width="1" stroke-dasharray="2 2"/>
+        <polyline points="563.3,150.0 621.6,48.0" fill="none" stroke="#C6321E" stroke-width="2.5" stroke-linejoin="round"/>
+        <!-- 1002, green -->
+        <polyline points="169.4,480.0 220.5,339.5 271.5,339.5 337.2,190.0 461.2,190.0 526.8,339.5 607.1,339.5 672.7,480.0" fill="none" stroke="#1F4B3F" stroke-width="2.5" stroke-linejoin="round"/>
+        <!-- 1003, brass: coupled to 1002, then branch, then coupled again -->
+        <polyline points="169.4,483.0 220.5,342.5 286.1,342.5" fill="none" stroke="#B5913F" stroke-width="1.6" stroke-linejoin="round"/>
+        <line x1="286.1" y1="339.5" x2="286.1" y2="150.0" stroke="#B5913F" stroke-width="1" stroke-dasharray="2 2"/>
+        <polyline points="286.1,150.0 344.5,48.0 490.4,48.0 556.0,150.0" fill="none" stroke="#B5913F" stroke-width="2.5" stroke-linejoin="round"/>
+        <line x1="556.0" y1="150.0" x2="556.0" y2="339.5" stroke="#B5913F" stroke-width="1" stroke-dasharray="2 2"/>
+        <polyline points="556.0,342.5 607.1,342.5 672.7,483.0" fill="none" stroke="#B5913F" stroke-width="1.6" stroke-linejoin="round"/>
+        <!-- splits and joins at Wending -->
+        <g fill="none" stroke="#C6321E" stroke-width="1.5">
+          <circle cx="220.5" cy="339.5" r="8"/>
+          <circle cx="249.6" cy="339.5" r="8"/>
+          <circle cx="512.2" cy="339.5" r="8"/>
+          <circle cx="556.0" cy="339.5" r="8"/>
+        </g>
+        <g font-size="9" fill="#C6321E" letter-spacing="1" text-anchor="middle">
+          <text x="206.5" y="367.5">SPLIT 10:07</text>
+          <text x="271.6" y="379.5">JOIN 10:11</text>
+          <text x="498.20000000000005" y="367.5">SPLIT 10:47</text>
+          <text x="578.0" y="379.5">JOIN 10:53</text>
+        </g>
+        <!-- train numbers -->
+        <g font-size="11" font-weight="700">
+          <text x="189.3" y="416.6" fill="#1F4B3F">7</text>
+          <text x="308.0" y="258.0" fill="#1F4B3F">7</text>
+          <text x="312.0" y="97.2" fill="#B5913F">31</text>
+          <text x="193.3" y="270.0" fill="#4A5560">8</text>
+          <text x="203.9" y="109.2" fill="#C6321E">32</text>
+          <text x="329.9" y="428.6" fill="#4A5560">8</text>
+          <text x="481.1" y="416.6" fill="#4A5560">9</text>
+          <text x="607.1" y="270.0" fill="#4A5560">9</text>
+          <text x="589.2" y="109.2" fill="#C6321E">33</text>
+          <text x="485.1" y="270.0" fill="#1F4B3F">10</text>
+          <text x="510.20000000000005" y="97.2" fill="#B5913F">34</text>
+          <text x="628.9" y="428.6" fill="#1F4B3F">10</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 7.2</span> Time–distance diagram of Duty 401. The main line runs up the page from Ashgrove to Coldwater; the branch is a second, narrower band above it, hung off the Wending line at the junction. Car 1002 in Meridian Green, 1003 in Brass, 1004 in Slate, 1001 in Signal Red; a thin line beside a thick one is a car coupled into the other's train. The circles are the splits and joins at Wending.</figcaption>
+  </figure>
+  <div class="key"><span class="down">1002</span><span class="up">1003</span><span class="slate">1004</span><span class="red">1001</span></div>
+  <p>Where two cars run as one train the drawing shows two lines side by side, one thick and one thin: the thick line is the car whose cab drives, the thin one is coupled behind. At a split the thin line parts from the thick and, after a dotted step up to the branch band, becomes a thick line of its own; at a join a thick line comes down the dotted step and settles beside the train it has been called on to, and turns thin. Read across the Wending band from 10:07 to 10:18 and the whole of § 5 is there: a split, a join, and three departures two minutes apart.</p>
+
+  <h2 id="c7-1"><span class="num">7.1</span> Reading it</h2>
   <p>Follow train 3 from the bottom left. It leaves Ashgrove at 08:00 and climbs the page as it climbs the valley; the slope of the line is its speed. At Wending the line goes level for five minutes: the crossing dwell. Then it climbs again to Coldwater, where it rests on the top band for nineteen minutes before coming back down the page as train 6.</p>
   <p>Train 4 starts at the top at the same moment and comes down. The two lines meet in the Wending band, and only there: the circle marks the crossing. Above the band the brass line is alone in section B; below it the green line is alone in section A. That each section holds one line at a time is the whole point of the drawing, and a timetable that puts two lines on one stretch outside a station band is not sent to the printer.</p>
   <div class="note"><p>The faint band across the upper section is the neutral section at posts 4.19–4.21. It is drawn so that a planner sees where a train must be coasting and does not book a stop or a start there.</p></div>
 </section>
 
 <!-- 7 -->
-<section class="page chapter" id="c7" data-folio="Book T · 7 Duty sheets">
-  <h1><span class="num">§ 7</span> Duty sheets</h1>
+<section class="page chapter" id="c8" data-folio="Book T · 8 Duty sheets">
+  <h1><span class="num">§ 8</span> Duty sheets</h1>
   <p class="lead">A duty sheet is the driver's extract of the working timetable: the trains one crew works in one turn, with the stations, the booked times and a line for each actual time.</p>
 
-  <h2 id="c7-1"><span class="num">7.1</span> What is on it</h2>
+  <h2 id="c8-1"><span class="num">8.1</span> What is on it</h2>
   <p>The sheet lists each leg of the duty: from, booked departure, to, booked arrival, and beside them the actual times as they happen. Beneath the legs it carries the duty in brief: the preparing steps, the crossing or the run-round, and the stabling. The cab shows the sheet beside the messages from the boxes and the Incident Book, and the leg in hand is marked.</p>
+  <p>A leg over the branch is written like any other, with Fernhollow as its end; the driver reads the branch by its own posts, lettered F, and stops at the Fernhollow board at F 2.255. A driver whose train divides sees only their own portion's legs: the sheet for Duty 401 runs Ashgrove–Wending, Wending–Coldwater, Coldwater–Wending, Wending–Ashgrove, and says in brief that 1003 is uncoupled at the first Wending call and called on at the second. The colleague's branch legs are on the colleague's sheet.</p>
 
-  <h2 id="c7-2"><span class="num">7.2</span> Bringing the clock forward</h2>
+  <h2 id="c8-2"><span class="num">8.2</span> Bringing the clock forward</h2>
   <p>While a train stands at a station with time in hand, the booked departure on the sheet may be used to bring the clock to fifteen seconds before it. This is a convenience of the sheet, not of the line: the world runs on through the skipped minutes, pantographs finish rising, boxes clear their signals at their usual two minutes before time, and the skip stops of itself if anything moves or anything is written in the Incident Book. Nothing about the departure itself changes.</p>
   <div class="why"><p>We timed the dwells for people, not for clocks. A driver who has done everything the dwell is for should not have to watch the last nine minutes of it pass.</p></div>
 
-  <h2 id="c7-3"><span class="num">7.3</span> Early and late</h2>
+  <h2 id="c8-3"><span class="num">8.3</span> Early and late</h2>
   <p>A departure before the booked time is an incident under <a href="book-r.html#R20">Rule R 20</a>; a late arrival is noted on the sheet and is not. The Traffic Office reads the sheets weekly and moves the minutes, not the drivers: a run that is late every day has a timetable problem, and the cure is in this Book.</p>
 </section>
 
 <!-- 8 -->
-<section class="page chapter" id="c8" data-folio="Book T · 8 Glossary">
-  <h1><span class="num">§ 8</span> Glossary</h1>
+<section class="page chapter" id="c9" data-folio="Book T · 9 Glossary">
+  <h1><span class="num">§ 9</span> Glossary</h1>
   <dl class="dl">
     <dt>Working timetable</dt><dd>The full timetable the Railway works from: trains, vehicles, tracks, dwells, sections and shunting moves. Abbreviated WTT.</dd>
     <dt>Public timetable</dt><dd>The passenger's extract: station, arrival, departure.</dd>
@@ -349,7 +487,10 @@
     <dt>Dwell</dt><dd>The booked time between arrival and departure at a station: calling, crossing or turnround.</dd>
     <dt>Recovery</dt><dd>The minutes booked beyond the measured running time, so that a small delay does not become a late arrival.</dd>
     <dt>Crossing</dt><dd>Two trains passing each other at a loop, one on each track (Rule T 14).</dd>
-    <dt>Block section</dt><dd>The single line between two boxes, from home signal to home signal; sections A and B.</dd>
+    <dt>Block section</dt><dd>The single line between two boxes, from home signal to home signal; sections A and B on the main line, C on the branch.</dd>
+    <dt>Portion</dt><dd>One of the parts of a train that divides at a station, or that is joined there; each portion is a train in its own right from the uncoupling to the coupling (Rule T 16).</dd>
+    <dt>Branch train</dt><dd>A train between Wending and Fernhollow, numbered in the 31–39 block; a branch portion of a main-line train becomes one when it is uncoupled.</dd>
+    <dt>Junction</dt><dd>The switch WD J beyond Wending's north stub, where the Fernhollow branch leaves the main line; worked as one route at a time (Rule S 32).</dd>
     <dt>Line Warrant</dt><dd>The authority for one train to occupy one block section, issued and cancelled by the boxes (Rule S 28).</dd>
     <dt>Arrived complete</dt><dd>A train wholly within station limits and stopped; the moment a warrant may be cancelled.</dd>
     <dt>Time–distance diagram</dt><dd>The Traffic Office's drawing of distance against time on which every train is a line and every crossing a meeting.</dd>
@@ -360,9 +501,9 @@
 <!-- COLOPHON -->
 <section class="page colophon" id="colophon" data-folio="Book T · Colophon">
   <img class="mark" src="../brand/mark-green.svg" alt="">
-  <p><strong>Book T — Timetabling.</strong> First edition, September 2026. Issued by the Traffic Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
-  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes nothing.</p>
-  <p>Amendments are issued as numbered slips; paste them in at the page indicated. Rules T 10 to T 14 are cited by number in other Books and must not be renumbered without a general amendment.</p>
+  <p><strong>Book T — Timetabling.</strong> Second edition, September 2026. Issued by the Traffic Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
+  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes the first edition of September 2026. What changed is listed in <a href="amendments/book-t-ed2.html">Amendment Slip T-2</a>.</p>
+  <p>Amendments are issued as numbered slips; paste them in at the page indicated. Rules T 10 to T 16 are cited by number in other Books and must not be renumbered without a general amendment.</p>
   <p>Companion volumes: <a href="book-i.html">Book I, Identity</a> · <a href="book-r.html">Book R, Rules of Operation</a> · <a href="book-s.html">Book S, Signalling</a> · <a href="book-d.html">Book D, Driving</a> · <a href="book-p.html">Book P, Permanent Way</a>.</p>
 </section>
 
