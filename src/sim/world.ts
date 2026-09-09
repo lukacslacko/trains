@@ -30,7 +30,8 @@ export interface Route {
 export interface AheadItem { kind: "signal" | "board" | "vehicle" | "buffer"; label: string; dist: number; obj?: Trackside; aspect?: string; applies: boolean }
 
 export interface Station extends StationInfo {
-  batonShown: boolean;
+  /** vehicle numbers of the trains the baton is shown to */
+  baton: Set<string>;
 }
 
 export class World {
@@ -56,13 +57,23 @@ export class World {
   /** per-consist bookkeeping for rolling back, running away and dragging the parking brake */
   private motion = new Map<Consist, { intended: number; wrong: number; flagged: boolean; drag: number; dragFlagged: boolean }>();
   finished: string | null = null;
+  /** vehicles driven by colleagues, whose incidents are not the player's */
+  npc = new Set<Vehicle>();
+  /** block warrants out: section id → train (vehicle number) */
+  warrants = new Map<string, string>();
+  private whistleDue = new Map<Consist, { km: number; dir: Dir; since: number }>();
+  /** where each consist last came to rest, to tell a departure past a stop board from an overrun */
+  private restKm = new Map<Consist, number>();
+  /** drivers of the colleagues' trains, for inspection */
+  npcDrivers: unknown[] = [];
+  private inNeutral = new Map<Consist, boolean>();
 
   constructor(layout: Layout, startTime: number, trainVehicle: Vehicle, driver: DriverLocation) {
     this.layout = layout;
     this.time = startTime;
     this.trainVehicle = trainVehicle;
     this.driver = driver;
-    this.stations = layout.stations.map((s) => ({ ...s, batonShown: false }));
+    this.stations = layout.stations.map((s) => ({ ...s, baton: new Set<string>() }));
   }
 
   /* ---------- messages & incidents ---------- */
@@ -70,7 +81,9 @@ export class World {
   say(from: string, text: string, kind: Message["kind"] = "box") {
     this.messages.push({ t: this.time, from, text, kind });
   }
-  incident(code: string, text: string, note = false) {
+  isNpc(c: Consist): boolean { return c.vehicles.some((v) => this.npc.has(v)); }
+  incident(code: string, text: string, note = false, c?: Consist) {
+    if (c && this.isNpc(c)) return; // a colleague's affair, not the player's
     // de-duplicate identical incidents within 10 s
     const last = this.incidents[this.incidents.length - 1];
     if (last && last.code === code && this.time - last.t < 10) return;
@@ -167,10 +180,11 @@ export class World {
         const facing = o.pos.dir === st.dir;
         if (!facing) continue;
         if (o.kind === "signal") {
-          const applies = o.type === "main" ? c.isTrain : !c.isTrain;
-          items.push({ kind: "signal", label: o.id, dist: d, obj: o, aspect: o.aspect, applies });
+          const applies = o.type === "ground" ? !c.isTrain : true;
+          const label = o.type === "distant" ? `${o.id} (distant for ${o.distantOf})` : o.id;
+          items.push({ kind: "signal", label, dist: d, obj: o, aspect: o.aspect, applies });
         } else {
-          let label = o.board === "stop" ? `Stop board ${o.label}` : o.board === "limitOfShunt" ? "Limit of Shunt" : o.board === "speed" ? `Speed ${o.value}` : o.board === "speedAdvance" ? `Speed ${o.value} ahead` : o.board === "gradient" ? `Gradient post · ${o.value === 0 ? "level" : `${Math.abs(o.value!)}‰ ${o.value! > 0 ? "rising" : "falling"}`} ahead` : "Buffer stop";
+          let label = o.board === "stop" ? `Stop board ${o.label}` : o.board === "limitOfShunt" ? "Limit of Shunt" : o.board === "speed" ? `Speed ${o.value}` : o.board === "speedAdvance" ? `Speed ${o.value} ahead` : o.board === "gradient" ? `Gradient post · ${o.value === 0 ? "level" : `${Math.abs(o.value!)}‰ ${o.value! > 0 ? "rising" : "falling"}`} ahead` : o.board === "whistle" ? "Whistle board · one long blast" : o.board === "section" ? "Section board · power off" : o.board === "resume" ? "Resume board · power may be taken" : "Buffer stop";
           if (o.board === "switchIndicator" && o.sw) {
             const set = o.sw.state === "normal" ? o.sw.normal : o.sw.reverse;
             if (o.approach === "toe") {
@@ -242,6 +256,18 @@ export class World {
     return true;
   }
   replaceSignal(id: string) { this.signal(id).aspect = "stop"; }
+
+  /* ---------- block working ---------- */
+  section(id: string) { const s = this.layout.sections.find((x) => x.id === id); if (!s) throw new Error(`no section ${id}`); return s; }
+  sectionClear(id: string): boolean { return !this.section(id).edges.some((e) => this.isOccupied(e)); }
+  /** Issue the section's warrant to a train if the section is clear and no warrant is out. */
+  lineClear(id: string, train: string): boolean {
+    if (this.warrants.has(id)) return this.warrants.get(id) === train;
+    if (!this.sectionClear(id)) return false;
+    this.warrants.set(id, train);
+    return true;
+  }
+  trainOutOfSection(id: string) { this.warrants.delete(id); }
 
   /* ---------- driver actions ---------- */
 
@@ -444,6 +470,13 @@ export class World {
             const isFront = i === 0 && end === (other.flip[0] ? "B" : "A");
             const isRear = i === other.vehicles.length - 1 && end === (other.flip[i] ? "A" : "B");
             if (!isFront && !isRear) continue;
+            // above coupling speed, or against a train coming the other way, this is a collision
+            if (kmh(Math.abs(c.v)) > 5 || other.v !== 0) {
+              const names = `${c.vehicles.map((x) => x.number).join("+")} and ${other.vehicles.map((x) => x.number).join("+")}`;
+              this.incident("COLLISION", `Collision between ${names} at ${(kmh(Math.abs(c.v)) + kmh(Math.abs(other.v))).toFixed(0)} km/h closing speed`);
+              c.v = 0; other.v = 0;
+              return;
+            }
             this.couple(c, other, isFront ? "front" : "rear", sign);
             return;
           }
@@ -508,12 +541,20 @@ export class World {
       const sign = c.v !== 0 ? Math.sign(c.v) : 0;
       const before = sign !== 0 ? c.leadingPos(sign) : null;
       const r = stepConsist(c, dt, this.gravityOn(c));
-      if (r.hitBuffer) { this.incident("BUFFER", `${c.vehicles.map((v) => v.number).join("+")} struck the buffer stop (Rule D 16)`); }
-      if (r.trailed) this.incident("TRAILED", `Ran through switch ${r.trailed} set against the move (Rule S 22)`);
+      if (r.hitBuffer) { this.incident("BUFFER", `${c.vehicles.map((v) => v.number).join("+")} struck the buffer stop (Rule D 16)`, false, c); }
+      if (r.trailed) this.incident("TRAILED", `Ran through switch ${r.trailed} set against the move (Rule S 22)`, false, c);
       if (before && Math.abs(c.v) > 0) this.checkPassings(c, before, Math.abs(c.v) * dt);
       if (this.consists.includes(c)) this.tryCouple(c);
     }
 
+    // distant signals repeat their home: CLEAR only when the home is CLEAR
+    for (const s of this.signals) if (s.type === "distant" && s.distantOf) s.aspect = this.signal(s.distantOf).aspect === "clear" ? "clear" : "caution";
+    // overhead line: no volts under a neutral section
+    for (const v of this.vehicles) {
+      if (!v.type.pantograph) continue;
+      const km = (kmOf(v.pos) + kmOf(v.posB)) / 2;
+      v.lineVolts = !this.layout.neutral.some((n) => km >= n.kmFrom && km <= n.kmTo);
+    }
     this.checkContinuous(dt);
     for (const h of this.hooks) h(this, dt);
   }
@@ -534,13 +575,29 @@ export class World {
   private onPassed(c: Consist, o: Trackside) {
     const names = c.vehicles.map((v) => v.number).join("+");
     if (o.kind === "signal") {
-      const governs = o.type === "main" ? c.isTrain : !c.isTrain;
-      if (governs && o.aspect === "stop") this.incident("SPAD", `${names} passed ${o.id} at ${o.type === "main" ? "STOP" : "SHUNT STOP"} (Rule S 10)`);
-      if (o.aspect !== "stop") { o.aspect = "stop"; }
+      if (o.type === "distant") return; // information only; it follows its home
+      if (o.type === "main") {
+        // a main signal governs every movement: trains need CAUTION or CLEAR, shunting moves may also take the subsidiary
+        const ok = o.aspect === "caution" || o.aspect === "clear" || (o.aspect === "shunt" && !c.isTrain);
+        if (!ok) this.incident("SPAD", `${names} passed ${o.id} at STOP (Rule S 10)`, false, c);
+      } else if (!c.isTrain && o.aspect === "stop") {
+        this.incident("SPAD", `${names} passed ${o.id} at SHUNT STOP (Rule S 10)`, false, c);
+      }
+      if (o.aspect !== "stop") o.aspect = "stop";
       return;
     }
-    if (o.board === "stop" && c.isTrain) this.incident("OVERRUN", `${names} overran the stop board at ${o.label} (Rule R 12)`);
-    if (o.board === "limitOfShunt" && !c.isTrain) this.incident("LOS", `${names} passed the Limit of Shunt (Rule S 12)`);
+    if (o.board === "stop" && c.isTrain) {
+      // leaving the stop you made is not an overrun; arriving past the board is
+      const rest = this.restKm.get(c);
+      const departing = rest !== undefined && Math.abs(rest - kmOf(o.pos)) * 1000 < 60;
+      if (!departing) this.incident("OVERRUN", `${names} overran the stop board at ${o.label} (Rule R 12)`, false, c);
+    }
+    if (o.board === "limitOfShunt" && !c.isTrain) this.incident("LOS", `${names} passed the Limit of Shunt (Rule S 12)`, false, c);
+    if (o.board === "whistle") {
+      const dir = kmDirOf(o.pos);
+      const crossing = this.layout.crossings.find((x) => (x.km - kmOf(o.pos)) * dir > 0 && (x.km - kmOf(o.pos)) * dir < 0.5);
+      if (crossing) this.whistleDue.set(c, { km: crossing.km, dir, since: this.time - 10 });
+    }
   }
 
   private checkContinuous(dt: number) {
@@ -551,11 +608,30 @@ export class World {
       // overspeed
       const lim = this.limitFor(c);
       if (moving && speed > lim + 2) {
-        if (!this.flags.overspeed) { this.flags.overspeed = true; this.incident("OVERSPEED", `${c.vehicles.map((v) => v.number).join("+")} at ${speed.toFixed(0)} km/h where the limit is ${lim} (Rule R 10)`); }
+        if (!this.flags.overspeed) { this.flags.overspeed = true; this.incident("OVERSPEED", `${c.vehicles.map((v) => v.number).join("+")} at ${speed.toFixed(0)} km/h where the limit is ${lim} (Rule R 10)`, false, c); }
       } else if (speed < lim) this.flags.overspeed = false;
+      // whistle boards: one long blast before the crossing
+      const wd = this.whistleDue.get(c);
+      if (wd) {
+        const front = kmOf(c.leadingPos(c.v >= 0 ? 1 : -1));
+        if ((front - wd.km) * wd.dir >= 0) {
+          const ctl = c.control;
+          if (!ctl || ctl.vehicle.lastHorn < wd.since) this.incident("WHISTLE", `${c.vehicles.map((v) => v.number).join("+")} passed the crossing without sounding the horn (Rule R 18)`, false, c);
+          this.whistleDue.delete(c);
+        }
+      }
+      // neutral section: no power to be taken
+      {
+        const ctl = c.control;
+        const inside = c.vehicles.some((v) => v.type.pantograph && !v.lineVolts);
+        if (inside && !this.inNeutral.get(c)) {
+          this.inNeutral.set(c, true);
+          if (ctl && ctl.cab.notch > 0) this.incident("POWER-IN-SECTION", `${c.vehicles.map((v) => v.number).join("+")} entered the neutral section with power applied (Rule D 24)`, false, c);
+        } else if (!inside && this.inNeutral.get(c)) this.inNeutral.set(c, false);
+      }
       // doors
       if (moving && c.anyDoorsOpen()) {
-        if (!this.flags.doorsMoving) { this.flags.doorsMoving = true; this.incident("DOORS-MOVING", "Moved with doors open (Rule R 14)"); }
+        if (!this.flags.doorsMoving) { this.flags.doorsMoving = true; this.incident("DOORS-MOVING", "Moved with doors open (Rule R 14)", false, c); }
       } else if (!c.anyDoorsOpen()) this.flags.doorsMoving = false;
       // lights on the main line
       if (moving && c.isTrain && speed > 5) {
@@ -565,16 +641,17 @@ export class World {
           const front = c.v > 0 ? c.frontEnd() : c.rearEnd();
           const rear = c.v > 0 ? c.rearEnd() : c.frontEnd();
           const ok = front.vehicle.lightsAt(front.end) === "head" && rear.vehicle.lightsAt(rear.end) === "tail";
-          if (!ok) { if (!this.flags.lightsBad) { this.flags.lightsBad = true; this.incident("LIGHTS", `Incorrect lights on the main line: front shows ${front.vehicle.lightsAt(front.end).toUpperCase()}, rear shows ${rear.vehicle.lightsAt(rear.end).toUpperCase()} (Rule R 16)`); } }
+          if (!ok) { if (!this.flags.lightsBad) { this.flags.lightsBad = true; this.incident("LIGHTS", `Incorrect lights on the main line: front shows ${front.vehicle.lightsAt(front.end).toUpperCase()}, rear shows ${rear.vehicle.lightsAt(rear.end).toUpperCase()} (Rule R 16)`, false, c); } }
           else this.flags.lightsBad = false;
         }
       }
       // horn before moving from rest
       const pl = this.prevLead.get(c);
       const wasStill = !pl || pl.v === 0;
+      if (c.v === 0 && pl && pl.v !== 0) this.restKm.set(c, kmOf(c.leadingPos(pl.v >= 0 ? 1 : -1)));
       if (wasStill && c.v !== 0) {
         const ctl = c.control;
-        if (ctl && this.time - ctl.vehicle.lastHorn > 25) this.incident("HORN", "Moved from rest without one short blast (Rule R 18)");
+        if (ctl && this.time - ctl.vehicle.lastHorn > 25) this.incident("HORN", "Moved from rest without one short blast (Rule R 18)", false, c);
       }
       // rolling back, running away, dragging the parking brake
       {
@@ -588,12 +665,12 @@ export class World {
           if (wrongWay) m.wrong += Math.abs(c.v) * dt; else m.wrong = 0;
           if (!m.flagged && m.wrong > 0.5) {
             m.flagged = true;
-            if (m.intended === 0) this.incident("RUNAWAY", `${c.vehicles.map((v) => v.number).join("+")} ran away: moved with no direction set (Rule D 22)`);
-            else this.incident("ROLLBACK", `${c.vehicles.map((v) => v.number).join("+")} rolled back on the gradient (Rule D 20)`);
+            if (m.intended === 0) this.incident("RUNAWAY", `${c.vehicles.map((v) => v.number).join("+")} ran away: moved with no direction set (Rule D 22)`, false, c);
+            else this.incident("ROLLBACK", `${c.vehicles.map((v) => v.number).join("+")} rolled back on the gradient (Rule D 20)`, false, c);
           }
           if (c.vehicles.some((v) => v.parkingBrake)) {
             m.drag += Math.abs(c.v) * dt;
-            if (!m.dragFlagged && m.drag > 3) { m.dragFlagged = true; this.incident("PARKING-DRAG", `${c.vehicles.map((v) => v.number).join("+")} moved with the parking brake applied (Rule D 22)`); }
+            if (!m.dragFlagged && m.drag > 3) { m.dragFlagged = true; this.incident("PARKING-DRAG", `${c.vehicles.map((v) => v.number).join("+")} moved with the parking brake applied (Rule D 22)`, false, c); }
           } else { m.drag = 0; m.dragFlagged = false; }
         }
       }

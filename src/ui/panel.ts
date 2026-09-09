@@ -123,7 +123,8 @@ export class SidePanel {
         <span class="lamp ${c.anyDoorsOpen() ? "amber" : "on"}">Doors ${c.anyDoorsOpen() ? "open" : "closed"}</span>
         <span class="lamp ${c.brakeProved ? "on" : c.vehicles.length > 1 ? "red" : ""}">${c.brakeProved ? "Brake proved" : w.brakeTest ? `Testing ${Math.ceil(w.brakeTest.t)} s` : "Brake not proved"}</span>
         ${c.vehicles.length > 1 ? `<span class="lamp ${c.allPipesConnected() ? "on" : "red"}">${c.allPipesConnected() ? "Pipe through" : "Pipe parted"}</span>` : ""}
-        ${w.stations.some((s) => s.batonShown) ? `<span class="lamp on"><span class="baton"></span>Baton shown</span>` : ""}
+        ${w.stations.some((s) => s.baton.has(w.trainVehicle.number)) ? `<span class="lamp on"><span class="baton"></span>Baton shown</span>` : ""}
+        ${!v.lineVolts && v.panto === "up" ? `<span class="lamp amber">Neutral section</span>` : ""}
       </div>`;
     const ctl = `
       <div class="ctl"><div class="lbl">Reverser<span class="k">R N F</span></div><div class="opts">${b("rev", "R", "Rev", cab.reverser === "R")}${b("rev", "N", "N", cab.reverser === "N")}${b("rev", "F", "Fwd", cab.reverser === "F")}</div></div>

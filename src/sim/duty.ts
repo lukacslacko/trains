@@ -1,15 +1,31 @@
-import { World, type Route } from "./world";
-import { type LoopStation } from "../track/layouts";
-import { kmOf } from "../track/graph";
+import { World } from "./world";
+import { type ValleyLayout, type StationLayout, type Signal, type Stop } from "../track/layouts";
+import { type Edge, type SwitchState, type Switch, kmOf } from "../track/graph";
 import { fmtTime, parseTime } from "../core/util";
-import { type Consist } from "../stock/vehicles";
+import { type Consist, type Vehicle } from "../stock/vehicles";
 
 export interface Leg { from: string; to: string; dep: string; arr: string }
 
 export type LegPhase = "waiting" | "running" | "done";
 export interface LegState { leg: Leg; phase: LegPhase; departed?: number; arrived?: number }
 
-/** Watches the passenger train against the booked legs and keeps the duty sheet. */
+/** km direction of travel for a leg, from the stations' stop positions */
+export function legDir(w: World, leg: Leg): 1 | -1 {
+  const a = w.station(leg.from).stops[0].km, b = w.station(leg.to).stops[0].km;
+  return b > a ? 1 : -1;
+}
+/** the stop a train uses at a station when arriving in km direction `dir` */
+export function stopFor(w: World, code: string, dir: 1 | -1): Stop {
+  const st = w.station(code);
+  return st.stops.find((s) => s.dir === dir) ?? st.stops[0];
+}
+/** the front of a consist in km direction `dir` */
+export function frontKm(c: Consist, dir: 1 | -1): number {
+  const ks = c.vehicles.flatMap((v) => [kmOf(v.pos), kmOf(v.posB)]);
+  return dir === 1 ? Math.max(...ks) : Math.min(...ks);
+}
+
+/** Watches the player's train against the booked legs and keeps the duty sheet. */
 export class DutyTracker {
   legs: LegState[];
   index = 0;
@@ -27,16 +43,6 @@ export class DutyTracker {
 
   get current(): LegState | null { return this.legs[this.index] ?? null; }
 
-  /** Booked departure time (s) for a station visit, or null. */
-  bookedDeparture(station: string, w: World): number | null {
-    for (let i = this.index; i < this.legs.length; i++) {
-      const l = this.legs[i];
-      if (l.phase === "waiting" && l.leg.from === station) return parseTime(l.leg.dep);
-    }
-    void w;
-    return null;
-  }
-
   private step(w: World) {
     const train = w.train;
     const cur = this.current;
@@ -47,38 +53,43 @@ export class DutyTracker {
       }
       return;
     }
-    const st = w.station(cur.phase === "waiting" ? cur.leg.from : cur.leg.to);
-    const platform = st.platform;
-    const lead = this.trainFront(w, train, st.arriveDir);
-    const km = kmOf(lead);
+    const dir = legDir(w, cur.leg);
+    // where the train stands now: the origin's stop reached by the previous leg's direction, or the first stop
+    const prev = this.legs[this.index - 1];
+    const hereDir: 1 | -1 = prev ? legDir(w, prev.leg) : (-dir as 1 | -1);
+    const here = stopFor(w, cur.leg.from, hereDir);
 
-    // doors opened at this station: check stopping accuracy
+    // doors opened at a stop: check stopping accuracy against the stop the train is standing at
     const doorsOpen = train.anyDoorsOpen();
     if (doorsOpen && !this.lastDoorsOpen && Math.abs(train.v) < 0.01) {
-      const front = kmOf(this.trainFront(w, train, st.arriveDir));
-      const short = (st.stopBoardKm - front) * st.arriveDir * 1000; // metres short of the board
-      if (short > 3 && short < 100) w.incident("STOP-SHORT", `Doors opened ${short.toFixed(0)} m short of the stop board at ${st.name} (Rule R 12)`);
+      const stop = cur.phase === "waiting" ? here : stopFor(w, cur.leg.to, dir);
+      const front = frontKm(train, stop.dir);
+      const short = (stop.km - front) * stop.dir * 1000;
+      if (short > 3 && short < 100) w.incident("STOP-SHORT", `Doors opened ${short.toFixed(0)} m short of the stop board at ${w.station(cur.phase === "waiting" ? cur.leg.from : cur.leg.to).name} (Rule R 12)`);
     }
     this.lastDoorsOpen = doorsOpen;
 
     if (cur.phase === "waiting") {
-      // departure: the train's leading end leaves the platform towards the main line
-      const outward = st.arriveDir === 1 ? platform.kmFrom - 0.02 : platform.kmTo + 0.02;
-      const left = st.arriveDir === 1 ? km < outward : km > outward;
+      const st = w.station(cur.leg.from);
+      const platform = here.platform;
+      const km = frontKm(train, dir);
+      const outward = dir === 1 ? platform.kmTo + 0.02 : platform.kmFrom - 0.02;
+      const left = dir === 1 ? km > outward : km < outward;
       if (left && Math.abs(train.v) > 0.1) {
         cur.phase = "running";
         cur.departed = w.time;
         const booked = parseTime(cur.leg.dep);
         if (w.time < booked - 5) w.incident("EARLY", `Departed ${st.name} at ${fmtTime(w.time)}, booked ${cur.leg.dep} (Rule R 20)`);
-        if (st.master && !st.batonShown) w.incident("NO-BATON", `Departed ${st.name} without the baton (Rule R 20)`);
-        st.batonShown = false;
+        if (st.master && !st.baton.has(w.trainVehicle.number)) w.incident("NO-BATON", `Departed ${st.name} without the baton (Rule R 20)`);
+        st.baton.delete(w.trainVehicle.number);
         this.stoppedAtBoard = false;
         w.say("Duty", `Service departed ${st.name} at ${fmtTime(w.time)} (booked ${cur.leg.dep}).`, "system");
       }
     } else if (cur.phase === "running") {
       const dest = w.station(cur.leg.to);
-      const front = kmOf(this.trainFront(w, train, dest.arriveDir));
-      const short = (dest.stopBoardKm - front) * dest.arriveDir * 1000;
+      const stop = stopFor(w, cur.leg.to, dir);
+      const front = frontKm(train, dir);
+      const short = (stop.km - front) * dir * 1000;
       const onPlatform = w.atPlatform(train);
       if (Math.abs(train.v) < 0.01 && onPlatform && short >= -0.5 && short < 60 && !this.stoppedAtBoard) {
         this.stoppedAtBoard = true;
@@ -91,181 +102,233 @@ export class DutyTracker {
       }
     }
   }
-
-  private trainFront(w: World, train: Consist, arriveDir: 1 | -1) {
-    void w;
-    // the end of the train that faces the arrival direction
-    const a = train.frontEnd(), b = train.rearEnd();
-    const pa = a.vehicle.endPos(a.end), pb = b.vehicle.endPos(b.end);
-    const ka = kmOf(pa), kb = kmOf(pb);
-    return arriveDir === 1 ? (ka > kb ? pa : pb) : (ka < kb ? pa : pb);
-  }
 }
 
-/* ---------------- Station masters for the loop layout ---------------- */
+/* ---------------- Boxes: station masters with block working ---------------- */
 
-type SMState = "idle" | "expecting" | "arrived" | "toHeadshunt" | "viaTrack2" | "toCouple" | "coupled" | "starterCleared" | "departing";
+export type Side = "S" | "N";
 
-export interface Visit { arrive: boolean; depart: string | null }
+export interface Visit {
+  /** the vehicle number that identifies the train (the passenger vehicle) */
+  train: string;
+  /** the locomotive that runs round, if any */
+  loco?: string;
+  arrive: boolean;
+  /** which side the train arrives from, or departs towards if it does not arrive */
+  from?: Side;
+  track: "1" | "2";
+  depart: string | null;
+  /** the side it departs towards */
+  to?: Side;
+  runRound?: boolean;
+}
 
-export class LoopStationMaster {
+type MoveState = "offered" | "expecting" | "arrived" | "toHeadshunt" | "viaTrack2" | "toCouple" | "ready" | "starterCleared" | "departing" | "done";
+
+interface Movement { visit: Visit; state: MoveState; said: Set<string> }
+
+/** Signals and switches by role for a station's box. */
+interface Roles {
+  homeS?: Signal; homeN?: Signal;
+  starter1S?: Signal; starter1N?: Signal; starter2S?: Signal; starter2N?: Signal;
+  stubSIn?: Signal; stubNIn?: Signal;
+  /** run-round: track 1 → headshunt, headshunt → station, track 2 → stub, stub → station */
+  toHs: Signal; hsIn: Signal; t2stub: Signal; stubIn: Signal;
+  hsEdge: Edge; stubEdge: Edge; swHs: Switch; swMain: Switch;
+  /** the side the headshunt lies on */
+  hsSide: Side;
+}
+
+export class Box {
   code: string;
   name: string;
   master: string;
-  loop: LoopStation;
-  state: SMState = "idle";
-  visits: Visit[];
-  visit = 0;
-  private msgOnce = new Set<string>();
-  /** the other station, for the line-clear exchange */
-  peer: LoopStationMaster | null = null;
+  st: StationLayout;
+  roles: Roles;
+  movements: Movement[] = [];
+  peers: Partial<Record<Side, Box>> = {};
+  /** section ids on each side */
+  sections: Partial<Record<Side, string>> = {};
 
-  constructor(w: World, loop: LoopStation, visits: Visit[]) {
-    this.loop = loop;
-    this.code = loop.code;
-    const st = w.station(loop.code);
-    this.name = st.name;
-    this.master = st.master ?? "";
-    this.visits = visits;
+  constructor(w: World, layout: ValleyLayout, code: string) {
+    this.code = code;
+    this.st = layout.st[code];
+    const info = w.station(code);
+    this.name = info.name;
+    this.master = info.master ?? "";
+    this.roles = this.buildRoles();
+    for (const sec of layout.sections) {
+      if (sec.from === code) this.sections.N = sec.id;
+      if (sec.to === code) this.sections.S = sec.id;
+    }
     this.defineRoutes(w);
-    const first = visits[0];
-    if (first && !first.arrive) this.state = "coupled"; // train already stands here, coupled
     w.hooks.push((world) => this.step(world));
   }
 
-  private sign(text: string) { return `${text} — ${this.master}, ${this.name}`; }
-  private say(w: World, key: string, text: string) {
-    if (this.msgOnce.has(key)) return;
-    this.msgOnce.add(key);
-    w.say(`${this.name} Box`, this.sign(text));
+  static link(a: Box, b: Box) { a.peers.N = b; b.peers.S = a; }
+
+  plan(v: Visit) {
+    const state: MoveState = v.arrive ? "offered" : (v.runRound ? "ready" : "ready");
+    this.movements.push({ visit: v, state, said: new Set() });
   }
 
-  /** Signals by role, per WORLD.md §4.2. */
-  get sig() {
-    const s = this.loop.signals;
-    return this.code === "AG"
-      ? { home: s["2"], starter: s["1"], t1hs: s["4"], hsIn: s["5"], t2stub: s["3"], stubIn: s["6"] }
-      : { home: s["1"], starter: s["2"], t1hs: s["3"], hsIn: s["6"], t2stub: s["4"], stubIn: s["5"] };
-  }
-  get home() { return this.sig.home; }
-  get starter() { return this.sig.starter; }
-
-  private defineRoutes(w: World) {
-    const L = this.loop, c = this.code, S = this.sig;
-    const routes: Route[] = [
-      { id: `${c}:Main→1`, station: c, switches: [[L.switchA, "normal"]], signals: [[S.home, "caution"]], clear: [L.edges.bA1, L.edges.t1] },
-      { id: `${c}:1→Main`, station: c, switches: [[L.switchA, "normal"]], signals: [[S.starter, "clear"]], clear: [L.edges.bA1, L.edges.stub, w.layout.graph.byId("main")] },
-      { id: `${c}:1→Headshunt`, station: c, switches: [[L.switchB, "normal"]], signals: [[S.t1hs, "shunt"]], clear: [L.edges.bB1, L.edges.hs] },
-      { id: `${c}:Headshunt→2→Stub`, station: c, switches: [[L.switchB, "reverse"], [L.switchA, "reverse"]], signals: [[S.hsIn, "shunt"], [S.t2stub, "shunt"]], clear: [L.edges.bB2, L.edges.t2, L.edges.bA2, L.edges.stub] },
-      { id: `${c}:Stub→1`, station: c, switches: [[L.switchA, "normal"]], signals: [[S.stubIn, "shunt"]], clear: [L.edges.bA1] },
-    ];
-    w.routes.push(...routes);
-  }
-
-  /** Called by the peer when it has cleared its starter towards us. */
-  expectTrain(w: World) {
-    if (this.state !== "idle") return;
-    if (w.setRoute(`${this.code}:Main→1`)) {
-      this.state = "expecting";
-      this.say(w, `expect${this.visit}`, `Line clear for the service to ${this.name}. ${this.home.id} cleared into track 1.`);
+  private buildRoles(): Roles {
+    const s = this.st.signals, e = this.st.edges;
+    switch (this.code) {
+      case "AG": return { homeN: s["2"], starter1N: s["1"], stubNIn: s["6"], toHs: s["4"], hsIn: s["5"], t2stub: s["3"], stubIn: s["6"], hsEdge: e.stubS, stubEdge: e.stubN, swHs: this.st.switchS, swMain: this.st.switchN, hsSide: "S" };
+      case "CW": return { homeS: s["1"], starter1S: s["2"], stubSIn: s["5"], toHs: s["3"], hsIn: s["6"], t2stub: s["4"], stubIn: s["5"], hsEdge: e.stubN, stubEdge: e.stubS, swHs: this.st.switchN, swMain: this.st.switchS, hsSide: "N" };
+      default: return { homeS: s["1"], homeN: s["8"], starter1S: s["2"], starter2S: s["4"], starter1N: s["7"], starter2N: s["9"], stubSIn: s["5"], stubNIn: s["6"], toHs: s["7"], hsIn: s["6"], t2stub: s["4"], stubIn: s["5"], hsEdge: e.stubN, stubEdge: e.stubS, swHs: this.st.switchN, swMain: this.st.switchS, hsSide: "N" };
     }
   }
 
-  private step(w: World) {
-    const v = this.visits[this.visit];
-    if (!v) return;
-    const L = this.loop;
-    const train = w.train;
-    const loco = w.vehicles.find((x) => x.type.cabs.length > 0 && !x.type.passenger);
-    const locoConsist = loco ? w.consistOf(loco) : null;
-    const t = w.time;
-    const booked = v.depart ? parseTime(v.depart) : null;
+  private sign(text: string) { return `${text} — ${this.master}, ${this.name}`; }
+  private say(w: World, m: Movement, key: string, text: string) {
+    if (m.said.has(key)) return;
+    m.said.add(key);
+    w.say(`${this.name} Box`, this.sign(text));
+  }
 
-    switch (this.state) {
-      case "idle":
-        break;
+  private defineRoutes(w: World) {
+    const c = this.code, e = this.st.edges, r = this.roles, swS = this.st.switchS, swN = this.st.switchN;
+    const R = (id: string, switches: [Switch, SwitchState][], signals: [Signal, Signal["aspect"]][], clear: Edge[]) => w.routes.push({ id: `${c}:${id}`, station: c, switches, signals, clear });
+    if (r.homeS) { R("homeS→1", [[swS, "normal"]], [[r.homeS, "caution"]], [e.bS1, e.t1]); R("homeS→2", [[swS, "reverse"]], [[r.homeS, "caution"]], [e.bS2, e.t2]); }
+    if (r.homeN) { R("homeN→1", [[swN, "normal"]], [[r.homeN, "caution"]], [e.bN1, e.t1]); R("homeN→2", [[swN, "reverse"]], [[r.homeN, "caution"]], [e.bN2, e.t2]); }
+    if (r.starter1S) R("1→S", [[swS, "normal"]], [[r.starter1S, "clear"]], [e.bS1, e.stubS]);
+    if (r.starter2S) R("2→S", [[swS, "reverse"]], [[r.starter2S, "clear"]], [e.bS2, e.stubS]);
+    if (r.starter1N) R("1→N", [[swN, "normal"]], [[r.starter1N, "clear"]], [e.bN1, e.stubN]);
+    if (r.starter2N) R("2→N", [[swN, "reverse"]], [[r.starter2N, "clear"]], [e.bN2, e.stubN]);
+    // run-round
+    const bHs1 = r.hsSide === "S" ? e.bS1 : e.bN1, bHs2 = r.hsSide === "S" ? e.bS2 : e.bN2;
+    const bMain1 = r.hsSide === "S" ? e.bN1 : e.bS1, bMain2 = r.hsSide === "S" ? e.bN2 : e.bS2;
+    R("1→hs", [[r.swHs, "normal"]], [[r.toHs, "shunt"]], [bHs1, r.hsEdge]);
+    R("hs→2→stub", [[r.swHs, "reverse"], [r.swMain, "reverse"]], [[r.hsIn, "shunt"], [r.t2stub, "shunt"]], [bHs2, e.t2, bMain2, r.stubEdge]);
+    R("stub→1", [[r.swMain, "normal"]], [[r.stubIn, "shunt"]], [bMain1]);
+  }
+
+  private home(side: Side) { return side === "S" ? this.roles.homeS : this.roles.homeN; }
+  private starter(track: "1" | "2", to: Side) {
+    return to === "S" ? (track === "1" ? this.roles.starter1S : this.roles.starter2S) : (track === "1" ? this.roles.starter1N : this.roles.starter2N);
+  }
+
+  /** The peer box asks: may train `train` enter the section towards us, into our planned track? */
+  acceptTrain(w: World, train: string, fromSide: Side): boolean {
+    const m = this.movements.find((x) => x.visit.train === train && x.state === "offered" && x.visit.from === fromSide);
+    if (!m) return false;
+    const sec = this.sections[fromSide]!;
+    if (!w.lineClear(sec, train)) return false;
+    if (!w.setRoute(`${this.code}:home${fromSide}→${m.visit.track}`)) { w.warrants.delete(sec); return false; }
+    m.state = "expecting";
+    this.say(w, m, "expect", `Line clear for ${train} to ${this.name}. Warrant ${sec} issued; ${this.home(fromSide)!.id} cleared into track ${m.visit.track}.`);
+    return true;
+  }
+
+  private trainOf(w: World, number: string): Consist | null {
+    const v = w.vehicles.find((x) => x.number === number);
+    return v ? w.consistOf(v) : null;
+  }
+  private trainVehicle(w: World, number: string): Vehicle | undefined { return w.vehicles.find((x) => x.number === number); }
+
+  private step(w: World) {
+    for (const m of this.movements) this.stepMovement(w, m);
+    this.movements = this.movements.filter((m) => m.state !== "done");
+  }
+
+  private stepMovement(w: World, m: Movement) {
+    const v = m.visit;
+    const train = this.trainOf(w, v.train);
+    if (!train) return;
+    const e = this.st.edges, r = this.roles;
+    const track = v.track === "1" ? e.t1 : e.t2;
+    const booked = v.depart ? parseTime(v.depart) : null;
+    const loco = v.loco ? this.trainVehicle(w, v.loco) : undefined;
+    const locoConsist = loco ? w.consistOf(loco) : null;
+    const stn = w.station(this.code);
+    const t = w.time;
+
+    switch (m.state) {
+      case "offered":
+        break; // waiting for the peer to offer the train
       case "expecting": {
-        // train stopped on track 1 at the board
-        const onT1 = w.whollyOn(train, [L.edges.t1]);
-        if (onT1 && Math.abs(train.v) < 0.01) {
-          this.state = "arrived";
-          this.say(w, `arr${this.visit}`, `Welcome to ${this.name}. When you have uncoupled and are back in the cab, I will clear ${this.sig.t1hs.id} for the loco to the headshunt.`);
+        if (w.whollyOn(train, [track]) && Math.abs(train.v) < 0.01) {
+          w.trainOutOfSection(this.sections[v.from!]!);
+          m.state = v.runRound ? "arrived" : "ready";
+          if (v.runRound) this.say(w, m, "arr", `Welcome to ${this.name}. Warrant ${this.sections[v.from!]} cancelled. When you have uncoupled and are back in the cab, I will clear ${r.toHs.id} for the loco to the ${r.hsSide === this.mainSideOpposite() ? "headshunt" : "stub"}.`);
+          else this.say(w, m, "arr", `Train ${v.train} arrived complete at ${this.name}; warrant ${this.sections[v.from!]} cancelled.${v.depart ? ` ${this.starter(v.track, v.to!)?.id} will be cleared at ${fmtTime(booked! - 120)} for the ${v.depart} departure.` : ""}`);
         }
         break;
       }
       case "arrived": {
-        // wait for uncoupling: loco alone in its own consist, driver in a cab of it
         if (locoConsist && locoConsist.vehicles.length === 1 && w.driver.kind === "cab" && w.driver.vehicle === loco) {
-          if (w.setRoute(`${this.code}:1→Headshunt`)) {
-            this.state = "toHeadshunt";
-            this.say(w, `hs${this.visit}`, `Loco to the headshunt. ${this.sig.t1hs.id} cleared. Stop clear of switch ${L.switchB.id}, short of the buffer stop.`);
+          if (w.setRoute(`${this.code}:1→hs`)) {
+            m.state = "toHeadshunt";
+            this.say(w, m, "hs", `Loco to the ${r.hsSide === this.mainSideOpposite() ? "headshunt" : "stub"}. ${r.toHs.id} cleared. Stop clear of switch ${r.swHs.id}${r.hsEdge.track === "hs" ? ", short of the buffer stop" : ", short of the Limit of Shunt"}.`);
           }
         }
         break;
       }
       case "toHeadshunt": {
-        if (locoConsist && w.whollyOn(locoConsist, [L.edges.hs]) && Math.abs(locoConsist.v) < 0.01) {
-          if (w.setRoute(`${this.code}:Headshunt→2→Stub`)) {
-            this.state = "viaTrack2";
-            this.say(w, `t2${this.visit}`, `Change ends and set back via track 2 to the stub. ${this.sig.hsIn.id} and ${this.sig.t2stub.id} cleared. Stop short of the Limit of Shunt.`);
+        if (locoConsist && w.whollyOn(locoConsist, [r.hsEdge]) && Math.abs(locoConsist.v) < 0.01) {
+          if (w.setRoute(`${this.code}:hs→2→stub`)) {
+            m.state = "viaTrack2";
+            this.say(w, m, "t2", `Change ends and set back via track 2 to the stub. ${r.hsIn.id} and ${r.t2stub.id} cleared. Stop short of the Limit of Shunt.`);
           }
         }
         break;
       }
       case "viaTrack2": {
-        if (locoConsist && w.whollyOn(locoConsist, [L.edges.stub]) && Math.abs(locoConsist.v) < 0.01) {
-          if (w.setRoute(`${this.code}:Stub→1`)) {
-            this.state = "toCouple";
-            this.say(w, `cp${this.visit}`, `Change ends; onto track 1 to the coach. ${this.sig.stubIn.id} cleared. Couple gently, then connect and prove the brake.`);
+        if (locoConsist && w.whollyOn(locoConsist, [r.stubEdge]) && Math.abs(locoConsist.v) < 0.01) {
+          if (w.setRoute(`${this.code}:stub→1`)) {
+            m.state = "toCouple";
+            this.say(w, m, "cp", `Change ends; onto track 1 to the coach. ${r.stubIn.id} cleared. Couple gently, then connect and prove the brake.`);
           }
         }
         break;
       }
       case "toCouple": {
-        if (train.vehicles.length >= 2 && train.allPipesConnected()) {
-          this.state = "coupled";
-          if (v.depart) this.say(w, `cpd${this.visit}`, `Coupled. ${this.starter.id} will be cleared at ${fmtTime(booked! - 120)} for the ${v.depart} departure.`);
-          else this.say(w, `cpd${this.visit}`, `Coupled. That completes the duty once the brake is proved and the train is stabled. Thank you.`);
+        const tr = this.trainOf(w, v.train)!;
+        if (tr.vehicles.length >= 2 && tr.allPipesConnected()) {
+          m.state = "ready";
+          if (v.depart) this.say(w, m, "cpd", `Coupled. ${this.starter(v.track, v.to!)!.id} will be cleared at ${fmtTime(booked! - 120)} for the ${v.depart} departure.`);
+          else this.say(w, m, "cpd", `Coupled. That completes the duty once the brake is proved and the train is stabled. Thank you.`);
         }
         break;
       }
-      case "coupled": {
-        if (!booked) { this.visit++; this.state = "idle"; break; }
+      case "ready": {
+        if (!booked) { m.state = "done"; break; }
         if (t >= booked - 120) {
-          if (w.setRoute(`${this.code}:1→Main`)) {
-            this.state = "starterCleared";
-            this.say(w, `st${this.visit}`, `${this.starter.id} cleared for the ${v.depart} departure. I will show the baton at the booked time when your doors are closed.`);
-            this.peer?.expectTrain(w);
+          const to = v.to!, peer = this.peers[to], sec = this.sections[to]!;
+          if (!peer) { m.state = "done"; break; }
+          if (peer.acceptTrain(w, v.train, to === "N" ? "S" : "N")) {
+            if (w.setRoute(`${this.code}:${v.track}→${to}`)) {
+              m.state = "starterCleared";
+              this.say(w, m, "st", `Warrant ${sec} in hand. ${this.starter(v.track, to)!.id} cleared for the ${v.depart} departure. I will show the baton at the booked time when your doors are closed.`);
+            } else {
+              w.warrants.delete(sec);
+            }
           } else {
-            this.say(w, `stblk${this.visit}`, `Cannot clear ${this.starter.id}: the line ahead is occupied.`);
+            this.say(w, m, "stblk", `Waiting for line clear from ${peer.name} for the ${v.depart} departure.`);
           }
         }
         break;
       }
       case "starterCleared": {
         if (t >= booked!) {
-          const st = w.station(this.code);
-          if (!train.anyDoorsOpen() && Math.abs(train.v) < 0.01 && !st.batonShown) {
-            if (!train.brakeProved) {
-              this.say(w, `bp${this.visit}`, `Prove the brake before I show the baton (Rule D 14).`);
-            } else {
-              st.batonShown = true;
-              this.state = "departing";
-              this.say(w, `bat${this.visit}`, `Baton shown. Ready to start.`);
-            }
+          const tr = this.trainOf(w, v.train)!;
+          if (!tr.anyDoorsOpen() && Math.abs(tr.v) < 0.01 && !stn.baton.has(v.train)) {
+            if (tr.vehicles.length > 1 && !tr.brakeProved) this.say(w, m, "bp", `Prove the brake before I show the baton (Rule D 14).`);
+            else { stn.baton.add(v.train); m.state = "departing"; this.say(w, m, "bat", `Baton shown to ${v.train}. Ready to start.`); }
           }
         }
         break;
       }
       case "departing": {
-        // when the train has passed the starter (it replaces to stop) and cleared the loop
-        if (this.starter.aspect === "stop" && !w.isOccupied(L.edges.t1) && !w.isOccupied(L.edges.bA1)) {
-          this.state = "idle";
-          this.visit++;
-          w.station(this.code).batonShown = false;
-        }
+        const starter = this.starter(v.track, v.to!)!;
+        if (starter.aspect === "stop" && !w.isOccupied(track)) { stn.baton.delete(v.train); m.state = "done"; }
         break;
       }
+      case "done": break;
     }
   }
+
+  private mainSideOpposite(): Side { return this.st.mainSide === "N" ? "S" : this.st.mainSide === "S" ? "N" : "X" as Side; }
 }

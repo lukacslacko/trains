@@ -23,7 +23,7 @@
 <nav class="desk-bar">
   <a href="index.html">← Library</a>
   <span class="spacer"></span>
-  <span>Book R · Fourth edition · September 2026</span>
+  <span>Book R · Fifth edition · September 2026</span>
   <a href="#" onclick="window.print();return false;">Print booklet</a>
 </nav>
 
@@ -37,7 +37,7 @@
   <div class="book-letter"><small>Book</small>R</div>
   <h1 class="title">Rules of Operation</h1>
   <p class="subtitle">The general rules by which the Meridian Railway is worked, and the Incident Book.</p>
-  <div class="edition">Fourth edition · September 2026 · Issued by the General Manager's Office</div>
+  <div class="edition">Fifth edition · September 2026 · Issued by the General Manager's Office</div>
   <div class="motto">On the line, on time.</div>
 </section>
 
@@ -50,6 +50,7 @@
     <li class="sub"><span class="num">2.1</span><a href="#c2-1">Posts and positions</a><span class="dots"></span><span class="pg">6</span></li>
     <li class="sub"><span class="num">2.2</span><a href="#c2-2">The profile</a><span class="dots"></span><span class="pg">7</span></li>
     <li><span class="num">3</span><a href="#c3">Staff and authority</a><span class="dots"></span><span class="pg">6</span></li>
+    <li class="sub"><span class="num">3.5</span><a href="#c3-5">The block</a><span class="dots"></span><span class="pg">7</span></li>
     <li><span class="num">4</span><a href="#c4">Speeds</a><span class="dots"></span><span class="pg">8</span></li>
     <li class="sub"><span class="num">R 10</span><a href="#R10">Speeds</a><span class="dots"></span><span class="pg">8</span></li>
     <li class="sub"><span class="num">4.1</span><a href="#c4-1">Where a limit begins and ends</a><span class="dots"></span><span class="pg">8</span></li>
@@ -65,6 +66,7 @@
     <li><span class="num">8</span><a href="#c8">One Train Working</a><span class="dots"></span><span class="pg">15</span></li>
     <li class="sub"><span class="num">R 24</span><a href="#R24">One Train Working</a><span class="dots"></span><span class="pg">15</span></li>
     <li><span class="num">9</span><a href="#c9">Timekeeping</a><span class="dots"></span><span class="pg">16</span></li>
+    <li class="sub"><span class="num">9.5</span><a href="#c9-5">Crossings</a><span class="dots"></span><span class="pg">17</span></li>
     <li><span class="num">10</span><a href="#c10">The Incident Book</a><span class="dots"></span><span class="pg">18</span></li>
     <li><span class="num">11</span><a href="#c11">The rules in one page</a><span class="dots"></span><span class="pg">21</span></li>
     <li><span class="num">—</span><a href="#colophon">Colophon</a><span class="dots"></span><span class="pg">22</span></li>
@@ -112,41 +114,57 @@
         <!-- buffer stops -->
         <rect x="34" y="53" width="6" height="18" fill="#C6321E"/>
         <rect x="600" y="53" width="6" height="18" fill="#C6321E"/>
+        <!-- block sections -->
+        <text x="184" y="84" text-anchor="middle" font-size="11" fill="#4A5560" letter-spacing="2">SECTION A</text>
+        <text x="447" y="84" text-anchor="middle" font-size="11" fill="#4A5560" letter-spacing="2">SECTION B</text>
         <!-- stations -->
-        <circle cx="90" cy="62" r="9" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="3"/>
-        <circle cx="550" cy="62" r="9" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="3"/>
-        <text x="90" y="92" text-anchor="middle" font-size="15" font-weight="600" fill="#1F4B3F" letter-spacing="2">ASHGROVE · AG</text>
-        <text x="90" y="108" text-anchor="middle" font-size="12" fill="#4A5560" font-family="IBM Plex Mono, Menlo, monospace">km 0.000</text>
-        <text x="550" y="92" text-anchor="middle" font-size="15" font-weight="600" fill="#1F4B3F" letter-spacing="2">WENDING · WD</text>
-        <text x="550" y="108" text-anchor="middle" font-size="12" fill="#4A5560" font-family="IBM Plex Mono, Menlo, monospace">km 3.300</text>
-        <text x="320" y="84" text-anchor="middle" font-size="12" fill="#4A5560" letter-spacing="2">SINGLE LINE · 1.5 kV DC OVERHEAD</text>
+        <circle cx="58" cy="62" r="9" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="3"/>
+        <circle cx="311" cy="62" r="9" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="3"/>
+        <circle cx="582" cy="62" r="9" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="3"/>
+        <text x="58" y="98" text-anchor="middle" font-size="14" font-weight="600" fill="#1F4B3F" letter-spacing="2">ASHGROVE · AG</text>
+        <text x="58" y="112" text-anchor="middle" font-size="11" fill="#4A5560" font-family="IBM Plex Mono, Menlo, monospace">km 0.000</text>
+        <text x="311" y="98" text-anchor="middle" font-size="14" font-weight="600" fill="#1F4B3F" letter-spacing="2">WENDING · WD</text>
+        <text x="311" y="112" text-anchor="middle" font-size="11" fill="#4A5560" font-family="IBM Plex Mono, Menlo, monospace">km 3.1</text>
+        <text x="582" y="98" text-anchor="middle" font-size="14" font-weight="600" fill="#1F4B3F" letter-spacing="2">COLDWATER · CW</text>
+        <text x="582" y="112" text-anchor="middle" font-size="11" fill="#4A5560" font-family="IBM Plex Mono, Menlo, monospace">km 6.400</text>
         <!-- hectometre posts (ticks above the track) and kilometre posts (plates) -->
         <g stroke="#4A5560" stroke-width="1">
-          <path d="M 57 52 v -5 M 74 52 v -5 M 91 52 v -5 M 108 52 v -5 M 125 52 v -5 M 142 52 v -5 M 159 52 v -5 M 176 52 v -5 M 193 52 v -5 M 227 52 v -5 M 244 52 v -5 M 261 52 v -5 M 278 52 v -5 M 295 52 v -5 M 312 52 v -5 M 329 52 v -5 M 346 52 v -5 M 363 52 v -5 M 397 52 v -5 M 414 52 v -5 M 431 52 v -5 M 448 52 v -5 M 465 52 v -5 M 482 52 v -5 M 499 52 v -5 M 516 52 v -5 M 533 52 v -5 M 567 52 v -5 M 584 52 v -5"/>
+          <path d="M 48.8 52 v -5 M 57.5 52 v -5 M 66.2 52 v -5 M 75.0 52 v -5 M 83.8 52 v -5 M 92.5 52 v -5 M 101.2 52 v -5 M 110.0 52 v -5 M 118.8 52 v -5 M 136.2 52 v -5 M 145.0 52 v -5 M 153.8 52 v -5 M 162.5 52 v -5 M 171.2 52 v -5 M 180.0 52 v -5 M 188.8 52 v -5 M 197.5 52 v -5 M 206.2 52 v -5 M 223.8 52 v -5 M 232.5 52 v -5 M 241.2 52 v -5 M 250.0 52 v -5 M 258.8 52 v -5 M 267.5 52 v -5 M 276.2 52 v -5 M 285.0 52 v -5 M 293.8 52 v -5 M 311.2 52 v -5 M 320.0 52 v -5 M 328.8 52 v -5 M 337.5 52 v -5 M 346.2 52 v -5 M 355.0 52 v -5 M 363.8 52 v -5 M 372.5 52 v -5 M 381.2 52 v -5 M 398.8 52 v -5 M 407.5 52 v -5 M 416.2 52 v -5 M 425.0 52 v -5 M 433.8 52 v -5 M 442.5 52 v -5 M 451.2 52 v -5 M 460.0 52 v -5 M 468.8 52 v -5 M 486.2 52 v -5 M 495.0 52 v -5 M 503.8 52 v -5 M 512.5 52 v -5 M 521.2 52 v -5 M 530.0 52 v -5 M 538.8 52 v -5 M 547.5 52 v -5 M 556.2 52 v -5 M 573.8 52 v -5 M 582.5 52 v -5 M 591.2 52 v -5"/>
         </g>
         <g font-family="Barlow Condensed, Arial Narrow, sans-serif" font-size="10" font-weight="600" text-anchor="middle">
-          <rect x="198" y="36" width="24" height="16" rx="1.5" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="1.4"/><text x="210" y="48" fill="#1A1A1A">1.0</text>
-          <rect x="368" y="36" width="24" height="16" rx="1.5" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="1.4"/><text x="380" y="48" fill="#1A1A1A">2.0</text>
-          <rect x="538" y="36" width="24" height="16" rx="1.5" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="1.4"/><text x="550" y="48" fill="#1A1A1A">3.0</text>
+          <rect x="116.5" y="36" width="22" height="16" rx="1.5" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="1.4"/><text x="127.5" y="48" fill="#1A1A1A">1.0</text>
+          <rect x="204.0" y="36" width="22" height="16" rx="1.5" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="1.4"/><text x="215.0" y="48" fill="#1A1A1A">2.0</text>
+          <rect x="291.5" y="36" width="22" height="16" rx="1.5" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="1.4"/><text x="302.5" y="48" fill="#1A1A1A">3.0</text>
+          <rect x="379.0" y="36" width="22" height="16" rx="1.5" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="1.4"/><text x="390.0" y="48" fill="#1A1A1A">4.0</text>
+          <rect x="466.5" y="36" width="22" height="16" rx="1.5" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="1.4"/><text x="477.5" y="48" fill="#1A1A1A">5.0</text>
+          <rect x="554.0" y="36" width="22" height="16" rx="1.5" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="1.4"/><text x="565.0" y="48" fill="#1A1A1A">6.0</text>
         </g>
       </svg>
     </div>
-    <figcaption><span class="fig">Fig. 2.1</span> The line. Kilometrage runs from the Ashgrove buffer stop; Down is towards Wending. The small ticks are the hectometre posts, one every 100 m; the green-rimmed plates are the kilometre posts, reading 1.0, 2.0 and 3.0.</figcaption>
+    <figcaption><span class="fig">Fig. 2.1</span> The line. Kilometrage runs from the Ashgrove buffer stop to the Coldwater buffer stop at km 6.400; Down is towards Coldwater. Wending, a through station, lies between, and the two block sections A and B lie between the stations' home signals. The small ticks are the hectometre posts, one every 100 m; the green-rimmed plates are the kilometre posts, reading 1.0 to 6.0.</figcaption>
   </figure>
 
   <dl class="dl">
-    <dt>Kilometrage</dt><dd>Distance along the line, in kilometres, measured from the buffer stop at Ashgrove, which is km 0.000. The buffer stop at Wending is km 3.300. Every fixed object on the railway has a kilometrage, and every message that needs a place gives one.</dd>
+    <dt>Kilometrage</dt><dd>Distance along the line, in kilometres, measured from the buffer stop at Ashgrove, which is km 0.000. Wending station lies around km 3.1; the buffer stop at Coldwater is km 6.400. Every fixed object on the railway has a kilometrage, and every message that needs a place gives one.</dd>
     <dt>Hectometre post</dt><dd>A slate post with an ivory plate, standing every 100 m along the line, that marks the kilometrage on the ground. The plate reads the kilometre, a point, and the hectometre digit in black figures: the post at 1.4 km reads <span class="mono">1.4</span>. See § 2.1.</dd>
     <dt>Kilometre post</dt><dd>The larger post at each full kilometre: the same ivory plate as the hectometre post on a larger scale, reading the kilometre with its zero in the same black figures, <span class="mono">2.0</span> for km 2.0, and distinguished only by a green rim. It takes the place of the hectometre post at that point.</dd>
-    <dt>Down</dt><dd>The direction of increasing kilometrage: from Ashgrove towards Wending. A Down train is one travelling Down. A Down signal governs Down trains.</dd>
-    <dt>Up</dt><dd>The direction of decreasing kilometrage: from Wending towards Ashgrove.</dd>
-    <dt>Station code</dt><dd>Two letters standing for a station on plates, in the timetable and in messages. Ashgrove is <span class="mono">AG</span>; Wending is <span class="mono">WD</span>.</dd>
-    <dt>Box</dt><dd>The signal box at a station and, by extension, the station master on duty in it. "Ashgrove Box" is the place; a message from it is signed "Marrow, Ashgrove".</dd>
-    <dt>Main line</dt><dd>The single line between the two stations, on which train movements run at line speed.</dd>
+    <dt>Down</dt><dd>The direction of increasing kilometrage: from Ashgrove through Wending towards Coldwater. A Down train is one travelling Down. A Down signal governs Down trains.</dd>
+    <dt>Up</dt><dd>The direction of decreasing kilometrage: from Coldwater through Wending towards Ashgrove.</dd>
+    <dt>Station code</dt><dd>Two letters standing for a station on plates, in the timetable and in messages. Ashgrove is <span class="mono">AG</span>; Wending is <span class="mono">WD</span>; Coldwater is <span class="mono">CW</span>.</dd>
+    <dt>Box</dt><dd>The signal box at a station and, by extension, the station master on duty in it. "Ashgrove Box" is the place; a message from it is signed "Marrow, Ashgrove". There is a Box at each of the three stations.</dd>
+    <dt>Main line</dt><dd>The single line between stations, on which train movements run at line speed.</dd>
+    <dt>Through station</dt><dd>A station the line runs through rather than ends at: Wending, with platform 1 on track 1 for Down trains and platform 2 on track 2 for Up trains. A terminus (Ashgrove, Coldwater) has a buffer stop at one end and a headshunt for running round.</dd>
+    <dt>Block section</dt><dd>The single line between the home signals of two neighbouring stations, worked by their two Boxes so that it holds one train at a time. Section A runs from Ashgrove to Wending, section B from Wending to Coldwater. See § 3.5 and <a href="book-s.html#S28">Rule S 28</a>.</dd>
+    <dt>Line Warrant</dt><dd>The authority for one train to enter one block section. There is one warrant for each section; the Box at the far end issues it when the section is clear, the Box at the near end clears its starter only with it in hand, and it is cancelled when the train has arrived complete. The driver never holds it and never sees it; the starter is its face.</dd>
+    <dt>Distant signal</dt><dd>A two-lamp signal with an ivory chevron plate, standing one warning distance before a home signal and named after it with the letter D (<span class="mono">WD 1D</span>). At <span class="term">caution</span> it says the home may be at STOP; at <span class="term">clear</span> it promises a clear run through the station. It is never at STOP and gives no instruction to stop (<a href="book-s.html#S24">Rule S 24</a>).</dd>
+    <dt>Neutral section</dt><dd>A short gap in the overhead line where two feeds meet, at km 4.19–4.21, through which no power can be taken. A section board stands before it and a resume board after it in each direction (<a href="book-d.html#D24">Rule D 24</a>).</dd>
+    <dt>Whistle board</dt><dd>A black W on an ivory disc, standing before a crossing. It asks for one long blast (<a href="#R18">Rule R 18</a>).</dd>
+    <dt>Crossing</dt><dd>A place where a road crosses the line on the level. There is one, Millers' Crossing, at km 4.70, with whistle boards 200 m before it in each direction. The word also means two trains passing each other at a station; see § 9.5.</dd>
+    <dt>Colleague</dt><dd>Another driver of the Railway, working another train in the same timetable. A colleague's train is subject to every rule in this Book, and a colleague's entries in the Incident Book are their own.</dd>
     <dt>Station limits</dt><dd>The part of the line that belongs to a station: from the speed board on the approach, or from the home signal where there is one, to the buffer stop. Within station limits the speed is 25 km/h and the station master's authority applies.</dd>
     <dt>Advance speed board</dt><dd>A black numeral on an ivory triangle, point up, standing one warning distance before a speed board that lowers the limit. It announces the lower limit; it does not impose it. The board it announces carries the same numeral (<a href="#c4-1">§ 4.1</a>, <a href="book-s.html">Book S</a>).</dd>
     <dt>Warning distance</dt><dd>The distance from an advance speed board to the speed board it announces: 200 m where the approach to the board is level or rising, 250 m where it falls at 10‰ or more. It is enough to lose the difference in speed at a steady service deceleration with a margin for reaction, fog and snow (<a href="#c4-1">§ 4.1</a>).</dd>
-    <dt>Gradient</dt><dd>The slope of the line, given in per mille and named from the Down direction: a <em>rising</em> gradient climbs towards Wending, a <em>falling</em> one descends towards it. What rises for a Down train falls for an Up train. See § 2.2.</dd>
+    <dt>Gradient</dt><dd>The slope of the line, given in per mille and named from the Down direction: a <em>rising</em> gradient climbs towards Coldwater, a <em>falling</em> one descends towards it. What rises for a Down train falls for an Up train. See § 2.2.</dd>
     <dt>Per mille (‰)</dt><dd>Metres of rise or fall in every thousand metres of line. A gradient of 12‰ climbs 12 m in a kilometre.</dd>
     <dt>Gradient post</dt><dd>A slate post with a small ivory disc and two black arms, standing at every change of grade. Each arm points along the line on its side, tilted with the grade there and lettered with it in per mille, <span class="mono">L</span> for level. The arm on the side you are travelling towards shows the grade ahead. Information only; it carries no instruction.</dd>
     <dt>Parking brake</dt><dd>The hand-applied brake of a cabbed vehicle, independent of the air. It holds a vehicle standing on any grade on this Railway, and it is what secures a vehicle that is left (<a href="#R22">Rule R 22</a>, <a href="book-d.html#D22">Rule D 22</a>).</dd>
@@ -159,7 +177,7 @@
     <dt>Proved</dt><dd>Of a brake: tested from the cab and shown to act through the whole train (<a href="book-d.html#D14">Rule D 14</a>).</dd>
     <dt>Baton</dt><dd>The station master's hand-held disc, green on one face and red on the other, with a lamp for night. See § 5.3.</dd>
     <dt>Booked time</dt><dd>A time printed in the working timetable for a departure or an arrival.</dd>
-    <dt>Duty</dt><dd>A day's work for a driver and a vehicle, laid out in the working timetable under a number: Duty 101, Duty 201.</dd>
+    <dt>Duty</dt><dd>A day's work for a driver and a vehicle, laid out in the working timetable under a number: Duty 101, Duty 201, Duty 301.</dd>
   </dl>
 
   <div class="note"><p><em>Forward</em> and <em>reverse</em> belong to the cab and change when the driver changes ends. <em>Up</em> and <em>Down</em> belong to the line and never change. A message from a Box is written in Up and Down; a driver translates.</p></div>
@@ -172,46 +190,50 @@
   <div class="why"><p>A signal has a name and a platform has a stop board, but most of the line has neither. Without the posts, "a little past the speed board" is the best anyone could say, and the drawing office could not find the spot next week. With them, every hundred metres of the railway has a name that fits on a plate.</p></div>
 
   <h2 id="c2-2"><span class="num">2.2</span> The profile</h2>
-  <p>The line is not flat. The Wend valley climbs from Ashgrove to Wending, and the railway climbs with it: level through the station limits at Ashgrove, then 12‰ up the valley from post 0.5 to post 2.4, easing to 6‰ towards the weir, and level again through the station limits at Wending from post 2.8. Wending stands 25.2 m above Ashgrove. A Down train climbs all the way; an Up train descends all the way, and arrives at the Ashgrove speed board with the 12‰ fall still under it.</p>
+  <p>The line is not flat. The Wend valley climbs from Ashgrove to Coldwater, and the railway climbs with it: level through the station limits at Ashgrove, then 12‰ up the valley from post 0.5 to post 2.4, easing to 6‰ towards the weir, level through the station limits at Wending from post 2.8 to post 3.4, then 8‰ again to post 5.6, and level through Coldwater. Wending stands 25.2 m above Ashgrove and Coldwater 42.8 m. A Down train climbs all the way; an Up train descends all the way, arrives at the Wending speed board with the 8‰ fall still under it and at the Ashgrove speed board with the 12‰ fall.</p>
 
   <figure>
     <div class="figure-frame">
       <svg viewBox="0 0 640 150" width="640" height="150" font-family="Barlow Condensed, Arial Narrow, sans-serif">
         <!-- datum and profile (heights exaggerated) -->
         <line x1="40" y1="112" x2="600" y2="112" stroke="#D9D2C0" stroke-width="1"/>
-        <polyline points="40,112 125,112 448,54 516,48 600,48" fill="none" stroke="#B5913F" stroke-width="3" stroke-linejoin="round"/>
+        <polyline points="40,112 84,112 250,78 285,74 338,74 530,48 600,48" fill="none" stroke="#B5913F" stroke-width="3" stroke-linejoin="round"/>
         <!-- changes of grade: gradient posts -->
         <g stroke="#4A5560" stroke-width="1.5">
-          <line x1="125" y1="112" x2="125" y2="92"/><line x1="448" y1="54" x2="448" y2="34"/><line x1="516" y1="48" x2="516" y2="28"/>
+          <line x1="84" y1="112" x2="84" y2="92"/><line x1="250" y1="78" x2="250" y2="58"/><line x1="285" y1="74" x2="285" y2="54"/><line x1="338" y1="74" x2="338" y2="54"/><line x1="530" y1="48" x2="530" y2="28"/>
         </g>
         <g fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.2">
-          <circle cx="125" cy="90" r="3.5"/><circle cx="448" cy="32" r="3.5"/><circle cx="516" cy="26" r="3.5"/>
+          <circle cx="84" cy="90" r="3.5"/><circle cx="250" cy="56" r="3.5"/><circle cx="285" cy="52" r="3.5"/><circle cx="338" cy="52" r="3.5"/><circle cx="530" cy="26" r="3.5"/>
         </g>
         <g font-family="IBM Plex Mono, Menlo, monospace" font-size="11" fill="#4A5560" text-anchor="middle">
-          <text x="125" y="130">0.5</text><text x="448" y="130">2.4</text><text x="516" y="130">2.8</text>
-          <text x="40" y="130">0.0</text><text x="600" y="130">3.3</text>
+          <text x="84" y="130">0.5</text><text x="250" y="130">2.4</text><text x="285" y="130">2.8</text><text x="338" y="130">3.4</text><text x="530" y="130">5.6</text>
+          <text x="40" y="130">0.0</text><text x="600" y="130">6.4</text>
         </g>
         <!-- grade labels -->
-        <g font-size="13" font-weight="600" fill="#1F4B3F" text-anchor="middle" letter-spacing="1.5">
-          <text x="82" y="102">LEVEL</text>
-          <text x="286" y="74" transform="rotate(-10 286 74)">RISING 12‰</text>
-          <text x="482" y="42">6‰</text>
-          <text x="558" y="40">LEVEL</text>
+        <g font-size="12" font-weight="600" fill="#1F4B3F" text-anchor="middle" letter-spacing="1.5">
+          <text x="62" y="104">LEVEL</text>
+          <text x="167" y="90" transform="rotate(-8 167 90)">RISING 12‰</text>
+          <text x="268" y="68">6‰</text>
+          <text x="311" y="66">LEVEL</text>
+          <text x="434" y="53" transform="rotate(-6 434 53)">RISING 8‰</text>
+          <text x="565" y="40">LEVEL</text>
         </g>
         <!-- heights -->
         <g font-family="IBM Plex Mono, Menlo, monospace" font-size="10" fill="#B5913F" text-anchor="middle">
-          <text x="448" y="66" transform="translate(0 4)">22.8 m</text>
-          <text x="600" y="62">25.2 m</text>
+          <text x="250" y="92">22.8 m</text>
+          <text x="311" y="88">25.2 m</text>
+          <text x="565" y="62">42.8 m</text>
         </g>
         <!-- stations -->
-        <text x="82" y="145" text-anchor="middle" font-size="12" font-weight="600" fill="#1F4B3F" letter-spacing="2">ASHGROVE</text>
-        <text x="558" y="145" text-anchor="middle" font-size="12" font-weight="600" fill="#1F4B3F" letter-spacing="2">WENDING</text>
+        <text x="62" y="145" text-anchor="middle" font-size="12" font-weight="600" fill="#1F4B3F" letter-spacing="2">ASHGROVE</text>
+        <text x="311" y="145" text-anchor="middle" font-size="12" font-weight="600" fill="#1F4B3F" letter-spacing="2">WENDING</text>
+        <text x="574" y="145" text-anchor="middle" font-size="12" font-weight="600" fill="#1F4B3F" letter-spacing="2">COLDWATER</text>
         <!-- direction -->
-        <g stroke="#4A5560" stroke-width="1.5" fill="none"><path d="M 250 18 L 390 18"/><path d="M 382 13 L 390 18 L 382 23"/></g>
-        <text x="320" y="12" text-anchor="middle" font-size="12" fill="#4A5560" letter-spacing="2.5">DOWN · CLIMBING</text>
+        <g stroke="#4A5560" stroke-width="1.5" fill="none"><path d="M 250 14 L 390 14"/><path d="M 382 9 L 390 14 L 382 19"/></g>
+        <text x="320" y="9" text-anchor="middle" font-size="12" fill="#4A5560" letter-spacing="2.5">DOWN · CLIMBING</text>
       </svg>
     </div>
-    <figcaption><span class="fig">Fig. 2.2</span> The profile of the Ashgrove–Wending line, heights exaggerated. The three small discs are the gradient posts at the changes of grade, km 0.5, 2.4 and 2.8.</figcaption>
+    <figcaption><span class="fig">Fig. 2.2</span> The profile of the line from Ashgrove to Coldwater, heights exaggerated. The five small discs are the gradient posts at the changes of grade, km 0.5, 2.4, 2.8, 3.4 and 5.6.</figcaption>
   </figure>
 
   <p>Every change of grade is marked on the ground by a <span class="term">gradient post</span>. It is a post like the hectometre posts, but instead of a plate it carries a small disc with two arms, one pointing along the line each way. Each arm is tilted with the grade on its side and lettered with that grade in per mille, or <span class="mono">L</span> where the line is level. Read the arm on the side you are travelling towards: tilted up and away from you, the line ahead rises; down and away, it falls. The post says nothing about what to do. Like the hectometre posts it is information, and the rules that turn on a gradient are written elsewhere: the warning distance in <a href="#R10">Rule R 10</a>, securing in <a href="#R22">Rule R 22</a>, and the handling of a train on a grade in <a href="book-d.html#D20">Rules D 20</a> and <a href="book-d.html#D22">D 22</a>.</p>
@@ -221,7 +243,7 @@
 <!-- 3 STAFF -->
 <section class="page chapter" id="c3" data-folio="Book R · 3 Staff and authority">
   <h1><span class="num">§ 3</span> Staff and authority</h1>
-  <p class="lead">Two people work a train between Ashgrove and Wending: the driver, who is responsible for the train, and the station master, who is responsible for the station. Each has authority over their own part and none over the other's.</p>
+  <p class="lead">Two people work a train between stations: the driver, who is responsible for the train, and the station master, who is responsible for the station. Each has authority over their own part and none over the other's. Between the stations the two Boxes work the block together, and the driver is spared it.</p>
 
   <h2><span class="num">3.1</span> The driver</h2>
   <p>The driver is in charge of the vehicle, or vehicles, from taking over the duty until stabling: their preparation, brakes, lights, speed and stopping, the doors, and the safety of every movement. Only the driver decides to move, and nothing in this Book obliges a driver to move a train they believe unfit. A driver who is in doubt stops, and asks.</p>
@@ -233,6 +255,7 @@
     <tbody>
       <tr><td>Ashgrove</td><td class="mono">AG</td><td>T. Marrow</td><td>Marrow, Ashgrove</td></tr>
       <tr><td>Wending</td><td class="mono">WD</td><td>J. Pell</td><td>Pell, Wending</td></tr>
+      <tr><td>Coldwater</td><td class="mono">CW</td><td>A. Ashby</td><td>Ashby, Coldwater</td></tr>
     </tbody>
   </table>
 
@@ -245,6 +268,11 @@
   <p><strong>An instruction can never authorise passing a signal at STOP.</strong> If a message and a signal disagree, the signal governs; the driver stops and asks. A station master who needs a train past a signal at STOP first clears the signal. If the signal has failed and cannot be cleared, the procedure in <a href="book-s.html">Book S</a> applies and nothing in this Book shortens it. See <a href="book-s.html#S10">Rule S 10</a>.</p>
 
   <div class="why"><p>We give each person one thing to be responsible for so that no one has to decide whose job it is. The driver never wonders whether the points are set; the station master never wonders whether the brakes will hold. Each trusts the other because each knows the other has nothing else to think about. And we put the signal above the instruction because a signal is a fact that both can see, while a message is a belief that one of them holds.</p></div>
+
+  <h2 id="c3-5"><span class="num">3.5</span> The block</h2>
+  <p>The single line between two stations is a <span class="term">block section</span>, and it holds one train at a time. No train enters a section without the section's <span class="term">Line Warrant</span>. The two Boxes at its ends exchange it by telephone: the Box that wants to send a train asks for line clear; the Box at the far end gives it only if the section is clear and no warrant for it is out, sets its home signal for the arriving train, and issues the warrant; the sending Box then clears its starter; when the train has arrived complete at the far end, that Box cancels the warrant and the section is free again. Section A lies between Ashgrove and Wending, section B between Wending and Coldwater. The whole of the working is in <a href="book-s.html#S28">Rule S 28</a>.</p>
+  <p>The driver's part in this is simple, and it is the point of the arrangement: the starter does not clear without the warrant. A driver who leaves on a cleared starter has the section to themselves and need not think about the block at all. A driver who finds the starter at STOP at the booked time waits; the Box will say why, and it is usually that a colleague has not yet arrived at the far end.</p>
+  <div class="why"><p>One warrant, one train, one section. We could have given each driver a token to carry, and some railways do; but the token would have to be handed over, carried back, and never be in two places at once, and every one of those is a thing that can go wrong on a platform. A warrant that lives in the Boxes and shows itself only as a cleared starter cannot be dropped, forgotten or fought over. The signal is its whole face.</p></div>
 </section>
 
 <!-- 4 SPEEDS -->
@@ -465,8 +493,9 @@
   <div class="rule" id="R18">
     <span class="rule-num">Rule R 18</span><span class="rule-title">Horn</span>
     <p>Before moving from rest, sound one short blast. When the baton has been shown, the blast is also the driver's acknowledgement of it.</p>
+    <p>At a whistle board, sound one long blast, for the crossing beyond it.</p>
   </div>
-  <div class="why"><p>A train that is about to move looks exactly like a train that is not. One blast gives the platform a second's warning and tells the station master that the baton has been seen. We ask for one blast, and a short one, so that it keeps its meaning.</p></div>
+  <div class="why"><p>A train that is about to move looks exactly like a train that is not. One blast gives the platform a second's warning and tells the station master that the baton has been seen. We ask for one blast, and a short one, so that it keeps its meaning. The long blast at a whistle board is for people who cannot see the train at all: a farm cart at Millers' Crossing hears the horn before it sees the car, and the board stands far enough back that the horn arrives first. Short means "I am moving"; long means "I am coming". Keep them different.</p></div>
 </section>
 
 <!-- 7 SECURING -->
@@ -529,6 +558,18 @@
     </tbody>
   </table>
 
+  <p>With Coldwater open the working timetable carries more than one train at a time, and each running of a car between two termini is a numbered <span class="term">train</span>: Down trains take odd numbers, Up trains even, as the signals do. Duty 301 works car 1002 as trains 3 and 6 while a colleague works car 1003 as trains 4 and 5:</p>
+  <table class="tt">
+    <thead><tr><th>Train</th><th>Car</th><th>Ashgrove</th><th>Wending</th><th>Coldwater</th></tr></thead>
+    <tbody>
+      <tr><td>3 ↓</td><td>1002</td><td>dep 08:00</td><td class="arr">arr 08:07 · dep 08:12 · platform 1</td><td class="arr">arr 08:21</td></tr>
+      <tr><td>4 ↑</td><td>1003</td><td class="arr">arr 08:21</td><td class="arr">arr 08:08 · dep 08:12 · platform 2</td><td>dep 08:00</td></tr>
+      <tr><td>5 ↓</td><td>1003</td><td>dep 08:40</td><td class="arr">arr 08:49 · dep 08:53 · platform 1</td><td class="arr">arr 09:01</td></tr>
+      <tr><td>6 ↑</td><td>1002</td><td class="arr">arr 09:01</td><td class="arr">arr 08:49 · dep 08:53 · platform 2</td><td>dep 08:40</td></tr>
+    </tbody>
+  </table>
+  <p>Trains 3 and 4 cross at Wending at 08:12, trains 5 and 6 at 08:53. The full working timetable, with the block sections and the time–distance diagram, is <a href="book-t.html">Book T</a>.</p>
+
   <h2><span class="num">9.2</span> Early and late</h2>
   <p>A departure before the booked time is an incident and is recorded. A late departure or arrival is noted in the margin of the timetable and is not an incident. The reasons are different in kind. A passenger who arrives at the booked time and finds the platform empty has been failed by the railway, and no explanation will reach them. A passenger who waits a few minutes has been inconvenienced, and the cause is very often outside the driver's hands; the cure for lateness is in the timetable, not in the Incident Book.</p>
 
@@ -539,6 +580,10 @@
 
   <h2><span class="num">9.4</span> The clock</h2>
   <p>The Box clock governs. The cab clock is set from it at the start of every duty. Where the two disagree during the day, the Box clock is right and the cab clock is set again at the next station.</p>
+
+  <h2 id="c9-5"><span class="num">9.5</span> Crossings</h2>
+  <p>Where two trains are booked to pass each other at a through station, the timetable shows a <span class="term">crossing</span>: both arrive, both stand, and both leave, each into the section the other has just cleared. A crossing waits for the late train. The Box cannot clear a starter into a section until the train coming the other way has arrived complete and its warrant is cancelled, so if your colleague is late, your starter stays at STOP past the booked time, and the delay is theirs, not yours. Wait, and do not write it in the Book; the Box has already noted it.</p>
+  <div class="why"><p>A crossing is the one place on a single line where the timetable and the block are the same thing. We put the crossing at Wending because it has two platforms and a Box, and we book a few minutes of stand at each, so that a train a minute or two late still meets its partner without either driver having to hurry.</p></div>
 </section>
 
 <!-- 10 INCIDENT BOOK -->
@@ -569,6 +614,7 @@
       <tr><td>Stopped short of board</td><td>The train stopped more than 3 m short of its stop board (<a href="#R12">R 12</a>).</td></tr>
       <tr><td>Incorrect lights on the main line</td><td>Head or tail lights not as Rule R 16 on leaving station limits (<a href="#R16">R 16</a>).</td></tr>
       <tr><td>No horn before moving</td><td>A vehicle moved from rest without the short blast (<a href="#R18">R 18</a>).</td></tr>
+      <tr><td>Crossing passed without a blast</td><td>A train passed Millers' Crossing without the long blast asked for at the whistle board (<a href="#R18">R 18</a>).</td></tr>
       <tr><td>Signal passed at danger</td><td>A main signal at STOP, or a ground signal at SHUNT STOP, was passed (<a href="book-s.html#S10">S 10</a>).</td></tr>
       <tr><td>Limit of Shunt passed</td><td>A shunting move went beyond the Limit of Shunt board (<a href="book-s.html#S12">S 12</a>).</td></tr>
       <tr><td>Rough coupling</td><td>Couplers met above 2 km/h; the speed is written (<a href="book-d.html#D10">D 10</a>).</td></tr>
@@ -577,9 +623,13 @@
       <tr><td>Rolled back on the gradient</td><td>A train starting on a rise moved more than half a metre against the direction set (<a href="book-d.html#D20">D 20</a>).</td></tr>
       <tr><td>Ran away</td><td>A vehicle moved with no direction set: the reverser in Neutral, or no one in the cab (<a href="book-d.html#D22">D 22</a>).</td></tr>
       <tr><td>Moved with the parking brake applied</td><td>A train moved more than a few metres with a parking brake still on (<a href="book-d.html#D22">D 22</a>).</td></tr>
+      <tr><td>Power through the neutral section</td><td>A train entered the neutral section with power applied (<a href="book-d.html#D24">D 24</a>).</td></tr>
+      <tr><td>Collision</td><td>Two movements met. Every other entry in this table exists so that this one is never written.</td></tr>
       <tr><td>Emergency brake used</td><td>The emergency position was used. This is noted and is not a fault (<a href="book-d.html#D18">D 18</a>).</td></tr>
     </tbody>
   </table>
+
+  <p>Each driver's entries are their own. A colleague's incidents, on a colleague's train, are written in the colleague's book and not in yours, even where the two trains shared a section that morning.</p>
 
   <h2><span class="num">10.3</span> What the Book is for</h2>
   <p>A clean duty is one with nothing written. That is the whole of the scoring on this railway: there are no points, and no one is ranked. The entries are read every week at the drawing office, in company, with the aim of improving the rules, the boards, the timetable or the vehicles. An entry that keeps appearing is a rule that is asking to be rewritten, or a board that is asking to be moved. Very rarely it is a person who is asking to be helped, and that is done quietly.</p>
@@ -600,13 +650,15 @@
       <tr><td>R 12</td><td>Stop with the front within 3 m short of the stop board.</td></tr>
       <tr><td>R 14</td><td>Doors open only when stationary at a platform; closed before moving.</td></tr>
       <tr><td>R 16</td><td>On the main line: HEAD at the front, TAIL at the rear, nothing at coupled ends.</td></tr>
-      <tr><td>R 18</td><td>One short blast before moving from rest.</td></tr>
+      <tr><td>R 18</td><td>One short blast before moving from rest; one long blast at a whistle board.</td></tr>
       <tr><td>R 20</td><td>Depart only with doors closed, booked time reached, starting signal at proceed, baton green. Then horn, then move.</td></tr>
       <tr><td>R 22</td><td>Before leaving the cab: power 0, brake Full, reverser Neutral; parking brake On on a gradient or when leaving the vehicle.</td></tr>
       <tr><td>R 24</td><td>One Train Working: one train, no signals; depart on your own authority at the booked time.</td></tr>
       <tr><td>S 10</td><td>Never pass a signal at STOP. No instruction can authorise it.</td></tr>
       <tr><td>S 12</td><td>Shunting moves stop short of the Limit of Shunt.</td></tr>
       <tr><td>S 14</td><td>Move only on a cleared signal, and only as far as the route goes.</td></tr>
+      <tr><td>S 24</td><td>A distant at CAUTION: be able to stop at the home it repeats.</td></tr>
+      <tr><td>S 28</td><td>One warrant, one train, one section. The starter does not clear without it.</td></tr>
       <tr><td>D 10</td><td>Couple at 2 km/h or less; then connect the pipe at the coupling.</td></tr>
       <tr><td>D 12</td><td>Uncouple stationary, brake applied, from the coupling.</td></tr>
       <tr><td>D 14</td><td>After coupling, prove the brake before departing.</td></tr>
@@ -614,6 +666,7 @@
       <tr><td>D 18</td><td>When in doubt, use the emergency brake. It is noted, not held against you.</td></tr>
       <tr><td>D 20</td><td>Starting on a rise: hold on the train brake, apply power, release as the traction takes up. No rolling back.</td></tr>
       <tr><td>D 22</td><td>Parking brake: off before moving, on before leaving the cab on a gradient and whenever stabled.</td></tr>
+      <tr><td>D 24</td><td>Power off at the section board; coast; power again only after the resume board.</td></tr>
     </tbody>
   </table>
   <p class="small" style="color:var(--slate)">Where this page and the rule differ, the rule governs. Where the rule and a signal differ, the signal governs. Where a signal and your judgement differ, stop.</p>
@@ -622,9 +675,9 @@
 <!-- COLOPHON -->
 <section class="page colophon" id="colophon" data-folio="Book R · Colophon">
   <img class="mark" src="../brand/mark-green.svg" alt="">
-  <p><strong>Book R — Rules of Operation.</strong> Fourth edition, September 2026. Issued by the General Manager's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
-  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes the third edition of September 2026. The changes are listed in <a href="amendments/book-r-ed4.html">Amendment Slip R-4</a>: the kilometre post now reads the kilometre with its zero, 1.0, on a green-rimmed plate like the hectometre posts. The earlier changes are in <a href="amendments/book-r-ed3.html">Amendment Slip R-3</a> (second edition to third: the profile, the warning distance and the parking brake) and <a href="amendments/book-r-ed2.html">Amendment Slip R-2</a> (first edition to second).</p>
-  <p>Companion volumes: <a href="book-i.html">Book I, Identity</a>; <a href="book-s.html">Book S, Signalling</a>; <a href="book-d.html">Book D, Driving</a>. Amendments are issued as numbered slips; paste them in at the page indicated, and initial the margin.</p>
+  <p><strong>Book R — Rules of Operation.</strong> Fifth edition, September 2026. Issued by the General Manager's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
+  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes the fourth edition of September 2026. The changes are listed in <a href="amendments/book-r-ed5.html">Amendment Slip R-5</a>: the line to Coldwater, the block and its Line Warrants, the long blast at a whistle board, the crossing at Wending and three new Incident Book entries. The earlier changes are in <a href="amendments/book-r-ed4.html">Amendment Slip R-4</a> (third edition to fourth: the kilometre plate), <a href="amendments/book-r-ed3.html">Amendment Slip R-3</a> (second edition to third: the profile, the warning distance and the parking brake) and <a href="amendments/book-r-ed2.html">Amendment Slip R-2</a> (first edition to second).</p>
+  <p>Companion volumes: <a href="book-i.html">Book I, Identity</a>; <a href="book-s.html">Book S, Signalling</a>; <a href="book-d.html">Book D, Driving</a>; <a href="book-p.html">Book P, Permanent Way</a>; <a href="book-t.html">Book T, Timetabling</a>. Amendments are issued as numbered slips; paste them in at the page indicated, and initial the margin.</p>
   <p>Every rule in this Book has been explained to at least one person who had never seen a railway. Where they did not understand, we rewrote the rule.</p>
 </section>
 

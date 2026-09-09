@@ -33,7 +33,7 @@
 <nav class="desk-bar">
   <a href="index.html">← Library</a>
   <span class="spacer"></span>
-  <span>Book D · Fourth edition · September 2026</span>
+  <span>Book D · Fifth edition · September 2026</span>
   <a href="#" onclick="window.print();return false;">Print booklet</a>
 </nav>
 
@@ -47,7 +47,7 @@
   <div class="book-letter"><small>Book</small>D</div>
   <h1 class="title">Driving Manual</h1>
   <p class="subtitle">The cab, the procedures, and the handbooks of the Class 1 car, the Class 4 locomotive and the Type C4 coach.</p>
-  <div class="edition">Fourth edition · September 2026 · Issued by the Locomotive Superintendent's Office</div>
+  <div class="edition">Fifth edition · September 2026 · Issued by the Locomotive Superintendent's Office</div>
   <div class="motto">On the line, on time.</div>
 </section>
 
@@ -70,6 +70,10 @@
     <li class="sub"><span class="num">4.4</span><a href="#c4-4">The emergency brake and the buffer stop</a><span class="dots"></span><span class="pg">13</span></li>
     <li class="sub"><span class="num">4.5</span><a href="#c4-5">Gradients</a><span class="dots"></span><span class="pg">14</span></li>
     <li class="sub"><span class="num">4.6</span><a href="#c4-6">Switches</a><span class="dots"></span><span class="pg">15</span></li>
+    <li class="sub"><span class="num">4.7</span><a href="#c4-7">Distant signals</a><span class="dots"></span><span class="pg">16</span></li>
+    <li class="sub"><span class="num">4.8</span><a href="#c4-8">Neutral sections</a><span class="dots"></span><span class="pg">16</span></li>
+    <li class="sub"><span class="num">4.9</span><a href="#c4-9">Whistle boards and crossings</a><span class="dots"></span><span class="pg">17</span></li>
+    <li class="sub"><span class="num">4.10</span><a href="#c4-10">Through stations and the block</a><span class="dots"></span><span class="pg">17</span></li>
     <li><span class="num">5</span><a href="#c5">Changing ends</a><span class="dots"></span><span class="pg">14</span></li>
     <li><span class="num">6</span><a href="#c6">Coupling, uncoupling and the brake test</a><span class="dots"></span><span class="pg">15</span></li>
     <li><span class="num">7</span><a href="#c7">Stabling</a><span class="dots"></span><span class="pg">18</span></li>
@@ -238,9 +242,9 @@
     <tbody>
       <tr><td>Speed</td><td class="mono">km/h</td><td>The limit in force. Fifty on the line, twenty-five in station limits, fifteen when shunting, five in the last twenty metres before a coupling.</td></tr>
       <tr><td>Pipe pressure</td><td class="mono">bar</td><td>5.0 released, 3.5 full service, 0 emergency. It tells you what the brakes are doing, not what the handle says.</td></tr>
-      <tr><td>Line</td><td>lamp</td><td>Lit when the pantograph is on a live wire.</td></tr>
+      <tr><td>Line</td><td>lamp</td><td>Lit when the pantograph is on a live wire. It goes dark for a second or two as you pass through the neutral section at post 4.2, and lights again beyond it (§ 4.8); if it goes dark anywhere else, the wire is dead and you are coasting.</td></tr>
       <tr><td>Doors</td><td>lamp</td><td>Amber while any door is open. Traction is held off until it goes out.</td></tr>
-      <tr><td>Ahead</td><td>text</td><td>The next signal or board in your direction, its aspect, and the distance to it. Switches are listed too, with how they lie: approaching the toe, <span class="mono">lies straight (to track 1)</span> or <span class="mono">lies diverging</span>; approaching from a branch, <span class="mono">set for you</span> or <span class="mono">SET AGAINST YOU</span>. It reads the switch indicator for you (§ 4.6); it does not replace looking at it.</td></tr>
+      <tr><td>Ahead</td><td>text</td><td>The next signal or board in your direction, its aspect, and the distance to it. A distant is named with the home it repeats, as <span class="mono">WD 1D (distant for WD 1) · CAUTION</span> (§ 4.7); whistle, section and resume boards are named with what they ask of you (§ 4.8, § 4.9). Switches are listed too, with how they lie: approaching the toe, <span class="mono">lies straight (to track 1)</span> or <span class="mono">lies diverging</span>; approaching from a branch, <span class="mono">set for you</span> or <span class="mono">SET AGAINST YOU</span>. It reads the switch indicator for you (§ 4.6); it does not replace looking at it.</td></tr>
       <tr><td>Limit</td><td class="mono">km/h</td><td>The lowest limit under any part of the train. It falls as the front reaches a lower board and rises only once the rear has passed a higher one.</td></tr>
       <tr><td>Kilometre</td><td class="mono">km</td><td>Where the front of the train stands, to the metre. It agrees with the hectometre posts beside the line; report a position to the Box by the last post passed, as in "stopped at 2.7".</td></tr>
       <tr><td>Gradient ahead</td><td class="mono">‰</td><td>The grade under the front of the train in the direction this cab faces: rising, falling or level. It agrees with the gradient posts, § 4.5.</td></tr>
@@ -347,8 +351,8 @@
   <p>A locomotive with one coach is heavier but has more brake for its weight; you will find step 2 from about 120 metres is enough. Do not be proud about it: a smooth stop three metres short is worth more than a perfect one that spills the tea.</p>
 
   <h3>Judging distance by the posts</h3>
-  <p>The Ahead indicator is a courtesy; the posts are the railway. A <span class="term">hectometre post</span> stands every hundred metres along the line, on your left as you run Down, an ivory plate on a slate post reading the distance from the Ashgrove buffer stop: the post at 1.4 km reads <span class="mono">1.4</span>. Every full kilometre has a larger <span class="term">kilometre post</span>, a green numeral under the word KM, reading simply <span class="mono">2</span>. Within the loops the posts stand outward of track 2. They carry no instruction; they tell you where you are, and from that, how far you have to go.</p>
-  <p>The Wending stop board stands at 3.165 and the Ashgrove board at 0.135. Running Down, the post reading <span class="mono">3.0</span> is 165 metres from the board: pass it, make your step-2 application, and you will be settling to a stop as <span class="mono">3.1</span> goes by, sixty-five metres out. Running Up, <span class="mono">0.3</span> does the same office, 165 metres from the board, and <span class="mono">0.2</span> is the last post before it. A post and a half, either way. The 25 km/h boards stand at 2.85 and 0.45, between posts, and their advance boards one warning distance earlier: at 2.65, two hundred metres out on a rising approach, and at 0.70, two hundred and fifty metres out because the Up approach falls at 12‰. Running Down, make your application fifty metres past <span class="mono">2.6</span> and be at 25 before <span class="mono">2.9</span>; running Up, make it at <span class="mono">0.7</span> and be at 25 before <span class="mono">0.4</span>. The 50 boards at the same places are yours once the rear of the train has passed them. Gradient posts stand at <span class="mono">0.5</span>, <span class="mono">2.4</span> and <span class="mono">2.8</span>, where the grade changes (§ 4.5).</p>
+  <p>The Ahead indicator is a courtesy; the posts are the railway. A <span class="term">hectometre post</span> stands every hundred metres along the line, on your left as you run Down, an ivory plate on a slate post reading the distance from the Ashgrove buffer stop: the post at 1.4 km reads <span class="mono">1.4</span>. Every full kilometre has a larger <span class="term">kilometre post</span>, the same plate on a larger scale with a green rim, reading the kilometre with its zero, as <span class="mono">2.0</span>. Within the loops the posts stand outward of track 2. They carry no instruction; they tell you where you are, and from that, how far you have to go.</p>
+  <p>The Wending stop board stands at 3.165 and the Ashgrove board at 0.135. Running Down, the post reading <span class="mono">3.0</span> is 165 metres from the board: pass it, make your step-2 application, and you will be settling to a stop as <span class="mono">3.1</span> goes by, sixty-five metres out. Running Up, <span class="mono">0.3</span> does the same office, 165 metres from the board, and <span class="mono">0.2</span> is the last post before it. A post and a half, either way. The 25 km/h boards stand at 2.85 and 0.45, between posts, and their advance boards one warning distance earlier: at 2.65, two hundred metres out on a rising approach, and at 0.70, two hundred and fifty metres out because the Up approach falls at 12‰. Running Down, make your application fifty metres past <span class="mono">2.6</span> and be at 25 before <span class="mono">2.9</span>; running Up, make it at <span class="mono">0.7</span> and be at 25 before <span class="mono">0.4</span>. The 50 boards at the same places are yours once the rear of the train has passed them. Gradient posts stand at <span class="mono">0.5</span>, <span class="mono">2.4</span>, <span class="mono">2.8</span>, <span class="mono">3.4</span> and <span class="mono">5.6</span>, where the grade changes (§ 4.5). Beyond Wending the line runs on to Coldwater at 6.4; the posts of section B, from 3.4 to 5.95, carry the section boards, the whistle boards and Millers' Crossing, listed below.</p>
   <table>
     <thead><tr><th>Post</th><th>What stands near it</th></tr></thead>
     <tbody>
@@ -359,8 +363,21 @@
       <tr><td class="mono">2.4</td><td>Gradient post: 12‰ behind, 6‰ ahead running Down. The climb eases.</td></tr>
       <tr><td class="mono">2.6</td><td>Running Down, the advance speed board 25 stands 50 m beyond, at 2.65: make your application there, on the last of the 6‰ rise. The 25 board is 200 m further on, at 2.85.</td></tr>
       <tr><td class="mono">2.8</td><td>Gradient post: 6‰ behind, level ahead. Speed boards 25 (Down) and 50 (Up) at 2.85, the 50 yours once the rear has passed it; home signal WD 1 at 2.88, twenty metres short of 2.9.</td></tr>
-      <tr><td class="mono">3</td><td>Kilometre post. 165 m to the Wending stop board: brake here running Down.</td></tr>
-      <tr><td class="mono">3.1</td><td>Wending stop board 65 m on the Down side. Down trains come to rest between 3.1 and 3.2.</td></tr>
+      <tr><td class="mono">3.0</td><td>Kilometre post. 165 m to the Wending platform 1 stop board: brake here running Down. Running Up, the platform 2 stop board stands 15 m on the Down side, at 3.015: Up trains come to rest just beyond this post.</td></tr>
+      <tr><td class="mono">3.1</td><td>Wending platform 1 stop board 65 m on the Down side. Down trains come to rest between 3.1 and 3.2.</td></tr>
+      <tr><td class="mono">3.2</td><td>Switch WD B at 3.22, ground signal WD 6 at 3.23, the north Limit of Shunt at 3.28; home signal WD 8 (Up) at 3.32.</td></tr>
+      <tr><td class="mono">3.4</td><td>North station limit: speed boards 50 (Down) and 25 (Up). Gradient post: level behind, 8‰ rising ahead running Down.</td></tr>
+      <tr><td class="mono">3.5</td><td>Running Up, distant WD 8D stands 20 m on the Down side at 3.52 (§ 4.7), and the advance speed board 25 at 3.60: brake for Wending here, on the 8‰ fall.</td></tr>
+      <tr><td class="mono">4.1</td><td>Running Down, the section board stands at the post: power off (§ 4.8). Running Up, the resume board: power may be taken again.</td></tr>
+      <tr><td class="mono">4.2</td><td>The neutral section, 4.19 to 4.21. The line lamp goes dark for the length of it.</td></tr>
+      <tr><td class="mono">4.3</td><td>Running Down, the resume board; running Up, the section board.</td></tr>
+      <tr><td class="mono">4.5</td><td>Running Down, the whistle board: one long blast for Millers' Crossing (§ 4.9).</td></tr>
+      <tr><td class="mono">4.7</td><td>Millers' Crossing.</td></tr>
+      <tr><td class="mono">4.9</td><td>Running Up, the whistle board for the crossing behind you at 4.7.</td></tr>
+      <tr><td class="mono">5.6</td><td>Gradient post: 8‰ behind, level ahead running Down. The climb is over.</td></tr>
+      <tr><td class="mono">5.7</td><td>Running Down, the advance speed board 25 at 5.75 and the distant CW 1D at 5.78, 200 m before the 25 board and the home: make your application here, on the level.</td></tr>
+      <tr><td class="mono">5.9</td><td>Speed boards 25 (Down) and 50 (Up) at 5.95; home signal CW 1 at 5.98.</td></tr>
+      <tr><td class="mono">6.2</td><td>Coldwater stop board 65 m on the Down side, at 6.265: Down trains come to rest between 6.2 and 6.3, as at Wending.</td></tr>
     </tbody>
   </table>
 
@@ -380,14 +397,16 @@
   <div class="danger"><p>The buffer stop at the end of a headshunt is close behind the inner switch, eighty metres at Ashgrove and Wending. A locomotive drawing forward from the platform must be at shunting speed and braking as soon as its rear end is clear of the switch.</p></div>
 
   <h2 id="c4-5"><span class="num">4.5</span> Gradients</h2>
-  <p>The Wend valley climbs. Ashgrove lies at the foot of it and Wending stands 25 metres higher, by the weir; the line rises between them and is level only within the station limits at each end. Down trains climb, Up trains descend, and the difference between the two is the subject of this section.</p>
+  <p>The Wend valley climbs. Ashgrove lies at the foot of it, Wending stands 25 metres higher, by the weir, and Coldwater 43 metres up, at the quarry; the line rises between the stations and is level only within their limits. Down trains climb, Up trains descend, and the difference between the two is the subject of this section.</p>
   <table>
     <thead><tr><th class="mono">km</th><th>Grade</th><th>Marked by</th></tr></thead>
     <tbody>
       <tr><td class="mono">0.0 – 0.5</td><td>Level</td><td>Ashgrove station limits. Gradient post at <span class="mono">0.5</span>.</td></tr>
       <tr><td class="mono">0.5 – 2.4</td><td>Rising 12‰</td><td>The valley grade: twelve metres up for every kilometre Down. Gradient post at <span class="mono">2.4</span>.</td></tr>
       <tr><td class="mono">2.4 – 2.8</td><td>Rising 6‰</td><td>Easing towards the weir. Gradient post at <span class="mono">2.8</span>.</td></tr>
-      <tr><td class="mono">2.8 – 3.3</td><td>Level</td><td>Wending station limits.</td></tr>
+      <tr><td class="mono">2.8 – 3.4</td><td>Level</td><td>Wending station limits. Gradient post at <span class="mono">3.4</span>.</td></tr>
+      <tr><td class="mono">3.4 – 5.6</td><td>Rising 8‰</td><td>The upper valley, to the quarry. Gradient post at <span class="mono">5.6</span>.</td></tr>
+      <tr><td class="mono">5.6 – 6.4</td><td>Level</td><td>Coldwater station limits.</td></tr>
     </tbody>
   </table>
   <p>Every change of grade is marked by a <span class="term">gradient post</span>: a slate post with a small ivory disc and two black arms, one along the line each way, each tilted with the grade on its side and lettered with that grade in per mille, <span class="mono">L</span> for level. The arm on the side you are travelling towards shows the grade ahead: tilted up and away from you, the line rises; down and away, it falls. The posts are information, not instruction; the cab's <span class="term">Gradient ahead</span> indicator reads the same thing. Book S draws them.</p>
@@ -430,16 +449,59 @@
   <p>The indicator carries no authority. A ground signal showing <span class="term">Shunt</span> is the station master's word that the route is set and the move may be made; the indicator is the switch's own word that it lies as the signal promised. The two agree almost always. When they do not, the indicator is the one telling the truth about the rails, and the rails are what you are about to run over: stop short of the switch and tell the Box what you see. Make it a habit, on every move that crosses a switch, to glance at the indicator as you approach it, the way you glance at a signal. It costs a second; the alternative costs a switch.</p>
   <div class="why"><p>A driver in a cab cannot see the blades of a switch; they are low, small and on the far side of the wheel. A signal says what was intended for the route; only the indicator says what the switch has actually done. On a run-round you cross four switches in six moves, half of them trailing, and the station master is throwing the points between your moves. The indicator is how you check that the last throw happened before you trust your tail to it.</p></div>
   <h3>The reads on a run-round</h3>
-  <p>At Wending, arriving on track 1, you cross <span class="mono">WD A</span> facing (it lies straight, for track 1) and stop at the board. Then:</p>
+  <p>At Wending, arriving on track 1, you cross <span class="mono">WD A</span> facing (it lies straight, for track 1) and stop at the board. Since the line was carried on to Coldwater, Wending has no headshunt: the loco draws forward into the <em>north stub</em>, the length of single line beyond WD B up to its Limit of Shunt, and the moves out of track 1 and track 2 are made under the subsidiaries of the starters WD 7 and WD 4 (§ 4.10) rather than under ground signals. Then:</p>
   <table>
     <thead><tr><th>Move</th><th>Signal</th><th>Switch and what its indicator should show</th></tr></thead>
     <tbody>
-      <tr><td>Draw forward from track 1 into the headshunt</td><td class="mono">WD 3</td><td><span class="mono">WD B</span>, trailing from track 1: <em>set for you</em>. The bar lies along the track: straight, for track 1.</td></tr>
-      <tr><td>Set back from the headshunt along track 2 to the stub</td><td class="mono">WD 6, WD 4</td><td><span class="mono">WD B</span>, facing from the headshunt: <em>lies diverging</em>, the bar leaning towards track 2. Then <span class="mono">WD A</span>, trailing from track 2: <em>set for you</em>, the bar leaning towards track 2.</td></tr>
+      <tr><td>Draw forward from track 1 into the north stub</td><td class="mono">WD 7, subsidiary</td><td><span class="mono">WD B</span>, trailing from track 1: <em>set for you</em>. The bar lies along the track: straight, for track 1.</td></tr>
+      <tr><td>Set back from the north stub along track 2 to the south stub</td><td class="mono">WD 6, WD 4 subsidiary</td><td><span class="mono">WD B</span>, facing from the north stub: <em>lies diverging</em>, the bar leaning towards track 2. Then <span class="mono">WD A</span>, trailing from track 2: <em>set for you</em>, the bar leaning towards track 2.</td></tr>
       <tr><td>Come forward from the stub onto track 1 to the coach</td><td class="mono">WD 5</td><td><span class="mono">WD A</span>, facing from the stub: <em>lies straight</em>, for track 1.</td></tr>
     </tbody>
   </table>
   <p>At Ashgrove the same in mirror: <span class="mono">AG B</span> set for you (straight) as you draw into the headshunt under <span class="mono">AG 4</span>; <span class="mono">AG B</span> lies diverging and <span class="mono">AG A</span> set for you (diverging) as you set back along track 2 under <span class="mono">AG 5</span> and <span class="mono">AG 3</span>; <span class="mono">AG A</span> lies straight as you come onto track 1 under <span class="mono">AG 6</span>. If at any of these the bar lies the other way, the points have not yet been thrown for you, whatever the message said: wait, and if the signal is showing Shunt over a switch that shows against you, stop and speak to the Box before you move.</p>
+
+  <h2 id="c4-7"><span class="num">4.7</span> Distant signals</h2>
+  <p>Every home signal on the line now has a <span class="term">distant signal</span> one warning distance before it: two lamps on a slate post, green above amber, with an ivory chevron plate behind the head, named after the home it repeats with the letter D. <span class="mono">WD 1D</span> stands at 2.68 for WD 1; <span class="mono">AG 2D</span> at 0.67 for AG 2; <span class="mono">WD 8D</span> at 3.52 for WD 8; <span class="mono">CW 1D</span> at 5.78 for CW 1. A distant has two aspects and neither of them is Stop.</p>
+  <table>
+    <thead><tr><th>Aspect</th><th>Shows</th><th>It means, to you</th></tr></thead>
+    <tbody>
+      <tr><td><span class="swatch" style="background:var(--amber)"></span>Caution</td><td>amber</td><td>The home ahead may be at Stop. Reduce speed so that you can stop at it.</td></tr>
+      <tr><td><span class="swatch" style="background:var(--lamp)"></span>Clear</td><td>green</td><td>The home is clear and so are the signals through the station: a clear run.</td></tr>
+    </tbody>
+  </table>
+  <div class="rule" id="S24-cited">
+    <span class="rule-num">Rule S 24</span><span class="rule-title">Distant signals</span>
+    <p>At a distant at Caution, reduce speed so as to be able to stop at the home signal it repeats. A distant at Clear promises a clear run through the station. <em>(Book S; cited here.)</em></p>
+  </div>
+  <p>The method is the one you already have for the advance speed board, because the two stand together: the distant is placed at the same warning distance as the triangle, 200 m on a level or rising approach and 250 m on a fall of 10‰ or more, and it asks the same of you. At a distant at Caution make the step-2 application you would make at the triangle, and be able to stop at the home. Then read the home. If it shows Stop, stop at it, and wait for it to clear or for the Box to speak. If it shows Caution, which is what a home into a platform shows when it is cleared for you, continue at station speed and stop at the board or the starter, whichever is yours. On Duties 201 and 301 every home you meet shows Caution when it is cleared, because you stop at every station; the distant will therefore be at Caution on the approach, and that is right: it is telling you to expect to stop, and you are going to.</p>
+  <div class="why"><p>A home signal stands where the station begins, which is too late to learn that it is at Stop if you arrive at line speed. The distant moves the news back by a braking distance, so that a driver who cannot see the home, in fog or snow or round the shoulder of the valley, still knows what to do. It is not a signal to stop at; passing a distant at Caution is what you are meant to do. It is a signal to slow at, and to believe.</p></div>
+  <div class="note"><p>The Ahead indicator names a distant with its home, as <span class="mono">WD 1D (distant for WD 1) · CAUTION</span>, and shows the aspect of the home itself a little further down the list. In the cab there is no such courtesy: the distant is what you have until the home comes into view.</p></div>
+
+  <h2 id="c4-8"><span class="num">4.8</span> Neutral sections</h2>
+  <p>Between Wending and Coldwater the overhead line is fed from both ends, from the Ashgrove substation and the Coldwater one, and the two feeds meet at a <span class="term">neutral section</span> at post 4.2: twenty metres of wire, from 4.19 to 4.21, that belong to neither and carry no current. Nothing can be drawn through it. A pantograph that crosses it with the motors taking current arcs at the gap, and the arc trips the substation behind it. The boards that guard it are black squares with a white bar: the <span class="term">section board</span>, its bar across the line, ninety metres before the gap in each direction, at 4.10 running Down and 4.30 running Up; and the <span class="term">resume board</span>, its bar along the line, ninety metres beyond it, at 4.30 running Down and 4.10 running Up.</p>
+  <div class="rule" id="D24">
+    <span class="rule-num">Rule D 24</span><span class="rule-title">Neutral sections</span>
+    <p>Shut off power at the section board and coast; take power again only after the resume board. Entering the neutral section with power applied is an incident.</p>
+  </div>
+  <ol class="steps">
+    <li>Choose your speed before the section board. Running Down you are on the 8‰ climb: a car coasting up it from 25 km/h will be at walking pace by the resume board, so be at line speed, or near it, when you shut off. Running Up you are on the fall and speed looks after itself.</li>
+    <li>At the section board, controller to <strong>0</strong>. Leave the reverser where it is and the brake alone; you are coasting, not stopping.</li>
+    <li>Watch the line lamp. It goes dark as the pantograph enters the gap and lights again as it leaves. Two hundred metres of coasting at 50 km/h is a quarter of a minute.</li>
+    <li>At the resume board, with the lamp lit, notch up again.</li>
+  </ol>
+  <div class="why"><p>The section board stands ninety metres before the gap because a driver takes a moment to act and a train takes a moment to stop drawing current; ninety metres at line speed is six seconds, which is enough. The resume board stands the same distance beyond it so that a train taking power again is doing so with its whole pantograph on the live wire, not on the edge of it. The lamp in the cab is the proof of both.</p></div>
+
+  <h2 id="c4-9"><span class="num">4.9</span> Whistle boards and crossings</h2>
+  <p>Millers' Crossing, a farm crossing at post 4.7, is the first road to cross the rails on the Railway. It has no gates and no lamps; it has you. A <span class="term">whistle board</span>, a black W on an ivory disc, stands two hundred metres before it in each direction, at 4.50 running Down and 4.90 running Up, and <a href="book-r.html#R18">Rule R 18</a> now asks for one long blast there, for the crossing beyond it. The long blast is the same key as the short one, held. Sound it as you pass the board; a blast sounded ten seconds before the board still counts, one sounded after the crossing does not.</p>
+  <div class="why"><p>Anyone on the crossing hears the train before they can see it, because the whistle board is placed where the line is out of sight of the road behind the shoulder of the hill. The blast is for them, not for you: it is the one piece of signalling on the Railway addressed to people who are not on the train.</p></div>
+  <div class="note"><p>The Ahead indicator lists the board as <span class="mono">Whistle board · one long blast</span>. Running Down, the board comes forty metres after the resume board of the neutral section: power on, then the horn, in that order, both before post 4.5 is behind you.</p></div>
+
+  <h2 id="c4-10"><span class="num">4.10</span> Through stations and the block</h2>
+  <p>Wending is no longer the end of anything. The line runs on from it to Coldwater, and Wending has become a <span class="term">through station</span> with two platform tracks: <strong>platform 1</strong> on track 1, where Down trains stop at the board at 3.165, and <strong>platform 2</strong> on track 2, where Up trains stop at the board at 3.015. Which track you are given is the Box's decision; the home signal is cleared into it, and the switch indicator at WD A or WD B tells you as you arrive. Every home into a platform shows Caution; every starter out of one, WD 7 (Down from track 1) or WD 4 (Up from track 2), stands at Stop until the Box has what it needs to clear it.</p>
+  <p>What it needs is the <span class="term">Line Warrant</span>. The single line between two boxes is a <span class="term">block section</span>: section A from Ashgrove to Wending, section B from Wending to Coldwater. Each section has one warrant, and a train enters the section only with it. The box at the far end issues the warrant when the section is clear and no other warrant for it is out; the box at your end clears its starter only with the warrant in hand; and when you have arrived complete at the far end, that box cancels it. One warrant, one train, one section. That is <a href="book-s.html#S28">Rule S 28</a>, and it is the reason two trains can be on the line at once and never meet between stations.</p>
+  <p>You will see the block worked in the messages, and you should read them as you read a signal. Two minutes before your booked time the far box speaks: <em>Line clear for 1002 to Coldwater. Warrant B issued; CW 1 cleared into track 1.</em> Then your own: <em>Warrant B in hand. WD 7 cleared for the 08:12 departure.</em> The starter clears at that moment and not before. When you arrive: <em>Train 1002 arrived complete at Coldwater; warrant B cancelled.</em> If instead you read <em>Waiting for line clear</em>, the section is not yours yet, and the starter will stay at Stop past your booked time; that is not lateness of your making and it is not a reason to move. Depart on the starter and the baton, as always, and on nothing else.</p>
+  <div class="why"><p>A signal at Stop protects the length of track you can see. The warrant protects the length you cannot: three kilometres of single line with a colleague somewhere on it, coming the other way. The starter is tied to the warrant so that the one thing a driver can see, the signal, always agrees with the one thing that matters, the section.</p></div>
+  <p><strong>Mind the crossing.</strong> When two trains are booked to pass at Wending they arrive from opposite ends into opposite platforms and leave, at the same minute, in opposite directions. Your colleague will be standing across the loop from you while you both wait for the batons, each of you with a warrant for the section the other has just left. Look before you look away: a car in platform 2 tells you section B is clear, and a Box that has not yet said <em>arrived complete</em> tells you it is not. Neither of you departs until both starters are cleared for you, and Mr Pell will show the baton to each of you by name.</p>
 </section>
 
 <!-- 5 CHANGING ENDS -->
@@ -605,7 +667,7 @@
   </figure>
 
   <dl class="dl spec">
-    <dt>Class</dt><dd>1, "Lark". Fleet numbers 1001 to 1004. Duty 101 is worked by 1002.</dd>
+    <dt>Class</dt><dd>1, "Lark". Fleet numbers 1001 to 1004. Duty 101 is worked by 1002; Duty 301 by 1002 and, driven by your colleague R. Farrow, by 1003.</dd>
     <dt>Length</dt><dd>22 m over buffers.</dd>
     <dt>Mass</dt><dd>38 t tare.</dd>
     <dt>Cabs</dt><dd>Two, A and B, identical.</dd>
@@ -623,6 +685,7 @@
   <p>From 50 km/h a Full application stops it in about a hundred metres. Step 2 takes nearer two hundred. Those two figures are the whole of the braking arithmetic on this line: with the Ahead indicator reading 150 metres to the board, step 2 is right and step 3 is a little early.</p>
   <p>On the 12‰ valley grade gravity asks 4.5 kN of the car. Notch 1 just holds 50 km/h on the climb, notch 2 holds it with something to spare, and the timetable is written for notch 2. Coming down, the car gathers speed coasting; a step 1 application checks it and step 2 slows it (§ 4.5). Left with its brakes released on the grade it is at walking pace in fifteen seconds, which is why the parking brake exists.</p>
   <p>The car is short enough that a change of ends is quick, twenty seconds of walking and a few more for the steps. On Duty 101 the six-minute dwell is generous; use the spare for the doors.</p>
+  <p>On the 8‰ to Coldwater the car has more in hand than on the 12‰, and the only new thing it asks of you is the neutral section at post 4.2 (§ 4.8): be at line speed when you shut off at 4.1, and the coast to 4.3 costs you nothing. Car 1003 is the same car in every particular; when Ms Farrow brings it into the other platform at Wending, what you see across the loop is your own car with somebody else's habits in it.</p>
 
   <h2><span class="num">8.2</span> The cab</h2>
   <p>The desk is the standard desk of Fig. 2.1, set across the full width of the cab with the driver's seat on the left. The lights switch on the Class 1 controls the two lamps in the cab front below the windscreen. The doors key opens both doors on both sides; on a platform, only the platform side will actually open.</p>
@@ -826,10 +889,34 @@
         <tr><td class="mono">by 08:00</td><td>Ashgrove</td><td class="act">coupled at the Down end, brake proved, stabled with the parking brake on</td><td></td></tr>
       </tbody>
     </table>
-    <p class="foot">Signalled stations, Book S. Station masters: T. Marrow at Ashgrove, J. Pell at Wending. Depart only on a cleared starter and the green baton, Rule R 20.</p>
+    <p class="foot">Signalled stations, Book S. Station masters: T. Marrow at Ashgrove, J. Pell at Wending. Depart only on a cleared starter and the green baton, Rule R 20. Since the line was carried on to Coldwater, the run-round at Wending uses the north stub beyond WD B, under the subsidiaries of WD 7 and WD 4.</p>
   </div>
 
-  <p><strong>What to expect.</strong> The train is coupled and stabled on Ashgrove track 1 with the locomotive at the Down end, its Cab A facing Wending. Prepare the locomotive only, parking brake off first; the coach lights itself. Wait for AG 1 to clear and for Mr Marrow's baton, and go at 07:00. The climb to Wending is nothing to the Heron in notch 2; the descent back is the heavier train's, so keep step 2 in hand on the 12‰ and brake at the triangle at 0.7 for the Ashgrove reduction. At Wending the home signal WD 1 shows Caution because track 1 ends at a buffer; stop at the board. Then the run-round, which is the whole point of the duty: uncouple (§ 6.2), draw forward into the headshunt under WD 3 with WD B showing set for you, change ends, run back along track 2 under WD 6 and WD 4 with WD B lying diverging and WD A set for you, stop short of the Limit of Shunt board, change ends again, and come onto track 1 under WD 5 with WD A lying straight, to couple to the coach's other end at walking pace (§ 6.1). Connect the pipe, prove the brake, and wait for WD 2 and Mr Pell. Each move is offered to you by Wending Box in a message; the ground signals are its word made visible, and the switch indicators are the rails' (§ 4.6). The worked example in <a href="book-s.html">Book S</a> walks through every signal of this run-round in order. At Ashgrove the same again in mirror, under Mr Marrow, and then stable the train coupled and proved, pantograph down and parking brake on, before 08:00 so that the next driver finds it ready.</p>
+  <p><strong>What to expect.</strong> The train is coupled and stabled on Ashgrove track 1 with the locomotive at the Down end, its Cab A facing Wending. Prepare the locomotive only, parking brake off first; the coach lights itself. Wait for AG 1 to clear and for Mr Marrow's baton, and go at 07:00. The climb to Wending is nothing to the Heron in notch 2; the descent back is the heavier train's, so keep step 2 in hand on the 12‰ and brake at the triangle at 0.7 for the Ashgrove reduction. At Wending the distant WD 1D shows Caution and the home WD 1 shows Caution because you are going to stop; stop at the platform 1 board. Then the run-round, which is the whole point of the duty: uncouple (§ 6.2), draw forward into the north stub under the subsidiary of WD 7 with WD B showing set for you, stopping short of the Limit of Shunt, change ends, run back along track 2 under WD 6 and the subsidiary of WD 4 with WD B lying diverging and WD A set for you, stop short of the Limit of Shunt board, change ends again, and come onto track 1 under WD 5 with WD A lying straight, to couple to the coach's other end at walking pace (§ 6.1). Connect the pipe, prove the brake, and wait for WD 2 and Mr Pell. Each move is offered to you by Wending Box in a message; the ground signals are its word made visible, and the switch indicators are the rails' (§ 4.6). The worked example in <a href="book-s.html">Book S</a> walks through every signal of this run-round in order. At Ashgrove the same again in mirror, under Mr Marrow, and then stable the train coupled and proved, pantograph down and parking brake on, before 08:00 so that the next driver finds it ready.</p>
+
+  <div class="card">
+    <div class="card-head"><span>Duty 301 · The crossing, Ashgrove–Coldwater</span><span class="mono">Car 1002 · Class 1 (and 1003, R. Farrow)</span></div>
+    <table>
+      <thead><tr><th class="mono">Time</th><th>Station</th><th>Event</th><th>Train</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">07:45</td><td>Ashgrove</td><td class="act">on duty; 1002 stabled on track 1, pantograph down, parking brake on. 1003 stands at Coldwater.</td><td></td></tr>
+        <tr><td class="mono">08:00</td><td>Ashgrove</td><td>depart, signal AG 1 and baton, warrant A</td><td class="mono">3 · Down</td></tr>
+        <tr><td class="mono">08:07</td><td>Wending</td><td>arrive platform 1 under WD 1D and WD 1; cross train 4 (1003) in platform 2</td><td class="mono">3</td></tr>
+        <tr><td class="mono">08:12</td><td>Wending</td><td>depart, signal WD 7 and baton, warrant B</td><td class="mono">3 · Down</td></tr>
+        <tr><td class="mono">08:21</td><td>Coldwater</td><td>arrive track 1 under CW 1D and CW 1</td><td class="mono">3</td></tr>
+        <tr><td class="mono">—</td><td>Coldwater</td><td class="act">change ends</td><td></td></tr>
+        <tr><td class="mono">08:40</td><td>Coldwater</td><td>depart, signal CW 2 and baton, warrant B</td><td class="mono">6 · Up</td></tr>
+        <tr><td class="mono">08:49</td><td>Wending</td><td>arrive platform 2 under WD 8D and WD 8; cross train 5 (1003) in platform 1</td><td class="mono">6</td></tr>
+        <tr><td class="mono">08:53</td><td>Wending</td><td>depart, signal WD 4 and baton, warrant A</td><td class="mono">6 · Up</td></tr>
+        <tr><td class="mono">09:01</td><td>Ashgrove</td><td>arrive track 1 under AG 2D and AG 2</td><td class="mono">6</td></tr>
+        <tr><td class="mono">—</td><td>Ashgrove</td><td class="act">stable: lights off, pantograph down, parking brake on</td><td></td></tr>
+      </tbody>
+    </table>
+    <p class="foot">Block working by Line Warrant, Rule S 28: sections A (Ashgrove–Wending) and B (Wending–Coldwater). Station masters: T. Marrow at Ashgrove, J. Pell at Wending, A. Ashby at Coldwater. Your colleague works trains 4 and 5 with car 1003: Coldwater 08:00, Wending 08:08/08:12, Ashgrove 08:21; Ashgrove 08:40, Wending 08:49/08:53, Coldwater 09:01. Down trains odd, Up trains even, Book T.</p>
+  </div>
+
+  <p><strong>What to expect.</strong> Two trains on one line, and the block between them. Prepare 1002 as on Duty 101, Cab B's lights at Tail and Cab A's at Head, parking brake off first. Two minutes before eight the messages begin: Wending gives line clear and issues warrant A, Mr Marrow clears AG 1, and at eight he shows you the baton; the same is happening to Ms Farrow at Coldwater with warrant B. Up the valley as before, and at 2.65 the triangle and at 2.68 the distant WD 1D, both asking the same thing: brake now. WD 1 shows Caution; stop at the platform 1 board. Across the loop in platform 2, 1003 will be standing, or about to; you have each cleared the other's section by arriving, and at 08:10 both boxes say so. At 08:12, WD 7 and the baton, and the two of you leave in opposite directions at the same minute, which is the whole of the art of a single line.</p>
+  <p>Beyond Wending the line is new to you. WD B lies straight for track 1 and the north stub takes you past its Limit of Shunt, which is not for you, to the 50 board at 3.4, where the 8‰ climb begins. Be at line speed by post 4.1, because the section board stands there: controller to 0, coast, watch the lamp go dark and light again, and take power at the resume board at 4.3 (§ 4.8). Forty metres on, at 4.5, the whistle board: one long blast for Millers' Crossing (§ 4.9). The climb ends at 5.6; at 5.75 the triangle and at 5.78 the distant CW 1D, on the level; CW 1 at Caution, the switch indicator at CW A lying straight, and the Coldwater board at 6.265 between posts 6.2 and 6.3, the mirror of Wending. Nineteen minutes of dwell at Coldwater to change ends, and the whole thing again coming home: Up on the 8‰ fall, holding the speed on the brake; the section board now at 4.3 and the whistle board at 4.9; the distant WD 8D at 3.52 and the triangle at 3.6 for the Wending reduction; WD 8 at Caution into platform 2, whose stop board at 3.015 is the one on the far side of the platform; and the crossing again with train 5 at 08:53. Then down the valley you know, the triangle at 0.7 and AG 2D at 0.67 on the fall, and home to Ashgrove at 09:01. Stable the car, and thank your colleague.</p>
 </section>
 
 <!-- 12 GLOSSARY -->
@@ -841,41 +928,49 @@
     <dt>Brake pipe</dt><dd>The air pipe running the length of the train. Charged, the brakes release; vented, they apply.</dd>
     <dt>Cab A, Cab B</dt><dd>The two driving positions of a two-cab vehicle. Forward is always away from the cab you occupy.</dd>
     <dt>Continuity</dt><dd>The condition of the brake pipe being connected from the cab to the far end of the train, proved by the brake test.</dd>
-    <dt>Down, Up</dt><dd>Down is the direction of increasing kilometrage, Ashgrove towards Wending. Up is the opposite.</dd>
+    <dt>Distant signal</dt><dd>A two-lamp signal with an ivory chevron plate, one warning distance before a home signal and named after it with the letter D, as <span class="mono">WD 1D</span>. Caution: the home may be at Stop, slow so as to stop at it. Clear: a clear run through the station. Never at Stop. § 4.7, Rule S 24.</dd>
+    <dt>Down, Up</dt><dd>Down is the direction of increasing kilometrage, Ashgrove towards Wending and Coldwater. Up is the opposite.</dd>
     <dt>Dwell</dt><dd>The time a train stands at a station between arrival and departure.</dd>
     <dt>Facing move</dt><dd>A move that enters a switch at its toe and is sent one way or the other by it. The switch indicator tells you which. § 4.6.</dd>
     <dt>Gradient post</dt><dd>A slate post at every change of grade, with a small ivory disc and two black arms along the line, each tilted with the grade on its side and lettered in per mille; <span class="mono">L</span> for level. The arm on the side you are travelling towards shows the grade ahead. Information, not instruction.</dd>
     <dt>Headshunt</dt><dd>The short dead-end track beyond the inner switch of a station loop, into which a locomotive draws to begin a run-round.</dd>
     <dt>Hectometre post</dt><dd>A post every hundred metres on the left of the line in the Down direction, its ivory plate reading the distance from the Ashgrove buffer stop in kilometres and tenths, as <span class="mono">1.4</span>. A position reference, not a signal.</dd>
     <dt>Home signal</dt><dd>The main signal that governs entry to a station from the line.</dd>
-    <dt>Kilometre post</dt><dd>The larger post at every full kilometre, a green numeral under the word KM. Kilometrage counts from the Ashgrove buffer stop, km 0.0, to the Wending buffer stop, km 3.3.</dd>
+    <dt>Kilometre post</dt><dd>The larger post at every full kilometre, the hectometre plate on a larger scale with a green rim, reading the kilometre with its zero, as <span class="mono">2.0</span>. Kilometrage counts from the Ashgrove buffer stop, km 0.0, to the Coldwater buffer stop, km 6.4.</dd>
+    <dt>Line Warrant</dt><dd>The single authority for a train to enter a block section. Issued by the box at the far end when the section is clear and no other warrant for it is out; the starter is cleared only with it in hand; cancelled when the train has arrived complete. One warrant, one train, one section. § 4.10, Rule S 28.</dd>
     <dt>Light locomotive</dt><dd>A locomotive running without vehicles attached.</dd>
     <dt>Limit of Shunt</dt><dd>A board beyond which shunting moves do not go. Book S, Rule S 12.</dd>
     <dt>Line speed</dt><dd>50 km/h, the highest speed permitted between stations.</dd>
+    <dt>Neutral section</dt><dd>A short length of overhead line between two feeds that carries no current, at post 4.2, from 4.19 to 4.21. Power off at the section board, on again after the resume board. § 4.8, Rule D 24.</dd>
     <dt>Notch</dt><dd>One position of the power controller. There are four above 0.</dd>
     <dt>One Train Working</dt><dd>Working a line that carries a single train and no signals. Rule R 24.</dd>
     <dt>Parking brake</dt><dd>The mechanical brake on a cabbed vehicle, worked from either cab, holding about half the full service force without air. Off before moving; on before leaving a cab on a gradient, and whenever stabled. Rule D 22.</dd>
     <dt>Per mille</dt><dd>Parts per thousand, the Railway's unit for gradients: 12‰ is twelve metres of rise in a thousand metres of line, written ‰.</dd>
+    <dt>Resume board</dt><dd>A black square with a white bar along the line, ninety metres beyond the neutral section: power may be taken again. § 4.8.</dd>
     <dt>Run through</dt><dd>To pass over a switch, trailing, when it is set for the other branch, forcing the blades across. It damages the switch and is an incident. Rule S 22.</dd>
     <dt>Run-round</dt><dd>The moves by which a locomotive is taken from one end of its train to the other at a terminus, by way of the loop.</dd>
     <dt>Securing</dt><dd>Controller 0, brake Full, reverser Neutral, and on a gradient or when stabling the parking brake, before leaving a cab. Rule R 22.</dd>
+    <dt>Section board</dt><dd>A black square with a white bar across the line, ninety metres before the neutral section: shut off power. § 4.8.</dd>
     <dt>Shunting move</dt><dd>Any movement made under a ground signal within station limits, at 15 km/h or less.</dd>
     <dt>Stabled</dt><dd>Standing out of service: pantograph down, lights off, doors closed, train brake applied, parking brake on.</dd>
     <dt>Starting signal</dt><dd>The main signal at the departure end of a platform that governs leaving the station.</dd>
     <dt>Station limits</dt><dd>The area from the speed board or home signal to the buffer stop, where 25 km/h applies.</dd>
     <dt>Stop board</dt><dd>The board at which a train stops at a platform, front of the train level with the bar.</dd>
     <dt>Switch indicator</dt><dd>A black box on a short post at the toe of every switch, a white bar on each face lying the way the switch lies: along the track for the straight route, leaning towards the diverging track for the diverging route. Read from every leg before crossing. Book S, Rule S 22.</dd>
+    <dt>Subsidiary</dt><dd>Two small white lamps beside the head of some main signals, WD 4 and WD 7. Lit diagonally with the main at Stop they show Shunt: a shunting move may pass at shunting speed as far as the route goes; a train may not. Book S, Rule S 10.</dd>
     <dt>Tail, Head</dt><dd>Red lamps at the rear of a train; white lamps at its front.</dd>
+    <dt>Through station</dt><dd>A station the line runs through rather than ends at, with a platform track for each direction: Wending, platform 1 on track 1 for Down trains and platform 2 on track 2 for Up trains. § 4.10.</dd>
     <dt>Trailing move</dt><dd>A move that enters a switch along one of its branches and leaves through the toe. Safe only when the switch is set for that branch; otherwise a run through. § 4.6.</dd>
-    <dt>Warning distance</dt><dd>The distance from an advance speed board to the speed board it announces: 200 m where the approach is level or rising, 250 m where it falls at 10‰ or more, enough to lose 25 km/h at 0.5 m/s² with fifty metres to spare. On this line 200 m at 2.65 and 250 m at 0.70.</dd>
+    <dt>Whistle board</dt><dd>A black W on an ivory disc, two hundred metres before a crossing: sound one long blast. At 4.50 and 4.90 for Millers' Crossing. § 4.9, Rule R 18.</dd>
+    <dt>Warning distance</dt><dd>The distance from an advance speed board, or a distant signal, to the speed board or home it announces: 200 m where the approach is level or rising, 250 m where it falls at 10‰ or more, enough to lose 25 km/h at 0.5 m/s² with fifty metres to spare. On this line 200 m at 2.65 and 250 m at 0.70.</dd>
   </dl>
 </section>
 
 <!-- COLOPHON -->
 <section class="page colophon" id="colophon" data-folio="Book D · Colophon">
   <img class="mark" src="../brand/mark-green.svg" alt="">
-  <p><strong>Book D — Driving Manual.</strong> Fourth edition, September 2026, superseding the third edition of September 2026. Issued by the Locomotive Superintendent's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
-  <p>Changes are listed on the amendment slips. <a href="amendments/book-d-ed2.html">Amendment Slip D-2</a>, first to second edition: advance speed boards, the whole-train rule for limits, and braking for a reduction. <a href="amendments/book-d-ed3.html">Amendment Slip D-3</a>, second to third edition: the gradient profile of the line, gradient posts, the parking brake, Rules D 20 and D 22, and the warning distance on a falling approach. <a href="amendments/book-d-ed4.html">Amendment Slip D-4</a>, third to fourth edition: switch indicators, facing and trailing moves, and the reads on a run-round.</p>
+  <p><strong>Book D — Driving Manual.</strong> Fifth edition, September 2026, superseding the fourth edition of September 2026. Issued by the Locomotive Superintendent's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
+  <p>Changes are listed on the amendment slips. <a href="amendments/book-d-ed2.html">Amendment Slip D-2</a>, first to second edition: advance speed boards, the whole-train rule for limits, and braking for a reduction. <a href="amendments/book-d-ed3.html">Amendment Slip D-3</a>, second to third edition: the gradient profile of the line, gradient posts, the parking brake, Rules D 20 and D 22, and the warning distance on a falling approach. <a href="amendments/book-d-ed4.html">Amendment Slip D-4</a>, third to fourth edition: switch indicators, facing and trailing moves, and the reads on a run-round. <a href="amendments/book-d-ed5.html">Amendment Slip D-5</a>, fourth to fifth edition: the line to Coldwater, distant signals, the neutral section and Rule D 24, whistle boards, through stations and the Line Warrant, and Duty 301.</p>
   <p>This Book cites Book R (Rules of Operation) and Book S (Signalling Manual). Where they differ, Book R governs. Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5.</p>
   <p>The handbooks in § 8 to § 10 are to be amended whenever a class is altered. Amendments are issued as numbered slips; paste them in at the page indicated. Drivers are asked to report any paragraph they had to read twice.</p>
 </section>

@@ -54,6 +54,8 @@ export class Vehicle {
   pipe = 0;             // brake pipe pressure, bar
   /** parking (hand) brake, cabbed vehicles only; holds about half the full service force */
   parkingBrake = false;
+  /** set by the world: false while the pantograph stands under a neutral section */
+  lineVolts = true;
   hornUntil = 0;
   lastHorn = -1e9;
 
@@ -88,7 +90,7 @@ export class Vehicle {
     return clamp((5.0 - this.pipe) / 1.5, 0, 1);
   }
   get powered() {
-    return this.type.pantograph && this.panto === "up";
+    return this.type.pantograph && this.panto === "up" && this.lineVolts;
   }
 }
 

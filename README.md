@@ -32,6 +32,7 @@ Incident Book and the station masters' messages):
 ```
 node scripts/play.mjs 101
 node scripts/play.mjs 201
+node scripts/play.mjs 301
 ```
 
 ## What is here (milestones M0 and M1)
@@ -43,9 +44,15 @@ node scripts/play.mjs 201
   5107. Loops, switches, main and ground signals, station masters who set
   routes and show the baton. Uncouple, run round, couple at walking pace,
   prove the brake, leave on signal and baton.
+- **Duty 301 — the crossing.** The line extended to Coldwater, Wending a
+  through station with two platforms, two block sections worked by Line
+  Warrants, distant signals, a neutral section, a whistle board for Millers'
+  Crossing, and a colleague driving car 1003 the other way. You cross at
+  Wending twice.
 - **The Library.** Book I (Identity), Book R (Rules of Operation), Book S
-  (Signalling), Book D (Driving). HTML booklets with a print stylesheet
-  (A5) in `public/manuals/`.
+  (Signalling), Book D (Driving), Book P (Permanent Way), Book T
+  (Timetabling). HTML booklets with a print stylesheet (A5) in
+  `public/manuals/`, each with amendment slips between editions.
 - **Waiting for a departure.** On the duty sheet, click the booked departure
   time to bring the clock to 15 s before it. The world keeps running through
   the skip, and it stops early if anything moves or an incident is written.

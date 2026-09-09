@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book T — Timetabling · The Meridian Railway</title>
+<link rel="stylesheet" href="book.css">
+<style>
+  .wtt td, .wtt th.mono { font-family: var(--mono); font-size: 13px; }
+  .wtt td.stn { font-family: var(--text); font-size: 14px; }
+  .wtt caption { font-family: var(--display); font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--brass); text-align: left; padding: 0 0 6px; }
+  .string-fig svg text { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; }
+  .string-fig svg .mono { font-family: "IBM Plex Mono", Menlo, monospace; }
+  .key { display: flex; gap: 18px; flex-wrap: wrap; font-family: var(--display); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--slate); margin-top: 6px; }
+  .key span::before { content: ""; display: inline-block; width: 18px; height: 3px; vertical-align: middle; margin-right: 6px; }
+  .key .down::before { background: var(--green); }
+  .key .up::before { background: var(--brass); }
+</style>
+</head>
+<body>
+<nav class="desk-bar">
+  <a href="index.html">← Library</a>
+  <span class="spacer"></span>
+  <span>Book T · First edition · September 2026</span>
+  <a href="#" onclick="window.print();return false;">Print booklet</a>
+</nav>
+
+<div class="book">
+
+<!-- COVER -->
+<section class="cover">
+  <div class="rule-line"></div>
+  <img class="mark" src="../brand/mark-ivory.svg" alt="">
+  <div class="company">The Meridian Railway</div>
+  <div class="book-letter"><small>Book</small>T</div>
+  <h1 class="title">Timetabling</h1>
+  <p class="subtitle">The working timetable of the Railway: how trains are numbered, timed, crossed and kept apart.</p>
+  <div class="edition">First edition · September 2026 · Issued by the Traffic Office</div>
+  <div class="motto">On the line, on time.</div>
+</section>
+
+<!-- CONTENTS -->
+<section class="page toc" data-folio="Book T · Contents">
+  <h1>Contents</h1>
+  <ol>
+    <li><span class="num">1</span><a href="#c1">Why a timetable</a><span class="dots"></span><span class="pg">3</span></li>
+    <li><span class="num">2</span><a href="#c2">Train numbers</a><span class="dots"></span><span class="pg">4</span></li>
+    <li class="sub"><span class="num">T 10</span><a href="#T10">Train numbers</a><span class="dots"></span><span class="pg">4</span></li>
+    <li><span class="num">3</span><a href="#c3">Running times and dwell</a><span class="dots"></span><span class="pg">5</span></li>
+    <li class="sub"><span class="num">T 12</span><a href="#T12">Booking and line clear</a><span class="dots"></span><span class="pg">6</span></li>
+    <li><span class="num">4</span><a href="#c4">The block and the crossing</a><span class="dots"></span><span class="pg">7</span></li>
+    <li class="sub"><span class="num">T 14</span><a href="#T14">Crossing</a><span class="dots"></span><span class="pg">8</span></li>
+    <li><span class="num">5</span><a href="#c5">The working timetable, September 2026</a><span class="dots"></span><span class="pg">9</span></li>
+    <li class="sub"><span class="num">5.1</span><a href="#c5-1">The shuttle, Duty 101</a><span class="dots"></span><span class="pg">9</span></li>
+    <li class="sub"><span class="num">5.2</span><a href="#c5-2">The run-round, Duty 201</a><span class="dots"></span><span class="pg">10</span></li>
+    <li class="sub"><span class="num">5.3</span><a href="#c5-3">The crossing, Duty 301</a><span class="dots"></span><span class="pg">10</span></li>
+    <li><span class="num">6</span><a href="#c6">The time–distance diagram</a><span class="dots"></span><span class="pg">12</span></li>
+    <li><span class="num">7</span><a href="#c7">Duty sheets</a><span class="dots"></span><span class="pg">14</span></li>
+    <li><span class="num">8</span><a href="#c8">Glossary</a><span class="dots"></span><span class="pg">15</span></li>
+    <li><span class="num">—</span><a href="#colophon">Colophon</a><span class="dots"></span><span class="pg">16</span></li>
+  </ol>
+</section>
+
+<!-- 1 -->
+<section class="page chapter" id="c1" data-folio="Book T · 1 Why a timetable">
+  <h1><span class="num">§ 1</span> Why a timetable</h1>
+  <p class="lead">A timetable looks like a list of times. It is two other things first: a promise the Railway makes to people who are not yet on it, and the quiet half of the arrangement that keeps trains apart on a single line.</p>
+  <blockquote class="epigraph">The Box keeps the trains apart in space. The timetable keeps them apart in time. We need both, and we write both down.<span class="who">Traffic Office, first minute book</span></blockquote>
+
+  <h2 id="c1-1"><span class="num">1.1</span> The promise</h2>
+  <p>The public timetable is the Railway's word to the valley: a train will call at Wending at eight minutes past eight, and another at eleven minutes to nine. Nobody who reads it sees a signal, a warrant or a cab. They see a time, and they arrange their morning around it. This is why a departure before the booked time is written in the Incident Book and a late one is only noted in the margin; the reasons are set out in <a href="book-r.html#R20">Rule R 20</a> and Book R § 9, and this Book does not repeat them.</p>
+
+  <h2 id="c1-2"><span class="num">1.2</span> The safety</h2>
+  <p>Between Ashgrove and Coldwater there is one line. Two trains cannot be on the same stretch of it at once, and the arrangements that see to this are of two kinds. The block, worked by the boxes with Line Warrants under <a href="book-s.html#S28">Rule S 28</a>, makes it impossible for a second train to be admitted to a section while the first is in it. The timetable makes it unnecessary: the trains are timed so that, on a normal day, each one reaches the loop before the other needs the section beyond it, and nobody has to be held at a home signal wondering why. The block is the wall; the timetable is the door that is always in the right place. A railway with the wall alone is safe and slow. A railway with the door alone is quick until the first misunderstanding.</p>
+
+  <h2 id="c1-3"><span class="num">1.3</span> Two timetables</h2>
+  <p>The Railway keeps two documents from one set of figures.</p>
+  <dl class="dl">
+    <dt>Public timetable</dt><dd>Station, arrival, departure. Printed on the name boards and in the valley's post offices. It shows the passenger's minutes and nothing else.</dd>
+    <dt>Working timetable</dt><dd>The same trains with everything a passenger never sees: the train number, the car or the locomotive, the platform track, the dwell, the block section, the shunting moves, the recovery minutes and the crossing. Every driver and every box works from it. This Book prints it in § 5.</dd>
+  </dl>
+  <div class="why"><p>We keep the two apart so that the public one can be read at a glance and the working one can be trusted to the minute. A figure that appears in both is the same figure; the working timetable is never allowed to drift from the promise.</p></div>
+</section>
+
+<!-- 2 -->
+<section class="page chapter" id="c2" data-folio="Book T · 2 Train numbers">
+  <h1><span class="num">§ 2</span> Train numbers</h1>
+  <p class="lead">A car has a number painted on its ends. A train has a number written in the timetable. They are not the same thing, and the boxes and the drivers use both, each for its own purpose.</p>
+
+  <div class="rule" id="T10">
+    <span class="rule-num">Rule T 10</span><span class="rule-title">Train numbers</span>
+    <p>Every train in the working timetable carries a number. Down trains carry odd numbers, Up trains even. A number belongs to one path on one day; a car or a locomotive may work several numbers in turn.</p>
+  </div>
+  <div class="why"><p>Signals already carry odd numbers when they face Down and even when they face Up (Book S § 6). We gave trains the same habit so that a person reading either the timetable or a signal plate knows the direction at once, without a second look.</p></div>
+
+  <h2 id="c2-1"><span class="num">2.1</span> The car and the train</h2>
+  <p>The boxes speak of cars, because a box can see a car and cannot see a timetable: <em>Line clear for 1002 to Wending</em> names the vehicle that will stand in the section. The timetable speaks of trains, because a timetable is a plan and a plan is about paths, not paint. When car 1002 leaves Ashgrove at 08:00 it is train 3; when it leaves Coldwater at 08:40 it is train 6. The Incident Book, which records what happened to people and vehicles, names the car; the Traffic Office, which records how the day went against the plan, names the train.</p>
+  <div class="note"><p>Where a train is more than one vehicle, the timetable names the passenger vehicle that the boxes will watch for arrival: in Duty 201 the coach, 5107, since the locomotive leaves it to run round. A train has arrived complete when its last vehicle is within station limits and it has stopped; a box cancels a warrant on nothing less.</p></div>
+
+  <h2 id="c2-2"><span class="num">2.2</span> Blocks of numbers</h2>
+  <table>
+    <thead><tr><th>Numbers</th><th>Used for</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">1–9</td><td>Passenger trains over the full line, Ashgrove–Coldwater.</td></tr>
+      <tr><td class="mono">11–19</td><td>The Ashgrove–Wending shuttle, worked before the block was opened.</td></tr>
+      <tr><td class="mono">21–29</td><td>Locomotive-hauled trains that run round at each end.</td></tr>
+      <tr><td class="mono">91–99</td><td>Light engines, inspection trolleys and works trains (not yet in use).</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 3 -->
+<section class="page chapter" id="c3" data-folio="Book T · 3 Running times and dwell">
+  <h1><span class="num">§ 3</span> Running times and dwell</h1>
+  <p class="lead">A booked time is a running time, a dwell and a little slack, added up and rounded to the minute in the direction of kindness. This chapter shows the arithmetic so that a driver who is a minute early knows why, and a driver who is a minute late knows it was foreseen.</p>
+
+  <h2 id="c3-1"><span class="num">3.1</span> Running times</h2>
+  <p>The Class 1 car reaches 50 km/h in about half a minute on the level and holds it up the 12‰ without effort. Its runs, measured on the Railway with a stopwatch and a clean stop at every board, are these.</p>
+  <table>
+    <thead><tr><th>Section</th><th>Distance</th><th>Measured</th><th>Booked</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Ashgrove–Wending</td><td class="mono">3.03 km</td><td class="mono">4 min 50 s</td><td class="mono">7 min</td><td>Down climbs 12‰ then 6‰; the Up run, descending, is a few seconds quicker.</td></tr>
+      <tr><td>Wending–Coldwater</td><td class="mono">3.10 km</td><td class="mono">5 min</td><td class="mono">9 min</td><td>The 8‰ climb, the neutral section coasted, a long blast at post 4.5.</td></tr>
+      <tr><td>Coldwater–Wending</td><td class="mono">3.25 km</td><td class="mono">5 min</td><td class="mono">9 min</td><td>Into platform 2 from the north; the neutral section coasted downhill.</td></tr>
+      <tr><td>Wending–Ashgrove</td><td class="mono">2.88 km</td><td class="mono">4 min 40 s</td><td class="mono">8 min</td><td>Descending 12‰ to the Ashgrove distant; the advance board stands at 0.70.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="c3-2"><span class="num">3.2</span> Recovery</h2>
+  <p>The difference between measured and booked is the recovery allowance, and it is deliberately wide. Two minutes over Ashgrove–Wending and four over Wending–Coldwater cover a driver who brakes a little early for a distant at caution, a pantograph that takes its time, a wet rail on the climb, and fog. Recovery is not an invitation to dawdle; it is the reason a train that has been held for a moment can still arrive to time.</p>
+  <div class="why"><p>We would rather write a longer time and keep it than a shorter one and explain it. A timetable that can only be kept by a perfect driver on a perfect day is a promise the Railway cannot make.</p></div>
+
+  <h2 id="c3-3"><span class="num">3.3</span> Dwell</h2>
+  <p>A dwell is the time a train stands at a station between its booked arrival and its booked departure. The Railway books three kinds.</p>
+  <dl class="dl">
+    <dt>Calling dwell</dt><dd>One to two minutes at a platform for doors: enough for the doors, the step and a passenger with a bicycle.</dd>
+    <dt>Crossing dwell</dt><dd>Four to five minutes at Wending. The first train to arrive waits for the second; the second needs a minute to arrive complete; then each needs line clear for the section the other has just left. See § 4.</dd>
+    <dt>Turnround dwell</dt><dd>Nineteen minutes at a terminus. Changing ends means walking the length of the car and setting the lights at both; running round means five shunting moves, two walks and a brake test. These take real minutes, and we book them so that they are taken calmly.</dd>
+  </dl>
+
+  <div class="rule" id="T12">
+    <span class="rule-num">Rule T 12</span><span class="rule-title">Booking and line clear</span>
+    <p>A train is never booked to leave a station before the box can be given line clear for the section ahead. Where two trains share a section in turn, the second is booked to leave after the first is booked to have arrived complete, plus the minute the boxes need to speak.</p>
+  </div>
+  <div class="note"><p>This is why the two trains at Wending in Duty 301 are both booked away at 08:12 and not 08:10: train 4 is booked to arrive at 08:08, and its arrival complete is what frees section B for train 3 and lets Wending Box ask Coldwater for line clear at 08:10.</p></div>
+</section>
+
+<!-- 4 -->
+<section class="page chapter" id="c4" data-folio="Book T · 4 The block and the crossing">
+  <h1><span class="num">§ 4</span> The block and the crossing</h1>
+  <p class="lead">Two trains on one line meet at a loop or not at all. This chapter says what a loop must have for a crossing to be timetabled, and what the boxes and the drivers do while it happens.</p>
+
+  <h2 id="c4-1"><span class="num">4.1</span> The block sections</h2>
+  <table>
+    <thead><tr><th>Section</th><th>Between</th><th>From home to home</th><th>Worked by</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">A</td><td>Ashgrove–Wending</td><td class="mono">km 0.42 – 2.88</td><td>Ashgrove Box and Wending Box</td></tr>
+      <tr><td class="mono">B</td><td>Wending–Coldwater</td><td class="mono">km 3.32 – 5.98</td><td>Wending Box and Coldwater Box</td></tr>
+    </tbody>
+  </table>
+  <p>Each section has one Line Warrant. The box at the far end issues it when the section is clear and no other warrant for it is out; the box at the near end clears its starter only with the warrant in hand; the far box cancels it when the train has arrived complete. One warrant, one train, one section: the whole of <a href="book-s.html#S28">Rule S 28</a> in a sentence. The timetable plans around it; it never plans against it.</p>
+
+  <h2 id="c4-2"><span class="num">4.2</span> What a crossing needs</h2>
+  <p>A crossing station must have two tracks that a passenger train can use, each with a platform, each with its own starting signal in each direction that trains will leave, and a home signal at each end that can be cleared into either track. Wending has all of these: platform 1 on track 1, kept for Down trains, and platform 2 on track 2, kept for Up trains; WD 2 and WD 4 starting Up, WD 7 and WD 9 starting Down; WD 1 and WD 8 as homes. A loop without a second platform can pass a train but cannot cross two that both call, and the timetable would have to send one of them through without stopping.</p>
+  <div class="why"><p>Down trains to platform 1 and Up trains to platform 2 is a habit, not a law of nature. We keep it so that a passenger who uses Wending daily learns which side to stand, and so that the boxes' routes are the same every day and the drivers' expectations with them.</p></div>
+
+  <h2 id="c4-3"><span class="num">4.3</span> The crossing, minute by minute</h2>
+  <p>Take the first crossing of Duty 301, trains 3 and 4, as the boxes and drivers see it.</p>
+  <ol class="steps">
+    <li><span class="mono">07:58</span> Wending gives Ashgrove line clear for train 3 and issues warrant A; Ashgrove clears AG 1. Wending gives Coldwater line clear for train 4 and issues warrant B; Coldwater clears CW 2. WD 1 is cleared into track 1 and WD 8 into track 2, both at CAUTION, since both trains will stop.</li>
+    <li><span class="mono">08:00</span> Both batons are shown. Both trains leave. Each section now holds exactly one train and one warrant.</li>
+    <li><span class="mono">08:07</span> Train 3 stops at the board on platform 1. It is within station limits and stopped: Wending cancels warrant A. Section A is free again, but nobody may enter it until a box asks.</li>
+    <li><span class="mono">08:08</span> Train 4 stops on platform 2; warrant B is cancelled.</li>
+    <li><span class="mono">08:10</span> Wending asks Coldwater for line clear for train 3 and receives warrant B; WD 7 is cleared. Wending asks Ashgrove for train 4 and receives warrant A; WD 4 is cleared. The two warrants have changed hands, and each train now holds the section the other has just vacated.</li>
+    <li><span class="mono">08:12</span> Doors closed, batons shown, one short blast each, and the trains leave in opposite directions.</li>
+  </ol>
+
+  <div class="rule" id="T14">
+    <span class="rule-num">Rule T 14</span><span class="rule-title">Crossing</span>
+    <p>At a crossing, the train that arrives first waits for the other. The box holds both starters until the second train has arrived complete and line clear has been given for each train's onward section. Neither train leaves before its booked time, and neither leaves on the strength of the other's warrant.</p>
+  </div>
+  <div class="note"><p>Both trains' departures at a crossing also satisfy <a href="book-r.html#R20">Rule R 20</a> in full: doors, booked time, starting signal, baton. The warrant is the box's business; the driver sees it only as a starter that clears, and a baton that follows.</p></div>
+</section>
+
+<!-- 5 -->
+<section class="page chapter" id="c5" data-folio="Book T · 5 The working timetable">
+  <h1><span class="num">§ 5</span> The working timetable, September 2026</h1>
+  <p class="lead">Three duties are worked at present. Each is set out as the boxes and the drivers read it: one row per station call, with the platform track and, where it matters, what happens in the dwell.</p>
+
+  <h2 id="c5-1"><span class="num">5.1</span> The shuttle, Duty 101</h2>
+  <p>Car 1002 between Ashgrove and Wending, One Train Working, no signals. The shuttle predates the block and is worked under <a href="book-r.html#R24">Rule R 24</a>; its trains carry numbers in the 11–19 block.</p>
+  <table class="wtt">
+    <caption>Duty 101 · car 1002 · One Train Working</caption>
+    <thead><tr><th>Train</th><th>Station</th><th>Arr</th><th>Dep</th><th>Track</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>11</td><td class="stn">Ashgrove</td><td>—</td><td>06:00</td><td>1</td><td class="stn">Prepared from 05:45</td></tr>
+      <tr><td>11</td><td class="stn">Wending</td><td>06:06</td><td>—</td><td>1</td><td class="stn">Change ends</td></tr>
+      <tr><td>12</td><td class="stn">Wending</td><td>—</td><td>06:12</td><td>1</td><td></td></tr>
+      <tr><td>12</td><td class="stn">Ashgrove</td><td>06:18</td><td>—</td><td>1</td><td class="stn">Change ends</td></tr>
+      <tr><td>13</td><td class="stn">Ashgrove</td><td>—</td><td>06:24</td><td>1</td><td></td></tr>
+      <tr><td>13</td><td class="stn">Wending</td><td>06:30</td><td>—</td><td>1</td><td class="stn">Change ends</td></tr>
+      <tr><td>14</td><td class="stn">Wending</td><td>—</td><td>06:36</td><td>1</td><td></td></tr>
+      <tr><td>14</td><td class="stn">Ashgrove</td><td>06:42</td><td>—</td><td>1</td><td class="stn">Stable</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="c5-2"><span class="num">5.2</span> The run-round, Duty 201</h2>
+  <p>Locomotive 4003 and coach 5107. The train is named for the coach; the locomotive runs round at each end, at Wending using the north stub as far as the Limit of Shunt at post 3.28.</p>
+  <table class="wtt">
+    <caption>Duty 201 · loco 4003 + coach 5107</caption>
+    <thead><tr><th>Train</th><th>Station</th><th>Arr</th><th>Dep</th><th>Track</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>21</td><td class="stn">Ashgrove</td><td>—</td><td>07:00</td><td>1</td><td class="stn">Warrant A; AG 1 at 06:58</td></tr>
+      <tr><td>21</td><td class="stn">Wending</td><td>07:07</td><td>—</td><td>1</td><td class="stn">Run round 07:07–07:28</td></tr>
+      <tr><td>22</td><td class="stn">Wending</td><td>—</td><td>07:30</td><td>1</td><td class="stn">Warrant A; WD 2 at 07:28</td></tr>
+      <tr><td>22</td><td class="stn">Ashgrove</td><td>07:37</td><td>—</td><td>1</td><td class="stn">Run round; stable by 08:00</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="c5-3"><span class="num">5.3</span> The crossing, Duty 301</h2>
+  <p>Cars 1002 and 1003 over the full line, crossing at Wending twice. Train 3 and train 6 are worked by 1002, trains 4 and 5 by 1003.</p>
+  <table class="wtt">
+    <caption>Duty 301 · cars 1002 and 1003 · block working</caption>
+    <thead><tr><th>Train</th><th>Car</th><th>Station</th><th>Arr</th><th>Dep</th><th>Track</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>3</td><td>1002</td><td class="stn">Ashgrove</td><td>—</td><td>08:00</td><td>1</td><td class="stn">Warrant A</td></tr>
+      <tr><td>3</td><td>1002</td><td class="stn">Wending</td><td>08:07</td><td>08:12</td><td>1</td><td class="stn">Crosses 4; warrant B</td></tr>
+      <tr><td>3</td><td>1002</td><td class="stn">Coldwater</td><td>08:21</td><td>—</td><td>1</td><td class="stn">Change ends</td></tr>
+      <tr><td>4</td><td>1003</td><td class="stn">Coldwater</td><td>—</td><td>08:00</td><td>1</td><td class="stn">Warrant B</td></tr>
+      <tr><td>4</td><td>1003</td><td class="stn">Wending</td><td>08:08</td><td>08:12</td><td>2</td><td class="stn">Crosses 3; warrant A</td></tr>
+      <tr><td>4</td><td>1003</td><td class="stn">Ashgrove</td><td>08:21</td><td>—</td><td>1</td><td class="stn">Change ends</td></tr>
+      <tr><td>5</td><td>1003</td><td class="stn">Ashgrove</td><td>—</td><td>08:40</td><td>1</td><td class="stn">Warrant A</td></tr>
+      <tr><td>5</td><td>1003</td><td class="stn">Wending</td><td>08:49</td><td>08:53</td><td>1</td><td class="stn">Crosses 6; warrant B</td></tr>
+      <tr><td>5</td><td>1003</td><td class="stn">Coldwater</td><td>09:01</td><td>—</td><td>1</td><td class="stn">Stable</td></tr>
+      <tr><td>6</td><td>1002</td><td class="stn">Coldwater</td><td>—</td><td>08:40</td><td>1</td><td class="stn">Warrant B</td></tr>
+      <tr><td>6</td><td>1002</td><td class="stn">Wending</td><td>08:49</td><td>08:53</td><td>2</td><td class="stn">Crosses 5; warrant A</td></tr>
+      <tr><td>6</td><td>1002</td><td class="stn">Ashgrove</td><td>09:01</td><td>—</td><td>1</td><td class="stn">Stable</td></tr>
+    </tbody>
+  </table>
+  <div class="note"><p>Train 4 is booked a minute longer over section B than train 3 is over section A: the descent from Coldwater is coasted through the neutral section and the approach to WD 8 is on a falling 8‰, where a driver rightly brakes a little early for the distant.</p></div>
+</section>
+
+<!-- 6 -->
+<section class="page chapter" id="c6" data-folio="Book T · 6 The time–distance diagram">
+  <h1><span class="num">§ 6</span> The time–distance diagram</h1>
+  <p class="lead">The Traffic Office draws every timetable before it prints it. The drawing is a graph of distance against time, and a train on it is a line: steep where it runs, level where it stands. Two trains that meet on the drawing meet on the line, and the drawing says where.</p>
+
+  <figure class="string-fig">
+    <div class="figure-frame">
+      <svg viewBox="0 0 700 420" width="700" height="420">
+        <!-- station bands -->
+        <rect x="60" y="356.1" width="620" height="23.9" fill="#F4EFE3"/>
+        <rect x="60" y="199.4" width="620" height="29.2" fill="#F4EFE3"/>
+        <rect x="60" y="40" width="620" height="23.9" fill="#F4EFE3"/>
+        <!-- neutral section -->
+        <rect x="60" y="156.3" width="620" height="1.6" fill="#B5913F" opacity=".5"/>
+        <text x="676" y="153" text-anchor="end" font-size="10" fill="#B5913F" letter-spacing="1">NEUTRAL SECTION 4.19–4.21</text>
+        <!-- time grid -->
+        <g stroke="#D9D2C0" stroke-width="1">
+          <line x1="98.75" y1="40" x2="98.75" y2="380"/>
+          <line x1="176.25" y1="40" x2="176.25" y2="380"/>
+          <line x1="253.75" y1="40" x2="253.75" y2="380"/>
+          <line x1="331.25" y1="40" x2="331.25" y2="380"/>
+          <line x1="408.75" y1="40" x2="408.75" y2="380"/>
+          <line x1="486.25" y1="40" x2="486.25" y2="380"/>
+          <line x1="563.75" y1="40" x2="563.75" y2="380"/>
+          <line x1="641.25" y1="40" x2="641.25" y2="380"/>
+        </g>
+        <!-- axes -->
+        <line x1="60" y1="380" x2="680" y2="380" stroke="#1A1A1A" stroke-width="1.5"/>
+        <line x1="60" y1="40" x2="60" y2="380" stroke="#1A1A1A" stroke-width="1.5"/>
+        <g class="mono" font-size="10" fill="#4A5560" text-anchor="middle">
+          <text x="98.75" y="396">07:50</text>
+          <text x="176.25" y="396">08:00</text>
+          <text x="253.75" y="396">08:10</text>
+          <text x="331.25" y="396">08:20</text>
+          <text x="408.75" y="396">08:30</text>
+          <text x="486.25" y="396">08:40</text>
+          <text x="563.75" y="396">08:50</text>
+          <text x="641.25" y="396">09:00</text>
+        </g>
+        <g font-size="12" fill="#1F4B3F" text-anchor="end" letter-spacing="1">
+          <text x="54" y="372">ASHGROVE</text>
+          <text x="54" y="218">WENDING</text>
+          <text x="54" y="56">COLDWATER</text>
+        </g>
+        <g class="mono" font-size="9" fill="#4A5560" text-anchor="end">
+          <text x="54" y="384">km 0</text>
+          <text x="54" y="230">km 3.1</text>
+          <text x="54" y="68">km 6.4</text>
+        </g>
+        <!-- Down trains, green -->
+        <polyline points="176.25,372.8 230.5,211.9 269.25,211.9 339,47.2" fill="none" stroke="#1F4B3F" stroke-width="2.5" stroke-linejoin="round"/>
+        <polyline points="486.25,372.8 556,211.9 587,211.9 649,47.2" fill="none" stroke="#1F4B3F" stroke-width="2.5" stroke-linejoin="round"/>
+        <!-- Up trains, brass -->
+        <polyline points="176.25,47.2 238.25,219.8 269.25,219.8 339,372.8" fill="none" stroke="#B5913F" stroke-width="2.5" stroke-linejoin="round"/>
+        <polyline points="486.25,47.2 556,219.8 587,219.8 649,372.8" fill="none" stroke="#B5913F" stroke-width="2.5" stroke-linejoin="round"/>
+        <!-- crossings -->
+        <circle cx="255" cy="215.8" r="9" fill="none" stroke="#C6321E" stroke-width="1.5"/>
+        <circle cx="571" cy="215.8" r="9" fill="none" stroke="#C6321E" stroke-width="1.5"/>
+        <text x="255" y="246" text-anchor="middle" font-size="10" fill="#C6321E" letter-spacing="1">CROSS 08:12</text>
+        <text x="571" y="246" text-anchor="middle" font-size="10" fill="#C6321E" letter-spacing="1">CROSS 08:53</text>
+        <!-- train numbers -->
+        <g font-size="12" font-weight="700">
+          <text x="200" y="300" fill="#1F4B3F">3</text>
+          <text x="203" y="120" fill="#B5913F">4</text>
+          <text x="512" y="300" fill="#1F4B3F">5</text>
+          <text x="515" y="120" fill="#B5913F">6</text>
+        </g>
+        <!-- turnround dwells -->
+        <text x="412" y="34" text-anchor="middle" font-size="9" fill="#4A5560" letter-spacing="1">1002 CHANGES ENDS 08:21–08:40</text>
+        <text x="412" y="410" text-anchor="middle" font-size="9" fill="#4A5560" letter-spacing="1">1003 CHANGES ENDS 08:21–08:40</text>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 6.1</span> Time–distance diagram of Duty 301. Distance up the page from Ashgrove to Coldwater; time across. Down trains in Meridian Green, Up trains in Brass. The two circles are the crossings at Wending.</figcaption>
+  </figure>
+  <div class="key"><span class="down">Down trains</span><span class="up">Up trains</span></div>
+
+  <h2 id="c6-1"><span class="num">6.1</span> Reading it</h2>
+  <p>Follow train 3 from the bottom left. It leaves Ashgrove at 08:00 and climbs the page as it climbs the valley; the slope of the line is its speed. At Wending the line goes level for five minutes: the crossing dwell. Then it climbs again to Coldwater, where it rests on the top band for nineteen minutes before coming back down the page as train 6.</p>
+  <p>Train 4 starts at the top at the same moment and comes down. The two lines meet in the Wending band, and only there: the circle marks the crossing. Above the band the brass line is alone in section B; below it the green line is alone in section A. That each section holds one line at a time is the whole point of the drawing, and a timetable that puts two lines on one stretch outside a station band is not sent to the printer.</p>
+  <div class="note"><p>The faint band across the upper section is the neutral section at posts 4.19–4.21. It is drawn so that a planner sees where a train must be coasting and does not book a stop or a start there.</p></div>
+</section>
+
+<!-- 7 -->
+<section class="page chapter" id="c7" data-folio="Book T · 7 Duty sheets">
+  <h1><span class="num">§ 7</span> Duty sheets</h1>
+  <p class="lead">A duty sheet is the driver's extract of the working timetable: the trains one crew works in one turn, with the stations, the booked times and a line for each actual time.</p>
+
+  <h2 id="c7-1"><span class="num">7.1</span> What is on it</h2>
+  <p>The sheet lists each leg of the duty: from, booked departure, to, booked arrival, and beside them the actual times as they happen. Beneath the legs it carries the duty in brief: the preparing steps, the crossing or the run-round, and the stabling. The cab shows the sheet beside the messages from the boxes and the Incident Book, and the leg in hand is marked.</p>
+
+  <h2 id="c7-2"><span class="num">7.2</span> Bringing the clock forward</h2>
+  <p>While a train stands at a station with time in hand, the booked departure on the sheet may be used to bring the clock to fifteen seconds before it. This is a convenience of the sheet, not of the line: the world runs on through the skipped minutes, pantographs finish rising, boxes clear their signals at their usual two minutes before time, and the skip stops of itself if anything moves or anything is written in the Incident Book. Nothing about the departure itself changes.</p>
+  <div class="why"><p>We timed the dwells for people, not for clocks. A driver who has done everything the dwell is for should not have to watch the last nine minutes of it pass.</p></div>
+
+  <h2 id="c7-3"><span class="num">7.3</span> Early and late</h2>
+  <p>A departure before the booked time is an incident under <a href="book-r.html#R20">Rule R 20</a>; a late arrival is noted on the sheet and is not. The Traffic Office reads the sheets weekly and moves the minutes, not the drivers: a run that is late every day has a timetable problem, and the cure is in this Book.</p>
+</section>
+
+<!-- 8 -->
+<section class="page chapter" id="c8" data-folio="Book T · 8 Glossary">
+  <h1><span class="num">§ 8</span> Glossary</h1>
+  <dl class="dl">
+    <dt>Working timetable</dt><dd>The full timetable the Railway works from: trains, vehicles, tracks, dwells, sections and shunting moves. Abbreviated WTT.</dd>
+    <dt>Public timetable</dt><dd>The passenger's extract: station, arrival, departure.</dd>
+    <dt>Train number</dt><dd>The number of a path in the working timetable; odd Down, even Up (Rule T 10). Distinct from the number painted on a car.</dd>
+    <dt>Path</dt><dd>A train's planned progress along the line in time; a line on the time–distance diagram.</dd>
+    <dt>Dwell</dt><dd>The booked time between arrival and departure at a station: calling, crossing or turnround.</dd>
+    <dt>Recovery</dt><dd>The minutes booked beyond the measured running time, so that a small delay does not become a late arrival.</dd>
+    <dt>Crossing</dt><dd>Two trains passing each other at a loop, one on each track (Rule T 14).</dd>
+    <dt>Block section</dt><dd>The single line between two boxes, from home signal to home signal; sections A and B.</dd>
+    <dt>Line Warrant</dt><dd>The authority for one train to occupy one block section, issued and cancelled by the boxes (Rule S 28).</dd>
+    <dt>Arrived complete</dt><dd>A train wholly within station limits and stopped; the moment a warrant may be cancelled.</dd>
+    <dt>Time–distance diagram</dt><dd>The Traffic Office's drawing of distance against time on which every train is a line and every crossing a meeting.</dd>
+    <dt>Duty sheet</dt><dd>The driver's extract of the working timetable for one turn of duty.</dd>
+  </dl>
+</section>
+
+<!-- COLOPHON -->
+<section class="page colophon" id="colophon" data-folio="Book T · Colophon">
+  <img class="mark" src="../brand/mark-green.svg" alt="">
+  <p><strong>Book T — Timetabling.</strong> First edition, September 2026. Issued by the Traffic Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
+  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes nothing.</p>
+  <p>Amendments are issued as numbered slips; paste them in at the page indicated. Rules T 10 to T 14 are cited by number in other Books and must not be renumbered without a general amendment.</p>
+  <p>Companion volumes: <a href="book-i.html">Book I, Identity</a> · <a href="book-r.html">Book R, Rules of Operation</a> · <a href="book-s.html">Book S, Signalling</a> · <a href="book-d.html">Book D, Driving</a> · <a href="book-p.html">Book P, Permanent Way</a>.</p>
+</section>
+
+<section class="back-cover">
+  <img class="mark" src="../brand/mark-ivory.svg" alt="">
+  <div>The Meridian Railway · On the line, on time</div>
+</section>
+
+</div>
+</body>
+</html>

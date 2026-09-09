@@ -126,14 +126,34 @@ manual that describes exactly what is playable.
   D 20 (starting on a rise) and D 22 (parking brake), warning distances by
   approach grade, profile ribbon in the line diagram, Book P first edition.
 
-### M2 — Intermediate stations and the block
-- A three-station line with a passing station in the middle.
-- Block working between stations (line-clear exchange), single-line token
-  or its Meridian equivalent (the *Line Warrant*).
-- Distant signals, speed boards, whistle boards, neutral sections
-  (pantograph down/up boards).
-- Player can choose to be the **station master / signaller** at one box,
-  with an NPC driving the train.
+### M2a + M2b — Coldwater and the block (done 2026-09-09)
+- The line extended to Coldwater; Wending a through station with two
+  platform tracks; two block sections worked by Line Warrants; distant
+  signals; subsidiary shunt aspects; a neutral section with section and
+  resume boards; a whistle board and Millers' Crossing; a colleague driving
+  the other train; Duty 301, the crossing. Book T first edition.
+
+### M2c — The junction and the split trains (next)
+- From Wending a second line branches to a fourth station (name to be
+  chosen with the valley's geography; a side valley).
+- A train of two coupled Class 1 motor cars runs from Ashgrove; at Wending
+  it is split, one car continuing to Coldwater and the other to the branch
+  terminus; in the opposite direction the two cars are joined at Wending
+  and run to Ashgrove as one train.
+- Wending's layout is enlarged so that two such split trains can pass, with
+  track geometry and signal protection that lets the half-trains to and
+  from Coldwater and the branch reach their tracks safely: a junction
+  switch with its own signals, routes that lock against each other, and a
+  box plan for the splitting and joining moves.
+- Books: S (junction signalling, joining and splitting under signals),
+  D (multiple working of Class 1 cars, splitting and joining), T (the
+  branch timetable), P (the branch's profile).
+
+### M2d — The signaller's chair (after M2c)
+- The player may take the box at any station instead of a cab: a lever
+  frame panel with the routes the NPC boxes use, the line-clear exchange
+  and the Line Warrants, the baton, and NPC drivers working every train.
+- Books: S (working a box), a new Book B (Box Working) or a chapter in S.
 
 ### M3 — Timetable and autonomous traffic
 - Working timetable editor; trains run automatically to it.

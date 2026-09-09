@@ -45,12 +45,13 @@ Rules are cited as "Rule R 20" across books.
 | Book | Title | Covers |
 |------|-------|--------|
 | I | Identity Manual | name, mark, colours, type, livery, signage, voice, document system |
-| R | Rules of Operation | terms, directions, staff and authority, speeds, station working, departure procedure, doors, lights, horn, incident book |
-| S | Signalling Manual | principles, main signals, ground signals, boards, hand signals and the baton, station layouts and signal numbering, routes and block working, failures |
-| D | Driving Manual | the driver's person and locations, cab controls, preparing and stabling, running, stopping, changing ends, coupling and uncoupling, brake continuity test, the Class 1 car, the Class 4 locomotive, the Type C4 coach |
-| P | Permanent Way | what the permanent way is, the line and its profile (gradient diagram), gradient posts, hectometre posts, warning distances; inspection and maintenance to follow with M4 |
+| R | Rules of Operation | terms, directions, staff and authority, speeds, station working, departure procedure, doors, lights, horn, block working, incident book |
+| S | Signalling Manual | principles, main signals and subsidiaries, distant signals, ground signals, boards, switch indicators, hand signals and the baton, station layouts and signal numbering, routes, block working and Line Warrants, failures |
+| D | Driving Manual | the driver's person and locations, cab controls, preparing and stabling, running, stopping, gradients, neutral sections, changing ends, coupling and uncoupling, brake continuity test, the Class 1 car, the Class 4 locomotive, the Type C4 coach |
+| P | Permanent Way | what the permanent way is, the line and its profile (gradient diagram), gradient posts, hectometre posts, warning distances, the neutral section and the crossing; inspection and maintenance to follow with M4 |
+| T | Timetabling | the working timetable, train numbers, block sections, the crossing at Wending, duty sheets, the time–distance diagram |
 
-Later: W (Workshop), T (Timetabling).
+Later: W (Workshop), B (Box Working).
 
 ### 2.1 Editions and amendment slips (standing requirement)
 
@@ -81,28 +82,38 @@ and carries no slip.
 ## 3. Geography
 
 The Wend valley. The line runs south to north from **Ashgrove** (a market
-town at the foot of the valley) to **Wending** (a mill village by the weir).
+town at the foot of the valley) through **Wending** (a mill village by the
+weir) to **Coldwater** (a quarry village at the head of the valley).
 
 - **Kilometrage** counts from the buffer stop at Ashgrove, km 0.000, to the
-  buffer stop at Wending, km 3.300.
-- **Down** = direction of increasing kilometrage (Ashgrove → Wending).
-  **Up** = decreasing (Wending → Ashgrove). A signal "faces" the trains it
-  governs: a Down signal governs Down trains.
-- **Station codes:** Ashgrove **AG**, Wending **WD**. Signal boxes are
-  called "Ashgrove Box" and "Wending Box".
-- **Station masters:** Ashgrove — T. Marrow. Wending — J. Pell. Messages are
-  signed "Marrow, Ashgrove" / "Pell, Wending".
+  buffer stop at Coldwater, km 6.400.
+- **Down** = direction of increasing kilometrage (Ashgrove → Coldwater).
+  **Up** = decreasing. A signal "faces" the trains it governs: a Down signal
+  governs Down trains.
+- **Station codes:** Ashgrove **AG**, Wending **WD**, Coldwater **CW**.
+  Signal boxes are "Ashgrove Box", "Wending Box", "Coldwater Box".
+- **Station masters:** Ashgrove — T. Marrow. Wending — J. Pell. Coldwater —
+  A. Ashby. Messages are signed "Marrow, Ashgrove" / "Pell, Wending" /
+  "Ashby, Coldwater". The colleague driving the other train in Duty 301 is
+  R. Farrow.
 - **Electrification:** overhead line, 1.5 kV DC, wired throughout including
-  headshunts.
+  headshunts. The Ashgrove and Coldwater feeds meet at a **neutral section**
+  at km 4.19–4.21 (see §5).
+- **Block sections:** A, Ashgrove–Wending (home signal to home signal:
+  km 0.42–2.88, worked by Ashgrove and Wending boxes); B, Wending–Coldwater
+  (km 3.32–5.98). Each has one Line Warrant (§6, Rule S 28).
 - **Line speed:** 50 km/h. **Station limits:** 25 km/h. **Shunting:** 15
   km/h. **Coupling approach:** 5 km/h in the last 20 m, contact at 2 km/h
   or less.
-- **Profile.** The valley climbs from Ashgrove to Wending. Gradients in per
-  mille, positive = rising in the Down direction: km 0.0–0.5 level (Ashgrove
-  station limits), 0.5–2.4 rising 12‰, 2.4–2.8 rising 6‰ (easing towards the
-  weir), 2.8–3.3 level (Wending station limits). Wending stands 25.2 m above
-  Ashgrove. Changes of grade, each marked by a gradient post: km 0.5, 2.4,
-  2.8. Down trains climb, Up trains descend.
+- **Profile.** Gradients in per mille, positive = rising in the Down
+  direction: km 0.0–0.5 level (Ashgrove station limits), 0.5–2.4 rising
+  12‰, 2.4–2.8 rising 6‰ (easing towards the weir), 2.8–3.4 level (Wending
+  station limits), 3.4–5.6 rising 8‰, 5.6–6.4 level (Coldwater). Wending
+  stands 25.2 m and Coldwater 42.8 m above Ashgrove. Changes of grade, each
+  marked by a gradient post: km 0.5, 2.4, 2.8, 3.4, 5.6. Down trains climb,
+  Up trains descend.
+- **Millers' Crossing:** a farm crossing at km 4.70, with whistle boards at
+  4.50 (Down) and 4.90 (Up).
 
 ## 4. Layouts
 
@@ -111,101 +122,128 @@ object stands on that loop track; otherwise it is on the single line.
 
 ### 4.1 Duty 101 layout ("the shuttle", Book D Class 1 car)
 
-Plain single track from buffer to buffer, no switches, no signals.
-
-| km | object | faces | note |
-|----|--------|-------|------|
-| 0.000 | buffer stop | – | fixed red light |
-| every 0.100 | hectometre post | – | kilometre posts at 1.0, 2.0, 3.0 |
-| 0.130–0.290 | Ashgrove platform | – | |
-| 0.135 | Stop board "ASHGROVE" | Up | Up trains stop here |
-| 0.450 | Speed board 25 | Up | station limit begins for Up trains |
-| 0.450 | Speed board 50 | Down | line speed resumes for Down trains, once the rear has passed |
-| 0.500 | Gradient post | both | level ↔ 12‰ |
-| 0.700 | Advance speed board 25 | Up | announces the 25 board 250 m ahead: the approach falls at 12‰ |
-| 2.400 | Gradient post | both | 12‰ ↔ 6‰ |
-| 2.650 | Advance speed board 25 | Down | announces the 25 board 200 m ahead |
-| 2.800 | Gradient post | both | 6‰ ↔ level |
-| 2.850 | Speed board 25 | Down | |
-| 2.850 | Speed board 50 | Up | |
-| 3.010–3.170 | Wending platform | – | |
-| 3.165 | Stop board "WENDING" | Down | Down trains stop here |
-| 3.300 | buffer stop | – | fixed red light |
+Plain single track from the Ashgrove buffer stop to a buffer stop at
+km 3.300 (Wending as first built), no switches, no signals. Objects as in
+the full line between those kilometres, without signals or switch
+indicators: stop boards at 0.135 (Up) and 3.165 (Down), speed and advance
+boards, gradient posts at 0.5 and 2.4 and 2.8, hectometre posts.
 
 Working: **One Train Working** — one vehicle on the line, no signals, the
 driver departs at the booked time on their own authority (Rule R 24).
 
-### 4.2 Duty 201 layout ("the run-round", Class 4 + Type C4)
+### 4.2 The full line (Duties 201 and 301)
 
-Each station has a loop (track 1 at the platform, track 2 alongside), a
-switch at each end, a headshunt beyond the inner switch, and a short stub
-of the single line between the outer switch and the home signal. Hectometre
-posts stand every 100 m throughout, moved outward past track 2 within the
-loops.
-
-Ashgrove (headshunt at the Up/buffer end, main line at the Down end):
+**Ashgrove** (terminus; headshunt at the Up/buffer end, main line to the
+north):
 
 | km | object | faces | on | note |
 |----|--------|-------|----|------|
 | 0.000 | buffer stop | – | headshunt | |
+| every 0.100 | hectometre post | – | | kilometre posts at 1.0, 2.0 … |
 | 0.070 | Ground signal **AG 5** | Down | headshunt | headshunt → station |
-| 0.080 | Switch **AG B** | toe faces Up (headshunt side) | – | normal = track 1, reverse = track 2; switch indicator at the toe |
-| 0.110–0.310 | track 1 and track 2 | – | | platform on track 1, km 0.130–0.290 |
+| 0.080 | Switch **AG B** | toe faces Up | – | normal = track 1, reverse = track 2; switch indicator |
+| 0.110–0.310 | track 1 and track 2 | | | platform on track 1, km 0.130–0.290 |
 | 0.115 | Ground signal **AG 4** | Up | track 1 | track 1 → headshunt |
 | 0.135 | Stop board "ASHGROVE" | Up | track 1 | |
 | 0.305 | Starting signal **AG 1** | Down | track 1 | main signal |
 | 0.305 | Ground signal **AG 3** | Down | track 2 | track 2 → stub |
-| 0.340 | Switch **AG A** | toe faces Down (main line side) | – | normal = track 1, reverse = track 2; switch indicator at the toe |
+| 0.340 | Switch **AG A** | toe faces Down | – | switch indicator |
 | 0.350 | Ground signal **AG 6** | Up | single line | stub → station |
-| 0.400 | Limit of Shunt board | Down | single line | shunting moves stop short of it |
-| 0.420 | Home signal **AG 2** | Up | single line | main signal, governs entry |
-| 0.450 | Speed boards 25 (Up) / 50 (Down) | | | |
-| 0.500 | Gradient post | both | single line | level ↔ 12‰ |
-| 0.700 | Advance speed board 25 | Up | single line | 250 m before the 25 board (falling approach) |
+| 0.400 | Limit of Shunt board | Down | single line | |
+| 0.420 | Home signal **AG 2** | Up | single line | |
+| 0.450 | Speed boards 25 (Up) / 50 (Down) | | | station limit |
+| 0.500 | Gradient post | both | | level ↔ 12‰ |
+| 0.670 | Distant signal **AG 2D** | Up | | 250 m before AG 2: falling 12‰ approach |
+| 0.700 | Advance speed board 25 | Up | | 250 m before the 25 board |
 
-Wending (mirror; headshunt at the Down/buffer end):
+**Section A**, km 0.45–2.85: gradient post at 2.4 (12‰ ↔ 6‰).
+
+**Wending** (through station; platform 1 on track 1 for Down trains,
+platform 2 on track 2 for Up trains):
 
 | km | object | faces | on | note |
 |----|--------|-------|----|------|
-| 2.400 | Gradient post | both | single line | 12‰ ↔ 6‰ |
-| 2.650 | Advance speed board 25 | Down | single line | 200 m before the 25 board |
-| 2.800 | Gradient post | both | single line | 6‰ ↔ level |
-| 2.850 | Speed boards 25 (Down) / 50 (Up) | | | |
-| 2.880 | Home signal **WD 1** | Down | single line | |
-| 2.900 | Limit of Shunt board | Up | single line | |
-| 2.950 | Ground signal **WD 5** | Down | single line | stub → station |
-| 2.960 | Switch **WD A** | toe faces Up (main line side) | – | normal = track 1, reverse = track 2; switch indicator at the toe |
-| 2.990–3.190 | track 1 and track 2 | | | platform on track 1, km 3.010–3.170 |
-| 2.995 | Starting signal **WD 2** | Up | track 1 | |
-| 2.995 | Ground signal **WD 4** | Up | track 2 | track 2 → stub |
-| 3.165 | Stop board "WENDING" | Down | track 1 | |
-| 3.185 | Ground signal **WD 3** | Down | track 1 | track 1 → headshunt |
-| 3.220 | Switch **WD B** | toe faces Down (headshunt side) | – | normal = track 1, reverse = track 2; switch indicator at the toe |
-| 3.230 | Ground signal **WD 6** | Up | headshunt | headshunt → station |
-| 3.300 | buffer stop | – | headshunt | |
+| 2.650 | Advance speed board 25 | Down | | 200 m before the 25 board (rising 6‰) |
+| 2.680 | Distant signal **WD 1D** | Down | | 200 m before WD 1 |
+| 2.800 | Gradient post | both | | 6‰ ↔ level |
+| 2.850 | Speed boards 25 (Down) / 50 (Up) | | | south station limit |
+| 2.880 | Home signal **WD 1** | Down | single line | from Ashgrove |
+| 2.900 | Limit of Shunt board | Up | single line | south stub |
+| 2.950 | Ground signal **WD 5** | Down | single line | south stub → station |
+| 2.960 | Switch **WD A** | toe faces Up | – | normal = track 1, reverse = track 2; switch indicator |
+| 2.990–3.190 | track 1 and track 2 | | | platform 1 on track 1, platform 2 on track 2, km 3.010–3.170 |
+| 2.995 | Starting signal **WD 2** | Up | track 1 | to Ashgrove |
+| 2.995 | Starting signal **WD 4** | Up | track 2 | to Ashgrove; with subsidiary (track 2 → south stub) |
+| 3.015 | Stop board "WENDING" | Up | track 2 | Up trains, platform 2 |
+| 3.165 | Stop board "WENDING" | Down | track 1 | Down trains, platform 1 |
+| 3.185 | Starting signal **WD 7** | Down | track 1 | to Coldwater; with subsidiary (track 1 → north stub) |
+| 3.185 | Starting signal **WD 9** | Down | track 2 | to Coldwater |
+| 3.220 | Switch **WD B** | toe faces Down | – | normal = track 1, reverse = track 2; switch indicator |
+| 3.230 | Ground signal **WD 6** | Up | single line | north stub → station |
+| 3.280 | Limit of Shunt board | Down | single line | north stub |
+| 3.320 | Home signal **WD 8** | Up | single line | from Coldwater |
+| 3.400 | Speed boards 25 (Up) / 50 (Down) | | | north station limit |
+| 3.400 | Gradient post | both | | level ↔ 8‰ |
+| 3.520 | Distant signal **WD 8D** | Up | | 200 m before WD 8 (falling 8‰, under 10‰) |
+| 3.600 | Advance speed board 25 | Up | | |
+
+WD 3 of the first layout is withdrawn: its move (track 1 → north stub) is
+now the subsidiary of WD 7. The run-round at Wending (Duty 201): track 1 →
+north stub under WD 7's subsidiary, north stub → track 2 under WD 6, track
+2 → south stub under WD 4's subsidiary, south stub → track 1 under WD 5.
+
+**Section B**, km 3.40–5.95: section boards (power off) at 4.10 (Down) and
+4.30 (Up), resume boards (power on) at 4.30 (Down) and 4.10 (Up), the
+neutral section at 4.19–4.21; whistle boards at 4.50 (Down) and 4.90 (Up)
+for Millers' Crossing at 4.70; gradient post at 5.6 (8‰ ↔ level).
+
+**Coldwater** (terminus; main line to the south, headshunt at the
+Down/buffer end; the mirror of Ashgrove):
+
+| km | object | faces | on | note |
+|----|--------|-------|----|------|
+| 5.750 | Advance speed board 25 | Down | | 200 m before the 25 board (level approach) |
+| 5.780 | Distant signal **CW 1D** | Down | | 200 m before CW 1 |
+| 5.950 | Speed boards 25 (Down) / 50 (Up) | | | station limit |
+| 5.980 | Home signal **CW 1** | Down | single line | |
+| 6.000 | Limit of Shunt board | Up | single line | |
+| 6.050 | Ground signal **CW 5** | Down | single line | stub → station |
+| 6.060 | Switch **CW A** | toe faces Up | – | switch indicator |
+| 6.090–6.290 | track 1 and track 2 | | | platform on track 1, km 6.110–6.270 |
+| 6.095 | Starting signal **CW 2** | Up | track 1 | |
+| 6.095 | Ground signal **CW 4** | Up | track 2 | track 2 → stub |
+| 6.265 | Stop board "COLDWATER" | Down | track 1 | |
+| 6.285 | Ground signal **CW 3** | Down | track 1 | track 1 → headshunt |
+| 6.320 | Switch **CW B** | toe faces Down | – | switch indicator |
+| 6.330 | Ground signal **CW 6** | Up | headshunt | headshunt → station |
+| 6.400 | buffer stop | – | headshunt | |
 
 Signal numbering rule: station code, space, number. Odd numbers face Down,
-even numbers face Up. Main signals take the lowest numbers (1, 2), ground
-signals the rest.
+even numbers face Up. Main signals take the lowest numbers, ground signals
+the rest; a distant signal takes its home's number with the letter D
+(WD 1D).
 
-### 4.3 Routes (Duty 201)
+### 4.3 Routes
 
-A route is set by the station master: switches are set, then the governing
-signal is cleared, only when every track section on the route is clear
-(except a shunt route into an occupied track, which is cleared for coupling).
+A route is set by the box: switches are set, then the governing signal is
+cleared, only when every track section on the route is clear (except a
+shunt route into an occupied track, which is cleared for coupling). A
+starter towards a block section is cleared only with the section's Line
+Warrant in hand.
 
-Ashgrove routes: `Main→1` (AG 2 Caution), `1→Main` (AG 1 Clear),
-`1→Headshunt` (AG 4 Shunt), `Headshunt→2→Stub` (AG 5 and AG 3 Shunt),
-`Stub→1` (AG 6 Shunt, into the occupied platform track for coupling).
-Wending routes mirror: `Main→1` (WD 1 Caution), `1→Main` (WD 2 Clear),
-`1→Headshunt` (WD 3 Shunt), `Headshunt→2→Stub` (WD 6 and WD 4 Shunt),
-`Stub→1` (WD 5 Shunt).
+Ashgrove: `homeN→1` (AG 2 Caution), `1→N` (AG 1 Clear), run-round
+`1→hs` (AG 4), `hs→2→stub` (AG 5 and AG 3), `stub→1` (AG 6).
+Wending: `homeS→1` (WD 1), `homeS→2` (WD 1), `homeN→1` and `homeN→2`
+(WD 8), `1→S` (WD 2), `2→S` (WD 4), `1→N` (WD 7), `2→N` (WD 9), run-round
+`1→hs` (WD 7 subsidiary), `hs→2→stub` (WD 6 and WD 4 subsidiary), `stub→1`
+(WD 5). Coldwater mirrors Ashgrove with CW 1, CW 2, CW 3, CW 6, CW 4, CW 5.
 
 ## 5. Signals and boards (catalogue)
 
 **Main signals.** Colour lights on a slate post; three lamps in a vertical
 row: green top, amber middle, red bottom. A black plate with the signal's
-name in white.
+name in white. A main signal governs every movement, trains and shunting
+moves alike.
 
 | aspect | shows | meaning |
 |--------|-------|---------|
@@ -214,8 +252,22 @@ name in white.
 | CLEAR | green | Proceed at line speed; the next signal shows a proceed aspect. |
 | (dark / doubtful) | – | Treat as STOP. |
 
-A home signal into a terminal platform shows CAUTION when cleared, never
-CLEAR, because the track ends.
+A home signal into a platform track where the train stops shows CAUTION
+when cleared, never CLEAR.
+
+**Subsidiary.** Two small white lamps beside the head of some main signals
+(WD 4, WD 7). Lit diagonally with the main at STOP they show **SHUNT**: a
+shunting move may pass at shunting speed as far as the route goes; for a
+train the signal is still at STOP.
+
+**Distant signals.** Two lamps on a slate post, green top, amber bottom,
+with an ivory chevron plate behind the head; named after the home they
+repeat with the letter D. **CAUTION** (amber): the home ahead may be at
+STOP, reduce speed so as to stop at it. **CLEAR** (green): the home and the
+signals through the station are clear. A distant is never at STOP; it gives
+no instruction to stop, only warning. It stands one warning distance before
+its home: 200 m where the approach is level or rising, 250 m where it falls
+at 10‰ or more.
 
 **Ground signals.** A low black box with two white lamps. Horizontal pair =
 **SHUNT STOP** (do not pass). Diagonal pair rising to the right = **SHUNT**:
@@ -230,17 +282,19 @@ obstruction. Ground signals govern shunting moves only.
 | Limit of Shunt | ivory board with a red diagonal band, "LIMIT OF SHUNT" | Shunting moves must not pass. |
 | Speed board | black numeral on an ivory disc with a black rim | Speed limit in km/h from the board onward. A lower limit applies to the front of the train as it passes; a higher limit applies only once the rear of the train has passed. |
 | Advance speed board | black numeral on an ivory triangle, point up, black rim | A lower limit lies ahead: the speed board with this numeral stands one warning distance beyond. Be at that speed when the front reaches the speed board. Higher limits are not announced. |
+| Whistle board | black W on an ivory disc with a black rim | Sound one long blast: a crossing lies ahead. |
+| Section board | black square with a white bar across | Shut off power: a neutral section lies ahead. |
+| Resume board | black square with a white bar along the line | Power may be taken again. |
 | Switch indicator | black box on a short post at the toe of every switch, a white bar on each face | Shows which way the switch lies: the bar along the track means set for the straight route, the bar leaning towards the diverging track means set for the diverging route. Read from every leg. It carries no authority (the signal does) but a switch showing against your move is never run through: stop and speak to the Box. |
 | Gradient post | slate post with a small ivory disc and two black arms, one along the line each way, each tilted with the grade on its side and lettered with that grade in per mille, L for level | Stands at every change of grade. The arm on the side you are travelling towards shows the grade ahead: tilted up and away from you it rises, down and away it falls. Information only, no instruction. |
-
-**Warning distance.** 200 m where the approach to the speed board is level
-or rising; 250 m where the approach falls at 10‰ or more. On this line the
-Up advance board for Ashgrove stands at 0.70 (falling 12‰ approach), the
-Down advance board for Wending at 2.65 (rising 6‰ approach).
 | Buffer stop | red lamp on the stop | End of track. |
 
-Future: whistle board, pantograph down/up boards, end of wire, distant
-signals.
+**Warning distance.** 200 m where the approach to the speed board or home
+signal is level or rising; 250 m where the approach falls at 10‰ or more.
+On this line: the Up advance board and distant for Ashgrove at 0.70 and
+0.67 (falling 12‰), the Down ones for Wending at 2.65 and 2.68 (rising 6‰),
+the Up ones for Wending at 3.60 and 3.52 (falling 8‰, under 10‰), the Down
+ones for Coldwater at 5.75 and 5.78 (level).
 
 **Posts.** A **hectometre post** stands every 100 m from the Ashgrove buffer
 stop (km 0.0) to the end of the line, on the left of the line in the Down
@@ -249,12 +303,14 @@ the distance in black figures: the kilometre, a point, and the hectometre
 digit, so the post at 1.4 km reads **1.4**. Every full kilometre has a
 larger **kilometre post**: the same plate on a larger scale, reading the
 kilometre with its zero (**2.0**) in the same black figures, distinguished
-only by a green rim. Posts are a position
-reference, not a signal: they carry no instruction. They are used to name
-where things stand (the Wending stop board is between posts 3.1 and 3.2),
-to report a position to the Box ("stopped at 2.7"), and to judge distance
-when braking (Book D: from 50 km/h begin the step-2 application about a post
-and a half before the stop board).
+only by a green rim. Posts are a position reference, not a signal: they
+carry no instruction. They are used to name where things stand, to report a
+position to the Box ("stopped at 2.7"), and to judge distance when braking.
+
+**Neutral section.** A gap in the overhead line between two feeds, km
+4.19–4.21. No power can be taken through it; drawing current across it arcs
+at the pantograph and trips the substation. Section boards stand 90 m before
+it in each direction, resume boards 90 m beyond.
 
 **Hand signals.** The **baton**: a hand-held disc, green on one face, red on
 the other, with a lamp for night. Green face shown steadily to the driver =
@@ -281,7 +337,8 @@ authority.
 - **R 16 Lights.** On the main line the leading end shows HEAD (white), the
   rear of the train shows TAIL (red), coupled ends show nothing. Within
   station limits on shunting moves, lights are recommended but not enforced.
-- **R 18 Horn.** One short blast before moving from rest.
+- **R 18 Horn.** One short blast before moving from rest. One long blast at
+  a whistle board, for the crossing beyond it.
 - **R 20 Departure of a passenger train.** All of: doors closed; booked time
   reached; where signals exist, the starting signal shows a proceed aspect;
   where a station master is on duty, the baton shown green. Then the horn,
@@ -294,7 +351,9 @@ authority.
 - **R 24 One Train Working.** On a line worked by one train with no signals,
   the driver departs on their own authority at the booked time.
 - **S 10 Signals at STOP.** Never pass a main signal at STOP or a ground
-  signal at SHUNT STOP. Doing so is a *signal passed at danger*.
+  signal at SHUNT STOP. A main signal at STOP with its subsidiary lit is
+  STOP for a train and SHUNT for a shunting move. Doing so is a *signal
+  passed at danger*.
 - **S 12 Limit of Shunt.** Shunting moves stop short of the board.
 - **S 14 Routes.** Move only when the governing signal has been cleared for
   the move, and only as far as the route goes.
@@ -306,6 +365,15 @@ authority.
 - **S 22 Switch indicators.** Before moving over a switch, read its indicator.
   Never run through a switch that shows set against your move: stop and
   speak to the Box. Running through switches is an incident.
+- **S 24 Distant signals.** At a distant at CAUTION, reduce speed so as to be
+  able to stop at the home signal it repeats. A distant at CLEAR promises a
+  clear run through the station.
+- **S 28 Block working.** A train enters a block section only with the
+  section's **Line Warrant**. The box at the far end issues the warrant when
+  the section is clear and no other warrant for it is out; the box at the
+  near end clears its starter only with the warrant in hand; the far box
+  cancels the warrant when the train has arrived complete. One warrant, one
+  train, one section.
 - **D 10 Coupling.** Approach at 5 km/h or less over the last 20 m; make
   contact at 2 km/h or less. After mechanical coupling, connect the brake
   pipe at the coupling (walk to it).
@@ -325,10 +393,14 @@ authority.
   entering the cab); apply it before leaving the cab on a gradient and
   whenever the vehicle is stabled. Moving with it applied, or a vehicle
   moving with no direction set (a runaway), is an incident.
+- **D 24 Neutral sections.** Shut off power at the section board and coast;
+  take power again only after the resume board. Entering the neutral
+  section with power applied is an incident.
 
 ## 7. Rolling stock
 
-**Class 1 motor car ("Lark").** Fleet 1001–1004; Duty 101 uses **1002**.
+**Class 1 motor car ("Lark").** Fleet 1001–1004; Duty 101 uses **1002**,
+Duty 301 uses 1002 and, driven by a colleague, **1003**.
 Length 22 m, mass 38 t, two cabs (A and B), doors on both sides, one
 pantograph, two 150 kW motors, max tractive effort 45 kN, max speed 60 km/h.
 Automatic air brake, max service deceleration about 1.0 m/s². Parking
@@ -354,7 +426,8 @@ contact; brake pipe and control line are connected by hand at the coupling.
 The player's driver is a person who is *somewhere*: in Cab A, in Cab B, on
 the ground beside the train, or at a coupling. Walking takes about 1.2 m/s.
 Actions that need a place (change ends, connect/uncouple) need the driver
-there.
+there. Colleagues driving other trains are not modelled as persons; they
+work their cabs and change ends without walking.
 
 ## 9. Cab controls (both classes)
 
@@ -373,34 +446,53 @@ there.
 
 Indicators: speed (km/h), brake pipe pressure (bar; 5.0 released, 3.5 full
 service, 0 emergency), gradient ahead (per mille, rising or falling), parking
-brake, height above Ashgrove, line voltage present, doors, next signal or
-board ahead with distance, current speed limit, clock.
+brake, height above Ashgrove, line voltage present (dark through a neutral
+section), doors, next signal or board ahead with distance (distants named
+with their home, switches with how they lie), current speed limit, clock.
 
 ## 10. Duties
 
 **Duty 101 — Ashgrove–Wending shuttle.** Car 1002 stabled at Ashgrove
-platform, pantograph down, lights off, doors closed, parking brake on. Sim
-starts 05:45. Booked: 06:00 AG dep → 06:06 WD arr; 06:12 WD dep → 06:18 AG
+platform, pantograph down, lights off, doors closed, parking brake on.
+Sim starts 05:45. Booked: 06:00 AG dep → 06:06 WD arr; 06:12 WD dep → 06:18 AG
 arr; 06:24 AG dep → 06:30 WD arr; 06:36 WD dep → 06:42 AG arr; then stable
 (pantograph down, lights off, parking brake on).
 
 **Duty 201 — Ashgrove–Wending with run-round.** Loco 4003 coupled to coach
 5107 on Ashgrove track 1, loco at the Down (main line) end, stabled.
-Sim starts 06:45. Booked: 07:00 AG dep → 07:07 WD arr; run round; 07:30 WD
-dep → 07:37 AG arr; run round; duty complete when coupled, brake proved,
-and stabled (pantograph down, parking brake on) at Ashgrove before 08:00.
+Sim starts 06:45. Booked: 07:00 AG dep → 07:07 WD arr; run round using the
+north stub; 07:30 WD dep → 07:37 AG arr; run round; duty complete when
+coupled, brake proved, and stabled (pantograph down, parking brake on) at
+Ashgrove before 08:00.
+
+**Duty 301 — The crossing.** Car 1002 stabled at Ashgrove track 1; car 1003
+stabled at Coldwater track 1 with R. Farrow. Sim starts 07:45. Working
+timetable (Book T; Down trains odd, Up trains even):
+
+| train | car | route | times |
+|-------|-----|-------|-------|
+| 3 | 1002 | Ashgrove–Coldwater | AG 08:00 → WD 08:07/08:12 (platform 1) → CW 08:21 |
+| 4 | 1003 | Coldwater–Ashgrove | CW 08:00 → WD 08:08/08:12 (platform 2) → AG 08:21 |
+| 5 | 1003 | Ashgrove–Coldwater | AG 08:40 → WD 08:49/08:53 (platform 1) → CW 09:01 |
+| 6 | 1002 | Coldwater–Ashgrove | CW 08:40 → WD 08:49/08:53 (platform 2) → AG 09:01 |
+
+Trains 3 and 4 cross at Wending at 08:12, trains 5 and 6 at 08:53. Duty
+complete when 1002 is stabled at Ashgrove.
 
 ## 11. Incident Book entries (what the rules engine records)
 
 Early departure · Moved with doors open · Doors opened away from platform ·
 Overspeed (with limit and speed) · Stop board overrun · Stopped short of
 board (> 3 m) · Incorrect lights on the main line · No horn before moving ·
-Signal passed at danger · Limit of Shunt passed · Ran through a switch set
-against the move (Rule S 22) · Rough coupling (speed) ·
-Brake not proved before departure · Buffer stop struck · Uncoupled with the
-brake not fully applied · Rolled back on the gradient · Ran away (moved with
-no direction set) · Moved with the parking brake applied · Emergency brake
+Crossing passed without a blast · Signal passed at danger · Limit of Shunt
+passed · Ran through a switch set against the move (Rule S 22) · Rough
+coupling (speed) · Brake not proved before departure · Buffer stop struck ·
+Uncoupled with the brake not fully applied · Rolled back on the gradient ·
+Ran away (moved with no direction set) · Moved with the parking brake
+applied · Power through the neutral section · Collision · Emergency brake
 used (noted, not a fault).
+
+A colleague's incidents are not written in the player's book.
 
 Book I adds identity rules I 10–I 38 (name, mark, colour, type, livery,
 signage, voice, document system); they are not enforced by the sim.

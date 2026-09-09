@@ -82,6 +82,7 @@ export class WorldRenderer {
 
     this.drawPosts(ctx, world, left, right, s);
     this.drawPlatforms(ctx, world);
+    this.drawLineFeatures(ctx, world);
     if (s >= 3.5) for (const e of world.layout.graph.edges) this.drawSleepers(ctx, e, left, right);
     for (const e of world.layout.graph.edges) this.drawEdge(ctx, e, s);
     this.drawSwitches(ctx, world, s);
@@ -119,7 +120,8 @@ export class WorldRenderer {
   private drawPlatforms(ctx: CanvasRenderingContext2D, world: World) {
     for (const p of world.layout.platforms) {
       const x0 = p.kmFrom * 1000, x1 = p.kmTo * 1000;
-      const y = p.side * 2.2, hgt = p.side * 5;
+      const off = p.track === "2" ? -5 : 0;
+      const y = p.side * 2.2 + off, hgt = p.side * 5;
       ctx.fillStyle = C.chalk;
       ctx.fillRect(x0, Math.min(y, y + hgt), x1 - x0, Math.abs(hgt));
       ctx.strokeStyle = C.slate; ctx.lineWidth = 0.15;
@@ -127,7 +129,7 @@ export class WorldRenderer {
       ctx.fillStyle = C.green;
       ctx.font = `600 4px ${DISPLAY}`;
       ctx.textAlign = "center";
-      ctx.fillText(p.name.toUpperCase().split("").join(" "), (x0 + x1) / 2, y + hgt / 2 + 1.4);
+      ctx.fillText(p.name.toUpperCase().split("").join(" "), (x0 + x1) / 2, y + hgt / 2 + 1.4 + (p.track === "2" ? -5 : 0));
     }
   }
 
@@ -242,13 +244,27 @@ export class WorldRenderer {
     const { p, t, n } = this.sideOf(sig);
     const off = 3.2;
     const cx = p.x + n.x * off, cy = p.y + n.y * off;
-    if (sig.type === "main") {
+    if (sig.type === "main" || sig.type === "distant") {
       // post from the track towards the head
       ctx.strokeStyle = C.slate; ctx.lineWidth = 0.35;
       ctx.beginPath(); ctx.moveTo(p.x + n.x * 1.2, p.y + n.y * 1.2); ctx.lineTo(cx, cy); ctx.stroke();
       const col = sig.aspect === "clear" ? C.lamp : sig.aspect === "caution" ? C.amber : C.red;
+      if (sig.type === "distant") {
+        // a distant wears a chevron plate behind its head
+        ctx.fillStyle = C.ivory; ctx.strokeStyle = C.ink; ctx.lineWidth = 0.15;
+        ctx.beginPath(); ctx.moveTo(cx - t.x * 1.2 - n.x * 2.0, cy - t.y * 1.2 - n.y * 2.0); ctx.lineTo(cx - t.x * 2.4, cy - t.y * 2.4); ctx.lineTo(cx - t.x * 1.2 + n.x * 2.0, cy - t.y * 1.2 + n.y * 2.0); ctx.closePath(); ctx.fill(); ctx.stroke();
+      }
       ctx.fillStyle = C.ink; ctx.beginPath(); ctx.arc(cx, cy, 1.5, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = col; ctx.beginPath(); ctx.arc(cx, cy, 1.0, 0, Math.PI * 2); ctx.fill();
+      if (sig.subsidiary) {
+        // the subsidiary: two small lamps beside the head, lit diagonally when the shunt aspect shows
+        const sx = cx + n.x * 2.4, sy = cy + n.y * 2.4;
+        ctx.fillStyle = C.ink; ctx.fillRect(sx - 1.0, sy - 0.7, 2.0, 1.4);
+        ctx.fillStyle = sig.aspect === "shunt" ? C.white : "rgba(255,255,255,.25)";
+        const dy = sig.aspect === "shunt" ? 0.3 : 0;
+        ctx.beginPath(); ctx.arc(sx - 0.5, sy + dy, 0.25, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(sx + 0.5, sy - dy, 0.25, 0, Math.PI * 2); ctx.fill();
+      }
       // a small pointer showing which way it faces
       ctx.fillStyle = C.ink; ctx.beginPath();
       ctx.moveTo(cx + t.x * 2.7, cy + t.y * 2.7); ctx.lineTo(cx + t.x * 1.6 + n.x * 0.7, cy + t.y * 1.6 + n.y * 0.7); ctx.lineTo(cx + t.x * 1.6 - n.x * 0.7, cy + t.y * 1.6 - n.y * 0.7); ctx.fill();
@@ -269,7 +285,8 @@ export class WorldRenderer {
     }
     if (s >= 1.6) {
       // labelled behind the head along the track, on a plate, so it never lies over rails or another signal
-      label(ctx, sig.id, cx - t.x * (sig.type === "main" ? 2.6 : 2.4), cy - t.y * 2.6 + 0.85, 2.3, t.x > 0 ? "right" : "left");
+      const back = sig.type === "distant" ? 4.0 : sig.type === "main" ? 2.6 : 2.4; // a distant's chevron plate sits behind its head
+      label(ctx, sig.id, cx - t.x * back, cy - t.y * back + 0.85, 2.3, t.x > 0 ? "right" : "left");
     }
   }
 
@@ -328,6 +345,19 @@ export class WorldRenderer {
       ctx.rotate(-Math.atan2(t.y, t.x));
       ctx.fillStyle = C.ink; ctx.font = `700 2px ${DISPLAY}`; ctx.textAlign = "center";
       ctx.fillText(String(b.value), 0, 0.7);
+    } else if (b.board === "whistle") {
+      ctx.rotate(-Math.atan2(t.y, t.x));
+      ctx.fillStyle = C.white; ctx.strokeStyle = C.ink; ctx.lineWidth = 0.3;
+      ctx.beginPath(); ctx.arc(0, 0, 1.4, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = C.ink; ctx.font = `700 2px ${DISPLAY}`; ctx.textAlign = "center";
+      ctx.fillText("W", 0, 0.7);
+    } else if (b.board === "section" || b.board === "resume") {
+      // black board; a white bar across the track means power off, a white bar along it means power may be taken
+      ctx.fillStyle = C.ink; ctx.fillRect(-1.3, -1.3, 2.6, 2.6);
+      ctx.strokeStyle = C.white; ctx.lineWidth = 0.4; ctx.lineCap = "butt";
+      ctx.beginPath();
+      if (b.board === "section") { ctx.moveTo(0, -0.9); ctx.lineTo(0, 0.9); } else { ctx.moveTo(-0.9, 0); ctx.lineTo(0.9, 0); }
+      ctx.stroke();
     } else if (b.board === "speedAdvance") {
       // an ivory triangle, point up: a lower limit lies one warning distance ahead
       ctx.rotate(-Math.atan2(t.y, t.x));
@@ -346,12 +376,35 @@ export class WorldRenderer {
 
   private drawBaton(ctx: CanvasRenderingContext2D, world: World) {
     for (const st of world.stations) {
-      if (!st.batonShown) continue;
-      const x = st.stopBoardKm * 1000 - st.arriveDir * 6, y = st.platform.side * 4.5;
-      ctx.fillStyle = C.lamp; ctx.strokeStyle = C.ivory; ctx.lineWidth = 0.3;
-      ctx.beginPath(); ctx.arc(x, y, 1.2, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-      ctx.fillStyle = C.green; ctx.font = `700 2.2px ${DISPLAY}`; ctx.textAlign = "center";
-      ctx.fillText("READY TO START", x, y + 3.6);
+      for (const number of st.baton) {
+        const v = world.vehicles.find((x) => x.number === number);
+        if (!v) continue;
+        // beside the platform, level with the train's leading end
+        const c = world.consistOf(v);
+        const stop = st.stops.find((s) => world.atPlatform(c) && s.platform.track === v.pos.edge.track) ?? st.stops[0];
+        const x = stop.km * 1000 - stop.dir * 6, y = stop.platform.side * 4.5 + (stop.platform.track === "2" ? -5 : 0);
+        ctx.fillStyle = C.lamp; ctx.strokeStyle = C.ivory; ctx.lineWidth = 0.3;
+        ctx.beginPath(); ctx.arc(x, y, 1.2, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        label(ctx, "READY TO START", x, y + 3.6, 2.2, "center", C.green, 700);
+      }
+    }
+  }
+
+  /** Level crossings and neutral sections along the line. */
+  private drawLineFeatures(ctx: CanvasRenderingContext2D, world: World) {
+    for (const x of world.layout.crossings) {
+      const px = x.km * 1000;
+      ctx.fillStyle = "rgba(217,210,192,.9)";
+      ctx.fillRect(px - 2.5, -6, 5, 12);
+      ctx.strokeStyle = C.slate; ctx.lineWidth = 0.15; ctx.strokeRect(px - 2.5, -6, 5, 12);
+      label(ctx, x.name.toUpperCase(), px, 9.2, 1.8, "center", C.slate);
+    }
+    for (const n of world.layout.neutral) {
+      const a = n.kmFrom * 1000, b = n.kmTo * 1000;
+      ctx.strokeStyle = C.brass; ctx.lineWidth = 0.35; ctx.setLineDash([0.8, 0.5]);
+      ctx.beginPath(); ctx.moveTo(a, -2.4); ctx.lineTo(b, -2.4); ctx.stroke();
+      ctx.setLineDash([]);
+      label(ctx, "NEUTRAL SECTION", (a + b) / 2, -3.4, 1.6, "center", C.brass);
     }
   }
 

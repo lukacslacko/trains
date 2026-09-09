@@ -71,10 +71,13 @@ export class LineDiagram {
     // stations
     ctx.fillStyle = C.ivory; ctx.font = `600 13px ${DISPLAY}`; ctx.textAlign = "center";
     for (const st of world.stations) {
-      const p = st.platform;
+      const p = st.stops[0].platform;
       ctx.fillText(st.name.toUpperCase(), (X(p.kmFrom) + X(p.kmTo)) / 2, yLab);
-      if (st.batonShown) { ctx.fillStyle = C.lamp; ctx.beginPath(); ctx.arc((X(p.kmFrom) + X(p.kmTo)) / 2 + 42, yLab - 4, 4, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = C.ivory; }
+      if (st.baton.size > 0) { ctx.fillStyle = C.lamp; ctx.beginPath(); ctx.arc((X(p.kmFrom) + X(p.kmTo)) / 2 + 46, yLab - 4, 4, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = C.ivory; }
     }
+    // crossings and neutral sections
+    for (const x of world.layout.crossings) { ctx.strokeStyle = C.chalk; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(X(x.km), y0 - 5); ctx.lineTo(X(x.km), y0 + 5); ctx.stroke(); }
+    for (const n of world.layout.neutral) { ctx.strokeStyle = C.brass; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(X(n.kmFrom), y0 - 6); ctx.lineTo(X(n.kmTo), y0 - 6); ctx.stroke(); }
     // signals and boards
     for (const o of world.layout.objects) {
       const km = kmOf(o.pos);
@@ -89,8 +92,12 @@ export class LineDiagram {
         const yy = y + side * (track === "2" ? 8 : 12);
         ctx.strokeStyle = C.slate; ctx.lineWidth = 1;
         ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, yy); ctx.stroke();
-        if (o.type === "main") {
+        if (o.type === "distant") {
+          ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(x, yy - 4); ctx.lineTo(x + 3.5, yy); ctx.lineTo(x, yy + 4); ctx.lineTo(x - 3.5, yy); ctx.closePath(); ctx.fill();
+          continue; // no label: it repeats its home
+        } else if (o.type === "main") {
           ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, yy, 3.5, 0, Math.PI * 2); ctx.fill();
+          if (o.subsidiary && o.aspect === "shunt") { ctx.fillStyle = C.white; ctx.beginPath(); ctx.arc(x, yy + side * 6, 1.5, 0, Math.PI * 2); ctx.fill(); }
         } else {
           ctx.fillStyle = "#000"; ctx.fillRect(x - 4, yy - 2.5, 8, 5);
           ctx.fillStyle = C.white;
@@ -98,9 +105,11 @@ export class LineDiagram {
           ctx.beginPath(); ctx.arc(x - 2, yy + dy, 1, 0, Math.PI * 2); ctx.fill();
           ctx.beginPath(); ctx.arc(x + 2, yy - dy, 1, 0, Math.PI * 2); ctx.fill();
         }
-        // the name sits beside the head, on the side away from the direction it faces
-        ctx.fillStyle = C.chalk; ctx.font = `600 9px ${DISPLAY}`; ctx.textAlign = facingDown ? "right" : "left";
-        ctx.fillText(o.id.replace(" ", ""), facingDown ? x - 7 : x + 7, yy + 3);
+        // main signals are named beside the head, on the side away from the direction they face; ground signals stay unnamed here
+        if (o.type === "main") {
+          ctx.fillStyle = C.chalk; ctx.font = `600 9px ${DISPLAY}`; ctx.textAlign = facingDown ? "right" : "left";
+          ctx.fillText(o.id.replace(" ", ""), facingDown ? x - 7 : x + 7, yy + 3);
+        }
         // direction tick
         ctx.fillStyle = C.slate;
         ctx.beginPath(); const dx = facingDown ? 6 : -6; ctx.moveTo(x + dx, yy); ctx.lineTo(x + dx * 0.4, yy - 2.5); ctx.lineTo(x + dx * 0.4, yy + 2.5); ctx.fill();
@@ -162,8 +171,10 @@ export class LineDiagram {
     const dkm = dp.x / 1000;
     ctx.fillStyle = C.ivory; ctx.strokeStyle = C.brass; ctx.lineWidth = 2;
     ctx.beginPath(); ctx.arc(X(dkm), y0, 3.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-    // direction
-    ctx.fillStyle = C.chalk; ctx.font = `600 11px ${DISPLAY}`; ctx.textAlign = "right";
-    ctx.fillText("DOWN →", w - 24, yLab);
+    // direction, in the gap between the last two stations' names
+    const stns = world.stations;
+    const gapKm = stns.length >= 2 ? (stns[stns.length - 2].stops[0].km + stns[stns.length - 1].stops[0].km) / 2 : world.layout.kmMax / 2;
+    ctx.fillStyle = C.chalk; ctx.font = `600 11px ${DISPLAY}`; ctx.textAlign = "center";
+    ctx.fillText("DOWN →", X(gapKm), yLab);
   }
 }
