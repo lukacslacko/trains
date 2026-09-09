@@ -446,19 +446,27 @@ export class WorldRenderer {
       for (const dx of [-L / 2 + 2.5, L / 2 - 2.5]) { ctx.fillRect(dx - 0.8, side - 0.5, 1.6, 0.8); }
     }
     // lights at ends (A at +L/2)
+    // lamps stand on the body just inside the red end plate, so a red tail lamp reads against green;
+    // an unlit lamp shows as a dark housing, a lit one glows beyond the vehicle
     const light = (end: End, x: number) => {
       const st = v.lightsAt(end);
-      if (st === "off") return;
-      ctx.fillStyle = st === "head" ? C.white : C.red;
-      for (const dy of [-0.9, 0.9]) { ctx.beginPath(); ctx.arc(x, dy, 0.32, 0, Math.PI * 2); ctx.fill(); }
-      if (st === "head") {
-        ctx.fillStyle = "rgba(255,255,255,.35)";
-        const dir = x > 0 ? 1 : -1;
-        ctx.beginPath(); ctx.moveTo(x, -1); ctx.lineTo(x + dir * 9, -3.5); ctx.lineTo(x + dir * 9, 3.5); ctx.lineTo(x, 1); ctx.fill();
+      const dir = x > 0 ? 1 : -1;
+      if (st !== "off") {
+        ctx.fillStyle = st === "head" ? "rgba(255,255,255,.35)" : "rgba(198,50,30,.35)";
+        ctx.beginPath();
+        if (st === "head") { ctx.moveTo(x, -1); ctx.lineTo(x + dir * 9, -3.5); ctx.lineTo(x + dir * 9, 3.5); ctx.lineTo(x, 1); }
+        else { ctx.moveTo(x, -1.2); ctx.lineTo(x + dir * 2.2, -1.6); ctx.lineTo(x + dir * 2.2, 1.6); ctx.lineTo(x, 1.2); }
+        ctx.fill();
+      }
+      for (const dy of [-0.85, 0.85]) {
+        ctx.fillStyle = st === "head" ? C.white : st === "tail" ? C.red : "#2b2b2b";
+        ctx.strokeStyle = st === "off" ? "#555" : C.ink; ctx.lineWidth = 0.12;
+        ctx.beginPath(); ctx.arc(x, dy, 0.38, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        if (st === "tail") { ctx.fillStyle = "rgba(255,120,100,.9)"; ctx.beginPath(); ctx.arc(x, dy, 0.16, 0, Math.PI * 2); ctx.fill(); }
       }
     };
-    light("A", L / 2 - 0.25);
-    light("B", -L / 2 + 0.25);
+    light("A", L / 2 - 1.05);
+    light("B", -L / 2 + 1.05);
     // labels
     if (s >= 1.6) {
       const flipText = Math.cos(ang) < 0;
