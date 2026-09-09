@@ -311,8 +311,10 @@ moves alike.
 A home signal into a platform track where the train stops shows CAUTION
 when cleared, never CLEAR.
 
-**Subsidiary.** Two small white lamps beside the head of some main signals
-(WD 4, WD 7, WD 8, WD 10). Lit diagonally with the main at STOP they show
+**Subsidiary.** Two small white lamps in a black box fixed on the post
+directly under the head of some main signals (WD 4, WD 7, WD 8, WD 10), so
+that head and subsidiary read as one signal on one structure. Lit diagonally
+with the main at STOP they show
 **SHUNT**: a shunting move may pass at shunting speed as far as the route
 goes; for a train the signal is still at STOP, except at a home signal
 marked for **call-on** (WD 8, WD 10): there the lit subsidiary tells a train

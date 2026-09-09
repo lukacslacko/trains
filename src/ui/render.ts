@@ -269,13 +269,16 @@ export class WorldRenderer {
       ctx.fillStyle = C.ink; ctx.beginPath(); ctx.arc(cx, cy, 1.5, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = col; ctx.beginPath(); ctx.arc(cx, cy, 1.0, 0, Math.PI * 2); ctx.fill();
       if (sig.subsidiary) {
-        // the subsidiary: two small lamps beside the head, lit diagonally when the shunt aspect shows
-        const sx = cx + n.x * 2.4, sy = cy + n.y * 2.4;
-        ctx.fillStyle = C.ink; ctx.fillRect(sx - 1.0, sy - 0.7, 2.0, 1.4);
+        // the subsidiary sits on the post under the head: in plan, a small box on the post between head and track
+        const sx = cx - n.x * 1.9, sy = cy - n.y * 1.9;
+        ctx.save();
+        ctx.translate(sx, sy); ctx.rotate(Math.atan2(t.y, t.x));
+        ctx.fillStyle = C.ink; ctx.fillRect(-1.0, -0.65, 2.0, 1.3);
         ctx.fillStyle = sig.aspect === "shunt" ? C.white : "rgba(255,255,255,.25)";
-        const dy = sig.aspect === "shunt" ? 0.3 : 0;
-        ctx.beginPath(); ctx.arc(sx - 0.5, sy + dy, 0.25, 0, Math.PI * 2); ctx.fill();
-        ctx.beginPath(); ctx.arc(sx + 0.5, sy - dy, 0.25, 0, Math.PI * 2); ctx.fill();
+        const dy = sig.aspect === "shunt" ? 0.28 : 0;
+        ctx.beginPath(); ctx.arc(-0.5, dy, 0.24, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(0.5, -dy, 0.24, 0, Math.PI * 2); ctx.fill();
+        ctx.restore();
       }
       // a small pointer showing which way it faces
       ctx.fillStyle = C.ink; ctx.beginPath();
