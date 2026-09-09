@@ -255,7 +255,7 @@ export class WorldRenderer {
 
   private drawSignal(ctx: CanvasRenderingContext2D, sig: Signal, s: number) {
     const { p, t, n } = this.sideOf(sig);
-    const off = 3.2;
+    const off = sig.type === "distant" ? 4.0 : 3.2; // a distant's plate needs room clear of the rails
     const cx = p.x + n.x * off, cy = p.y + n.y * off;
     if (sig.type === "main" || sig.type === "distant") {
       // post from the track towards the head
@@ -263,9 +263,11 @@ export class WorldRenderer {
       ctx.beginPath(); ctx.moveTo(p.x + n.x * 1.2, p.y + n.y * 1.2); ctx.lineTo(cx, cy); ctx.stroke();
       const col = sig.aspect === "clear" ? C.lamp : sig.aspect === "caution" ? C.amber : C.red;
       if (sig.type === "distant") {
-        // a distant wears a chevron plate behind its head
-        ctx.fillStyle = C.ivory; ctx.strokeStyle = C.ink; ctx.lineWidth = 0.15;
-        ctx.beginPath(); ctx.moveTo(cx - t.x * 1.2 - n.x * 2.0, cy - t.y * 1.2 - n.y * 2.0); ctx.lineTo(cx - t.x * 2.4, cy - t.y * 2.4); ctx.lineTo(cx - t.x * 1.2 + n.x * 2.0, cy - t.y * 1.2 + n.y * 2.0); ctx.closePath(); ctx.fill(); ctx.stroke();
+        // a distant wears its head on an ivory chevron plate (Book S, Fig. 2.3): the plate's point shows which way it faces
+        const P = (a: number, b: number) => ({ x: cx + t.x * a + n.x * b, y: cy + t.y * a + n.y * b });
+        const pts = [P(3.0, 0), P(1.4, 2.0), P(-1.8, 2.0), P(-1.8, -2.0), P(1.4, -2.0)];
+        ctx.fillStyle = C.ivory; ctx.strokeStyle = C.ink; ctx.lineWidth = 0.25;
+        ctx.beginPath(); pts.forEach((q, i) => (i ? ctx.lineTo(q.x, q.y) : ctx.moveTo(q.x, q.y))); ctx.closePath(); ctx.fill(); ctx.stroke();
       }
       ctx.fillStyle = C.ink; ctx.beginPath(); ctx.arc(cx, cy, 1.5, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = col; ctx.beginPath(); ctx.arc(cx, cy, 1.0, 0, Math.PI * 2); ctx.fill();
@@ -281,9 +283,11 @@ export class WorldRenderer {
         ctx.beginPath(); ctx.arc(0.5, -dy, 0.24, 0, Math.PI * 2); ctx.fill();
         ctx.restore();
       }
-      // a small pointer showing which way it faces
-      ctx.fillStyle = C.ink; ctx.beginPath();
-      ctx.moveTo(cx + t.x * 2.7, cy + t.y * 2.7); ctx.lineTo(cx + t.x * 1.6 + n.x * 0.7, cy + t.y * 1.6 + n.y * 0.7); ctx.lineTo(cx + t.x * 1.6 - n.x * 0.7, cy + t.y * 1.6 - n.y * 0.7); ctx.fill();
+      // a small pointer showing which way a main signal faces (a distant's plate does that itself)
+      if (sig.type === "main") {
+        ctx.fillStyle = C.ink; ctx.beginPath();
+        ctx.moveTo(cx + t.x * 2.7, cy + t.y * 2.7); ctx.lineTo(cx + t.x * 1.6 + n.x * 0.7, cy + t.y * 1.6 + n.y * 0.7); ctx.lineTo(cx + t.x * 1.6 - n.x * 0.7, cy + t.y * 1.6 - n.y * 0.7); ctx.fill();
+      }
     } else {
       // ground signal: black box with two white lamps
       ctx.fillStyle = C.ink;
