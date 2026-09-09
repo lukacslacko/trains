@@ -23,7 +23,7 @@
 <nav class="desk-bar">
   <a href="index.html">← Library</a>
   <span class="spacer"></span>
-  <span>Book T · Second edition · September 2026</span>
+  <span>Book T · Third edition · September 2026</span>
   <a href="#" onclick="window.print();return false;">Print booklet</a>
 </nav>
 
@@ -36,8 +36,8 @@
   <div class="company">The Meridian Railway</div>
   <div class="book-letter"><small>Book</small>T</div>
   <h1 class="title">Timetabling</h1>
-  <p class="subtitle">The working timetable of the Railway: how trains are numbered, timed, crossed, divided, joined and kept apart.</p>
-  <div class="edition">Second edition · September 2026 · Issued by the Traffic Office</div>
+  <p class="subtitle">The working timetable of the Railway: how trains are numbered, timed, crossed, divided, joined and kept apart, and how a whole day is worked from shed to shed.</p>
+  <div class="edition">Third edition · September 2026 · The weekday working · Issued by the Traffic Office</div>
   <div class="motto">On the line, on time.</div>
 </section>
 
@@ -61,8 +61,14 @@
     <li class="sub"><span class="num">6.4</span><a href="#c6-4">The junction, Duty 401</a><span class="dots"></span><span class="pg">13</span></li>
     <li><span class="num">7</span><a href="#c7">The time–distance diagram</a><span class="dots"></span><span class="pg">15</span></li>
     <li><span class="num">8</span><a href="#c8">Duty sheets</a><span class="dots"></span><span class="pg">18</span></li>
-    <li><span class="num">9</span><a href="#c9">Glossary</a><span class="dots"></span><span class="pg">19</span></li>
-    <li><span class="num">—</span><a href="#colophon">Colophon</a><span class="dots"></span><span class="pg">20</span></li>
+    <li><span class="num">9</span><a href="#cwk">The weekday working</a><span class="dots"></span><span class="pg">19</span></li>
+    <li class="sub"><span class="num">T 18</span><a href="#T18">The whole day</a><span class="dots"></span><span class="pg">19</span></li>
+    <li class="sub"><span class="num">9.4</span><a href="#cwk-4">The main line</a><span class="dots"></span><span class="pg">21</span></li>
+    <li class="sub"><span class="num">9.5</span><a href="#cwk-5">The branch</a><span class="dots"></span><span class="pg">22</span></li>
+    <li class="sub"><span class="num">9.7</span><a href="#cwk-7">The crew diagrams</a><span class="dots"></span><span class="pg">23</span></li>
+    <li class="sub"><span class="num">9.10</span><a href="#cwk-10">Duty 601, A Day on the Valley</a><span class="dots"></span><span class="pg">25</span></li>
+    <li><span class="num">10</span><a href="#c9">Glossary</a><span class="dots"></span><span class="pg">26</span></li>
+    <li><span class="num">—</span><a href="#colophon">Colophon</a><span class="dots"></span><span class="pg">27</span></li>
   </ol>
 </section>
 
@@ -70,6 +76,7 @@
 <section class="page chapter" id="c1" data-folio="Book T · 1 Why a timetable">
   <h1><span class="num">§ 1</span> Why a timetable</h1>
   <p class="lead">A timetable looks like a list of times. It is two other things first: a promise the Railway makes to people who are not yet on it, and the quiet half of the arrangement that keeps trains apart on a single line.</p>
+  <div class="note"><p><strong>The weekday working.</strong> This third edition adds § 9: a whole weekday from Ashgrove Shed at dawn to Ashgrove Shed at dusk, written once as data and worked from by every box, every colleague and every duty sheet, with Rule T 18. The second edition's addition, the branch and the portions of § 5, stands as it was.</p></div>
   <blockquote class="epigraph">The Box keeps the trains apart in space. The timetable keeps them apart in time. We need both, and we write both down.<span class="who">Traffic Office, first minute book</span></blockquote>
 
   <h2 id="c1-1"><span class="num">1.1</span> The promise</h2>
@@ -82,7 +89,7 @@
   <p>The Railway keeps two documents from one set of figures.</p>
   <dl class="dl">
     <dt>Public timetable</dt><dd>Station, arrival, departure. Printed on the name boards and in the valley's post offices. It shows the passenger's minutes and nothing else.</dd>
-    <dt>Working timetable</dt><dd>The same trains with everything a passenger never sees: the train number, the car or the locomotive, the platform track, the dwell, the block section, the shunting moves, the recovery minutes and the crossing. Every driver and every box works from it. This Book prints it in § 6.</dd>
+    <dt>Working timetable</dt><dd>The same trains with everything a passenger never sees: the train number, the car or the locomotive, the platform track, the dwell, the block section, the shunting moves, the recovery minutes and the crossing. Every driver and every box works from it. This Book prints the duties' timetables in § 6 and the whole weekday working in § 9.</dd>
   </dl>
   <div class="why"><p>We keep the two apart so that the public one can be read at a glance and the working one can be trusted to the minute. A figure that appears in both is the same figure; the working timetable is never allowed to drift from the promise.</p></div>
 </section>
@@ -107,10 +114,11 @@
   <table>
     <thead><tr><th>Numbers</th><th>Used for</th></tr></thead>
     <tbody>
-      <tr><td class="mono">1–9</td><td>Passenger trains over the full line, Ashgrove–Coldwater.</td></tr>
-      <tr><td class="mono">11–19</td><td>The Ashgrove–Wending shuttle, worked before the block was opened.</td></tr>
+      <tr><td class="mono">1–29</td><td>Passenger trains over the full line, Ashgrove–Coldwater: 3 to 6 in Duty 301, 7 to 10 in Duty 401, 1 to 24 on the weekday working (§ 9).</td></tr>
+      <tr><td class="mono">11–19</td><td>The Ashgrove–Wending shuttle, worked before the block was opened (Duty 101). A block belongs to a working: on a day the shuttle runs, the weekday working does not.</td></tr>
       <tr><td class="mono">21–29</td><td>Locomotive-hauled trains that run round at each end.</td></tr>
-      <tr><td class="mono">31–39</td><td>Branch trains, Wending–Fernhollow: odd Down towards Fernhollow, even Up towards Wending. A branch portion of a main-line train carries a branch number from the moment it is uncoupled.</td></tr>
+      <tr><td class="mono">31–89</td><td>Branch trains, Wending–Fernhollow: odd Down towards Fernhollow, even Up towards Wending. A branch portion of a main-line train carries a branch number from the moment it is uncoupled. Duty 401 uses 31 to 34; the weekday working runs from 31 to 74.</td></tr>
+      <tr><td class="mono">E1–E99</td><td>Empties and shunts: an empty train positioning a car, or a shunt between a shed road and a platform. Odd for Down (out of Ashgrove Shed is Down), even for Up (§ 9.3).</td></tr>
       <tr><td class="mono">91–99</td><td>Light engines, inspection trolleys and works trains (not yet in use).</td></tr>
     </tbody>
   </table>
@@ -219,7 +227,7 @@
 <!-- 6 -->
 <section class="page chapter" id="c6" data-folio="Book T · 6 The working timetable">
   <h1><span class="num">§ 6</span> The working timetable, September 2026</h1>
-  <p class="lead">Four duties are worked at present. Each is set out as the boxes and the drivers read it: one row per station call, with the platform track and, where it matters, what happens in the dwell.</p>
+  <p class="lead">Four driving duties are set out here as the boxes and the drivers read them: one row per station call, with the platform track and, where it matters, what happens in the dwell. Duties 501 and 502 work the timetables of 301 and 401 from Wending Box. The weekday working, a whole day from shed to shed, is § 9.</p>
 
   <h2 id="c6-1"><span class="num">6.1</span> The shuttle, Duty 101</h2>
   <p>Car 1002 between Ashgrove and Wending, One Train Working, no signals. The shuttle predates the block and is worked under <a href="book-r.html#R24">Rule R 24</a>; its trains carry numbers in the 11–19 block.</p>
@@ -467,6 +475,7 @@
   <h2 id="c8-1"><span class="num">8.1</span> What is on it</h2>
   <p>The sheet lists each leg of the duty: from, booked departure, to, booked arrival, and beside them the actual times as they happen. Beneath the legs it carries the duty in brief: the preparing steps, the crossing or the run-round, and the stabling. The cab shows the sheet beside the messages from the boxes and the Incident Book, and the leg in hand is marked.</p>
   <p>A leg over the branch is written like any other, with Fernhollow as its end; the driver reads the branch by its own posts, lettered F, and stops at the Fernhollow board at F 2.255. A driver whose train divides sees only their own portion's legs: the sheet for Duty 401 runs Ashgrove–Wending, Wending–Coldwater, Coldwater–Wending, Wending–Ashgrove, and says in brief that 1003 is uncoupled at the first Wending call and called on at the second. The colleague's branch legs are on the colleague's sheet.</p>
+  <p>On the weekday working (§ 9) the sheet carries a train column and names places that are not platforms: <span class="mono">AG shed 1 → AG 1</span> is a shunt out of the shed, and a shunt is marked at the moment it began, with no baton looked for. A driver who rides in a colleague's train has no leg for the ride; the brief says what to do before the first leg begins.</p>
 
   <h2 id="c8-2"><span class="num">8.2</span> Bringing the clock forward</h2>
   <p>While a train stands at a station with time in hand, the booked departure on the sheet may be used to bring the clock to fifteen seconds before it. This is a convenience of the sheet, not of the line: the world runs on through the skipped minutes, pantographs finish rising, boxes clear their signals at their usual two minutes before time, and the skip stops of itself if anything moves or anything is written in the Incident Book. Nothing about the departure itself changes.</p>
@@ -476,9 +485,172 @@
   <p>A departure before the booked time is an incident under <a href="book-r.html#R20">Rule R 20</a>; a late arrival is noted on the sheet and is not. The Traffic Office reads the sheets weekly and moves the minutes, not the drivers: a run that is late every day has a timetable problem, and the cure is in this Book.</p>
 </section>
 
-<!-- 8 -->
-<section class="page chapter" id="c9" data-folio="Book T · 9 Glossary">
-  <h1><span class="num">§ 9</span> Glossary</h1>
+
+<!-- 9 -->
+<section class="page chapter" id="cwk" data-folio="Book T · 9 The weekday working">
+  <h1><span class="num">§ 9</span> The weekday working</h1>
+  <p class="lead">The four duties of § 6 are days cut short: each begins with a car already standing at a platform and ends with it stabled there. The weekday working is a whole day. It begins in Ashgrove Shed before six and ends there after half past five, and everything between, the shunts, the empties, the hourly crossings, the branch shuttle, the divide at dawn and the join at dusk, is written in one timetable, from which every box's working, every colleague's turns and the driver's duty sheet are read.</p>
+
+  <h2 id="cwk-1"><span class="num">9.1</span> The timetable as data</h2>
+  <p>A working timetable used to be a table in this Book that the boxes and the drivers copied into their own working. It is now the thing itself: the Traffic Office writes the timetable once, as data, and the boxes' registers, the colleagues' driving and the duty sheets are drawn from it and from nothing else. What it is made of:</p>
+  <table>
+    <thead><tr><th>Thing</th><th>What it holds</th></tr></thead>
+    <tbody>
+      <tr><td>Service</td><td>A train number, its kind (<em>passenger</em>, <em>empty</em>, or a <em>shunt</em> within one station), the vehicle that works it, and its calls.</td></tr>
+      <tr><td>Call</td><td>A station and a track, with the booked arrival and departure. The track may be a platform ("1", "2") or a shed road ("shed 1"). Two calls at the same station in succession are a shunt between its tracks.</td></tr>
+      <tr><td>Coupled to</td><td>A service that runs coupled inside another service's train, that driver driving, from its first call until the train divides at the station named; from there it is a train of its own (§ 5).</td></tr>
+      <tr><td>Joins</td><td>A service that, on arrival at its last call, is called on and coupled to the train of the service named, and travels on with it (§ 5).</td></tr>
+      <tr><td>Diagram</td><td>A driver's day: the vehicle they book on to, when they sign on and off, and their turns, the services they work, in order. Between turns a driver rides or waits.</td></tr>
+      <tr><td>Stabling</td><td>Where the stock stands when the day begins: a road, its vehicles from the buffer stop outwards, coupled or not.</td></tr>
+    </tbody>
+  </table>
+  <div class="rule" id="T18">
+    <span class="rule-num">Rule T 18</span><span class="rule-title">The whole day</span>
+    <p>Every movement of a vehicle in a day is in the working timetable: the shunts out of the shed and into it, the empties that position a car, the passenger trains. The boxes plan for what the timetable moves and for nothing else; a driver's diagram is the timetable's turns in order; a vehicle is stabled at night where the timetable stables it.</p>
+  </div>
+  <div class="why"><p>A railway that appears at six o'clock with its trains already standing at the platforms has been drawn, not worked. The cars slept somewhere, somebody walked to them in the dark, and somebody brought them to the platform under the shed signals. Writing those minutes into the same timetable as the passenger trains is what makes a day one piece; it is also what lets a driver book on at the shed and a signaller see the first shunt coming.</p></div>
+
+  <h2 id="cwk-2"><span class="num">9.2</span> The stock at dawn</h2>
+  <p>Four Class 1 cars stable in Ashgrove Shed (Book S § 6 for its signals, Book P for its roads). Cars stand with their A ends facing the door, so that the leading cab out of the shed is cab A.</p>
+  <table>
+    <thead><tr><th>Road</th><th>From the buffer stop outwards</th><th>Coupled</th><th>Works</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">1</td><td class="mono">1001, then 1002 at the door end</td><td>yes: pipe and control line through</td><td>The pair leaves as one at 05:35 and divides at Wending.</td></tr>
+      <tr><td class="mono">2</td><td class="mono">1004, then 1003 at the door end</td><td>no</td><td>1003 leaves at 05:15; 1004 is spare all day.</td></tr>
+      <tr><td class="mono">3</td><td>empty</td><td>—</td><td>Kept for the locomotive and coach when they are out.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="cwk-3"><span class="num">9.3</span> The shed and the positioning</h2>
+  <p>Empties and shunts carry E-numbers (§ 2.2). A shunt moves within station limits on the ground signals and the subsidiaries, at shunting speed, with neither warrant nor baton, and stops short of whatever stands in the road it enters; an empty train runs under the same signals, warrants and boards as a passenger train, with its doors kept closed (<a href="book-r.html#R26">Rule R 26</a>).</p>
+  <table class="wtt">
+    <caption>Dawn · Ashgrove Shed and the positioning run</caption>
+    <thead><tr><th>Train</th><th>Car</th><th>From</th><th>Dep</th><th>To</th><th>Arr</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>E1</td><td>1003</td><td class="stn">Ashgrove shed 2</td><td>05:15</td><td class="stn">Ashgrove platform 1</td><td>05:19</td><td class="stn">Shunt: AG 9 and AG 5 cleared at 05:14</td></tr>
+      <tr><td>E3</td><td>1003</td><td class="stn">Ashgrove 1</td><td>05:25</td><td class="stn">Wending 1</td><td>05:32</td><td class="stn">Empty; warrant A; AG 1 at 05:23</td></tr>
+      <tr><td>E3</td><td>1003</td><td class="stn">Wending 1</td><td>05:34</td><td class="stn">Coldwater 1</td><td>05:43</td><td class="stn">Warrant B; stands for train 2</td></tr>
+      <tr><td>E5</td><td>1002+1001</td><td class="stn">Ashgrove shed 1</td><td>05:35</td><td class="stn">Ashgrove platform 1</td><td>05:39</td><td class="stn">Shunt: AG 7 and AG 5 cleared at 05:34; the pair stands for train 1</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="cwk-4"><span class="num">9.4</span> The main line</h2>
+  <p>Two cars work the main line all day and cross at Wending at twelve minutes past every hour. Down trains leave Ashgrove on the hour from 06:00 to 16:00; Up trains leave Coldwater on the hour from 06:00 to 17:00. Car 1002 works Down at the even hours and Up at the odd, car 1003 the other way about, so that each car makes one journey an hour and turns round in thirty-nine minutes at each end.</p>
+  <table class="wtt">
+    <caption>The hourly pattern · h = 06 … 16 (Down), 06 … 17 (Up)</caption>
+    <thead><tr><th>Train</th><th>Car</th><th>Station</th><th>Arr</th><th>Dep</th><th>Track</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>1 + 2(h − 6)</td><td>1002 at even h, 1003 at odd</td><td class="stn">Ashgrove</td><td>—</td><td>h:00</td><td>1</td><td class="stn">Warrant A</td></tr>
+      <tr><td></td><td></td><td class="stn">Wending</td><td>h:07</td><td>h:12</td><td>1</td><td class="stn">Crosses the Up train; warrant B</td></tr>
+      <tr><td></td><td></td><td class="stn">Coldwater</td><td>h:21</td><td>—</td><td>1</td><td class="stn">Change ends; away at (h+1):00 as an Up train</td></tr>
+      <tr><td>2 + 2(h − 6)</td><td>1003 at even h, 1002 at odd</td><td class="stn">Coldwater</td><td>—</td><td>h:00</td><td>1</td><td class="stn">Warrant B</td></tr>
+      <tr><td></td><td></td><td class="stn">Wending</td><td>h:08</td><td>h:12</td><td>2</td><td class="stn">Crosses the Down train; warrant A</td></tr>
+      <tr><td></td><td></td><td class="stn">Ashgrove</td><td>h:21</td><td>—</td><td>1</td><td class="stn">Change ends; away at (h+1):00 as a Down train</td></tr>
+    </tbody>
+  </table>
+  <p>The first and the last hour are the exceptions, and they are the whole reason the day has a shape. <strong>Train 1</strong>, 1002, leaves Ashgrove at 06:00 with 1001 coupled behind it, stands on platform 1 at Wending from 06:07, and is divided there: 1002 goes on to Coldwater as train 1 at 06:12, and 1001, from that moment train 31, follows up the branch at 06:16. <strong>Train 2</strong>, 1003, leaves Coldwater at 06:00 and crosses it at 06:12; that is why 1003 ran empty to Coldwater at 05:25. <strong>Train 24</strong>, the last Up, 1002, leaves Coldwater at 17:00 and stands on platform 2 at Wending from 17:08 to 17:20: not for a crossing, for there is no train 23, but for the branch car to be called on behind it (§ 9.6). Train 22, 1003, the last Down car's last Up, reaches Ashgrove at 16:21 and goes into the shed.</p>
+
+  <h2 id="cwk-5"><span class="num">9.5</span> The branch</h2>
+  <p>Car 1001 shuttles between Wending and Fernhollow twice an hour, and its minutes are chosen so that it is never on a Wending platform when the main-line trains need both: it is away between :07 and :13, when the crossing occupies platforms 1 and 2, and again over the hour. Branch trains use platform 1 at Wending. The numbers run on from 31 in the order the trains run: even Up towards Wending, odd Down towards Fernhollow.</p>
+  <table class="wtt">
+    <caption>The branch pattern · h = 06 … 16, numbers n = 32 + 4(h − 6)</caption>
+    <thead><tr><th>Train</th><th>From</th><th>Dep</th><th>To</th><th>Arr</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>31</td><td class="stn">Wending 1</td><td>06:16</td><td class="stn">Fernhollow</td><td>06:24</td><td class="stn">The branch portion of train 1, uncoupled at 06:07</td></tr>
+      <tr><td>n</td><td class="stn">Fernhollow</td><td>h:34</td><td class="stn">Wending 1</td><td>h:43</td><td class="stn">Warrant C</td></tr>
+      <tr><td>n + 1</td><td class="stn">Wending 1</td><td>h:46</td><td class="stn">Fernhollow</td><td>h:54</td><td class="stn">Away before the :07 arrival on platform 1</td></tr>
+      <tr><td>n + 2</td><td class="stn">Fernhollow</td><td>(h+1):04</td><td class="stn">Wending 1</td><td>(h+1):13</td><td class="stn">Line clear at (h+1):02; WD 10 cleared once the Down train has left the junction</td></tr>
+      <tr><td>n + 3</td><td class="stn">Wending 1</td><td>(h+1):16</td><td class="stn">Fernhollow</td><td>(h+1):24</td><td class="stn">Not at h = 16</td></tr>
+      <tr><td>74</td><td class="stn">Fernhollow</td><td>17:04</td><td class="stn">Wending 2</td><td>17:13</td><td class="stn">Called on to train 24; joins</td></tr>
+    </tbody>
+  </table>
+  <div class="note"><p>The (h+1):04 train is given line clear at (h+1):02 while the junction is still held for the Up train arriving at (h+1):08 and the Down train leaving at (h+1):12; Wending's box gives the section and sets the home as soon as the road is free, and the branch car finds WD 10 cleared, or waits a moment at it. That is the busiest minute of the hour at Wending, and it is booked with a minute in hand on purpose.</p></div>
+
+  <h2 id="cwk-6"><span class="num">9.6</span> Dusk: the join and the sheddings</h2>
+  <table class="wtt">
+    <caption>Dusk · the join at Wending and Ashgrove Shed</caption>
+    <thead><tr><th>Train</th><th>Car</th><th>From</th><th>Dep</th><th>To</th><th>Arr</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>22</td><td>1003</td><td class="stn">Coldwater 1</td><td>16:00</td><td class="stn">Ashgrove 1</td><td>16:21</td><td class="stn">The last Up train of 1003</td></tr>
+      <tr><td>E8</td><td>1003</td><td class="stn">Ashgrove 1</td><td>16:35</td><td class="stn">Ashgrove shed 2</td><td>16:39</td><td class="stn">Shunt: AG 4 cleared at 16:34; stops short of 1004; stable</td></tr>
+      <tr><td>24</td><td>1002</td><td class="stn">Coldwater 1</td><td>17:00</td><td class="stn">Wending 2</td><td>17:08</td><td class="stn">Waits for 74</td></tr>
+      <tr><td>74</td><td>1001</td><td class="stn">Fernhollow</td><td>17:04</td><td class="stn">Wending 2</td><td>17:13</td><td class="stn">Called on under WD 10; couples to 1002; pipe connected, brake proved</td></tr>
+      <tr><td>24</td><td>1002+1001</td><td class="stn">Wending 2</td><td>17:20</td><td class="stn">Ashgrove 1</td><td>17:29</td><td class="stn">Warrant A</td></tr>
+      <tr><td>E10</td><td>1002+1001</td><td class="stn">Ashgrove 1</td><td>17:40</td><td class="stn">Ashgrove shed 1</td><td>17:44</td><td class="stn">Shunt: AG 4 cleared at 17:39; 1002 leads in, so 1001 stands at the door end for the morning</td></tr>
+    </tbody>
+  </table>
+  <div class="note"><p>The pair goes into road 1 the other way about from how it came out: 1002 led out at dawn and leads in at dusk, so that at the next dawn 1001 will lead. The Traffic Office writes the stabling for each day accordingly; a pair turned once a day is turned back the next.</p></div>
+
+  <h2 id="cwk-7"><span class="num">9.7</span> The crew diagrams</h2>
+  <table>
+    <thead><tr><th>Driver</th><th>Car</th><th>On</th><th>Off</th><th>Turns</th></tr></thead>
+    <tbody>
+      <tr><td>E. Hale</td><td class="mono">1003</td><td class="mono">05:05</td><td class="mono">16:50</td><td>E1, E3, then 2, 3, 6, 7 … 22 (Up at the even hours, Down at the odd), E8. Books on at the shed; empty to Coldwater for the first Up train; home on the last; into road 2.</td></tr>
+      <tr><td>R. Farrow</td><td class="mono">1002</td><td class="mono">05:25</td><td class="mono">17:55</td><td>E5, then 1, 4, 5, 8 … 21, 24, E10. The pair out of road 1 at 05:35; train 1 divides at Wending; home with 1001 behind on train 24; the pair into road 1.</td></tr>
+      <tr><td>W. Penrose</td><td class="mono">1001</td><td class="mono">05:25</td><td class="mono">17:55</td><td>31 to 74. Rides in the pair to Wending in cab A of 1001, uncouples there at 06:07 and takes the branch; called on behind 1002 at 17:13; rides home and into the shed.</td></tr>
+      <tr><td>D. Corry</td><td class="mono">1004</td><td class="mono">05:25</td><td class="mono">17:55</td><td>Spare at Ashgrove Shed.</td></tr>
+    </tbody>
+  </table>
+  <p>A diagram never needs a driver to be in two places: a driver's next turn begins where the last one ended, or where the train they rode in has carried them. Mr Penrose has no turn between 06:00 and 06:16 and none after 17:13, because for those minutes he is a passenger in Ms Farrow's train, and the timetable knows it.</p>
+
+  <h2 id="cwk-8"><span class="num">9.8</span> What the boxes see</h2>
+  <p>Each box's register is the timetable read from its own window: for every train, where it comes from and when, its platform, when it leaves and where to; and for the shed, the shunts as "05:35 shunt from shed 1 to platform 1". A train that divides is two lines in the register from the station it divides at; a train that is joined is one line from the station it is joined at. The box that works the shed, Ashgrove, sets the shed road for a shunt at a minute before its time, the road's exit signal and AG 5 for a move out, AG 4 for a move in (Book S § 6); the shunt has no baton, and the box cancels nothing, since no section was entered.</p>
+
+  <h2 id="cwk-9"><span class="num">9.9</span> What a driver sees</h2>
+  <p>The duty sheet of a weekday turn carries a train column, and it names places that are not platforms: <span class="mono">AG shed 1 → AG 1</span> is the shunt out of road 1 at 05:35, and the last leg, <span class="mono">AG 1 → AG shed 1</span>, puts the pair away. A shunt is marked on the sheet at the moment it began rather than at a departure, and no baton is looked for. A driver who rides has no leg for the ride: Mr Penrose's sheet begins at Wending with train 31, and its brief says what to do before that leg begins, which is to uncouple his own car and take its cab.</p>
+
+  <figure class="string-fig">
+    <div class="figure-frame">
+        <svg viewBox="0 0 700 550" width="700" height="550">
+        <!-- station bands: branch above, main below, the shed under the Ashgrove line -->
+        <rect x="60" y="36" width="620" height="24" fill="#F4EFE3"/>
+        <rect x="60" y="142" width="620" height="8" fill="#F4EFE3"/>
+        <rect x="60" y="190" width="620" height="24" fill="#F4EFE3"/>
+        <rect x="60" y="325.5" width="620" height="28" fill="#F4EFE3"/>
+        <rect x="60" y="470" width="620" height="10" fill="#F4EFE3"/>
+        <rect x="60" y="500" width="620" height="12" fill="#F4EFE3"/>
+        <line x1="60" y1="150.0" x2="680" y2="150.0" stroke="#B5913F" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="676" y="147" text-anchor="end" font-size="9" fill="#B5913F" letter-spacing="1">JUNCTION WD J · THE BRANCH, ABOVE, HANGS OFF THE WENDING LINE</text>
+        <text x="676" y="497" text-anchor="end" font-size="9" fill="#B5913F" letter-spacing="1">ASHGROVE SHED, BELOW THE ASHGROVE LINE: ROADS 1 AND 2</text>
+        <g stroke="#D9D2C0" stroke-width="1"><line x1="60.0" y1="48" x2="60.0" y2="512"/><line x1="101.3" y1="48" x2="101.3" y2="512"/><line x1="142.7" y1="48" x2="142.7" y2="512"/><line x1="184.0" y1="48" x2="184.0" y2="512"/><line x1="225.3" y1="48" x2="225.3" y2="512"/><line x1="266.7" y1="48" x2="266.7" y2="512"/><line x1="308.0" y1="48" x2="308.0" y2="512"/><line x1="349.3" y1="48" x2="349.3" y2="512"/><line x1="390.7" y1="48" x2="390.7" y2="512"/><line x1="432.0" y1="48" x2="432.0" y2="512"/><line x1="473.3" y1="48" x2="473.3" y2="512"/><line x1="514.7" y1="48" x2="514.7" y2="512"/><line x1="556.0" y1="48" x2="556.0" y2="512"/><line x1="597.3" y1="48" x2="597.3" y2="512"/><line x1="638.7" y1="48" x2="638.7" y2="512"/><line x1="680.0" y1="48" x2="680.0" y2="512"/></g>
+        <line x1="60" y1="480" x2="680" y2="480" stroke="#1A1A1A" stroke-width="1.5"/>
+        <line x1="60" y1="48" x2="60" y2="512" stroke="#1A1A1A" stroke-width="1.5"/>
+        <g class="mono" font-size="10" fill="#4A5560" text-anchor="middle"><text x="60.0" y="530">05:00</text><text x="184.0" y="530">05:30</text><text x="308.0" y="530">06:00</text><text x="432.0" y="530">06:30</text><text x="556.0" y="530">07:00</text><text x="680.0" y="530">07:30</text></g>
+        <g font-size="12" fill="#1F4B3F" text-anchor="end" letter-spacing="1"><text x="54" y="52">FERNHOLLOW</text><text x="54" y="206">COLDWATER</text><text x="54" y="343.5">WENDING</text><text x="54" y="478">ASHGROVE</text><text x="54" y="510">SHED</text></g>
+        <g class="mono" font-size="9" fill="#4A5560" text-anchor="end"><text x="54" y="64">F 2.32</text><text x="54" y="218">km 6.4</text><text x="54" y="355.5">km 3.1</text><text x="54" y="490">km 0</text></g>
+        <!-- 1003, brass: out of road 2, empty to Coldwater, then train 2 and train 3 -->
+        <polyline points="122.0,506.0 138.5,480.0 163.3,480.0 192.3,339.5 200.5,339.5 237.7,190.0 308.0,190.0 341.1,342.5 357.6,342.5 394.8,480.0 556.0,480.0 584.9,339.5 605.6,339.5 642.8,190.0" fill="none" stroke="#B5913F" stroke-width="2.5" stroke-linejoin="round"/>
+        <!-- 1002, green: out of road 1 with 1001 behind, train 1, then train 4 -->
+        <polyline points="204.7,506.0 221.2,480.0 308.0,480.0 336.9,339.5 357.6,339.5 394.8,190.0 556.0,190.0 589.1,342.5 605.6,342.5 642.8,480.0" fill="none" stroke="#1F4B3F" stroke-width="2.5" stroke-linejoin="round"/>
+        <!-- 1001, red: coupled behind 1002 to Wending, then the branch shuttle -->
+        <polyline points="204.7,509.0 221.2,483.0 308.0,483.0 336.9,342.5 374.1,342.5" fill="none" stroke="#C6321E" stroke-width="1.6" stroke-linejoin="round"/>
+        <line x1="374.1" y1="339.5" x2="374.1" y2="150.0" stroke="#C6321E" stroke-width="1" stroke-dasharray="2 2"/>
+        <polyline points="374.1,150.0 407.2,48.0 448.5,48.0 485.7,150.0" fill="none" stroke="#C6321E" stroke-width="2.5" stroke-linejoin="round"/>
+        <line x1="485.7" y1="150.0" x2="485.7" y2="339.5" stroke="#C6321E" stroke-width="1" stroke-dasharray="2 2"/>
+        <polyline points="485.7,339.5 498.1,339.5" fill="none" stroke="#C6321E" stroke-width="2.5" stroke-linejoin="round"/>
+        <line x1="498.1" y1="339.5" x2="498.1" y2="150.0" stroke="#C6321E" stroke-width="1" stroke-dasharray="2 2"/>
+        <polyline points="498.1,150.0 531.2,48.0 572.5,48.0 609.7,150.0" fill="none" stroke="#C6321E" stroke-width="2.5" stroke-linejoin="round"/>
+        <line x1="609.7" y1="150.0" x2="609.7" y2="339.5" stroke="#C6321E" stroke-width="1" stroke-dasharray="2 2"/>
+        <polyline points="609.7,339.5 622.1,339.5" fill="none" stroke="#C6321E" stroke-width="2.5" stroke-linejoin="round"/>
+        <line x1="622.1" y1="339.5" x2="622.1" y2="150.0" stroke="#C6321E" stroke-width="1" stroke-dasharray="2 2"/>
+        <polyline points="622.1,150.0 655.2,48.0" fill="none" stroke="#C6321E" stroke-width="2.5" stroke-linejoin="round"/>
+        <g fill="none" stroke="#C6321E" stroke-width="1.5"><circle cx="336.9" cy="339.5" r="8"/><circle cx="357.6" cy="341" r="9"/><circle cx="605.6" cy="341" r="9"/></g>
+        <g font-size="9" fill="#C6321E" letter-spacing="1" text-anchor="middle"><text x="324.5" y="367.5">SPLIT 06:07</text><text x="365.9" y="379.5">CROSS 06:12</text><text x="605.6" y="379.5">CROSS 07:12</text></g>
+        <g font-size="11" font-weight="700"><text x="113.7" y="498" fill="#B5913F">E1</text><text x="167.5" y="410" fill="#B5913F">E3</text><text x="196.4" y="498" fill="#1F4B3F">E5</text><text x="316.3" y="415" fill="#1F4B3F">1</text><text x="320.4" y="265" fill="#B5913F">2</text><text x="370.0" y="265" fill="#1F4B3F">1</text><text x="374.1" y="415" fill="#B5913F">2</text><text x="564.3" y="415" fill="#B5913F">3</text><text x="568.4" y="265" fill="#1F4B3F">4</text><text x="618.0" y="265" fill="#B5913F">3</text><text x="622.1" y="415" fill="#1F4B3F">4</text><text x="394.8" y="95" fill="#C6321E">31</text><text x="460.9" y="95" fill="#C6321E">32</text><text x="518.8" y="95" fill="#C6321E">33</text><text x="584.9" y="95" fill="#C6321E">34</text><text x="642.8" y="95" fill="#C6321E">35</text></g>
+        <g font-size="9" fill="#4A5560" letter-spacing="1" text-anchor="middle"><text x="270.8" y="184">1003 STANDS AT COLDWATER 05:43–06:00</text><text x="473.3" y="184">1002 CHANGES ENDS 06:21–07:00</text><text x="473.3" y="466">1003 CHANGES ENDS 06:21–07:00</text></g>
+        </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 9.1</span> Time–distance diagram of the dawn of the weekday working, 05:00 to 07:30. The main line runs up the page from Ashgrove to Coldwater, the branch is the narrower band above, hung off the Wending line at the junction, and Ashgrove Shed is the band below the Ashgrove line. Car 1003 in Brass, 1002 in Meridian Green, 1001 in Signal Red; the thin red line beside the green is 1001 coupled behind 1002; the circle at 06:07 is the divide, the circles at 06:12 and 07:12 the crossings. From 07:00 the pattern of § 9.4 and § 9.5 repeats to the hour.</figcaption>
+  </figure>
+  <div class="key"><span class="up">1003</span><span class="down">1002</span><span class="red">1001</span></div>
+
+  <h2 id="cwk-10"><span class="num">9.10</span> Duty 601, A Day on the Valley</h2>
+  <p>Duty 601 runs the whole weekday working from 05:00, and offers five chairs: drive 1002 with Ms Farrow's turns, 1003 with Mr Hale's, or 1001 with Mr Penrose's; or work Wending Box or Ashgrove Box for the day. Whichever chair is taken, the other four are taken by colleagues, and the day carries on around it. A driver's duty is done when their car is stabled in the shed at the end of the diagram, parking brake on, pantograph down, lights out; a signaller's when every train is home and the register is done. How to drive the day, from booking on in the shed to putting the car away, is Book D's; how to work it from the box is Book S's.</p>
+</section>
+
+<!-- 10 -->
+<section class="page chapter" id="c9" data-folio="Book T · 10 Glossary">
+  <h1><span class="num">§ 10</span> Glossary</h1>
   <dl class="dl">
     <dt>Working timetable</dt><dd>The full timetable the Railway works from: trains, vehicles, tracks, dwells, sections and shunting moves. Abbreviated WTT.</dd>
     <dt>Public timetable</dt><dd>The passenger's extract: station, arrival, departure.</dd>
@@ -495,15 +667,24 @@
     <dt>Arrived complete</dt><dd>A train wholly within station limits and stopped; the moment a warrant may be cancelled.</dd>
     <dt>Time–distance diagram</dt><dd>The Traffic Office's drawing of distance against time on which every train is a line and every crossing a meeting.</dd>
     <dt>Duty sheet</dt><dd>The driver's extract of the working timetable for one turn of duty.</dd>
+    <dt>Weekday working</dt><dd>The whole day's working timetable, from Ashgrove Shed at dawn to Ashgrove Shed at dusk, written as data and worked from by every box, colleague and duty sheet (§ 9, Rule T 18).</dd>
+    <dt>Service</dt><dd>One entry of the working timetable: a train number, its kind, the vehicle that works it and its calls.</dd>
+    <dt>Call</dt><dd>A service's booked arrival and departure at a station, on a platform track or a shed road.</dd>
+    <dt>Empty train</dt><dd>A train carrying no passengers, E-numbered, run under the same signals, warrants and boards as a passenger train with its doors closed (Rule R 26).</dd>
+    <dt>Shunt</dt><dd>A movement within one station's limits, between a platform and the shed or the headshunt, on ground signals and subsidiaries at shunting speed, with neither warrant nor baton (Rule R 26).</dd>
+    <dt>Diagram</dt><dd>A driver's day: the vehicle booked on to, the sign-on and sign-off, and the turns in order.</dd>
+    <dt>Turn</dt><dd>One service worked by one driver as part of a diagram.</dd>
+    <dt>Stabling</dt><dd>Where the stock stands when the day begins and ends: a shed road, its vehicles from the buffer stop outwards, coupled or not.</dd>
+    <dt>Register</dt><dd>A box's duty sheet: the timetable read from its own window, one line per visit, shunts included.</dd>
   </dl>
 </section>
 
 <!-- COLOPHON -->
 <section class="page colophon" id="colophon" data-folio="Book T · Colophon">
   <img class="mark" src="../brand/mark-green.svg" alt="">
-  <p><strong>Book T — Timetabling.</strong> Second edition, September 2026. Issued by the Traffic Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
-  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes the first edition of September 2026. What changed is listed in <a href="amendments/book-t-ed2.html">Amendment Slip T-2</a>.</p>
-  <p>Amendments are issued as numbered slips; paste them in at the page indicated. Rules T 10 to T 16 are cited by number in other Books and must not be renumbered without a general amendment.</p>
+  <p><strong>Book T — Timetabling.</strong> Third edition, September 2026. Issued by the Traffic Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
+  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes the second edition of September 2026. What changed is listed in <a href="amendments/book-t-ed3.html">Amendment Slip T-3</a>; the second edition's changes are in <a href="amendments/book-t-ed2.html">Amendment Slip T-2</a>.</p>
+  <p>Amendments are issued as numbered slips; paste them in at the page indicated. Rules T 10 to T 18 are cited by number in other Books and must not be renumbered without a general amendment.</p>
   <p>Companion volumes: <a href="book-i.html">Book I, Identity</a> · <a href="book-r.html">Book R, Rules of Operation</a> · <a href="book-s.html">Book S, Signalling</a> · <a href="book-d.html">Book D, Driving</a> · <a href="book-p.html">Book P, Permanent Way</a>.</p>
 </section>
 

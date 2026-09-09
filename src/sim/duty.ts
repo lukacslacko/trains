@@ -5,13 +5,43 @@ import { type Route } from "./world";
 import { fmtTime, parseTime } from "../core/util";
 import { type Consist, type Vehicle } from "../stock/vehicles";
 
-export interface Leg { from: string; to: string; dep: string; arr: string }
+export type LegKind = "passenger" | "empty" | "shunt";
+export interface Leg {
+  from: string; to: string; dep: string; arr: string;
+  /** the tracks at each end: a platform ("1", "2", "b1") or a shed road ("sh1") */
+  fromTrack?: string; toTrack?: string;
+  /** a passenger train, an empty train, or a shunt within one station */
+  kind?: LegKind;
+  /** the vehicles this train should have when it departs: a divided portion waits until the rest has been uncoupled */
+  portion?: number;
+  /** the service number, for the sheet */
+  service?: string;
+  /** on arrival this leg's train is called on and couples onto a train standing at the destination */
+  joins?: boolean;
+  /** this leg begins by uncoupling the driver's own car from the train it rode in */
+  divides?: boolean;
+}
+
+/** A place's kilometre on its station's line, for the direction of a move: a platform's stop board, a shed road's junction with the headshunt. */
+export function placeKm(w: World, code: string, track?: string): number {
+  const st = w.station(code);
+  const shed = w.layout.sheds.find((s) => s.station === code && s.roads.some((r) => r.track === track));
+  if (shed) return shed.mainKm;
+  const stop = (track && st.stops.find((s) => s.track === track)) || st.stops[0];
+  return stop.km;
+}
+/** the edges of a place: a platform track or a shed road of a station */
+export function placeEdges(w: World, code: string, track: string): Edge[] {
+  const st = w.station(code);
+  return (st.edges ?? []).filter((e) => e.track === track);
+}
 
 export type LegPhase = "waiting" | "running" | "done";
 export interface LegState { leg: Leg; phase: LegPhase; departed?: number; arrived?: number }
 
 /** km direction of travel for a leg: on one line by the stops' kilometres, otherwise towards the branch is Down. */
 export function legDir(w: World, leg: Leg): 1 | -1 {
+  if (leg.from === leg.to) return placeKm(w, leg.to, leg.toTrack) >= placeKm(w, leg.from, leg.fromTrack) ? 1 : -1;
   const a = w.station(leg.from).stops[0], b = w.station(leg.to).stops[0];
   if (a.line === b.line) return b.km > a.km ? 1 : -1;
   return b.line === "branch" ? 1 : -1;
@@ -47,6 +77,9 @@ export class DutyTracker {
 
   get current(): LegState | null { return this.legs[this.index] ?? null; }
 
+  /** whether the train has stood at the leg's origin since the leg became current */
+  private wasHere = false;
+
   private step(w: World) {
     const train = w.train;
     const cur = this.current;
@@ -60,23 +93,44 @@ export class DutyTracker {
     const dir = legDir(w, cur.leg);
     const prev = this.legs[this.index - 1];
     const hereDir: 1 | -1 = prev ? legDir(w, prev.leg) : (-dir as 1 | -1);
-    const here = stopFor(w, cur.leg.from, hereDir);
+    const kind = cur.leg.kind ?? "passenger";
+    const isShed = (track: string) => /^sh\d/.test(track);
+    const fromTrack = cur.leg.fromTrack ?? stopFor(w, cur.leg.from, hereDir).track;
+    const toTrack = cur.leg.toTrack ?? stopFor(w, cur.leg.to, dir).track;
+    const fromEdges = placeEdges(w, cur.leg.from, fromTrack);
+    const toEdges = placeEdges(w, cur.leg.to, toTrack);
+    // the stop board that governs the arrival (none on a shed road)
+    const toStop = isShed(toTrack) ? null : (w.station(cur.leg.to).stops.find((s) => s.track === toTrack && s.dir === dir) ?? null);
+    const fromStop = isShed(fromTrack) ? null : (w.station(cur.leg.from).stops.find((s) => s.track === fromTrack) ?? null);
 
     const doorsOpen = train.anyDoorsOpen();
-    if (doorsOpen && !this.lastDoorsOpen && Math.abs(train.v) < 0.01) {
-      const stop = cur.phase === "waiting" ? here : stopFor(w, cur.leg.to, dir);
-      const front = frontKm(train, stop.dir);
-      const short = (stop.km - front) * stop.dir * 1000;
-      if (short > 3 && short < 100) w.incident("STOP-SHORT", `Doors opened ${short.toFixed(0)} m short of the stop board at ${w.station(cur.phase === "waiting" ? cur.leg.from : cur.leg.to).name} (Rule R 12)`);
+    if (doorsOpen && !this.lastDoorsOpen && Math.abs(train.v) < 0.01 && kind === "passenger") {
+      const stop = cur.phase === "waiting" ? fromStop : toStop;
+      if (stop) {
+        const front = frontKm(train, stop.dir);
+        const short = (stop.km - front) * stop.dir * 1000;
+        if (short > 3 && short < 100) w.incident("STOP-SHORT", `Doors opened ${short.toFixed(0)} m short of the stop board at ${w.station(cur.phase === "waiting" ? cur.leg.from : cur.leg.to).name} (Rule R 12)`);
+      }
     }
     this.lastDoorsOpen = doorsOpen;
 
     if (cur.phase === "waiting") {
       const st = w.station(cur.leg.from);
-      const platform = here.platform;
-      const km = frontKm(train, dir);
-      const outward = dir === 1 ? platform.kmTo + 0.02 : platform.kmFrom - 0.02;
-      const left = dir === 1 ? km > outward : km < outward;
+      // at a platform the train has left once its front is 20 m beyond the platform; on a shed road, once it is no longer wholly on the road
+      let here: boolean, left: boolean;
+      if (fromStop) {
+        const platform = fromStop.platform;
+        const km = frontKm(train, dir);
+        const outward = dir === 1 ? platform.kmTo + 0.02 : platform.kmFrom - 0.02;
+        const kmF = frontKm(train, fromStop.dir);
+        here = Math.abs(train.v) < 0.01 && kmF >= platform.kmFrom - 0.05 && kmF <= platform.kmTo + 0.05;
+        if (here) this.wasHere = true;
+        left = this.wasHere && (dir === 1 ? km > outward : km < outward);
+      } else {
+        here = fromEdges.length > 0 && w.whollyOn(train, fromEdges);
+        if (here && Math.abs(train.v) < 0.01) this.wasHere = true;
+        left = this.wasHere && !here;
+      }
       // the baton is judged as the train starts to move; the box may put it away as soon as the starter is passed
       if (Math.abs(train.v) > 0.05 && this.startedWithBaton === null) this.startedWithBaton = st.baton.has(w.trainVehicle.number);
       if (Math.abs(train.v) < 0.01 && !left) this.startedWithBaton = null;
@@ -84,26 +138,33 @@ export class DutyTracker {
         cur.phase = "running";
         cur.departed = w.time;
         const booked = parseTime(cur.leg.dep);
-        if (w.time < booked - 5) w.incident("EARLY", `Departed ${st.name} at ${fmtTime(w.time)}, booked ${cur.leg.dep} (Rule R 20)`);
-        if (st.master && !(this.startedWithBaton ?? st.baton.has(w.trainVehicle.number))) w.incident("NO-BATON", `Departed ${st.name} without the baton (Rule R 20)`);
+        if (kind === "passenger" && w.time < booked - 5) w.incident("EARLY", `Departed ${st.name} at ${fmtTime(w.time)}, booked ${cur.leg.dep} (Rule R 20)`);
+        if (kind !== "shunt" && st.master && !(this.startedWithBaton ?? st.baton.has(w.trainVehicle.number))) w.incident("NO-BATON", `Departed ${st.name} without the baton (Rule R 20)`);
         st.baton.delete(w.trainVehicle.number);
         this.startedWithBaton = null;
         this.stoppedAtBoard = false;
-        w.say("Duty", `Service departed ${st.name} at ${fmtTime(w.time)} (booked ${cur.leg.dep}).`, "system");
+        this.wasHere = false;
+        const what = kind === "shunt" ? `Shunt from ${st.name} ${isShed(fromTrack) ? `shed road ${fromTrack.slice(2)}` : `platform ${fromTrack}`} began` : `Service departed ${st.name}`;
+        w.say("Duty", `${what} at ${fmtTime(w.time)} (booked ${cur.leg.dep}).`, "system");
       }
     } else if (cur.phase === "running") {
       const dest = w.station(cur.leg.to);
-      const stop = stopFor(w, cur.leg.to, dir);
-      const front = frontKm(train, dir);
-      const short = (stop.km - front) * dir * 1000;
-      const onPlatform = w.atPlatform(train);
-      if (Math.abs(train.v) < 0.01 && onPlatform && short >= -0.5 && short < 60 && !this.stoppedAtBoard) {
+      const stopped = Math.abs(train.v) < 0.01;
+      if (!stopped || this.stoppedAtBoard) return;
+      if (toStop) {
+        const front = frontKm(train, dir);
+        const short = (toStop.km - front) * dir * 1000;
+        if (w.atPlatform(train) && short >= -0.5 && short < 60) {
+          this.stoppedAtBoard = true;
+          cur.phase = "done"; cur.arrived = w.time;
+          const late = w.time - parseTime(cur.leg.arr);
+          w.say("Duty", `Arrived ${dest.name} at ${fmtTime(w.time)} (booked ${cur.leg.arr}${late > 60 ? `, ${Math.round(late / 60)} min late` : ""}); stopped ${short.toFixed(1)} m short of the board.`, "system");
+          this.index++;
+        }
+      } else if (toEdges.length > 0 && w.whollyOn(train, toEdges)) {
         this.stoppedAtBoard = true;
-        cur.phase = "done";
-        cur.arrived = w.time;
-        const booked = parseTime(cur.leg.arr);
-        const late = w.time - booked;
-        w.say("Duty", `Arrived ${dest.name} at ${fmtTime(w.time)} (booked ${cur.leg.arr}${late > 60 ? `, ${Math.round(late / 60)} min late` : ""}); stopped ${short.toFixed(1)} m short of the board.`, "system");
+        cur.phase = "done"; cur.arrived = w.time;
+        w.say("Duty", `On ${dest.name} ${isShed(toTrack) ? `shed road ${toTrack.slice(2)}` : `track ${toTrack}`} at ${fmtTime(w.time)} (booked ${cur.leg.arr}).`, "system");
         this.index++;
       }
     }
@@ -123,7 +184,7 @@ export interface Visit {
   arrive: boolean;
   from?: Side;
   /** the platform track of the working; a signaller may receive the train on the other one, and the visit then follows the train */
-  track: "1" | "2";
+  track: string;
   /** booked arrival, for the register */
   arr?: string;
   depart: string | null;
@@ -133,9 +194,11 @@ export interface Visit {
   splitFrom?: string;
   /** this train arrives as a call-on and couples onto `joinTo`, which then leaves as one train */
   joinTo?: string;
+  /** a shunt within the station at `depart`: from one track to another under the frame's shunt route */
+  shunt?: { from: string; to: string };
 }
 
-export type MoveState = "offered" | "expecting" | "arrived" | "toHeadshunt" | "viaTrack2" | "toCouple" | "ready" | "lineClear" | "starterCleared" | "departing" | "done";
+export type MoveState = "offered" | "expecting" | "arrived" | "toHeadshunt" | "viaTrack2" | "toCouple" | "ready" | "lineClear" | "starterCleared" | "departing" | "shuntDue" | "shunting" | "done";
 
 export interface Movement {
   visit: Visit; state: MoveState; said: Set<string>;
@@ -201,7 +264,7 @@ export class Box {
   }
 
   plan(v: Visit) {
-    const m: Movement = { visit: v, state: v.arrive ? "offered" : "ready", said: new Set() };
+    const m: Movement = { visit: v, state: v.shunt ? "shuntDue" : v.arrive ? "offered" : "ready", said: new Set() };
     this.movements.push(m);
     this.register.push(m);
   }
@@ -264,18 +327,30 @@ export class Box {
       R("2→N", swJ ? [[swN, "reverse"], [swJ, "normal"]] : [[swN, "reverse"]], [[r.starter2N, "clear"]], [e.bN2, e.stubN, ...(e.mainN ? [e.mainN] : [])], onward);
       if (swJ && e.stubB) R("2→B", [[swN, "reverse"], [swJ, "reverse"]], [[r.starter2N, "clear"]], [e.bN2, e.stubN, e.stubB], e.stubB);
     }
-    // run-round
+    // run-round: where a shed switch lies on the headshunt, it stands normal for the headshunt
+    const swShed = this.st.switchShed;
+    const viaShed: [Switch, SwitchState][] = swShed ? [[swShed, "normal"]] : [];
+    const hsIn = e.hsIn ? [e.hsIn] : [];
     if (r.toHs && r.hsIn && r.t2stub && r.stubIn && r.hsEdge && r.stubEdge && r.swHs && r.swMain && t2) {
       const bHs1 = (r.hsSide === "S" ? e.bS1 : e.bN1)!, bHs2 = (r.hsSide === "S" ? e.bS2 : e.bN2)!;
       const bMain1 = (r.hsSide === "S" ? e.bN1 : e.bS1)!, bMain2 = (r.hsSide === "S" ? e.bN2 : e.bS2)!;
-      R("1→hs", [[r.swHs, "normal"]], [[r.toHs, "shunt"]], [bHs1, r.hsEdge], r.hsEdge);
-      R("hs→2→stub", [[r.swHs, "reverse"], [r.swMain, "reverse"]], [[r.hsIn, "shunt"], [r.t2stub, "shunt"]], [bHs2, t2, bMain2, r.stubEdge], r.stubEdge);
+      R("1→hs", [[r.swHs, "normal"], ...viaShed], [[r.toHs, "shunt"]], [bHs1, ...hsIn, r.hsEdge], r.hsEdge);
+      R("hs→2→stub", [[r.swHs, "reverse"], [r.swMain, "reverse"], ...viaShed], [[r.hsIn, "shunt"], [r.t2stub, "shunt"]], [...hsIn, bHs2, t2, bMain2, r.stubEdge], r.stubEdge);
       R("stub→1", [[r.swMain, "normal"]], [[r.stubIn, "shunt"]], [bMain1], t1);
+    }
+    // the shed: from track 1 into each road under the headshunt signal, and out of each road onto track 1 under its exit signal and the headshunt signal
+    const shed = this.st.shed;
+    if (shed && r.toHs && r.hsIn && r.swHs) {
+      const bHs1 = (r.hsSide === "S" ? e.bS1 : e.bN1)!;
+      for (const road of shed.roads) {
+        R(`1→${road.track}`, [[r.swHs, "normal"], ...road.switches], [[r.toHs, "shunt"]], [bHs1, ...hsIn, ...road.leads], road.edge);
+        R(`${road.track}→1`, [...road.switches, [r.swHs, "normal"]], [[road.exit, "shunt"], [r.hsIn, "shunt"]], [...road.leads, ...hsIn, bHs1], t1);
+      }
     }
   }
 
   private home(side: Side) { return side === "S" ? this.roles.homeS : side === "N" ? this.roles.homeN : this.roles.homeB; }
-  private starter(track: "1" | "2", to: Side) {
+  private starter(track: string, to: Side) {
     return to === "S" ? (track === "1" ? this.roles.starter1S : this.roles.starter2S) : (track === "1" ? this.roles.starter1N : this.roles.starter2N);
   }
   /** the starting signal a movement leaves under */
@@ -302,6 +377,26 @@ export class Box {
     const v = m.visit;
     return v.to ? `${this.code}:${v.track}→${v.to}` : null;
   }
+  /** the route id of a shunt visit */
+  shuntRouteFor(m: Movement): string | null {
+    const v = m.visit;
+    return v.shunt ? `${this.code}:${v.shunt.from}→${v.shunt.to}` : null;
+  }
+  /** the working's name for a track: the station's platform tracks are "1" and "2" whatever their edges are called; shed roads keep their names */
+  trackName(edgeTrack: string): string {
+    const e = this.st.edges;
+    if (e.t1.track === edgeTrack) return "1";
+    if (e.t2 && e.t2.track === edgeTrack) return "2";
+    return edgeTrack;
+  }
+  /** the edges of a track name at this station: a platform track or a shed road */
+  trackEdges(track: string): Edge[] {
+    const e = this.st.edges;
+    if (track === "1") return [e.t1];
+    if (track === "2") return e.t2 ? [e.t2] : [];
+    const road = this.st.shed?.roads.find((r) => r.track === track);
+    return road ? [road.edge] : [];
+  }
 
   /** The peer box asks: may train `train` enter the section towards us? */
   acceptTrain(w: World, train: string, fromSide: Side): boolean {
@@ -320,13 +415,14 @@ export class Box {
     if (!m) return false;
     const sec = this.sections[fromSide]!;
     if (!w.lineClear(sec, train)) return false;
-    const routeId = this.homeRouteFor(m)!;
-    if (!w.setRoute(routeId)) { w.warrants.delete(sec); return false; }
+    // line clear is given on the section; the home is set now if the road is free, otherwise as soon as it is (the train waits at the home)
+    const set = w.setRoute(this.homeRouteFor(m)!);
     m.state = "expecting";
     const home = this.home(fromSide)!;
+    const road = set ? "" : ` when the road is free`;
     this.say(w, m, "expect", m.visit.joinTo
-      ? `Line clear for ${train} to ${this.name}. Warrant ${sec} issued; ${home.id} shows its subsidiary: call on to platform ${m.visit.track} and couple to ${m.visit.joinTo} standing there.`
-      : `Line clear for ${train} to ${this.name}. Warrant ${sec} issued; ${home.id} cleared into track ${m.visit.track}.`);
+      ? `Line clear for ${train} to ${this.name}. Warrant ${sec} issued; ${home.id} ${set ? "shows" : "will show"} its subsidiary${road}: call on to platform ${m.visit.track} and couple to ${m.visit.joinTo} standing there.`
+      : `Line clear for ${train} to ${this.name}. Warrant ${sec} issued; ${home.id} ${set ? "cleared" : "will be cleared"} into track ${m.visit.track}${road}.`);
     return true;
   }
 
@@ -439,6 +535,8 @@ export class Box {
     if (name === "1→hs") return `1 → ${hs}`;
     if (name === "hs→2→stub") return `${hs} → 2 → stub`;
     if (name === "stub→1") return "stub → 1";
+    if ((mm = /^1→sh(\d)$/.exec(name))) return `1 → shed ${mm[1]}`;
+    if ((mm = /^sh(\d)→1$/.exec(name))) return `shed ${mm[1]} → 1`;
     return name;
   }
   /** what a signal is for, in the frame's words */
@@ -457,6 +555,8 @@ export class Box {
     if (r.toHs?.id === sid) return `platform 1 to the ${r.hsEdge?.track === "hs" ? "headshunt" : "stub"}`;
     if (r.hsIn?.id === sid) return `from the ${r.hsEdge?.track === "hs" ? "headshunt" : "stub"}`;
     if (r.stubIn?.id === sid) return "from the stub";
+    const road = this.st.shed?.roads.find((x) => x.exit.id === sid);
+    if (road) return `shed road ${road.track.slice(2)}`;
     return "";
   }
   /** the routes of this box's frame, in frame order */
@@ -480,6 +580,15 @@ export class Box {
     return false;
   }
 
+  /** the booked time a visit is first felt at the box: its arrival, else its departure */
+  static timeOf(v: Visit): number { return v.arr ? parseTime(v.arr) : v.depart ? parseTime(v.depart) : 1e9; }
+  /** put the register in booked order (the planner adds visits service by service) */
+  sortRegister() {
+    const key = (m: Movement) => Box.timeOf(m.visit);
+    this.register.sort((a, b) => key(a) - key(b));
+    this.movements.sort((a, b) => key(a) - key(b));
+  }
+
   private step(w: World) {
     for (const m of this.movements) this.stepMovement(w, m);
     this.movements = this.movements.filter((m) => m.state !== "done");
@@ -489,6 +598,8 @@ export class Box {
     const v = m.visit;
     const train = this.trainOf(w, v.train);
     if (!train) return;
+    // a train's visits are worked in booked order: nothing is done for a later one while an earlier one is still in hand
+    if (this.movements.some((o) => o !== m && o.visit.train === v.train && Box.timeOf(o.visit) < Box.timeOf(v))) return;
     const e = this.st.edges, r = this.roles;
     const platforms = [e.t1, e.t2].filter((x): x is Edge => !!x);
     const booked = v.depart ? parseTime(v.depart) : null;
@@ -518,7 +629,12 @@ export class Box {
           const hsName = r.hsEdge && r.hsEdge.track === "hs" ? "headshunt" : "stub";
           if (v.runRound) this.say(w, m, "arr", `Welcome to ${this.name}. Warrant ${sec} cancelled. When you have uncoupled and are back in the cab, I will clear ${r.toHs!.id} for the loco to the ${hsName}.`);
           else this.say(w, m, "arr", `Train ${v.train} arrived complete at ${this.name}; warrant ${sec} cancelled.${v.depart ? ` ${this.starter(v.track, v.to!)?.id} will be cleared at ${fmtTime(booked! - 120)} for the ${v.depart} departure${v.to === "B" ? " to Fernhollow" : v.to === "N" ? " to Coldwater" : ""}.` : ""}`);
-        } else if (player) {
+        } else if (!player) {
+          // the home not yet set: set it as soon as the road is free, but never again once the train is inside the station
+          const id = this.homeRouteFor(m);
+          const inside = train.vehicles.some((veh) => w.edgesOf(veh).some((edge) => this.st.all.includes(edge)));
+          if (id && !inside && !w.routes.find((x) => x.id === id)?.live) w.setRoute(id);
+        } else {
           // a train stood at the home signal is a train the signaller is holding
           const home = v.from ? this.home(v.from) : undefined;
           if (home && home.aspect === "stop" && Math.abs(train.v) < 0.01 && this.standsAt(train, home)) {
@@ -567,6 +683,8 @@ export class Box {
       }
       case "ready": {
         if (!booked) { m.state = "done"; break; }
+        // nothing is asked for a train that has not yet reached the platform
+        if (!this.trackEdges(v.track).some((edge) => w.isOccupied(edge)) || !this.trackEdges(v.track).some((edge) => train.vehicles.some((veh) => w.edgesOf(veh).includes(edge)))) break;
         // a portion of a split train waits until it stands on its own
         if (!this.standsAlone(w, m)) {
           if (!player && t >= booked - 240) this.say(w, m, "split", `${v.train} to be uncoupled from ${v.splitFrom} for the ${v.depart} departure${v.to === "B" ? " to Fernhollow" : ""}.`);
@@ -606,6 +724,22 @@ export class Box {
             else { stn.baton.add(v.train); m.state = "departing"; m.batonAt = t; this.say(w, m, "bat", `Baton shown to ${v.train}. Ready to start.`); }
           }
         }
+        break;
+      }
+      case "shuntDue": {
+        if (!booked) { m.state = "done"; break; }
+        const id = this.shuntRouteFor(m)!;
+        const rt = w.routes.find((x) => x.id === id);
+        if (player) { if (rt?.live) m.state = "shunting"; break; }
+        if (t >= booked - 60 && w.setRoute(id)) {
+          m.state = "shunting";
+          this.say(w, m, "sh", `${v.train}: ${this.routeLabel(w, id)} set, ${rt!.signals.map(([s]) => s.id).join(" and ")} cleared.`);
+        }
+        break;
+      }
+      case "shunting": {
+        const dest = this.trackEdges(v.shunt!.to);
+        if (dest.length && w.whollyOn(train, dest) && Math.abs(train.v) < 0.01) { m.state = "done"; m.arrivedAt = t; }
         break;
       }
       case "departing": {

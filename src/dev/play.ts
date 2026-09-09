@@ -1,4 +1,4 @@
-import { DUTY_101, DUTY_201, DUTY_301, DUTY_401, DUTY_501, DUTY_502 } from "../scenarios/duties";
+import { DUTY_101, DUTY_201, DUTY_301, DUTY_401, DUTY_501, DUTY_502, DUTY_601 } from "../scenarios/duties";
 import { Autopilot } from "./autopilot";
 import { parseTime } from "../core/util";
 import { type Box, type BoxDuty } from "../sim/duty";
@@ -55,6 +55,32 @@ function playBox(scenario: typeof DUTY_501, until: string) {
 }
 export function play501() { return playBox(DUTY_501, "09:20"); }
 export function play502() { return playBox(DUTY_502, "11:30"); }
+
+/** The day with every chair taken by a colleague: the player watches from Wending Box, worked by its master. */
+export function play601() {
+  const { world: w } = DUTY_601.create("wd-box");
+  const a = new Autopilot(w);
+  last = a;
+  const box = w.boxes.find((b) => b.code === "WD")!;
+  box.mode = "npc";
+  const end = parseTime("18:10");
+  let lastReport = 0;
+  a.until(() => {
+    if (w.time - lastReport >= 3600) { lastReport = w.time; a.say(`trains: ${w.vehicles.map((v) => `${v.number}@${v.pos.edge.id}`).join(" ")}`); }
+    return !!w.finished || w.time >= end;
+  }, end - w.time + 10);
+  const pending = w.boxes.flatMap((b) => b.register.filter((m) => m.state !== "done").map((m) => `${b.code}:${m.visit.train}:${m.state}@${m.visit.depart ?? m.visit.arr}`));
+  // punctuality: arrivals and departures more than two minutes off the book
+  const late: string[] = [];
+  for (const b of w.boxes) for (const m of b.register) {
+    if (m.visit.arr && m.arrivedAt !== undefined && m.arrivedAt - parseTime(m.visit.arr) > 120) late.push(`${b.code} ${m.visit.train} arr ${m.visit.arr} +${Math.round((m.arrivedAt - parseTime(m.visit.arr)) / 60)}`);
+    if (m.visit.depart && m.departedAt !== undefined && m.departedAt - parseTime(m.visit.depart) > 120) late.push(`${b.code} ${m.visit.train} dep ${m.visit.depart} +${Math.round((m.departedAt - parseTime(m.visit.depart)) / 60)}`);
+  }
+  a.say(`late: ${late.join(", ") || "none"}`);
+  a.say(`colleagues' incidents: ${w.npcIncidents.join(" | ") || "none"}`);
+  a.say(`finished: ${w.finished ?? "NO"}; pending ${pending.join(" ") || "none"}; drivers ${(w.npcDrivers as { vehicle: { number: string }; state: string }[]).map((d) => `${d.vehicle.number}:${d.state}`).join(" ")}`);
+  return a.report();
+}
 
 /** the autopilot of the run in progress, for reports after a failure */
 export let last: Autopilot | null = null;
@@ -179,7 +205,15 @@ export function play401() {
   r = a.drive(w.train, 3.015, -1, { max: 1200 }); a.say(`to WD p2 ${JSON.stringify(r)} npc ${npcState()}`);
   w.toggleDoors(); a.step(200); w.toggleDoors(); a.step(20);
   a.secure();
-  a.say(`waiting for 1003 to join: ${a.until(() => w.train.vehicles.length === 2, 900)} at ${w.time.toFixed(0)} npc ${npcState()}`);
+  {
+    const v3 = w.vehicles.find((v) => v.number === "1003")!;
+    let lastT = 0;
+    const joined = a.until(() => {
+      if (w.time - lastT >= 45) { lastT = w.time; const c3 = w.consistOf(v3); a.say(`  trace 1003 ${v3.pos.edge.id}@${v3.pos.s.toFixed(0)} v=${c3.v.toFixed(2)} train=${c3.isTrain} callOn=${c3.callOn} WD10=${w.signal("WD 10").aspect} live=${w.routes.filter((r) => r.live).map((r) => r.id).join(",")} ahead=${w.ahead(c3, 200).slice(0, 3).map((i) => `${i.label}:${i.aspect ?? ""}@${i.dist.toFixed(0)}`).join(" ")}`); }
+      return w.train.vehicles.length === 2;
+    }, 900);
+    a.say(`waiting for 1003 to join: ${joined} at ${w.time.toFixed(0)} npc ${npcState()}`);
+  }
   a.until(() => w.train.allPipesConnected(), 120);
   a.prove(car); a.say(`proved ${w.train.brakeProved}, pipes ${w.train.allPipesConnected()}`);
   w.setReverser("F");

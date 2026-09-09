@@ -23,7 +23,7 @@
 <nav class="desk-bar">
   <a href="index.html">← Library</a>
   <span class="spacer"></span>
-  <span>Book R · Seventh edition · September 2026</span>
+  <span>Book R · Eighth edition · September 2026</span>
   <a href="#" onclick="window.print();return false;">Print booklet</a>
 </nav>
 
@@ -37,7 +37,7 @@
   <div class="book-letter"><small>Book</small>R</div>
   <h1 class="title">Rules of Operation</h1>
   <p class="subtitle">The general rules by which the Meridian Railway is worked, and the Incident Book.</p>
-  <div class="edition">Seventh edition · September 2026 · The signaller's chair · Issued by the General Manager's Office</div>
+  <div class="edition">Eighth edition · September 2026 · Empty trains and shunts · Issued by the General Manager's Office</div>
   <div class="motto">On the line, on time.</div>
 </section>
 
@@ -59,6 +59,7 @@
     <li class="sub"><span class="num">R 14</span><a href="#R14">Doors</a><span class="dots"></span><span class="pg">10</span></li>
     <li class="sub"><span class="num">R 20</span><a href="#R20">Departure of a passenger train</a><span class="dots"></span><span class="pg">11</span></li>
     <li class="sub"><span class="num">5.5</span><a href="#c5-5">Portions</a><span class="dots"></span><span class="pg">12</span></li>
+    <li class="sub"><span class="num">R 26</span><a href="#R26">Empty trains and shunts</a><span class="dots"></span><span class="pg">12</span></li>
     <li><span class="num">6</span><a href="#c6">Lights and horn</a><span class="dots"></span><span class="pg">12</span></li>
     <li class="sub"><span class="num">R 16</span><a href="#R16">Lights</a><span class="dots"></span><span class="pg">12</span></li>
     <li class="sub"><span class="num">R 18</span><a href="#R18">Horn</a><span class="dots"></span><span class="pg">13</span></li>
@@ -184,12 +185,15 @@
     <dt>Headshunt</dt><dd>The short dead-end track beyond the inner switch, used to draw a locomotive clear of the loop while running round. It ends at the buffer stop.</dd>
     <dt>Stub</dt><dd>The short length of single line between the outer switch and the home signal, inside station limits. A locomotive running round reverses on it.</dd>
     <dt>Train movement</dt><dd>The running of a train between stations, or from a platform onto the main line, under main signals and the timetable.</dd>
-    <dt>Shunting move</dt><dd>Any movement within station limits that is not a train movement: drawing forward, setting back, running round, coupling. Shunting moves are governed by ground signals and by the station master's instructions, and never exceed 15 km/h.</dd>
+    <dt>Shunting move</dt><dd>Any movement within station limits that is not a train movement: drawing forward, setting back, running round, coupling, a car to or from the shed. Shunting moves are governed by ground signals and subsidiaries and by the station master's instructions, and never exceed 15 km/h. What makes a movement a shunting move is the signal it last passed (<a href="#R26">Rule R 26</a>).</dd>
+    <dt>Empty train</dt><dd>A train carrying no passengers, run to put a car where the working needs it next: E-numbered in the working timetable, and in every other respect a train (<a href="#R26">Rule R 26</a>).</dd>
+    <dt>Shed</dt><dd>The roads where cars stable overnight: at Ashgrove, three roads off the headshunt, each with a ground signal at its exit, and the building over their far ends. A car leaves the shed as a shunting move and enters it as one.</dd>
+    <dt>Diagram</dt><dd>A driver's day: the vehicle they book on to, and their turns in order, from the working timetable in Book T. Between turns a driver rides in the train or waits at the station shown.</dd>
     <dt>Secured</dt><dd>Of a vehicle: left in the state <a href="#R22">Rule R 22</a> describes, so that it cannot move on its own or at a touch.</dd>
     <dt>Proved</dt><dd>Of a brake: tested from the cab and shown to act through the whole train (<a href="book-d.html#D14">Rule D 14</a>).</dd>
     <dt>Baton</dt><dd>The station master's hand-held disc, green on one face and red on the other, with a lamp for night. See § 5.3.</dd>
     <dt>Booked time</dt><dd>A time printed in the working timetable for a departure or an arrival.</dd>
-    <dt>Duty</dt><dd>A day's work for a driver and a vehicle, or for a signaller and a Box, laid out in the working timetable under a number: Duties 101 to 401 are driven, Duties 501 and 502 are worked from Wending Box.</dd>
+    <dt>Duty</dt><dd>A day's work for a driver and a vehicle, or for a signaller and a Box, laid out in the working timetable under a number: Duties 101 to 401 are driven, Duties 501 and 502 are worked from Wending Box, and Duty 601 is a whole day from the timetable in any of its chairs.</dd>
   </dl>
 
   <div class="note"><p><em>Forward</em> and <em>reverse</em> belong to the cab and change when the driver changes ends. <em>Up</em> and <em>Down</em> belong to the line and never change. A message from a Box is written in Up and Down; a driver translates.</p></div>
@@ -272,7 +276,7 @@
       <tr><td>Fernhollow</td><td class="mono">FH</td><td>M. Thorne</td><td>Thorne, Fernhollow</td></tr>
     </tbody>
   </table>
-  <p>Fernhollow Box works the branch end of section C and its own two signals; the branch's home at Wending, WD 10, is Wending's. Four colleagues drive the other cars of the working timetable at the date of this edition: R. Farrow (car 1003), E. Hale (car 1004), W. Penrose (car 1001) and D. Corry (car 1002, on the duties where it is not yours). They keep the same Book you do.</p>
+  <p>Fernhollow Box works the branch end of section C and its own two signals; the branch's home at Wending, WD 10, is Wending's. Four colleagues drive the other cars of the working timetable at the date of this edition: R. Farrow (car 1003), E. Hale (car 1004), W. Penrose (car 1001) and D. Corry (car 1002, on the duties where it is not yours; on Duty 601 spare with car 1004 in Ashgrove Shed). They keep the same Book you do. Each driver works to a <span class="term">diagram</span>: the vehicle they book on to at the shed, and their turns of the day in order, printed in <a href="book-t.html">Book T</a>; between turns a driver rides in the train their car is coupled into, or waits at the station the diagram shows.</p>
   <p id="c3-2-chair">A Box may be worked by a <span class="term">signaller</span> on duty in place of its station master, and on Duties 501 and 502 that signaller is you. The chair carries the whole of the station master's authority within station limits and nothing more: the frame and its routes, the exchange of line clear with the neighbouring Boxes and the warrants that come of it, the baton. A Box worked this way signs its messages with the station's name alone, "— Wending", and the neighbouring Boxes address it exactly as they would the station master. The drivers on the line owe the chair what they owe the station master, and the chair owes them a cleared road. How a Box is worked, from the first "Is line clear?" to the last warrant cancelled, is <a href="book-s.html#S34">Book S, Working a box</a>.</p>
 
   <h2><span class="num">3.3</span> Instructions</h2>
@@ -312,6 +316,7 @@
     </table>
     <p>A limit applies to the whole train. A train's limit is the lowest limit under any part of it: a reduction applies from the moment the front reaches its board, and a rise only once the rear has passed its board.</p>
     <p>The warning distance before a speed board is 200 m where the approach to it is level or rising, and 250 m where the approach falls at 10‰ or more.</p>
+    <p>Shunting speed applies to any vehicle running as a shunting move, a Class 1 car going to or from the shed included; what makes a movement a shunting move, and when it becomes a train again, is <a href="#R26">Rule R 26</a>.</p>
   </div>
 
   <figure>
@@ -457,6 +462,18 @@
   <p>Some trains are booked to divide at Wending, and some to be joined there. A train of two Class 1 cars comes up from Ashgrove as one train under one number; at Wending it is uncoupled into two <span class="term">portions</span>, one for Coldwater and one for Fernhollow, and from the moment they stand on their own each portion is a train in its own right: it has its own train number, its own booked departure, its own baton, and its own Line Warrant for the section it enters. Coming back, the two cars arrive at Wending one after the other into the same platform, the second called on behind the first, are coupled, and leave for Ashgrove as one train again under one number.</p>
   <p>Portions leave a station in the order they stand: the one nearest the exit goes first, and the other waits for it. Which portion that is depends on which end of the train each car has come to stand at, and the working timetable is written with that in mind; a driver reads the order from the timetable and the Box, not from a habit. Everything the driver does at the coupling, and the whole of the joining move, is in <a href="book-d.html#D28">Rule D 28</a>; the numbering and the order are in <a href="book-t.html">Book T</a>.</p>
   <div class="why"><p>A divided train is two trains, and we say so plainly because every rule in this Book is written for one train at a time: one baton, one warrant, one departure. The moment the coupler parts, the four conditions of Rule R 20 must be met twice over, once for each portion, and neither driver may borrow the other's.</p></div>
+
+  <h2 id="c5-6"><span class="num">5.6</span> Empty trains and shunts</h2>
+  <p>Not every movement carries passengers. A car has to come out of the shed in the morning and go back at night, and a car is sometimes wanted at the other end of the line before its first passengers are. The working timetable books these movements like any others, and this Book gives them one rule.</p>
+
+  <div class="rule" id="R26">
+    <span class="rule-num">Rule R 26</span><span class="rule-title">Empty trains and shunts</span>
+    <p>A train carrying no passengers (an <em>empty</em> train, E-numbered in the working) runs under the same signals, warrants, speeds and stop boards as a passenger train, its doors kept closed. A <em>shunt</em> within station limits, between a platform and the shed or the headshunt, moves on ground signals and subsidiaries at shunting speed, needs neither warrant nor baton, and stops short of any vehicle in the road it enters. What a movement is, the signal it last passed decides: a main aspect makes it a train; a ground signal or a subsidiary at SHUNT makes it a shunting move; a vehicle in a shed is a shunting move until it leaves under a main aspect. Stop boards do not apply to shunting moves, and ground signals do not apply to trains.</p>
+  </div>
+
+  <p>The rule has two halves, and they are kept apart on purpose. An empty train is a train: it holds a warrant, it is crossed at Wending like any other, its driver reads the stop boards and stops at them, and the only thing its passengers would notice is that there are none. A shunt is not a train at all: it lives and dies inside station limits, and what governs it is the ground signal or the subsidiary at its head and the vehicle it may find in the road ahead. A car leaving Ashgrove Shed passes the ground signal at its road's exit and the headshunt signal, draws into platform 1 and stops where the platform allows; it becomes a train at the moment it passes the starting signal at a main aspect, and from that moment the stop boards, the warrant and the baton are its business. Coming home it does the reverse: the starting signal is behind it, the ground signal at the platform end is ahead, and once it has passed that at SHUNT it is a shunting move again and stops short of whatever stands in its road.</p>
+
+  <div class="why"><p>A shunt needs no warrant because a warrant is authority to enter a block section, and a shunt never leaves station limits: the switches, the signals and the road it runs on are the station master's, and the station master can see the whole of it. And we let the aspect decide what a movement is, rather than the vehicle or the driver's intention, because the aspect is the one thing the driver and the Box are both looking at. A driver who has passed a ground signal at SHUNT knows that they are shunting, and so does the Box that cleared it; a driver who has passed the starter at CLEAR knows that they are a train, and so does the Box that gave them the road. There is nothing to agree about afterwards.</p></div>
 </section>
 
 <!-- 6 LIGHTS AND HORN -->
@@ -611,6 +628,7 @@
   </table>
   <p>Train 33 leaves before train 9 because, after the pair has turned round at Ashgrove, car 1001 stands at the Down end of it and is nearest the exit (§ 5.5). The full working timetable, with the block sections and the time–distance diagram, is <a href="book-t.html">Book T</a>.</p>
   <p>Duties 501 and 502 run these two timetables again, the crossing and the junction, with every car in a colleague's hands and the player in Wending Box; the trains keep their numbers and their times, and the Box keeps them (<a href="book-s.html#S34">Book S, Working a box</a>).</p>
+  <p>Duty 601 is a whole weekday from the working timetable in <a href="book-t.html">Book T</a>: the cars out of Ashgrove Shed at dawn, an empty train to Coldwater, a pair that divides at Wending, a crossing at Wending at twelve minutes past every hour, the branch shuttling half-hourly, a call-on and a join at dusk, and everything back in the shed by a quarter to six; the reader takes any one of its chairs, a driver's diagram or a Box, and colleagues take the rest.</p>
 
   <h2><span class="num">9.2</span> Early and late</h2>
   <p>A departure before the booked time is an incident and is recorded. A late departure or arrival is noted in the margin of the timetable and is not an incident. The reasons are different in kind. A passenger who arrives at the booked time and finds the platform empty has been failed by the railway, and no explanation will reach them. A passenger who waits a few minutes has been inconvenienced, and the cause is very often outside the driver's hands; the cure for lateness is in the timetable, not in the Incident Book.</p>
@@ -701,6 +719,7 @@
       <tr><td>R 20</td><td>Depart only with doors closed, booked time reached, starting signal at proceed, baton green. Then horn, then move.</td></tr>
       <tr><td>R 22</td><td>Before leaving the cab: power 0, brake Full, reverser Neutral; parking brake On on a gradient or when leaving the vehicle.</td></tr>
       <tr><td>R 24</td><td>One Train Working: one train, no signals; depart on your own authority at the booked time.</td></tr>
+      <tr><td>R 26</td><td>An empty train is a train: signals, warrant, speeds, stop boards, doors closed. A shunt stays within station limits on ground signals and subsidiaries at 15, no warrant, no baton, stop short of what stands in the road. The aspect you last passed says which you are.</td></tr>
       <tr><td>S 10</td><td>Never pass a signal at STOP. No instruction can authorise it.</td></tr>
       <tr><td>S 12</td><td>Shunting moves stop short of the Limit of Shunt.</td></tr>
       <tr><td>S 14</td><td>Move only on a cleared signal, and only as far as the route goes.</td></tr>
@@ -730,8 +749,8 @@
 <!-- COLOPHON -->
 <section class="page colophon" id="colophon" data-folio="Book R · Colophon">
   <img class="mark" src="../brand/mark-green.svg" alt="">
-  <p><strong>Book R — Rules of Operation.</strong> Seventh edition, September 2026. Issued by the General Manager's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
-  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes the sixth edition of September 2026. The changes are listed in <a href="amendments/book-r-ed7.html">Amendment Slip R-7</a>: the signaller's chair, a fourth colleague, Duties 501 and 502, and three Incident Book entries that are the Box's. The earlier changes are in <a href="amendments/book-r-ed6.html">Amendment Slip R-6</a> (fifth edition to sixth: the Fernhollow branch and its kilometrage, the junction, portions and how they leave, the branch speed, the fourth Box and three colleagues, Duty 401 and the crossing of divided trains), <a href="amendments/book-r-ed5.html">Amendment Slip R-5</a> (fourth edition to fifth: the line to Coldwater, the block and its Line Warrants, the long blast at a whistle board, the crossing at Wending and three new Incident Book entries), <a href="amendments/book-r-ed4.html">Amendment Slip R-4</a> (third edition to fourth: the kilometre plate), <a href="amendments/book-r-ed3.html">Amendment Slip R-3</a> (second edition to third: the profile, the warning distance and the parking brake) and <a href="amendments/book-r-ed2.html">Amendment Slip R-2</a> (first edition to second).</p>
+  <p><strong>Book R — Rules of Operation.</strong> Eighth edition, September 2026. Issued by the General Manager's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
+  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes the seventh edition of September 2026. The changes are listed in <a href="amendments/book-r-ed8.html">Amendment Slip R-8</a>: Rule R 26 on empty trains and shunts, the shed, crew diagrams and Duty 601. The earlier changes are in <a href="amendments/book-r-ed7.html">Amendment Slip R-7</a> (sixth edition to seventh: the signaller's chair, a fourth colleague, Duties 501 and 502, and three Incident Book entries that are the Box's), <a href="amendments/book-r-ed6.html">Amendment Slip R-6</a> (fifth edition to sixth: the Fernhollow branch and its kilometrage, the junction, portions and how they leave, the branch speed, the fourth Box and three colleagues, Duty 401 and the crossing of divided trains), <a href="amendments/book-r-ed5.html">Amendment Slip R-5</a> (fourth edition to fifth: the line to Coldwater, the block and its Line Warrants, the long blast at a whistle board, the crossing at Wending and three new Incident Book entries), <a href="amendments/book-r-ed4.html">Amendment Slip R-4</a> (third edition to fourth: the kilometre plate), <a href="amendments/book-r-ed3.html">Amendment Slip R-3</a> (second edition to third: the profile, the warning distance and the parking brake) and <a href="amendments/book-r-ed2.html">Amendment Slip R-2</a> (first edition to second).</p>
   <p>Companion volumes: <a href="book-i.html">Book I, Identity</a>; <a href="book-s.html">Book S, Signalling</a>; <a href="book-d.html">Book D, Driving</a>; <a href="book-p.html">Book P, Permanent Way</a>; <a href="book-t.html">Book T, Timetabling</a>. Amendments are issued as numbered slips; paste them in at the page indicated, and initial the margin.</p>
   <p>Every rule in this Book has been explained to at least one person who had never seen a railway. Where they did not understand, we rewrote the rule.</p>
 </section>

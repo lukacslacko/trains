@@ -82,6 +82,7 @@ export class WorldRenderer {
 
     this.drawPosts(ctx, world, left, right, s);
     this.drawPlatforms(ctx, world);
+    this.drawSheds(ctx, world);
     this.drawLineFeatures(ctx, world);
     if (s >= 3.5) for (const e of world.layout.graph.edges) this.drawSleepers(ctx, e, left, right);
     for (const e of world.layout.graph.edges) this.drawEdge(ctx, e, s);
@@ -511,6 +512,20 @@ export class WorldRenderer {
       ctx.save(); if (Math.cos(ang) < 0) ctx.rotate(Math.PI); ctx.fillText("♪", 0, -W / 2 - 1.2); ctx.restore();
     }
     ctx.restore();
+  }
+
+  /** A shed: the building drawn under its roads, so that the cars inside stay visible, with its name over the door end. */
+  private drawSheds(ctx: CanvasRenderingContext2D, world: World) {
+    for (const sh of world.layout.sheds) {
+      const b = sh.building;
+      ctx.save();
+      ctx.translate(b.x, b.y); ctx.rotate(b.angle);
+      ctx.fillStyle = "rgba(217,210,192,.55)"; ctx.strokeStyle = C.slate; ctx.lineWidth = 0.35;
+      ctx.beginPath(); ctx.rect(0, 0, b.w, b.h); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = C.slate; ctx.font = `600 2.2px ${DISPLAY}`; ctx.textAlign = "center";
+      ctx.fillText(sh.name.toUpperCase(), b.w / 2, -1.2);
+      ctx.restore();
+    }
   }
 
   /** The signal boxes: a small building at each station that has one, the player's picked out in brass. */

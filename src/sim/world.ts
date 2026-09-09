@@ -96,8 +96,10 @@ export class World {
     this.messages.push({ t: this.time, from, text, kind });
   }
   isNpc(c: Consist): boolean { return c.vehicles.some((v) => this.npc.has(v)); }
+  /** colleagues' incidents: not the player's book, but kept for the record */
+  npcIncidents: string[] = [];
   incident(code: string, text: string, note = false, c?: Consist) {
-    if (c && this.isNpc(c)) return; // a colleague's affair, not the player's
+    if (c && this.isNpc(c)) { this.npcIncidents.push(`${fmtTime(this.time)} ${code}: ${text}`); return; } // a colleague's affair, not the player's
     // de-duplicate identical incidents within 10 s
     const last = this.incidents[this.incidents.length - 1];
     if (last && last.code === code && this.time - last.t < 10) return;
@@ -395,6 +397,8 @@ export class World {
   edgeName(e: Edge): string {
     if (/^[12]$/.test(e.track)) return `track ${e.track}`;
     if (e.track === "hs") return "the headshunt";
+    if (e.track === "shl") return "the shed lead";
+    if (/^sh\d$/.test(e.track)) return `shed road ${e.track.slice(2)}`;
     if (e.track === "sw") return "the switch";
     if (e.track === "main") return "the main line";
     if (e.track === "b1" || e.track === "bm") return "the branch";
@@ -419,18 +423,18 @@ export class World {
     return this.driverCab;
   }
   setReverser(r: Reverser) {
-    const c = this.requireCab(); if (!c) return;
+    const c = this.requireControl(); if (!c) return;
     if (c.cab.notch > 0) { this.say("Cab", "Power controller must be at 0 to move the reverser.", "system"); return; }
     c.cab.reverser = r;
   }
   setNotch(n: number) {
-    const c = this.requireCab(); if (!c) return;
+    const c = this.requireControl(); if (!c) return;
     n = Math.max(0, Math.min(4, Math.round(n)));
     if (n > 0 && c.cab.reverser === "N") { this.say("Cab", "Reverser is in Neutral.", "system"); return; }
     c.cab.notch = n;
   }
   setBrake(step: BrakeStep) {
-    const c = this.requireCab(); if (!c) return;
+    const c = this.requireControl(); if (!c) return;
     c.cab.brake = step;
     if (step === 5) this.incident("EMERGENCY", "Emergency brake used", true);
   }
@@ -539,8 +543,29 @@ export class World {
     if (!cab) return;
     cab.active = true;
     const c = this.consistOf(v);
-    c.control = { vehicle: v, cab, index: c.vehicles.indexOf(v) };
+    // a train a colleague is driving from another cab is theirs: the player rides in it
+    const ctl = c.control;
+    const colleague = ctl && ctl.vehicle !== v && this.npc.has(ctl.vehicle) && ctl.cab.active;
+    if (!colleague) c.control = { vehicle: v, cab, index: c.vehicles.indexOf(v) };
     this.driver = { kind: "cab", vehicle: v, end: d.at.end };
+  }
+  /** a colleague's name from the vehicle they drive, for the panel */
+  driverName(v: Vehicle): string {
+    const d = (this.npcDrivers as { vehicle: Vehicle; opts: { name?: string } }[]).find((x) => x.vehicle === v);
+    return d?.opts.name ? `${d.opts.name}` : `the driver of ${v.number}`;
+  }
+  /** the colleague whose cab controls the train the player sits in, or null when the player has the train */
+  ridingWith(): Vehicle | null {
+    const dc = this.driverCab; if (!dc) return null;
+    const ctl = dc.consist.control;
+    return ctl && ctl.vehicle !== dc.vehicle ? ctl.vehicle : null;
+  }
+  /** the cab, when the player has the train; otherwise a word from the cab */
+  private requireControl(): { vehicle: Vehicle; cab: Cab; consist: Consist } | null {
+    const c = this.requireCab(); if (!c) return null;
+    const other = this.ridingWith();
+    if (other) { this.say("Cab", `${other.number} has the train: you are riding.`, "system"); return null; }
+    return c;
   }
   /** Places within walking reach (80 m): cabs of any vehicle, couplings of any consist. */
   walkTargets(): { label: string; anchor: Anchor; dist: number }[] {
@@ -596,9 +621,14 @@ export class World {
     const partB = new Consist(`${c.id}b`, c.vehicles.slice(k + 1), c.flip.slice(k + 1));
     partA.couplings = c.couplings.slice(0, k);
     partB.couplings = c.couplings.slice(k + 1);
+    // each part is what the whole was, except that a part with no passenger accommodation is a shunting move
+    for (const p of [partA, partB]) p.shunting = c.shunting || p.shunting;
     for (const p of [partA, partB]) {
       if (ctl && p.vehicles.includes(ctl.vehicle)) p.control = { vehicle: ctl.vehicle, cab: ctl.cab, index: p.vehicles.indexOf(ctl.vehicle) };
     }
+    // the player sitting in a cab of the other part takes it
+    const pd = this.driver;
+    if (pd.kind === "cab") for (const p of [partA, partB]) if (!p.control && p.vehicles.includes(pd.vehicle)) p.control = { vehicle: pd.vehicle, cab: pd.vehicle.cabs[pd.end]!, index: p.vehicles.indexOf(pd.vehicle) };
     this.consists = this.consists.filter((x) => x !== c).concat([partA, partB]);
     this.prevLead.delete(c);
     const rest = this.restKm.get(c);
@@ -681,10 +711,14 @@ export class World {
     const ctl = playerCtl ?? c2.control ?? c1.control;
     if (ctl) merged.control = { vehicle: ctl.vehicle, cab: ctl.cab, index: merged.vehicles.indexOf(ctl.vehicle) };
     merged.callOn = false;
+    merged.shunting = c1.shunting;
     merged.v = 0;
     merged.brakeProved = false;
     this.consists = this.consists.filter((x) => x !== c1 && x !== c2).concat([merged]);
     this.prevLead.delete(c1); this.prevLead.delete(c2);
+    // the merged train rests where the standing one stood, so that leaving its platform is not an overrun
+    const rest = this.restKm.get(c2) ?? this.restKm.get(c1);
+    if (rest !== undefined) this.restKm.set(merged, rest);
     if (this.driver.kind === "ground" && this.driver.at.kind === "coupling") this.driver = { kind: "ground", at: { kind: "cab", vehicle: merged.vehicles[0], end: merged.flip[0] ? "B" : "A" } };
     const names = c1Vehicles.map((v) => v.number).join("+") + " to " + c2Vehicles.map((v) => v.number).join("+");
     if (speed > 5) this.incident("COUPLE-DAMAGE", `Coupled ${names} at ${speed.toFixed(1)} km/h — damage likely (Rule D 10)`);
@@ -768,16 +802,21 @@ export class World {
         const ok = o.aspect === "caution" || o.aspect === "clear" || (o.aspect === "shunt" && !c.isTrain) || callOn;
         if (!ok) this.incident("SPAD", `${names} passed ${o.id} at STOP (Rule S 10)`, false, c);
         if (callOn) c.callOn = true;
+        // the aspect passed says what the movement is from here: a main aspect makes a train, the subsidiary a shunting move
+        if (o.aspect === "caution" || o.aspect === "clear") c.shunting = false;
+        else if (o.aspect === "shunt" && !callOn) c.shunting = true;
       } else if (!c.isTrain && o.aspect === "stop") {
         this.incident("SPAD", `${names} passed ${o.id} at SHUNT STOP (Rule S 10)`, false, c);
-      }
+      } else if (o.aspect === "shunt") c.shunting = true;
       if (o.aspect !== "stop") o.aspect = "stop";
       return;
     }
     if (o.board === "stop" && c.isTrain) {
-      // leaving the stop you made is not an overrun; arriving past the board is
+      // leaving the platform you stood at is not an overrun, wherever on it you stood; arriving past the board is
       const rest = this.restKm.get(c);
-      const departing = rest !== undefined && Math.abs(rest - kmOf(o.pos)) * 1000 < 60;
+      const boardKm = kmOf(o.pos);
+      const platform = this.layout.platforms.find((p) => p.track === o.pos.edge.track && boardKm >= p.kmFrom - 0.01 && boardKm <= p.kmTo + 0.01);
+      const departing = rest !== undefined && (Math.abs(rest - boardKm) * 1000 < 60 || (!!platform && rest >= platform.kmFrom - 0.02 && rest <= platform.kmTo + 0.02));
       if (!departing) this.incident("OVERRUN", `${names} overran the stop board at ${o.label} (Rule R 12)`, false, c);
     }
     if (o.board === "limitOfShunt" && !c.isTrain) this.incident("LOS", `${names} passed the Limit of Shunt (Rule S 12)`, false, c);
@@ -842,7 +881,7 @@ export class World {
       if (c.v === 0 && pl && pl.v !== 0) this.restKm.set(c, kmOf(c.leadingPos(pl.v >= 0 ? 1 : -1)));
       if (wasStill && c.v !== 0) {
         const ctl = c.control;
-        if (ctl && this.time - ctl.vehicle.lastHorn > 25) this.incident("HORN", "Moved from rest without one short blast (Rule R 18)", false, c);
+        if (ctl && this.time - ctl.vehicle.lastHorn > 25) this.incident("HORN", `${c.vehicles.map((v) => v.number).join("+")} moved from rest without one short blast (Rule R 18)`, false, c);
       }
       // rolling back, running away, dragging the parking brake
       {

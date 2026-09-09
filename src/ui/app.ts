@@ -30,8 +30,9 @@ export class App {
     const h = location.hash.replace("#", "") || "home";
     this.stop();
     if (h === "library") return this.library();
-    const sc = SCENARIOS.find((s) => s.id === h);
-    if (sc) return this.play(sc);
+    const [id, role] = h.split("/");
+    const sc = SCENARIOS.find((s) => s.id === id);
+    if (sc) return this.play(sc, role);
     this.home();
   }
 
@@ -41,13 +42,16 @@ export class App {
   }
 
   private home() {
-    const cards = SCENARIOS.map((s) => `
-      <div class="card" onclick="location.hash='${s.id}'">
+    const cards = SCENARIOS.map((s) => {
+      const roles = s.roles ? `<div class="roles">${s.roles.map((r) => `<a href="#${s.id}/${r.id}" title="${r.detail}">${r.label}</a>`).join("")}</div>` : "";
+      return `
+      <div class="card ${s.roles ? "day" : ""}" ${s.roles ? "" : `onclick="location.hash='${s.id}'"`}>
         <div class="num">DUTY ${s.number}</div>
         <h3>${s.title}</h3>
         <div class="sub">${s.subtitle}</div>
-        <p>${s.blurb}</p>
-      </div>`).join("");
+        <p>${s.blurb}</p>${roles}
+      </div>`;
+    }).join("");
     this.root.innerHTML = `
       <div class="home">
         <div class="masthead"><img src="/brand/mark-green.svg" alt=""><div class="name">Meridian Railway<small>A modular train simulator</small></div></div>
@@ -71,13 +75,14 @@ export class App {
       </div>`;
   }
 
-  private play(scenario: Scenario) {
-    const { world, duty } = scenario.create();
+  private play(scenario: Scenario, role?: string) {
+    const { world, duty } = scenario.create(role);
+    const roleLabel = role && scenario.roles ? scenario.roles.find((r) => r.id === role)?.label : "";
     this.root.innerHTML = `
       <div class="duty">
         <div class="topbar">
           <img src="${MARK}" alt=""><span class="brand">Meridian Railway</span>
-          <span class="title">Duty ${scenario.number} · ${scenario.title}</span>
+          <span class="title">Duty ${scenario.number} · ${scenario.title}${roleLabel ? ` · ${roleLabel}` : ""}</span>
           <span class="spacer"></span>
           <span class="clock" id="clock"></span>
           <span id="warp"></span>

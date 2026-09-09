@@ -88,6 +88,16 @@ Wending the **Fernhollow branch** leaves the main line at the junction
 switch WD J and climbs a side valley to **Fernhollow** (a hamlet of fern
 gatherers and a chapel).
 
+- **Ashgrove Shed:** three stabling roads off the Ashgrove headshunt on
+  the loop side, reached through the shed switch **AG S** on the headshunt
+  40 m from the buffer stop and the ladder switches **AG T** and **AG U**;
+  roads 1, 2 and 3 are 70 m long each and end at buffer stops; the shed
+  building stands over their far ends. Ground signals **AG 7**, **AG 9** and
+  **AG 11** at the road exits face out towards the station (the Down
+  direction, hence odd numbers). Shed kilometres run from the shed switch
+  into the shed (the "agshed" line, 15 km/h throughout, level); "out of the
+  shed" is Down on the main line. Sheds are data in the layout, so more can
+  be added at any station's headshunt.
 - **Kilometrage** counts from the buffer stop at Ashgrove, km 0.000, to the
   buffer stop at Coldwater, km 6.400.
 - **Down** = direction of increasing kilometrage (Ashgrove → Coldwater).
@@ -156,6 +166,11 @@ north):
 |----|--------|-------|----|------|
 | 0.000 | buffer stop | – | headshunt | |
 | every 0.100 | hectometre post | – | | kilometre posts at 1.0, 2.0 … |
+| 0.040 | Switch **AG S** | toe faces Down | headshunt | normal = headshunt to the buffer stop, reverse = shed lead |
+| shed 0.030 | Switch **AG T** | | shed lead | normal = road 1, reverse = on to AG U |
+| shed 0.061 | Switch **AG U** | | shed lead | normal = road 2, reverse = road 3 |
+| shed 0.034 / 0.065 / 0.095 | Ground signals **AG 7**, **AG 9**, **AG 11** | Down (out) | roads 1, 2, 3 | 4 m inside each road |
+| shed 0.100 / 0.131 / 0.161 | buffer stops | – | roads 1, 2, 3 | the shed building over the far 40 m |
 | 0.070 | Ground signal **AG 5** | Down | headshunt | headshunt → station |
 | 0.080 | Switch **AG B** | toe faces Up | – | normal = track 1, reverse = track 2; switch indicator |
 | 0.110–0.310 | track 1 and track 2 | | | platform on track 1, km 0.130–0.290 |
@@ -294,7 +309,11 @@ from its clear stretch (the platform is occupied by design) but still needs
 it held by no other route.
 
 Ashgrove: `homeN→1` (AG 2 Caution), `1→N` (AG 1 Clear), run-round
-`1→hs` (AG 4), `hs→2→stub` (AG 5 and AG 3), `stub→1` (AG 6).
+`1→hs` (AG 4, with AG S normal), `hs→2→stub` (AG 5 and AG 3), `stub→1`
+(AG 6); the shed: `1→sh1`, `1→sh2`, `1→sh3` (AG 4, with AG S reverse and
+the ladder set for the road; the road itself may be occupied, the move
+stops short of what stands there) and `sh1→1`, `sh2→1`, `sh3→1` (the road's
+exit signal and AG 5; track 1 may be occupied, for coupling).
 Wending: `homeS→1` (WD 1), `homeS→2` (WD 1), `homeN→1` and `homeN→2`
 (WD 8, WD J straight), `homeB→1` and `homeB→2` (WD 10, WD J for the
 branch), call-on variants of the four northern home routes with WD 8 or
@@ -420,6 +439,17 @@ authority.
   vehicle stands on a gradient or is to be left unattended (stabling always).
   The pantograph may stay up. (The cab door will not let you out otherwise:
   the sim refuses with a message naming the missing condition.)
+- **R 26 Empty trains and shunts.** A train carrying no passengers (an
+  *empty* train, E-numbered in the working) runs under the same signals,
+  warrants, speeds and stop boards as a passenger train, its doors kept
+  closed. A *shunt* within station limits, between a platform and the shed
+  or the headshunt, moves on ground signals and subsidiaries at shunting
+  speed, needs neither warrant nor baton, and stops short of any vehicle in
+  the road it enters. What a movement is, the signal it last passed
+  decides: a main aspect makes it a train; a ground signal or a subsidiary
+  at SHUNT makes it a shunting move; a vehicle in a shed is a shunting move
+  until it leaves under a main aspect. Stop boards do not apply to shunting
+  moves, and ground signals do not apply to trains.
 - **R 24 One Train Working.** On a line worked by one train with no signals,
   the driver departs on their own authority at the booked time.
 - **S 10 Signals at STOP.** Never pass a main signal at STOP or a ground
@@ -518,6 +548,9 @@ authority.
 **Class 1 motor car ("Lark").** Fleet 1001–1004; Duty 101 uses **1002**,
 Duty 301 uses 1002 and, driven by a colleague, **1003**; Duty 401 uses all
 four: 1002 and 1003 as the player's pair, 1004 and 1001 as the colleagues'.
+On Duty 601 all four stable in Ashgrove Shed: road 1 holds 1002 and 1001
+coupled (1002 at the door end), road 2 holds 1003 (door end) and 1004,
+which is spare all day. Cars stand with their A ends facing out.
 Class 1 cars couple to each other and work in multiple (Rule D 26).
 Length 22 m, mass 38 t, two cabs (A and B), doors on both sides, one
 pantograph, two 150 kW motors, max tractive effort 45 kN, max speed 60 km/h.
@@ -639,6 +672,33 @@ The working shown on the register (the box's duty sheet) is the same
 timetable as Duties 301 and 401; a signaller may receive a train on the
 other platform, and the visit then follows the train, but the working
 names the platform the timetable expects.
+
+**Duty 601 — A Day on the Valley.** The whole weekday working from Book T,
+as data (`src/traffic/valleyday.ts`): services with their calls, how they
+couple and divide, and the crew diagrams; the boxes' working, the
+colleagues' driving and the player's duty sheet are all derived from it.
+Sim starts 05:00. The player takes any chair: drive 1002 (R. Farrow), 1003
+(E. Hale) or 1001 (W. Penrose), or work Wending or Ashgrove Box; the other
+chairs are taken by colleagues. D. Corry is spare with 1004.
+
+The working: E1 1003 shed road 2 → platform 1 05:15; E3 1003 empty AG 05:25
+→ WD 05:32/05:34 → CW 05:43; E5 the pair 1002+1001 road 1 → platform 1
+05:35. Train 1 (1002 with 1001 coupled) AG 06:00 → WD 06:07, divides:
+1002 on to CW at 06:12 (arr 06:21), 1001 as train 31 to FH at 06:16 (arr
+06:24). Down trains (odd numbers from 1) leave AG on the hour 06:00–16:00,
+call WD 1 at h:07/h:12, arrive CW h:21; Up trains (even from 2) leave CW on
+the hour 06:00–17:00, call WD 2 at h:08/h:12, arrive AG h:21; 1002 works
+Down at even hours and Up at odd, 1003 the reverse; every crossing is at
+Wending at twelve past. The branch (1001, trains 32 onwards): FH h:34 →
+WD 1 h:43, WD h:46 → FH h:54, FH (h+1):04 → WD 1 (h+1):13, WD (h+1):16 →
+FH (h+1):24, keeping clear of the crossing. The last Up train, 24 (1002),
+CW 17:00 → WD 2 17:08 waits there for the last branch train, FH 17:04 →
+WD 17:13, which is called on behind it under WD 10 and joins; the pair
+leaves WD at 17:20 and reaches AG at 17:29. At dusk E8 takes 1003 platform
+1 → road 2 at 16:35 and E10 takes the pair platform 1 → road 1 at 17:40.
+Duty done, for a driver, when their car is stabled in the shed at the end
+of the diagram (parking brake, pantograph down, lights out); for a box,
+when every train is home and the register is done.
 
 ## 11. Incident Book entries (what the rules engine records)
 

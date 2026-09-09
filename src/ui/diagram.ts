@@ -42,8 +42,24 @@ export class LineDiagram {
     const yB = y0 + 104;
     const pxPerKm = X(1) - X(0);
     const XB = (km: number) => (branch ? X(branch.junctionKm ?? 0) + km * pxPerKm : 0);
-    const Xof = (line: string, km: number) => (line === "branch" ? XB(km) : X(km));
-    const yOfLine = (line: string, track: string) => (line === "branch" ? yB : track === "2" ? yT2 : y0);
+    // sheds: each road a short stub below its station's headshunt, laid out leftwards from the shed switch
+    const sheds = world.layout.sheds;
+    const shedOf = (line: string) => sheds.find((sh) => sh.line === line);
+    const yShed = (line: string, track: string) => { const sh = shedOf(line); const i = sh ? Math.max(0, sh.roads.findIndex((r) => r.track === track)) : 0; return y0 + 24 + i * 7; };
+    const XS = (line: string, km: number) => { const sh = shedOf(line); return sh ? X(sh.mainKm) - km * pxPerKm * 1.6 : 0; };
+    const Xof = (line: string, km: number) => (line === "branch" ? XB(km) : shedOf(line) ? XS(line, km) : X(km));
+    const yOfLine = (line: string, track: string) => (line === "branch" ? yB : shedOf(line) ? yShed(line, track) : track === "2" ? yT2 : y0);
+    for (const sh of sheds) {
+      ctx.lineWidth = 2; ctx.lineCap = "round";
+      for (const r of sh.roads) {
+        const kmA = r.edge.kmA, kmB = r.edge.kmA + r.edge.length / 1000;
+        const y = yShed(sh.line, r.track);
+        ctx.strokeStyle = "rgba(244,239,227,.6)";
+        ctx.beginPath(); ctx.moveTo(XS(sh.line, kmA), y); ctx.lineTo(XS(sh.line, kmB), y); ctx.stroke();
+      }
+      ctx.fillStyle = C.chalk; ctx.font = `600 10px ${DISPLAY}`; ctx.textAlign = "left";
+      ctx.fillText("SHED", X(sh.mainKm) + 6, y0 + 28 + (sh.roads.length - 1) * 3.5);
+    }
 
     // edges: draw by track with schematic y
     const yOf = (track: string) => (track === "2" ? yT2 : y0);
@@ -53,7 +69,7 @@ export class LineDiagram {
       ctx.beginPath(); ctx.moveTo(X(branch.junctionKm ?? 0), y0); ctx.lineTo(XB(0.1), yB); ctx.lineTo(XB(branch.kmMax), yB); ctx.stroke();
     }
     for (const e of world.layout.graph.edges) {
-      if (e.line === "branch") continue;
+      if (e.line === "branch" || shedOf(e.line)) continue;
       const kmA = e.kmA, kmB = e.kmA + (e.kmDir * e.length) / 1000;
       if (e.track === "sw") {
         // a switch branch: drawn faint when the switch is set the other way
@@ -74,7 +90,7 @@ export class LineDiagram {
     for (const v of world.vehicles) {
       const a = kmOf(v.pos), b = kmOf(v.posB);
       const track = v.pos.edge.track, line = v.pos.edge.line;
-      const y = line === "branch" ? yB : track === "2" ? yT2 : (track === "sw" ? (Math.abs(v.pos.edge.a.y) > 1 || Math.abs(v.pos.edge.b.y) > 1 ? (y0 + yT2) / 2 : y0) : y0);
+      const y = line === "branch" ? yB : shedOf(line) ? yShed(line, track === "shl" ? v.posB.edge.track : track) : track === "2" ? yT2 : (track === "sw" ? (Math.abs(v.pos.edge.a.y) > 1 || Math.abs(v.pos.edge.b.y) > 1 ? (y0 + yT2) / 2 : y0) : y0);
       ctx.beginPath(); ctx.moveTo(Xof(line, Math.min(a, b)), y); ctx.lineTo(Xof(line, Math.max(a, b)), y); ctx.stroke();
     }
     // platforms

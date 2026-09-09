@@ -1,4 +1,4 @@
-import { TrackGraph, sCurve, type Position, type Dir, type Edge, type Switch, type Pt, pointAt, tangentAt } from "./graph";
+import { TrackGraph, sCurve, type Position, type Dir, type Edge, type Switch, type SwitchState, type Pt, pointAt, tangentAt } from "./graph";
 
 export type MainAspect = "stop" | "caution" | "clear" | "shunt"; // "shunt" = the subsidiary lit under a main signal at STOP
 export type DistantAspect = "caution" | "clear";
@@ -66,12 +66,38 @@ export interface LineInfo {
   junctionKm?: number;
 }
 
+/** A stabling road in a shed: the edge, its exit signal, and how the ladder is set to reach it. */
+export interface ShedRoad {
+  track: string;
+  edge: Edge;
+  exit: Signal;
+  switches: [Switch, SwitchState][];
+  /** the lead edges between the headshunt and the road, in order */
+  leads: Edge[];
+}
+/** A shed: roads off a station's headshunt, and the building drawn over their far ends. */
+export interface Shed {
+  id: string;
+  station: string;
+  name: string;
+  /** the line whose kilometrage the shed edges carry */
+  line: string;
+  /** where the shed lead leaves the station's headshunt, in the station line's km */
+  mainKm: number;
+  /** the station line's km direction of "out of the shed": shed kilometres run into the shed, so a car facing out faces -1 on the shed's km and `outDir` on the line's */
+  outDir: Dir;
+  roads: ShedRoad[];
+  /** the building, world metres */
+  building: { x: number; y: number; w: number; h: number; angle: number };
+}
+
 export interface Layout {
   name: string;
   graph: TrackGraph;
   objects: Trackside[];
   platforms: Platform[];
   stations: StationInfo[];
+  sheds: Shed[];
   kmMax: number;
   posts: Post[];
   lines: Record<string, LineInfo>;
@@ -116,7 +142,9 @@ const branchLine: LineInfo = {
   profile: [[0, 0.3, 0], [0.3, 1.9, 10], [1.9, BR_MAX, 0]],
   speedZones: [[0, BR_LIMIT, STATION_SPEED], [BR_LIMIT, FH_LIMIT, BRANCH_SPEED], [FH_LIMIT, BR_MAX, STATION_SPEED]],
 };
-const LINES: Record<string, LineInfo> = { main: mainLine, branch: branchLine };
+/** the Ashgrove shed roads: flat, 15 km/h, their own short kilometrage from the shed switch */
+const agShedLine: LineInfo = { id: "agshed", name: "Ashgrove Shed", kmMax: 0.2, baseHeight: 0, profile: [[0, 0.2, 0]], speedZones: [[0, 0.2, 15]] };
+const LINES: Record<string, LineInfo> = { main: mainLine, branch: branchLine, agshed: agShedLine };
 
 function limitAt(km: number, line = "main") {
   for (const [a, b, lim] of LINES[line].speedZones) if (km >= a && km < b) return lim;
@@ -232,7 +260,7 @@ export function shuttleLayout(): Layout {
       { code: "AG", name: "Ashgrove", stops: [{ dir: -1, track: "1", km: 0.135, platform: P.AG, line: "main" }] },
       { code: "WD", name: "Wending", stops: [{ dir: 1, track: "1", km: 3.165, platform: P.WD1, line: "main" }] },
     ],
-    sections: [], neutral: [], crossings: [],
+    sections: [], neutral: [], crossings: [], sheds: [],
   };
 }
 
@@ -245,8 +273,12 @@ export interface StationLayout {
   switchN?: Switch;
   /** the junction switch on the north side of a through station with a branch */
   switchJ?: Switch;
-  edges: { stubS?: Edge; stubN?: Edge; stubB?: Edge; t1: Edge; t2?: Edge; bS1?: Edge; bS2?: Edge; bN1?: Edge; bN2?: Edge; mainN?: Edge };
+  /** hsIn: the part of the headshunt between the station switch and the shed switch, where there is a shed */
+  edges: { stubS?: Edge; stubN?: Edge; stubB?: Edge; t1: Edge; t2?: Edge; bS1?: Edge; bS2?: Edge; bN1?: Edge; bN2?: Edge; mainN?: Edge; hsIn?: Edge };
   mainSide?: "S" | "N";
+  /** the switch on the headshunt that leads to the shed (normal: the headshunt, reverse: the shed lead) */
+  switchShed?: Switch;
+  shed?: Shed;
   signals: Record<string, Signal>;
   all: Edge[];
 }
@@ -278,12 +310,25 @@ export function valleyLayout(): ValleyLayout {
 
   // ----- Ashgrove -----
   const agBuf = g.node("AG-buf", 0, 0, { buffer: true });
+  const agS = g.node("AG-S", 40, 0);
   const agB = g.node("AG-B", 80, 0);
   const agT1a = g.node("AG-t1a", 110, 0), agT2a = g.node("AG-t2a", 110, T2);
   const agT1b = g.node("AG-t1b", 310, 0), agT2b = g.node("AG-t2b", 310, T2);
   const agA = g.node("AG-A", 340, 0);
   const agH = g.node("AG-H", AG_LIMIT * 1000, 0);
-  const agHs = g.edge("AG-hs", agBuf, agB, { kmA: 0, kmDir: 1, track: "hs" });
+  // the headshunt in two parts: the shed switch AG S lies 40 m from the buffer stop
+  const agHs = g.edge("AG-hsOut", agBuf, agS, { kmA: 0, kmDir: 1, track: "hs" });
+  const agHsIn = g.edge("AG-hsIn", agS, agB, { kmA: 0.04, kmDir: 1, track: "hs" });
+  // Ashgrove Shed: three roads off the headshunt on the loop side, a ladder of switches, 70 m each to a buffer stop
+  const SH = T2;
+  const agT = g.node("AG-T", 10, SH), agU = g.node("AG-U", -20, 2 * SH), agSh3a = g.node("AG-sh3a", -50, 3 * SH);
+  const sh1b = g.node("AG-sh1b", -60, SH, { buffer: true }), sh2b = g.node("AG-sh2b", -90, 2 * SH, { buffer: true }), sh3b = g.node("AG-sh3b", -120, 3 * SH, { buffer: true });
+  const lead1 = g.edge("AG-lead1", agS, agT, { kmA: 0, kmDir: 1, track: "shl", line: "agshed", pts: sCurve({ x: 40, y: 0 }, { x: 10, y: SH }) });
+  const road1 = g.edge("AG-sh1", agT, sh1b, { kmA: lead1.length / 1000, kmDir: 1, track: "sh1", line: "agshed" });
+  const lead2 = g.edge("AG-lead2", agT, agU, { kmA: lead1.length / 1000, kmDir: 1, track: "shl", line: "agshed", pts: sCurve({ x: 10, y: SH }, { x: -20, y: 2 * SH }) });
+  const road2 = g.edge("AG-sh2", agU, sh2b, { kmA: (lead1.length + lead2.length) / 1000, kmDir: 1, track: "sh2", line: "agshed" });
+  const lead3 = g.edge("AG-lead3", agU, agSh3a, { kmA: (lead1.length + lead2.length) / 1000, kmDir: 1, track: "shl", line: "agshed", pts: sCurve({ x: -20, y: 2 * SH }, { x: -50, y: 3 * SH }) });
+  const road3 = g.edge("AG-sh3", agSh3a, sh3b, { kmA: (lead1.length + lead2.length + lead3.length) / 1000, kmDir: 1, track: "sh3", line: "agshed" });
   const agB1 = g.edge("AG-B1", agB, agT1a, { kmA: 0.08, kmDir: 1, track: "sw" });
   const agB2 = g.edge("AG-B2", agB, agT2a, { kmA: 0.08, kmDir: 1, track: "sw", pts: sCurve({ x: 80, y: 0 }, { x: 110, y: T2 }) });
   const agT1 = g.edge("AG-t1", agT1a, agT1b, { kmA: 0.11, kmDir: 1, track: "1" });
@@ -291,11 +336,28 @@ export function valleyLayout(): ValleyLayout {
   const agA1 = g.edge("AG-A1", agT1b, agA, { kmA: 0.31, kmDir: 1, track: "sw" });
   const agA2 = g.edge("AG-A2", agT2b, agA, { kmA: 0.31, kmDir: 1, track: "sw", pts: sCurve({ x: 310, y: T2 }, { x: 340, y: 0 }) });
   const agStub = g.edge("AG-stub", agA, agH, { kmA: 0.34, kmDir: 1, track: "main" });
-  const agSwB = g.switch("AG B", agB, agHs, agB1, agB2);
+  const agSwB = g.switch("AG B", agB, agHsIn, agB1, agB2);
   const agSwA = g.switch("AG A", agA, agStub, agA1, agA2);
+  const agSwS = g.switch("AG S", agS, agHsIn, agHs, lead1);
+  const agSwT = g.switch("AG T", agT, lead1, road1, lead2);
+  const agSwU = g.switch("AG U", agU, lead2, road2, lead3);
+  const agShedSignals = {
+    "7": sig("AG 7", "ground", "sh1", road1.kmA + 0.004, -1, "AG"),
+    "9": sig("AG 9", "ground", "sh2", road2.kmA + 0.004, -1, "AG"),
+    "11": sig("AG 11", "ground", "sh3", road3.kmA + 0.004, -1, "AG"),
+  };
+  const agShed: Shed = {
+    id: "AGS", station: "AG", name: "Ashgrove Shed", line: "agshed", mainKm: 0.04, outDir: 1,
+    roads: [
+      { track: "sh1", edge: road1, exit: agShedSignals["7"], switches: [[agSwS, "reverse"], [agSwT, "normal"]], leads: [lead1] },
+      { track: "sh2", edge: road2, exit: agShedSignals["9"], switches: [[agSwS, "reverse"], [agSwT, "reverse"], [agSwU, "normal"]], leads: [lead1, lead2] },
+      { track: "sh3", edge: road3, exit: agShedSignals["11"], switches: [[agSwS, "reverse"], [agSwT, "reverse"], [agSwU, "reverse"]], leads: [lead1, lead2, lead3] },
+    ],
+    building: { x: -125, y: 3 * SH - 3.2, w: 100, h: -3 * SH + 6.4, angle: 0 },
+  };
   st.AG = {
-    code: "AG", kind: "terminus", mainSide: "N", switchS: agSwB, switchN: agSwA,
-    edges: { stubS: agHs, stubN: agStub, t1: agT1, t2: agT2, bS1: agB1, bS2: agB2, bN1: agA1, bN2: agA2 },
+    code: "AG", kind: "terminus", mainSide: "N", switchS: agSwB, switchN: agSwA, switchShed: agSwS, shed: agShed,
+    edges: { stubS: agHs, hsIn: agHsIn, stubN: agStub, t1: agT1, t2: agT2, bS1: agB1, bS2: agB2, bN1: agA1, bN2: agA2 },
     signals: {
       "1": sig("AG 1", "main", "1", 0.305, 1, "AG"),
       "2": sig("AG 2", "main", "main", 0.42, -1, "AG"),
@@ -303,13 +365,17 @@ export function valleyLayout(): ValleyLayout {
       "4": sig("AG 4", "ground", "1", 0.115, -1, "AG"),
       "5": sig("AG 5", "ground", "hs", 0.07, 1, "AG"),
       "6": sig("AG 6", "ground", "main", 0.35, -1, "AG"),
+      ...agShedSignals,
     },
-    all: [agHs, agB1, agB2, agT1, agT2, agA1, agA2, agStub],
+    all: [agHs, agHsIn, lead1, lead2, lead3, road1, road2, road3, agB1, agB2, agT1, agT2, agA1, agA2, agStub],
   };
   objects.push(
     board(g, "STOP-AG", "stop", "1", 0.135, -1, { label: "ASHGROVE" }),
     board(g, "LOS-AG", "limitOfShunt", "main", 0.4, 1, { label: "LIMIT OF SHUNT" }),
     board(g, "BUF-AG", "buffer", "hs", 0.0, -1),
+    board(g, "BUF-SH1", "buffer", "sh1", road1.kmA + road1.length / 1000, 1),
+    board(g, "BUF-SH2", "buffer", "sh2", road2.kmA + road2.length / 1000, 1),
+    board(g, "BUF-SH3", "buffer", "sh3", road3.kmA + road3.length / 1000, 1),
   );
 
   // ----- Section A -----
@@ -467,6 +533,7 @@ export function valleyLayout(): ValleyLayout {
     ],
     neutral: [{ id: "N1", line: "main", kmFrom: 4.19, kmTo: 4.21 }],
     crossings: [{ id: "X1", name: "Millers' Crossing", line: "main", km: 4.70 }],
+    sheds: [agShed],
     st,
   };
 }

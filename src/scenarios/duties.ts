@@ -1,10 +1,13 @@
 import { World } from "../sim/world";
 import { DutyTracker, Box, BoxDuty, type Leg } from "../sim/duty";
 import { NpcDriver } from "../sim/npc";
+import { buildDay, type DayRole } from "../traffic/day";
+import { valleyDay } from "../traffic/valleyday";
 import { shuttleLayout, valleyLayout } from "../track/layouts";
 import { Vehicle, Consist, CLASS_1, CLASS_4, TYPE_C4 } from "../stock/vehicles";
 import { parseTime } from "../core/util";
 
+export interface ScenarioRole { id: string; label: string; detail: string }
 export interface Scenario {
   id: string;
   number: string;
@@ -12,7 +15,9 @@ export interface Scenario {
   subtitle: string;
   blurb: string;
   legs: Leg[];
-  create(): { world: World; duty: DutyTracker | BoxDuty };
+  /** the chairs on offer; a scenario without roles has one, the driver of its train */
+  roles?: ScenarioRole[];
+  create(role?: string): { world: World; duty: DutyTracker | BoxDuty };
 }
 
 /* ---------- the traffic of the crossing (Duties 301 and 501) ---------- */
@@ -305,4 +310,36 @@ export const DUTY_502: Scenario = {
   },
 };
 
-export const SCENARIOS = [DUTY_101, DUTY_201, DUTY_301, DUTY_401, DUTY_501, DUTY_502];
+/* ---------- a whole day from the timetable ---------- */
+
+const DAY_ROLES: Record<string, DayRole> = {
+  farrow: { kind: "driver", driver: "Farrow" },
+  hale: { kind: "driver", driver: "Hale" },
+  penrose: { kind: "driver", driver: "Penrose" },
+  "wd-box": { kind: "box", code: "WD" },
+  "ag-box": { kind: "box", code: "AG" },
+};
+
+export const DUTY_601: Scenario = {
+  id: "duty601",
+  number: "601",
+  title: "A Day on the Valley",
+  subtitle: "The weekday working from the timetable · four cars · Ashgrove Shed · any chair",
+  blurb: "The whole day from Book T: the cars come out of Ashgrove Shed at dawn, 1003 runs empty to Coldwater, the pair divides at Wending, the main line crosses at Wending every hour, the branch shuttles, and at dusk everything goes back into the shed. Take any driver's turn or either box; the rest of the railway carries on around you.",
+  legs: [],
+  roles: [
+    { id: "farrow", label: "Drive 1002 (Ms Farrow)", detail: "The pair out of the shed at 05:35, train 1 at 06:00, the main line all day, home with 1001 behind you." },
+    { id: "hale", label: "Drive 1003 (Mr Hale)", detail: "Out of the shed at 05:15, empty to Coldwater, the first Up train, the main line all day." },
+    { id: "penrose", label: "Drive 1001 (Mr Penrose)", detail: "Ride in the pair to Wending, uncouple and take the branch all day; called on behind 1002 at dusk." },
+    { id: "wd-box", label: "Wending Box", detail: "The junction all day: the crossings, the branch, the divide and the join." },
+    { id: "ag-box", label: "Ashgrove Box", detail: "The shed and the terminus: shunts out at dawn and in at dusk, a train every hour." },
+  ],
+  create(role = "farrow") {
+    const r = DAY_ROLES[role] ?? DAY_ROLES.farrow;
+    const tt = valleyDay();
+    const who = r.kind === "driver" ? `You are ${r.driver === "Farrow" ? "Ms Farrow" : r.driver === "Hale" ? "Mr Hale" : "Mr Penrose"}, booking on at Ashgrove Shed.` : `You have ${r.code === "WD" ? "Wending" : "Ashgrove"} Box for the day.`;
+    return buildDay(tt, r, `Duty 601, ${tt.name}. ${who} The working is in Book T and on your duty sheet: 1003 out of road 2 at 05:15 and empty to Coldwater at 05:25; the pair 1002 and 1001 out of road 1 at 05:35, away as train 1 at 06:00 and divided at Wending, 1002 on to Coldwater and 1001 to the branch. Down trains leave Ashgrove on the hour and Up trains leave Coldwater on the hour, crossing at Wending at twelve minutes past; the branch car shuttles half-hourly and keeps clear of the crossing. At dusk 1003 goes into road 2 at 16:35, 1001 is called on behind 1002 at Wending at 17:13, and the pair goes into road 1 at 17:40.`);
+  },
+};
+
+export const SCENARIOS = [DUTY_101, DUTY_201, DUTY_301, DUTY_401, DUTY_501, DUTY_502, DUTY_601];

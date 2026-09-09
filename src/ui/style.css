@@ -39,6 +39,11 @@ button:disabled { opacity: .4; cursor: default; }
 .card.book h3 { color: var(--ivory); }
 .card.book .num, .card.book .sub { color: rgba(244,239,227,.7); }
 .card.book p { color: rgba(244,239,227,.9); }
+.card.day { grid-column: 1 / -1; }
+.card .roles { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.card .roles a { font-family: var(--display); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--green); border: 1px solid var(--green); padding: 4px 8px; border-radius: 3px; text-decoration: none; background: var(--paper); }
+.card .roles a:hover { background: var(--green); color: var(--ivory); }
+.sheet td.svc { color: var(--brass); }
 .card.book .letter { font-family: var(--display); font-weight: 700; font-size: 56px; line-height: 1; float: right; margin: -6px 0 0 12px; }
 
 /* ---------- Duty screen ---------- */

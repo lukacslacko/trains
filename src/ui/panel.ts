@@ -164,7 +164,9 @@ export class SidePanel {
       <div class="ctl"><div class="lbl">Doors<span class="k">O</span></div><div class="opts">${b("doors", "", c.anyDoorsOpen() ? "Open" : "Closed", c.anyDoorsOpen())}${b("horn", "", "Horn", w.hornHeld !== null)}${b("test", "", "Prove brake", false)}</div></div>
       <div class="ctl"><div class="lbl">Cab<span class="k">C</span></div><div class="opts">${b("leave", "", "Leave cab", false)}</div></div>`;
     const otherLights = Object.values(v.cabs).filter((x) => x && x.end !== cab.end).map((x) => `other end ${x!.end}: ${x!.lights}`).join(", ");
-    return `<h4>Cab ${cab.end} · ${v.type.cls} ${v.number} <span class="where">${esc(otherLights)}</span></h4>${gauges}${lamps}${ctl}`;
+    const rider = w.ridingWith();
+    const riding = rider ? `<div class="lamps"><span class="lamp amber">Riding · ${esc(w.driverName(rider))} has the train from ${rider.number}</span></div>` : "";
+    return `<h4>Cab ${cab.end} · ${v.type.cls} ${v.number} <span class="where">${esc(otherLights)}</span></h4>${gauges}${lamps}${riding}${ctl}`;
   }
 
   /* ---------- the signaller's chair ---------- */
@@ -188,7 +190,7 @@ export class SidePanel {
         const arr = box.arrived.find((a) => a.train === out && a.side === s);
         rows += `<div class="row"><span><b>${out}</b> ${arr ? "arrived complete" : "in section"}</span><button data-a="cancel" data-v="${s}" class="${arr ? "" : "red"}" title="${arr ? "Train out of section: cancel the warrant" : "The train has not arrived complete"}">Train out of section</button></div>`;
       }
-      for (const m of box.movements.filter((x) => x.state === "ready" && x.visit.to === s && x.visit.depart && box.standsAlone(w, x))) {
+      for (const m of box.movements.filter((x) => x.state === "ready" && x.visit.to === s && x.visit.depart && box.standsAlone(w, x) && box.trainOf(w, x.visit.train) && [box.st.edges.t1, box.st.edges.t2].some((e) => e && w.whollyOn(box.trainOf(w, x.visit.train)!, [e])))) {
         rows += `<div class="row"><span><b>${m.visit.train}</b> booked ${m.visit.depart} to ${esc(sideName(s))}</span><button data-a="ask" data-v="${m.visit.train}|${s}">Ask ${esc(sideName(s))}</button></div>`;
       }
       return `<div class="sec"><div class="sec-head"><span>Section ${sec} · ${esc(sideName(s))}</span><span class="state ${out ? "out" : clear ? "ok" : "busy"}">${state}</span></div>${rows}</div>`;
@@ -240,6 +242,8 @@ export class SidePanel {
       case "lineClear": return `Warrant in hand: clear ${box.starterFor(m)?.id ?? "the starter"} towards ${name(v.to)}`;
       case "starterCleared": return `Show the baton at ${v.depart} when the doors are closed`;
       case "departing": return "Leaving";
+      case "shuntDue": { const id = box.shuntRouteFor(m); const rt = id ? w.routes.find((r) => r.id === id) : undefined; return `Set ${rt ? rt.signals.map(([s]) => s.id).join(" and ") : "the road"} for ${v.train}, ${box.routeLabel(w, id ?? "")} at ${v.depart}`; }
+      case "shunting": return `${v.train} shunting to ${v.shunt?.to.startsWith("sh") ? `shed road ${v.shunt.to.slice(2)}` : `platform ${v.shunt?.to}`}`;
       default: return "Run-round in progress";
     }
   }
@@ -250,8 +254,8 @@ export class SidePanel {
     const sideName = (s: Side | undefined) => box.sideName(w, s);
     const rows = this.duty.rows.filter((m) => m.state !== "done").slice(0, 4).map((m) => {
       const v = m.visit;
-      const from = v.from ? `from ${sideName(v.from)}${v.arr ? ` ${v.arr}` : ""}` : "starts here";
-      const to = v.depart ? `${v.depart} to ${sideName(v.to)}` : v.joinTo ? `couples to ${v.joinTo}` : "terminates";
+      const from = v.shunt ? `${v.depart} shunt from ${v.shunt.from.startsWith("sh") ? `shed ${v.shunt.from.slice(2)}` : `platform ${v.shunt.from}`}` : v.from ? `from ${sideName(v.from)}${v.arr ? ` ${v.arr}` : ""}` : "starts here";
+      const to = v.shunt ? `to ${v.shunt.to.startsWith("sh") ? `shed ${v.shunt.to.slice(2)}` : `platform ${v.shunt.to}`}` : v.depart ? `${v.depart} to ${sideName(v.to)}` : v.joinTo ? `couples to ${v.joinTo}` : "terminates";
       return `<tr><td><b>${v.train}</b> ${esc(from)} · platform ${v.track} · ${esc(to)}<div class="advice">${esc(this.advice(box, m))}</div></td></tr>`;
     }).join("");
     return `<h4>The working <span class="where">${fmtTime(w.time)}</span></h4><table>${rows || "<tr><td>Nothing more booked.</td></tr>"}</table>`;
@@ -310,10 +314,13 @@ export class SidePanel {
       const depCell = canSkip
         ? `<button class="skip" data-a="skipto" data-v="${i}" title="Advance the clock to 15 s before this departure">${l.leg.dep} ▸</button>`
         : w.skipUntil !== null && i === d.index ? `<span class="skipping">${l.leg.dep} …</span>` : l.leg.dep;
-      return `<tr class="${cls}"><td>${l.leg.from}</td><td>${depCell}</td><td>${dep}</td><td>${l.leg.to}</td><td>${l.leg.arr}</td><td>${arr}</td></tr>`;
+      const place = (code: string, track?: string) => track ? `${code} ${/^sh\d/.test(track) ? "shed " + track.slice(2) : track}` : code;
+      const svc = l.leg.service ? `<td class="svc">${esc(l.leg.service)}</td>` : "";
+      return `<tr class="${cls}">${svc}<td>${esc(place(l.leg.from, l.leg.fromTrack))}</td><td>${depCell}</td><td>${dep}</td><td>${esc(place(l.leg.to, l.leg.toTrack))}</td><td>${l.leg.arr}</td><td>${arr}</td></tr>`;
     }).join("");
     const prep = d.prep.map((p) => `<li>${esc(p)}</li>`).join("");
-    return `<div class="sheet"><table><thead><tr><th>From</th><th>Dep</th><th>Actual</th><th>To</th><th>Arr</th><th>Actual</th></tr></thead><tbody>${rows}</tbody></table><h4>The duty in brief</h4><ol>${prep}</ol><p class="hint">Waiting for a departure? Click its booked time to bring the clock to 15 s before it. The world runs on meanwhile; the clock stops early if anything moves or is written in the Incident Book.</p></div>`;
+    const svcHead = d.legs.some((l) => l.leg.service) ? "<th>Train</th>" : "";
+    return `<div class="sheet"><table><thead><tr>${svcHead}<th>From</th><th>Dep</th><th>Act.</th><th>To</th><th>Arr</th><th>Act.</th></tr></thead><tbody>${rows}</tbody></table><h4>The duty in brief</h4><ol>${prep}</ol><p class="hint">Waiting for a departure? Click its booked time to bring the clock to 15 s before it. The world runs on meanwhile; the clock stops early if anything moves or is written in the Incident Book.</p></div>`;
   }
 
   private renderIncidents(): string {

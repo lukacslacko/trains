@@ -116,15 +116,22 @@ export class Consist {
   control: { vehicle: Vehicle; cab: Cab; index: number } | null = null;
   /** passed a home signal on its subsidiary: proceed at shunting speed to the vehicles ahead */
   callOn = false;
+  /**
+   * A shunting move rather than a train: works under ground signals and subsidiaries at 15 km/h,
+   * stop boards do not apply. The signal passed says which it is; a vehicle without passenger
+   * accommodation starts as one, and anything stabled in a shed is one until it leaves under a main aspect.
+   */
+  shunting: boolean;
 
   constructor(id: string, vehicles: Vehicle[], flip: boolean[]) {
     this.id = id; this.vehicles = vehicles; this.flip = flip;
     for (let i = 0; i + 1 < vehicles.length; i++) this.couplings.push({ pipe: true });
+    this.shunting = !vehicles.some((v) => v.type.passenger);
   }
 
   get mass() { return this.vehicles.reduce((m, v) => m + v.mass, 0); }
   get length() { return this.vehicles.reduce((l, v) => l + v.length, 0); }
-  get isTrain() { return this.vehicles.some((v) => v.type.passenger); }
+  get isTrain() { return !this.shunting; }
   get speedKmh() { return Math.abs(this.v) * 3.6; }
 
   /** Reference direction of the consist as a track Position at the front end (dir outward). */

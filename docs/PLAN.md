@@ -162,12 +162,24 @@ manual that describes exactly what is playable.
   Wending Box); a headless auto-signaller plays both through the player's
   own actions. Books S and R reissued.
 
-### M3 — Timetable and autonomous traffic (next)
-- Working timetable editor; trains run automatically to it.
-- The player's train fits into the running traffic; conflicts are handled
-  by the signallers (NPC or player).
-- Freight: wagons with destinations, a marshalling puzzle ("which cars go
-  where"), consist rules (brake force, length, load).
+### M3 — Timetable and autonomous traffic (first cut done 2026-09-09)
+- The working timetable as data (`src/traffic/timetable.ts`): services
+  with calls, kinds (passenger, empty, shunt), coupling and dividing,
+  joins; crew diagrams; where the stock stands at dawn. A planner derives
+  the boxes' working, the colleagues' programmes and the player's duty
+  sheet from it (`src/traffic/planner.ts`), so a whole day runs by itself
+  and the player takes any chair (Duty 601, `src/traffic/valleyday.ts`).
+- Ashgrove Shed: three roads off the headshunt, shed routes and exit
+  signals, empties out at dawn and in at dusk; sheds are layout data.
+- A movement is a train or a shunting move by the signal it last passed;
+  Class 1 cars can shunt. Colleagues shunt, ride, divide their own car,
+  join by call-on, brake for speed boards, whistle at every crossing, and
+  stable in the shed. Rule R 26 empty trains and shunts. Book T reissued
+  with the working.
+- Still to come in M3: a timetable editor in the game (the data is ready
+  for it); freight: wagons with destinations, a marshalling puzzle, consist
+  rules (brake force, length, load); the player relieving a colleague
+  mid-diagram.
 
 ### M4 — Wear and tear (permanent way)
 - Track condition model: geometry, rail wear, ballast, fastenings. Traffic
