@@ -170,7 +170,16 @@ export class World {
           const applies = o.type === "main" ? c.isTrain : !c.isTrain;
           items.push({ kind: "signal", label: o.id, dist: d, obj: o, aspect: o.aspect, applies });
         } else {
-          const label = o.board === "stop" ? `Stop board ${o.label}` : o.board === "limitOfShunt" ? "Limit of Shunt" : o.board === "speed" ? `Speed ${o.value}` : o.board === "speedAdvance" ? `Speed ${o.value} ahead` : o.board === "gradient" ? `Gradient post · ${o.value === 0 ? "level" : `${Math.abs(o.value!)}‰ ${o.value! > 0 ? "rising" : "falling"}`} ahead` : "Buffer stop";
+          let label = o.board === "stop" ? `Stop board ${o.label}` : o.board === "limitOfShunt" ? "Limit of Shunt" : o.board === "speed" ? `Speed ${o.value}` : o.board === "speedAdvance" ? `Speed ${o.value} ahead` : o.board === "gradient" ? `Gradient post · ${o.value === 0 ? "level" : `${Math.abs(o.value!)}‰ ${o.value! > 0 ? "rising" : "falling"}`} ahead` : "Buffer stop";
+          if (o.board === "switchIndicator" && o.sw) {
+            const set = o.sw.state === "normal" ? o.sw.normal : o.sw.reverse;
+            if (o.approach === "toe") {
+              const far = set.a === o.sw.node ? set.b : set.a;
+              const onward = far.edges.find((e) => e !== set);
+              label = `Switch ${o.sw.id} · lies ${o.sw.state === "normal" ? "straight" : "diverging"}${onward && onward.track !== "sw" ? ` (to ${onward.track === "hs" ? "the headshunt" : onward.track === "main" ? "the main line" : "track " + onward.track})` : ""}`;
+            }
+            else label = `Switch ${o.sw.id} · ${o.approach === o.sw.state ? "set for you" : "SET AGAINST YOU"}`;
+          }
           const applies = o.board === "stop" ? c.isTrain : o.board === "limitOfShunt" ? !c.isTrain : true;
           items.push({ kind: o.board === "buffer" ? "buffer" : "board", label, dist: d, obj: o, applies });
         }
@@ -500,7 +509,7 @@ export class World {
       const before = sign !== 0 ? c.leadingPos(sign) : null;
       const r = stepConsist(c, dt, this.gravityOn(c));
       if (r.hitBuffer) { this.incident("BUFFER", `${c.vehicles.map((v) => v.number).join("+")} struck the buffer stop (Rule D 16)`); }
-      if (r.trailed) this.incident("TRAILED", `Ran through switch ${r.trailed} set against the move`);
+      if (r.trailed) this.incident("TRAILED", `Ran through switch ${r.trailed} set against the move (Rule S 22)`);
       if (before && Math.abs(c.v) > 0) this.checkPassings(c, before, Math.abs(c.v) * dt);
       if (this.consists.includes(c)) this.tryCouple(c);
     }

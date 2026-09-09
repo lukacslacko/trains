@@ -14,10 +14,14 @@ export interface Signal {
 export interface Board {
   kind: "board";
   id: string;
-  board: "stop" | "limitOfShunt" | "speed" | "speedAdvance" | "gradient" | "buffer";
+  board: "stop" | "limitOfShunt" | "speed" | "speedAdvance" | "gradient" | "switchIndicator" | "buffer";
   pos: Position;
   label?: string;
   value?: number;
+  /** the switch a switch indicator reports */
+  sw?: Switch;
+  /** for a switch indicator: which way a train reading it approaches the switch */
+  approach?: "toe" | "normal" | "reverse";
 }
 export type Trackside = Signal | Board;
 
@@ -96,6 +100,21 @@ function elevationAt(km: number) {
   }
   return h;
 }
+/** A switch indicator at the toe of every switch, read by trains approaching from any of its three legs. */
+function switchIndicators(g: TrackGraph): Board[] {
+  const out: Board[] = [];
+  for (const sw of g.switches) {
+    const legs: [Edge, "toe" | "normal" | "reverse"][] = [[sw.toe, "toe"], [sw.normal, "normal"], [sw.reverse, "reverse"]];
+    for (const [e, approach] of legs) {
+      // the object sits at the node end of the leg, facing trains that travel along the leg towards the node
+      const atA = e.a === sw.node;
+      const pos: Position = { edge: e, s: atA ? 0 : e.length, dir: atA ? -1 : 1 };
+      out.push({ kind: "board", id: `SI-${sw.id}-${approach}`, board: "switchIndicator", pos, label: sw.id, sw, approach });
+    }
+  }
+  return out;
+}
+
 /** Gradient posts stand at every change of grade; each faces both ways, so one object per direction. */
 function gradientPosts(g: TrackGraph): Board[] {
   const out: Board[] = [];
@@ -283,7 +302,7 @@ export function loopLayout(): Layout & { loops: Record<string, LoopStation> } {
       board(g, "BUF-WD", "buffer", "hs", KM_MAX, 1),
     );
   }
-  objects.push(...speedBoards(g), ...gradientPosts(g));
+  objects.push(...speedBoards(g), ...gradientPosts(g), ...switchIndicators(g));
 
   const inLoop = (km: number) => (km > 0.08 && km < 0.34) || (km > 2.96 && km < 3.22);
   return {

@@ -44,11 +44,15 @@ export class LineDiagram {
     for (const e of world.layout.graph.edges) {
       const kmA = e.kmA, kmB = e.kmA + (e.kmDir * e.length) / 1000;
       if (e.track === "sw") {
-        // a diverging branch: from the node on the single line to track 2, or the reverse
+        // a switch branch: drawn faint when the switch is set the other way
         const nodeA = e.a, nodeB = e.b;
+        const sw = nodeA.switch ?? nodeB.switch;
+        const set = sw ? (sw.state === "normal" ? sw.normal : sw.reverse) === e : true;
         const ya = nodeA.switch ? y0 : (Math.abs(nodeA.y) > 1 ? yT2 : y0);
         const yb = nodeB.switch ? y0 : (Math.abs(nodeB.y) > 1 ? yT2 : y0);
+        ctx.strokeStyle = set ? C.ivory : "rgba(244,239,227,.3)";
         ctx.beginPath(); ctx.moveTo(X(kmA), ya); ctx.lineTo(X(kmB), yb); ctx.stroke();
+        ctx.strokeStyle = C.ivory;
         continue;
       }
       ctx.beginPath(); ctx.moveTo(X(kmA), yOf(e.track)); ctx.lineTo(X(kmB), yOf(e.track)); ctx.stroke();
@@ -79,6 +83,7 @@ export class LineDiagram {
       const facingDown = o.pos.edge.kmDir * o.pos.dir === 1;
       const side = facingDown ? -1 : 1; // Down-facing above the line, Up-facing below
       const x = X(km);
+      if (o.kind === "board" && o.board === "switchIndicator") continue;
       if (o.kind === "signal") {
         const col = o.aspect === "clear" ? C.lamp : o.aspect === "caution" ? C.amber : o.aspect === "shunt" ? C.white : C.red;
         const yy = y + side * (track === "2" ? 8 : 12);

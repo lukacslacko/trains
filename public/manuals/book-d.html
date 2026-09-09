@@ -33,7 +33,7 @@
 <nav class="desk-bar">
   <a href="index.html">← Library</a>
   <span class="spacer"></span>
-  <span>Book D · Third edition · September 2026</span>
+  <span>Book D · Fourth edition · September 2026</span>
   <a href="#" onclick="window.print();return false;">Print booklet</a>
 </nav>
 
@@ -47,7 +47,7 @@
   <div class="book-letter"><small>Book</small>D</div>
   <h1 class="title">Driving Manual</h1>
   <p class="subtitle">The cab, the procedures, and the handbooks of the Class 1 car, the Class 4 locomotive and the Type C4 coach.</p>
-  <div class="edition">Third edition · September 2026 · Issued by the Locomotive Superintendent's Office</div>
+  <div class="edition">Fourth edition · September 2026 · Issued by the Locomotive Superintendent's Office</div>
   <div class="motto">On the line, on time.</div>
 </section>
 
@@ -69,6 +69,7 @@
     <li class="sub"><span class="num">4.3</span><a href="#c4-3">Braking to a stop board</a><span class="dots"></span><span class="pg">12</span></li>
     <li class="sub"><span class="num">4.4</span><a href="#c4-4">The emergency brake and the buffer stop</a><span class="dots"></span><span class="pg">13</span></li>
     <li class="sub"><span class="num">4.5</span><a href="#c4-5">Gradients</a><span class="dots"></span><span class="pg">14</span></li>
+    <li class="sub"><span class="num">4.6</span><a href="#c4-6">Switches</a><span class="dots"></span><span class="pg">15</span></li>
     <li><span class="num">5</span><a href="#c5">Changing ends</a><span class="dots"></span><span class="pg">14</span></li>
     <li><span class="num">6</span><a href="#c6">Coupling, uncoupling and the brake test</a><span class="dots"></span><span class="pg">15</span></li>
     <li><span class="num">7</span><a href="#c7">Stabling</a><span class="dots"></span><span class="pg">18</span></li>
@@ -239,7 +240,7 @@
       <tr><td>Pipe pressure</td><td class="mono">bar</td><td>5.0 released, 3.5 full service, 0 emergency. It tells you what the brakes are doing, not what the handle says.</td></tr>
       <tr><td>Line</td><td>lamp</td><td>Lit when the pantograph is on a live wire.</td></tr>
       <tr><td>Doors</td><td>lamp</td><td>Amber while any door is open. Traction is held off until it goes out.</td></tr>
-      <tr><td>Ahead</td><td>text</td><td>The next signal or board in your direction, its aspect, and the distance to it.</td></tr>
+      <tr><td>Ahead</td><td>text</td><td>The next signal or board in your direction, its aspect, and the distance to it. Switches are listed too, with how they lie: approaching the toe, <span class="mono">lies straight (to track 1)</span> or <span class="mono">lies diverging</span>; approaching from a branch, <span class="mono">set for you</span> or <span class="mono">SET AGAINST YOU</span>. It reads the switch indicator for you (§ 4.6); it does not replace looking at it.</td></tr>
       <tr><td>Limit</td><td class="mono">km/h</td><td>The lowest limit under any part of the train. It falls as the front reaches a lower board and rises only once the rear has passed a higher one.</td></tr>
       <tr><td>Kilometre</td><td class="mono">km</td><td>Where the front of the train stands, to the metre. It agrees with the hectometre posts beside the line; report a position to the Box by the last post passed, as in "stopped at 2.7".</td></tr>
       <tr><td>Gradient ahead</td><td class="mono">‰</td><td>The grade under the front of the train in the direction this cab faces: rising, falling or level. It agrees with the gradient posts, § 4.5.</td></tr>
@@ -418,6 +419,27 @@
   </div>
   <p>Wherever the gradient indicator shows anything but level, <a href="book-r.html#R22">Rule R 22</a> adds the parking brake to the three conditions for leaving a cab, and the door will not open without it. The stations are level, so a run-round never needs it; a change of ends after a stop on the valley grade always does. A vehicle that moves with no direction set, with the reverser in Neutral or nobody in a cab, is a <em>runaway</em>, and the Incident Book records it under that word. A train that moves with the parking brake still applied is dragging it; that is recorded too, after three metres.</p>
   <div class="note"><p>The Type C4 coach has no parking brake of its own. Uncoupled, it is held by its automatic brake, which applies when the pipe is parted; that is safe on the level platforms where run-rounds happen, and it is the reason a coach is never left uncoupled on the grade.</p></div>
+
+  <h2 id="c4-6"><span class="num">4.6</span> Switches</h2>
+  <p>A switch has three legs: the <em>toe</em>, where the single track begins to divide, and two branches beyond it, the straight route and the diverging one. Every move over a switch is one of two kinds. A <span class="term">facing move</span> comes in at the toe and is sent one way or the other by the switch: which way is not your decision, and you had better know it. A <span class="term">trailing move</span> comes in along a branch and out through the toe: if the switch lies for your branch you pass over it; if it lies for the other branch, your wheels force the blades across and you have <em>run through</em> it, which bends the blades, breaks the rodding, and can put the tail of your move on the ground.</p>
+  <p>Every switch on the Railway now carries a <span class="term">switch indicator</span> at its toe: a black box on a short post with a white bar on each face. The bar lies the way the switch lies. Along the track, the switch is set for the straight route; leaning towards the diverging track, it is set for the diverging route. It reads the same from every leg. Coming at the toe, it tells you which route you are about to take. Coming along a branch, it tells you whether the switch is set for your track or against you, and the Ahead indicator (§ 2.2) says so in those words.</p>
+  <div class="rule" id="S22-cited">
+    <span class="rule-num">Rule S 22</span><span class="rule-title">Switch indicators</span>
+    <p>Before moving over a switch, read its indicator. Never run through a switch that shows set against your move: stop and speak to the Box. Running through switches is an incident. <em>(Book S; cited here.)</em></p>
+  </div>
+  <p>The indicator carries no authority. A ground signal showing <span class="term">Shunt</span> is the station master's word that the route is set and the move may be made; the indicator is the switch's own word that it lies as the signal promised. The two agree almost always. When they do not, the indicator is the one telling the truth about the rails, and the rails are what you are about to run over: stop short of the switch and tell the Box what you see. Make it a habit, on every move that crosses a switch, to glance at the indicator as you approach it, the way you glance at a signal. It costs a second; the alternative costs a switch.</p>
+  <div class="why"><p>A driver in a cab cannot see the blades of a switch; they are low, small and on the far side of the wheel. A signal says what was intended for the route; only the indicator says what the switch has actually done. On a run-round you cross four switches in six moves, half of them trailing, and the station master is throwing the points between your moves. The indicator is how you check that the last throw happened before you trust your tail to it.</p></div>
+  <h3>The reads on a run-round</h3>
+  <p>At Wending, arriving on track 1, you cross <span class="mono">WD A</span> facing (it lies straight, for track 1) and stop at the board. Then:</p>
+  <table>
+    <thead><tr><th>Move</th><th>Signal</th><th>Switch and what its indicator should show</th></tr></thead>
+    <tbody>
+      <tr><td>Draw forward from track 1 into the headshunt</td><td class="mono">WD 3</td><td><span class="mono">WD B</span>, trailing from track 1: <em>set for you</em>. The bar lies along the track: straight, for track 1.</td></tr>
+      <tr><td>Set back from the headshunt along track 2 to the stub</td><td class="mono">WD 6, WD 4</td><td><span class="mono">WD B</span>, facing from the headshunt: <em>lies diverging</em>, the bar leaning towards track 2. Then <span class="mono">WD A</span>, trailing from track 2: <em>set for you</em>, the bar leaning towards track 2.</td></tr>
+      <tr><td>Come forward from the stub onto track 1 to the coach</td><td class="mono">WD 5</td><td><span class="mono">WD A</span>, facing from the stub: <em>lies straight</em>, for track 1.</td></tr>
+    </tbody>
+  </table>
+  <p>At Ashgrove the same in mirror: <span class="mono">AG B</span> set for you (straight) as you draw into the headshunt under <span class="mono">AG 4</span>; <span class="mono">AG B</span> lies diverging and <span class="mono">AG A</span> set for you (diverging) as you set back along track 2 under <span class="mono">AG 5</span> and <span class="mono">AG 3</span>; <span class="mono">AG A</span> lies straight as you come onto track 1 under <span class="mono">AG 6</span>. If at any of these the bar lies the other way, the points have not yet been thrown for you, whatever the message said: wait, and if the signal is showing Shunt over a switch that shows against you, stop and speak to the Box before you move.</p>
 </section>
 
 <!-- 5 CHANGING ENDS -->
@@ -452,7 +474,7 @@
     <p>Approach the standing vehicle at 5 km/h or less over the last twenty metres. Make contact at 2 km/h or less. The coupler engages mechanically on contact. Then go to the coupling and connect the brake pipe.</p>
   </div>
   <ol class="steps">
-    <li>You will be under a ground signal showing <span class="term">Shunt</span>, on a route into an occupied track; the station master has cleared it for you to couple. Shunting speed is 15 km/h until the last twenty metres. The coach you are making for stands at the platform between posts 3.1 and 3.2 at Wending, between 0.1 and 0.2 at Ashgrove.</li>
+    <li>You will be under a ground signal showing <span class="term">Shunt</span>, on a route into an occupied track; the station master has cleared it for you to couple. Read the switch indicator at the outer switch as you come to it from the stub: it should lie straight, for track 1 (§ 4.6). Shunting speed is 15 km/h until the last twenty metres. The coach you are making for stands at the platform between posts 3.1 and 3.2 at Wending, between 0.1 and 0.2 at Ashgrove.</li>
     <li>At twenty metres, be at 5 km/h or under. Handle between step 1 and Release, controller at 0. The Ahead indicator counts the metres down.</li>
     <li>Let the train roll the last few metres at a walking pace and touch at 2 km/h or less. You will feel the coupler take.</li>
     <li>Handle to <span class="term">Full</span>. Secure the cab and leave it.</li>
@@ -471,7 +493,7 @@
     <li>Walk to the coupling between the vehicles you mean to part.</li>
     <li>Disconnect the brake pipe. The pipe vents on both sides; you will hear it. The coach is now held by its own brake and will stay where it is.</li>
     <li>Part the coupler. The two vehicles are separate.</li>
-    <li>Walk to the cab of the vehicle that is to move. From here on you are a light locomotive under the station master's ground signals, described in Book S.</li>
+    <li>Walk to the cab of the vehicle that is to move. From here on you are a light locomotive under the station master's ground signals, described in Book S, and every move you make crosses a switch: read its indicator before each one (§ 4.6).</li>
   </ol>
   <div class="note"><p>Where the headshunts are: at Wending beyond post 3.2, ending at the buffer stop at 3.3; at Ashgrove before post 0.1, ending at 0.0. Eighty metres each, and a locomotive is sixteen.</p></div>
   <div class="why"><p>The pipe comes off before the coupler because a coach parted with its pipe still charged is a coach with its brakes released and nothing holding it. The order is not a preference; it is what keeps a coach on the platform.</p></div>
@@ -807,7 +829,7 @@
     <p class="foot">Signalled stations, Book S. Station masters: T. Marrow at Ashgrove, J. Pell at Wending. Depart only on a cleared starter and the green baton, Rule R 20.</p>
   </div>
 
-  <p><strong>What to expect.</strong> The train is coupled and stabled on Ashgrove track 1 with the locomotive at the Down end, its Cab A facing Wending. Prepare the locomotive only, parking brake off first; the coach lights itself. Wait for AG 1 to clear and for Mr Marrow's baton, and go at 07:00. The climb to Wending is nothing to the Heron in notch 2; the descent back is the heavier train's, so keep step 2 in hand on the 12‰ and brake at the triangle at 0.7 for the Ashgrove reduction. At Wending the home signal WD 1 shows Caution because track 1 ends at a buffer; stop at the board. Then the run-round, which is the whole point of the duty: uncouple (§ 6.2), draw forward into the headshunt under WD 3, change ends, run back along track 2 under WD 6 and WD 4 and stop short of the Limit of Shunt board, change ends again, and come onto track 1 under WD 5 to couple to the coach's other end at walking pace (§ 6.1). Connect the pipe, prove the brake, and wait for WD 2 and Mr Pell. Each move is offered to you by Wending Box in a message; the ground signals are its word made visible. The worked example in <a href="book-s.html">Book S</a> walks through every signal of this run-round in order. At Ashgrove the same again in mirror, under Mr Marrow, and then stable the train coupled and proved, pantograph down and parking brake on, before 08:00 so that the next driver finds it ready.</p>
+  <p><strong>What to expect.</strong> The train is coupled and stabled on Ashgrove track 1 with the locomotive at the Down end, its Cab A facing Wending. Prepare the locomotive only, parking brake off first; the coach lights itself. Wait for AG 1 to clear and for Mr Marrow's baton, and go at 07:00. The climb to Wending is nothing to the Heron in notch 2; the descent back is the heavier train's, so keep step 2 in hand on the 12‰ and brake at the triangle at 0.7 for the Ashgrove reduction. At Wending the home signal WD 1 shows Caution because track 1 ends at a buffer; stop at the board. Then the run-round, which is the whole point of the duty: uncouple (§ 6.2), draw forward into the headshunt under WD 3 with WD B showing set for you, change ends, run back along track 2 under WD 6 and WD 4 with WD B lying diverging and WD A set for you, stop short of the Limit of Shunt board, change ends again, and come onto track 1 under WD 5 with WD A lying straight, to couple to the coach's other end at walking pace (§ 6.1). Connect the pipe, prove the brake, and wait for WD 2 and Mr Pell. Each move is offered to you by Wending Box in a message; the ground signals are its word made visible, and the switch indicators are the rails' (§ 4.6). The worked example in <a href="book-s.html">Book S</a> walks through every signal of this run-round in order. At Ashgrove the same again in mirror, under Mr Marrow, and then stable the train coupled and proved, pantograph down and parking brake on, before 08:00 so that the next driver finds it ready.</p>
 </section>
 
 <!-- 12 GLOSSARY -->
@@ -821,6 +843,7 @@
     <dt>Continuity</dt><dd>The condition of the brake pipe being connected from the cab to the far end of the train, proved by the brake test.</dd>
     <dt>Down, Up</dt><dd>Down is the direction of increasing kilometrage, Ashgrove towards Wending. Up is the opposite.</dd>
     <dt>Dwell</dt><dd>The time a train stands at a station between arrival and departure.</dd>
+    <dt>Facing move</dt><dd>A move that enters a switch at its toe and is sent one way or the other by it. The switch indicator tells you which. § 4.6.</dd>
     <dt>Gradient post</dt><dd>A slate post at every change of grade, with a small ivory disc and two black arms along the line, each tilted with the grade on its side and lettered in per mille; <span class="mono">L</span> for level. The arm on the side you are travelling towards shows the grade ahead. Information, not instruction.</dd>
     <dt>Headshunt</dt><dd>The short dead-end track beyond the inner switch of a station loop, into which a locomotive draws to begin a run-round.</dd>
     <dt>Hectometre post</dt><dd>A post every hundred metres on the left of the line in the Down direction, its ivory plate reading the distance from the Ashgrove buffer stop in kilometres and tenths, as <span class="mono">1.4</span>. A position reference, not a signal.</dd>
@@ -833,6 +856,7 @@
     <dt>One Train Working</dt><dd>Working a line that carries a single train and no signals. Rule R 24.</dd>
     <dt>Parking brake</dt><dd>The mechanical brake on a cabbed vehicle, worked from either cab, holding about half the full service force without air. Off before moving; on before leaving a cab on a gradient, and whenever stabled. Rule D 22.</dd>
     <dt>Per mille</dt><dd>Parts per thousand, the Railway's unit for gradients: 12‰ is twelve metres of rise in a thousand metres of line, written ‰.</dd>
+    <dt>Run through</dt><dd>To pass over a switch, trailing, when it is set for the other branch, forcing the blades across. It damages the switch and is an incident. Rule S 22.</dd>
     <dt>Run-round</dt><dd>The moves by which a locomotive is taken from one end of its train to the other at a terminus, by way of the loop.</dd>
     <dt>Securing</dt><dd>Controller 0, brake Full, reverser Neutral, and on a gradient or when stabling the parking brake, before leaving a cab. Rule R 22.</dd>
     <dt>Shunting move</dt><dd>Any movement made under a ground signal within station limits, at 15 km/h or less.</dd>
@@ -840,7 +864,9 @@
     <dt>Starting signal</dt><dd>The main signal at the departure end of a platform that governs leaving the station.</dd>
     <dt>Station limits</dt><dd>The area from the speed board or home signal to the buffer stop, where 25 km/h applies.</dd>
     <dt>Stop board</dt><dd>The board at which a train stops at a platform, front of the train level with the bar.</dd>
+    <dt>Switch indicator</dt><dd>A black box on a short post at the toe of every switch, a white bar on each face lying the way the switch lies: along the track for the straight route, leaning towards the diverging track for the diverging route. Read from every leg before crossing. Book S, Rule S 22.</dd>
     <dt>Tail, Head</dt><dd>Red lamps at the rear of a train; white lamps at its front.</dd>
+    <dt>Trailing move</dt><dd>A move that enters a switch along one of its branches and leaves through the toe. Safe only when the switch is set for that branch; otherwise a run through. § 4.6.</dd>
     <dt>Warning distance</dt><dd>The distance from an advance speed board to the speed board it announces: 200 m where the approach is level or rising, 250 m where it falls at 10‰ or more, enough to lose 25 km/h at 0.5 m/s² with fifty metres to spare. On this line 200 m at 2.65 and 250 m at 0.70.</dd>
   </dl>
 </section>
@@ -848,8 +874,8 @@
 <!-- COLOPHON -->
 <section class="page colophon" id="colophon" data-folio="Book D · Colophon">
   <img class="mark" src="../brand/mark-green.svg" alt="">
-  <p><strong>Book D — Driving Manual.</strong> Third edition, September 2026, superseding the second edition of September 2026. Issued by the Locomotive Superintendent's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
-  <p>Changes are listed on the amendment slips. <a href="amendments/book-d-ed2.html">Amendment Slip D-2</a>, first to second edition: advance speed boards, the whole-train rule for limits, and braking for a reduction. <a href="amendments/book-d-ed3.html">Amendment Slip D-3</a>, second to third edition: the gradient profile of the line, gradient posts, the parking brake, Rules D 20 and D 22, and the warning distance on a falling approach.</p>
+  <p><strong>Book D — Driving Manual.</strong> Fourth edition, September 2026, superseding the third edition of September 2026. Issued by the Locomotive Superintendent's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
+  <p>Changes are listed on the amendment slips. <a href="amendments/book-d-ed2.html">Amendment Slip D-2</a>, first to second edition: advance speed boards, the whole-train rule for limits, and braking for a reduction. <a href="amendments/book-d-ed3.html">Amendment Slip D-3</a>, second to third edition: the gradient profile of the line, gradient posts, the parking brake, Rules D 20 and D 22, and the warning distance on a falling approach. <a href="amendments/book-d-ed4.html">Amendment Slip D-4</a>, third to fourth edition: switch indicators, facing and trailing moves, and the reads on a run-round.</p>
   <p>This Book cites Book R (Rules of Operation) and Book S (Signalling Manual). Where they differ, Book R governs. Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5.</p>
   <p>The handbooks in § 8 to § 10 are to be amended whenever a class is altered. Amendments are issued as numbered slips; paste them in at the page indicated. Drivers are asked to report any paragraph they had to read twice.</p>
 </section>

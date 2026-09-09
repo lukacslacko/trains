@@ -1,5 +1,5 @@
 import { World } from "../sim/world";
-import { type Edge, type Pt, worldPoint, pointAt, tangentAt } from "../track/graph";
+import { type Edge, type Pt, type Switch, worldPoint, pointAt, tangentAt } from "../track/graph";
 import { type Signal, type Board } from "../track/layouts";
 import { type Vehicle, type End } from "../stock/vehicles";
 
@@ -70,6 +70,7 @@ export class WorldRenderer {
 
     this.drawPosts(ctx, world, left, right, s);
     this.drawPlatforms(ctx, world);
+    if (s >= 3.5) for (const e of world.layout.graph.edges) this.drawSleepers(ctx, e, left, right);
     for (const e of world.layout.graph.edges) this.drawEdge(ctx, e, s);
     this.drawSwitches(ctx, world, s);
     for (const o of world.layout.objects) {
@@ -122,32 +123,96 @@ export class WorldRenderer {
     }
   }
 
+  /** The switch an edge is a branch of (not its toe), if any. */
+  private branchOf(e: Edge): Switch | null {
+    for (const n of [e.a, e.b]) if (n.switch && e !== n.switch.toe && (e === n.switch.normal || e === n.switch.reverse)) return n.switch;
+    return null;
+  }
+
+  /** The part of an edge's polyline between arc lengths s0 and s1. */
+  private clipped(e: Edge, s0: number, s1: number): Pt[] {
+    const out: Pt[] = [pointAt(e, s0)];
+    for (let i = 0; i < e.pts.length; i++) if (e.cum[i] > s0 && e.cum[i] < s1) out.push(e.pts[i]);
+    out.push(pointAt(e, s1));
+    return out;
+  }
+
+  /** Sleepers under the rails: short slate ties every 0.65 m. */
+  private drawSleepers(ctx: CanvasRenderingContext2D, e: Edge, left: number, right: number) {
+    ctx.strokeStyle = "rgba(74,85,96,.35)"; ctx.lineWidth = 0.24; ctx.lineCap = "butt";
+    ctx.beginPath();
+    for (let s = 0.3; s < e.length; s += 0.65) {
+      const p = pointAt(e, s);
+      if (p.x < left || p.x > right) continue;
+      const t = tangentAt(e, s);
+      ctx.moveTo(p.x - t.y * 1.25, p.y + t.x * 1.25);
+      ctx.lineTo(p.x + t.y * 1.25, p.y - t.x * 1.25);
+    }
+    ctx.stroke();
+  }
+
+  /** Track drawn as two rails. At a switch the set route runs through; the other route's rails end short of the points. */
   private drawEdge(ctx: CanvasRenderingContext2D, e: Edge, s: number) {
     ctx.lineCap = "butt"; ctx.lineJoin = "round";
-    ctx.beginPath();
-    ctx.moveTo(e.pts[0].x, e.pts[0].y);
-    for (let i = 1; i < e.pts.length; i++) ctx.lineTo(e.pts[i].x, e.pts[i].y);
-    if (s >= 2.2) {
-      ctx.strokeStyle = C.ink; ctx.lineWidth = 1.7; ctx.stroke();
-      ctx.strokeStyle = C.ivory; ctx.lineWidth = 1.0; ctx.stroke();
-    } else {
-      ctx.strokeStyle = C.ink; ctx.lineWidth = 1.2; ctx.stroke();
+    const GAP = 5;
+    let pts = e.pts;
+    const sw = this.branchOf(e);
+    if (sw) {
+      const set = sw.state === "normal" ? sw.normal : sw.reverse;
+      if (e !== set) pts = e.a === sw.node ? this.clipped(e, GAP, e.length) : this.clipped(e, 0, e.length - GAP);
+    }
+    if (s < 2.2) {
+      ctx.strokeStyle = C.ink; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
+      for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+      ctx.stroke();
+      return;
+    }
+    // per-vertex normals, then the two rails at ±0.72 m
+    const n = pts.length;
+    const normals: Pt[] = [];
+    for (let i = 0; i < n; i++) {
+      const p0 = pts[Math.max(0, i - 1)], p1 = pts[Math.min(n - 1, i + 1)];
+      const dx = p1.x - p0.x, dy = p1.y - p0.y, l = Math.hypot(dx, dy) || 1;
+      normals.push({ x: -dy / l, y: dx / l });
+    }
+    ctx.strokeStyle = C.ink; ctx.lineWidth = 0.22;
+    for (const side of [-0.72, 0.72]) {
+      ctx.beginPath();
+      for (let i = 0; i < n; i++) {
+        const x = pts[i].x + normals[i].x * side, y = pts[i].y + normals[i].y * side;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
     }
   }
 
+  /** Switch indicators: a black box on a short post at the toe, showing a white bar that lies the way the switch lies. */
   private drawSwitches(ctx: CanvasRenderingContext2D, world: World, s: number) {
     for (const sw of world.layout.graph.switches) {
-      const sel = sw.state === "normal" ? sw.normal : sw.reverse;
       const n = sw.node;
-      // highlight the set branch with a short green line from the node
-      const along = sel.a === n ? pointAt(sel, Math.min(12, sel.length)) : pointAt(sel, Math.max(0, sel.length - 12));
-      ctx.strokeStyle = C.lamp; ctx.lineWidth = 0.6; ctx.lineCap = "round";
-      ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(along.x, along.y); ctx.stroke();
-      ctx.fillStyle = C.paper; ctx.strokeStyle = C.ink; ctx.lineWidth = 0.25;
-      ctx.beginPath(); ctx.arc(n.x, n.y, 1.0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      // direction "through the switch" from the toe, and which side the diverging track leaves to
+      const toeIn = sw.toe.b === n ? tangentAt(sw.toe, sw.toe.length) : (() => { const t = tangentAt(sw.toe, 0); return { x: -t.x, y: -t.y }; })();
+      const farRev = sw.reverse.a === n ? sw.reverse.b : sw.reverse.a;
+      const divSide = Math.sign((farRev.x - n.x) * -toeIn.y + (farRev.y - n.y) * toeIn.x) || 1; // +1 = to the left-hand normal
+      const nrm = { x: -toeIn.y, y: toeIn.x };
+      // the box stands on the side away from the diverging track, 3.4 m from the toe
+      const bx = n.x - nrm.x * divSide * 3.4, by = n.y - nrm.y * divSide * 3.4;
+      ctx.fillStyle = C.ink; ctx.strokeStyle = C.ivory; ctx.lineWidth = 0.12;
+      ctx.beginPath(); ctx.rect(bx - 0.9, by - 0.9, 1.8, 1.8); ctx.fill(); ctx.stroke();
+      // the bar: along the track when set straight, leaning towards the diverging track when set diverging
+      let d = toeIn;
+      if (sw.state === "reverse") {
+        const a = 0.6 * divSide; // about 35 degrees
+        d = { x: toeIn.x * Math.cos(a) - toeIn.y * Math.sin(a), y: toeIn.x * Math.sin(a) + toeIn.y * Math.cos(a) };
+      }
+      ctx.strokeStyle = C.white; ctx.lineWidth = 0.28; ctx.lineCap = "round";
+      ctx.beginPath(); ctx.moveTo(bx - d.x * 0.6, by - d.y * 0.6); ctx.lineTo(bx + d.x * 0.6, by + d.y * 0.6); ctx.stroke();
+      ctx.strokeStyle = C.slate; ctx.lineWidth = 0.2;
+      ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx + nrm.x * divSide * 1.6, by + nrm.y * divSide * 1.6); ctx.stroke();
       if (s >= 2) {
-        ctx.fillStyle = C.slate; ctx.font = `600 2.6px ${DISPLAY}`; ctx.textAlign = "center";
-        ctx.fillText(sw.id, n.x, n.y + 4.8);
+        ctx.fillStyle = C.slate; ctx.font = `600 2.2px ${DISPLAY}`; ctx.textAlign = "center";
+        ctx.fillText(sw.id, bx, by - nrm.y * divSide * 2.6 + (divSide * nrm.y < 0 ? 0.8 : 0.8));
       }
     }
   }
@@ -204,6 +269,7 @@ export class WorldRenderer {
   }
 
   private drawBoard(ctx: CanvasRenderingContext2D, b: Board, s: number) {
+    if (b.board === "switchIndicator") return;
     const { p, t, n } = this.sideOf(b);
     if (b.board === "gradient") {
       // one physical post per change of grade, drawn from the Down-facing object, on the post side of the line (-y)

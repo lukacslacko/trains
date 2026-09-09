@@ -65,7 +65,7 @@
 <nav class="desk-bar">
   <a href="index.html">← Library</a>
   <span class="spacer"></span>
-  <span>Book I · Third edition · September 2026</span>
+  <span>Book I · Fourth edition · September 2026</span>
   <a href="#" onclick="window.print();return false;">Print booklet</a>
 </nav>
 
@@ -79,7 +79,7 @@
   <div class="book-letter"><small>Book</small>I</div>
   <h1 class="title">Identity Manual</h1>
   <p class="subtitle">The name, the mark, the colours and the voice of the Meridian Railway, and how to use them.</p>
-  <div class="edition">Third edition · September 2026 · Issued by the General Manager's Office</div>
+  <div class="edition">Fourth edition · September 2026 · Issued by the General Manager's Office</div>
   <div class="motto">On the line, on time.</div>
 </section>
 
@@ -547,7 +547,45 @@
     <figcaption><span class="fig">Fig. 7.2</span> Signal name plates. Odd numbers face Down, even numbers face Up (Book S).</figcaption>
   </figure>
 
-  <h2 id="c7-3"><span class="num">7.3</span> Boards</h2>
+  <h2 id="c7-switch"><span class="num">7.3</span> Switch indicators</h2>
+  <p>Every switch tells the driver which way it lies. The <strong>switch indicator</strong> is an Ink box 400 mm square with an Ivory rim 12 mm wide, on a Slate post 1.0 m to the underside of the box, standing at the toe of the switch on the side of the line away from the diverging track. Each of its two faces, one towards the toe and one towards the branches, carries a single White bar 300 mm long and 40 mm wide. The bar lies the way the switch lies: upright when the switch is set for the straight route, leaning 35° from the vertical towards the diverging track when it is set for the diverging route. Both faces move together, so a driver reads the same answer from any leg of the switch. The bar is a lamp, lit at night, and it is White for the reason the ground-signal lamps are White: it is information for a shunting move, and White is the colour the Railway keeps for that. It is not lettering, and the signal name plate of § 7.2 remains the only white lettering on the line.</p>
+  <figure>
+    <div class="figure-frame" style="display:flex;justify-content:space-around;align-items:flex-end;flex-wrap:wrap;gap:16px">
+      <svg viewBox="0 0 200 230" width="200" height="230" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+        <rect x="95" y="118" width="10" height="112" fill="#4A5560"/>
+        <rect x="62" y="40" width="76" height="76" fill="#1A1A1A" stroke="#F4EFE3" stroke-width="2.3"/>
+        <rect x="96.2" y="49.5" width="7.6" height="57" fill="#fff"/>
+        <line x1="62" y1="128" x2="138" y2="128" stroke="#B5913F" stroke-width="1"/>
+        <line x1="62" y1="124" x2="62" y2="132" stroke="#B5913F" stroke-width="1"/><line x1="138" y1="124" x2="138" y2="132" stroke="#B5913F" stroke-width="1"/>
+        <text x="100" y="141" text-anchor="middle" font-size="10" fill="#B5913F" letter-spacing="1">400</text>
+        <line x1="150" y1="49.5" x2="150" y2="106.5" stroke="#B5913F" stroke-width="1"/>
+        <line x1="146" y1="49.5" x2="154" y2="49.5" stroke="#B5913F" stroke-width="1"/><line x1="146" y1="106.5" x2="154" y2="106.5" stroke="#B5913F" stroke-width="1"/>
+        <text x="158" y="81" font-size="10" fill="#B5913F" letter-spacing="1">300</text>
+        <line x1="96.2" y1="30" x2="103.8" y2="30" stroke="#B5913F" stroke-width="1"/>
+        <line x1="96.2" y1="26" x2="96.2" y2="34" stroke="#B5913F" stroke-width="1"/><line x1="103.8" y1="26" x2="103.8" y2="34" stroke="#B5913F" stroke-width="1"/>
+        <text x="100" y="23" text-anchor="middle" font-size="10" fill="#B5913F" letter-spacing="1">40</text>
+        <text x="100" y="12" text-anchor="middle" font-size="11" fill="#4A5560" letter-spacing="1.5">SET STRAIGHT</text>
+        <text x="110" y="200" font-size="10" fill="#B5913F" letter-spacing="1">1.0 m TO RAIL</text>
+      </svg>
+      <svg viewBox="0 0 200 230" width="200" height="230" font-family="Barlow Condensed, Arial Narrow, sans-serif">
+        <rect x="95" y="118" width="10" height="112" fill="#4A5560"/>
+        <rect x="62" y="40" width="76" height="76" fill="#1A1A1A" stroke="#F4EFE3" stroke-width="2.3"/>
+        <rect x="96.2" y="49.5" width="7.6" height="57" fill="#fff" transform="rotate(35 100 78)"/>
+        <line x1="100" y1="50" x2="100" y2="106" stroke="#B5913F" stroke-width="1" stroke-dasharray="2 2"/>
+        <path d="M100 62 A16 16 0 0 1 109.2 64.9" fill="none" stroke="#B5913F" stroke-width="1"/>
+        <text x="112" y="60" font-size="10" fill="#B5913F" letter-spacing="1">35°</text>
+        <text x="100" y="12" text-anchor="middle" font-size="11" fill="#4A5560" letter-spacing="1.5">SET DIVERGING</text>
+        <text x="20" y="200" font-size="10" fill="#B5913F" letter-spacing="1">LEANING TOWARDS THE DIVERGING TRACK</text>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 7.3</span> Switch indicator, the face towards the toe: set straight, and set diverging with the diverging track to the right. Dimensions in millimetres, in brass.</figcaption>
+  </figure>
+  <p>The indicator stands where the points begin, 3.4 m from the centre of the track on the side away from the diverging route, so that it is never between the two tracks and never behind a wagon standing on either of them. It shows how the switch lies and nothing else; the ground signal beside it says whether the driver may go. Book S says how the two are read together, and what a driver does when the indicator shows the switch set against the move. The Works makes the bar as one lamp behind a stencil, so that the leaning bar is the same lamp turned, never a second lamp.</p>
+  <dl class="dl">
+    <dt>Switch indicator</dt><dd>Ink box with an Ivory rim, two faces, a single White bar on each: upright for the straight route, leaning towards the diverging track for the diverging route. One at the toe of every switch, on the side away from the diverging track.</dd>
+  </dl>
+
+  <h2 id="c7-3"><span class="num">7.4</span> Boards</h2>
   <p>Four fixed boards are in use, drawn here so that the Works and Book S agree. Their meanings are Book S's business; their looks are ours.</p>
   <figure>
     <div class="figure-frame" style="display:flex;justify-content:space-around;align-items:flex-end;flex-wrap:wrap;gap:16px">
@@ -581,7 +619,7 @@
         <text x="75" y="13" text-anchor="middle" font-size="11" fill="#4A5560" letter-spacing="1.5">ADVANCE SPEED BOARD</text>
       </svg>
     </div>
-    <figcaption><span class="fig">Fig. 7.3</span> Stop board, Limit of Shunt board, Speed board and Advance speed board. All on Slate posts, board centres 2.0 m above rail.</figcaption>
+    <figcaption><span class="fig">Fig. 7.4</span> Stop board, Limit of Shunt board, Speed board and Advance speed board. All on Slate posts, board centres 2.0 m above rail.</figcaption>
   </figure>
   <dl class="dl">
     <dt>Stop board</dt><dd>Ivory board with an Ink border, a thick Ink bar across the upper half, the station name beneath in Barlow Condensed 600.</dd>
@@ -591,7 +629,7 @@
   </dl>
   <p>The two speed shapes are two tenses of the same word. The disc says <em>now</em>: the limit on it applies from the board. The triangle says <em>ahead</em>: the limit on it applies at a speed board one warning distance further on, 200 m on this line, and the driver has that distance in which to come down to it. Only reductions are announced; a higher limit gets a disc and nothing before it. An advance speed board stands on the same side of the line as the disc it announces, facing the trains that will meet them both, so that a driver reads triangle then disc, always in that order and never one without the other. In fog or snow the triangle is the one that matters, because the disc may not be seen in time.</p>
 
-  <h2><span class="num">7.4</span> Hectometre and kilometre posts</h2>
+  <h2><span class="num">7.5</span> Hectometre and kilometre posts</h2>
   <p>The line is measured from the Ashgrove buffer stop, and every hundred metres of it is named by a post. A <strong>hectometre post</strong> is an Ivory plate 320 × 180 mm on a Slate post, with the distance in Ink figures in Barlow Condensed 600, 120 mm high: the kilometre, a point, and the hectometre digit, so that the post at 1.4 km reads <span class="mono">1.4</span>. At every full kilometre the plate is a <strong>kilometre post</strong> instead: Ivory, 360 × 240 mm, with a Meridian Green border 12 mm wide, the word KM in green 40 mm high, and the kilometre alone beneath it in green figures 150 mm high, so that the post at 2 km reads <span class="mono">2</span>. Posts are a position reference and nothing more. They are not signals and carry no instruction; Book S says what they are for.</p>
   <figure>
     <div class="figure-frame" style="display:flex;justify-content:space-around;align-items:flex-end;flex-wrap:wrap;gap:16px">
@@ -630,7 +668,7 @@
         <text x="130" y="200" font-size="10" fill="#B5913F" letter-spacing="1">BORDER 12</text>
       </svg>
     </div>
-    <figcaption><span class="fig">Fig. 7.4</span> Hectometre post at 1.4 km and kilometre post at 2 km. Dimensions in millimetres, in brass.</figcaption>
+    <figcaption><span class="fig">Fig. 7.5</span> Hectometre post at 1.4 km and kilometre post at 2 km. Dimensions in millimetres, in brass.</figcaption>
   </figure>
   <p>Posts stand on the left of the line in the Down direction, the face of the plate parallel to the track so that it reads from either direction, the top of the plate 1.2 m above rail level. Where a loop track lies on that side the post moves outward past it, so that within the loops the posts stand beyond track 2. On a platform the plate is fixed to the platform wall without a post. A post is never moved to make room for a sign; the sign moves.</p>
   <dl class="dl">
@@ -638,7 +676,7 @@
     <dt>Kilometre post</dt><dd>Ivory plate with a Meridian Green border, the word KM small above the kilometre in green figures. One at every full kilometre, in place of the hectometre post.</dd>
   </dl>
 
-  <h2 id="c7-5"><span class="num">7.5</span> Gradient posts</h2>
+  <h2 id="c7-5"><span class="num">7.6</span> Gradient posts</h2>
   <p>Where the grade of the line changes, a <strong>gradient post</strong> says so. It is a Slate post 1.8 m to the top with a small Ivory disc, 150 mm across with an Ink rim 12 mm wide, and two Ink arms 400 mm long and 40 mm wide, one along the line each way. Each arm is tilted with the grade on its side and lettered above with that grade in per mille, in Barlow Condensed 600, figures 100 mm high; a level stretch is lettered <span class="mono">L</span> and its arm lies flat. The tilt is a fixed 12° for any grade that is not level, rising or falling as the line does, so that the sign reads at a glance from a moving cab; the figure, not the angle, gives the value. Gradient posts are information and nothing more: they are not signals and carry no instruction. Book P keeps the profile they mark, and Book S says how a driver reads them.</p>
   <figure>
     <div class="figure-frame" style="display:flex;justify-content:center;align-items:flex-end">
@@ -665,36 +703,36 @@
         <text x="204" y="200" font-size="10" fill="#B5913F" letter-spacing="1">1.8 m TO RAIL · TILT 12°</text>
       </svg>
     </div>
-    <figcaption><span class="fig">Fig. 7.5</span> Gradient post at km 0.5, seen from the post side: level behind (the Ashgrove side, left), 12‰ rising ahead in the Down direction (right). Dimensions in millimetres, in brass.</figcaption>
+    <figcaption><span class="fig">Fig. 7.6</span> Gradient post at km 0.5, seen from the post side: level behind (the Ashgrove side, left), 12‰ rising ahead in the Down direction (right). Dimensions in millimetres, in brass.</figcaption>
   </figure>
   <p>A gradient post stands at every change of grade and nowhere else, on the post side of the line, the same side as the hectometre posts, with its arms parallel to the track so that it reads from either direction; where a change of grade falls within a loop the post moves outward past track 2, as the hectometre posts do. The arm on the side a driver is travelling towards shows the grade ahead: tilted up and away from the driver it rises, down and away it falls. The Works cuts the arms to one pattern and sets the tilt with a gauge; a post is never re-tilted to a site's true slope, and a grade that the profile does not show gets no post.</p>
   <dl class="dl">
     <dt>Gradient post</dt><dd>Slate post, Ivory disc with an Ink rim, two Ink arms tilted with the grade on their side and lettered with it in per mille, L for level. One at every change of grade.</dd>
   </dl>
 
-  <h2><span class="num">7.6</span> The baton</h2>
+  <h2><span class="num">7.7</span> The baton</h2>
   <p>The station master's baton is a disc 200 mm across on a turned handle: Meridian Green on one face, Signal Red on the other, each face with an Ivory rim 12 mm wide and a small lens at the centre for the lamp. The green face shown steadily means <em>ready to start</em>; the red face means <em>stop</em>. The handle is unpainted ash, which darkens with use and is left to.</p>
   <figure>
     <div class="figure-frame" style="display:flex;justify-content:center;gap:48px">
       <svg viewBox="0 0 120 200" width="120" height="200"><rect x="55" y="112" width="10" height="84" rx="4" fill="#B08A5A"/><circle cx="60" cy="62" r="54" fill="#F4EFE3"/><circle cx="60" cy="62" r="46" fill="#1F4B3F"/><circle cx="60" cy="62" r="8" fill="#F4EFE3" opacity=".9"/></svg>
       <svg viewBox="0 0 120 200" width="120" height="200"><rect x="55" y="112" width="10" height="84" rx="4" fill="#B08A5A"/><circle cx="60" cy="62" r="54" fill="#F4EFE3"/><circle cx="60" cy="62" r="46" fill="#C6321E"/><circle cx="60" cy="62" r="8" fill="#F4EFE3" opacity=".9"/></svg>
     </div>
-    <figcaption><span class="fig">Fig. 7.6</span> The baton, green face and red face.</figcaption>
+    <figcaption><span class="fig">Fig. 7.7</span> The baton, green face and red face.</figcaption>
   </figure>
 
-  <h2><span class="num">7.7</span> Uniform</h2>
+  <h2><span class="num">7.8</span> Uniform</h2>
   <p>Staff in uniform wear a Slate cap with a Meridian Green band and the MR badge in Brass at the front: a disc with the letters MR in Barlow Condensed 700 inside a thin Brass ring. Drivers and station masters wear the same badge; the station master's is the one holding the baton.</p>
   <figure>
     <div class="figure-frame" style="display:flex;justify-content:center;align-items:center;gap:36px">
       <svg viewBox="0 0 240 60" width="240" height="60" font-family="Barlow Condensed, Arial Narrow, sans-serif"><rect x="0" y="0" width="240" height="60" rx="4" fill="#1F4B3F"/><circle cx="120" cy="30" r="22" fill="#1F4B3F" stroke="#B5913F" stroke-width="3"/><circle cx="120" cy="30" r="17" fill="none" stroke="#B5913F" stroke-width="1"/><text x="120" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#B5913F" letter-spacing="1">MR</text></svg>
       <span class="small" style="color:var(--slate);max-width:220px">The cap band with the badge. Badge 44 mm across, ring 3 mm, letters 22 mm high.</span>
     </div>
-    <figcaption><span class="fig">Fig. 7.7</span> Cap band and badge.</figcaption>
+    <figcaption><span class="fig">Fig. 7.8</span> Cap band and badge.</figcaption>
   </figure>
 
   <div class="rule" id="I30">
     <span class="rule-num">Rule I 30</span><span class="rule-title">Signage</span>
-    <p>Make name boards, plates, boards, posts and batons to the drawings in this chapter. Hectometre and kilometre posts stand at every hundred metres and every kilometre without exception, and are the only lineside plates that carry a distance. Every speed board that lowers the limit has an advance speed board of the same figures one warning distance before it; a speed board that raises the limit has none. A gradient post stands at every change of grade and at no other place, its arms tilted to the one pattern and lettered with the grade, never re-tilted to a site. Do not add a sign that is not in Book S, and do not vary a drawing to suit a site; move the post instead.</p>
+    <p>Make name boards, plates, boards, posts and batons to the drawings in this chapter. Hectometre and kilometre posts stand at every hundred metres and every kilometre without exception, and are the only lineside plates that carry a distance. Every speed board that lowers the limit has an advance speed board of the same figures one warning distance before it; a speed board that raises the limit has none. A gradient post stands at every change of grade and at no other place, its arms tilted to the one pattern and lettered with the grade, never re-tilted to a site. A switch indicator stands at the toe of every switch, on the side away from the diverging track, and shows the way the switch lies and nothing else. Do not add a sign that is not in Book S, and do not vary a drawing to suit a site; move the post instead.</p>
   </div>
 </section>
 
@@ -810,8 +848,8 @@
 <!-- COLOPHON -->
 <section class="page colophon" id="colophon" data-folio="Book I · Colophon">
   <img class="mark" src="../brand/mark-green.svg" alt="">
-  <p><strong>Book I — Identity Manual.</strong> Third edition, September 2026. Issued by the General Manager's Office of the Meridian Railway, drawn in the Drawing Office at Ashgrove, and printed at the Ashgrove Works press on Ivory stock, Works Standard 2.</p>
-  <p>Set in Barlow Condensed, Source Serif 4 and IBM Plex Mono. Page size A5. Colours are given as the Drawing Office values; the Works keeps the paint and glass standards. This edition supersedes the second edition of September 2026; the changes are listed in <a href="amendments/book-i-ed3.html">Amendment Slip I-3</a>, which a second-edition copy should carry inside its back cover. The changes from the first edition to the second are in <a href="amendments/book-i-ed2.html">Amendment Slip I-2</a>; a first-edition copy carries both.</p>
+  <p><strong>Book I — Identity Manual.</strong> Fourth edition, September 2026. Issued by the General Manager's Office of the Meridian Railway, drawn in the Drawing Office at Ashgrove, and printed at the Ashgrove Works press on Ivory stock, Works Standard 2.</p>
+  <p>Set in Barlow Condensed, Source Serif 4 and IBM Plex Mono. Page size A5. Colours are given as the Drawing Office values; the Works keeps the paint and glass standards. This edition supersedes the third edition of September 2026; the changes are listed in <a href="amendments/book-i-ed4.html">Amendment Slip I-4</a>, which a third-edition copy should carry inside its back cover. The earlier changes are in <a href="amendments/book-i-ed2.html">Amendment Slip I-2</a> (first to second) and <a href="amendments/book-i-ed3.html">Amendment Slip I-3</a> (second to third); an older copy carries every slip issued since its edition.</p>
   <p>The Valley Survey's original stake is said to be under the Ashgrove buffer stop. Nobody has looked.</p>
 </section>
 

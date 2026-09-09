@@ -18,7 +18,7 @@
 <nav class="desk-bar">
   <a href="index.html">← Library</a>
   <span class="spacer"></span>
-  <span>Book S · Third edition · September 2026</span>
+  <span>Book S · Fourth edition · September 2026</span>
   <a href="#" onclick="window.print();return false;">Print booklet</a>
 </nav>
 
@@ -32,7 +32,7 @@
   <div class="book-letter"><small>Book</small>S</div>
   <h1 class="title">Signalling Manual</h1>
   <p class="subtitle">Signals, boards and hand signals of the Meridian Railway, and the routes they protect.</p>
-  <div class="edition">Third edition · September 2026 · Issued by the Signal Engineer's Office</div>
+  <div class="edition">Fourth edition · September 2026 · Issued by the Signal Engineer's Office</div>
   <div class="motto">On the line, on time.</div>
 </section>
 
@@ -45,6 +45,7 @@
     <li class="sub"><span class="num">1.2</span><a href="#c1-2">Who speaks, who listens</a><span class="dots"></span><span class="pg">4</span></li>
     <li><span class="num">2</span><a href="#c2">Main signals</a><span class="dots"></span><span class="pg">5</span></li>
     <li><span class="num">3</span><a href="#c3">Ground signals</a><span class="dots"></span><span class="pg">8</span></li>
+    <li class="sub"><span class="num">3.3</span><a href="#c3-3">Switch indicators</a><span class="dots"></span><span class="pg">10</span></li>
     <li><span class="num">4</span><a href="#c4">Boards</a><span class="dots"></span><span class="pg">10</span></li>
     <li class="sub"><span class="num">4.1</span><a href="#c4-1">Where boards stand</a><span class="dots"></span><span class="pg">11</span></li>
     <li class="sub"><span class="num">4.2</span><a href="#c4-2">Speed boards and advance speed boards</a><span class="dots"></span><span class="pg">11</span></li>
@@ -261,6 +262,54 @@
   <p>A ground signal is addressed to shunting movements and to nothing else. A train movement that has been given a proceed aspect at a main signal passes any ground signal within its route without regard to it; the main signal has already spoken for the whole route, and the ground signals along it stay at SHUNT STOP because nobody is shunting. So a Down train entering Wending under WD 1 at CAUTION passes WD 5 at SHUNT STOP on the stub without stopping, and has done nothing wrong.</p>
   <div class="note"><p>This is not an exception to Rule S 10. The ground signal was never speaking to you. It is, though, the one place where a driver must know which kind of movement they are making, and the answer is always the same: if your last signal was a main signal, you are a train; if it was a ground signal, you are shunting.</p></div>
   <div class="why"><p>We could have arranged for the box to clear every ground signal along a train's route as well as the main signal, and some railways do. It costs levers and it costs time, and it teaches drivers to expect the white lamps to move for them. We would rather they read the black box as what it is: a signal for a different job.</p></div>
+
+  <h2 id="c3-3"><span class="num">3.3</span> Switch indicators</h2>
+  <p>Every switch on the Railway carries a <strong>switch indicator</strong> at its toe: a black box on a short post, standing on the side of the line away from the diverging track, with a white bar on each of its two faces. The bar lies the way the switch lies. Along the track, the switch is set for the straight route, which on this line is always track 1 (<span class="term">normal</span>). Leaning towards the diverging track, it is set for the diverging route, track 2 (<span class="term">reverse</span>). The box has a face towards the toe and a face towards the branches, so it can be read from every leg of the switch.</p>
+
+  <figure class="sig-fig">
+    <div class="figure-frame">
+      <svg viewBox="0 0 360 170" width="360" height="170" role="img" aria-label="Switch indicator showing set straight and set diverging">
+        <line x1="10" y1="132" x2="350" y2="132" stroke="#D9D2C0" stroke-width="2"/>
+        <!-- SET STRAIGHT -->
+        <g transform="translate(95,0)">
+          <rect x="-4" y="94" width="8" height="38" fill="#4A5560"/>
+          <rect x="-18" y="128" width="36" height="5" fill="#4A5560"/>
+          <rect x="-30" y="34" width="60" height="60" rx="4" fill="#1A1A1A" stroke="#F4EFE3" stroke-width="1.5"/>
+          <rect x="-4" y="42" width="8" height="44" rx="2" fill="#FFFFFF"/>
+          <!-- plan of the switch beneath: straight route set -->
+          <g stroke="#4A5560" stroke-width="2" fill="none">
+            <line x1="-40" y1="118" x2="40" y2="118"/>
+            <path d="M -10 118 Q 8 118 22 106" stroke="#D9D2C0" stroke-dasharray="3 3"/>
+          </g>
+          <text x="0" y="156" text-anchor="middle" fill="#1F4B3F" font-size="15" font-weight="700" letter-spacing="2.5">SET STRAIGHT</text>
+        </g>
+        <!-- SET DIVERGING -->
+        <g transform="translate(265,0)">
+          <rect x="-4" y="94" width="8" height="38" fill="#4A5560"/>
+          <rect x="-18" y="128" width="36" height="5" fill="#4A5560"/>
+          <rect x="-30" y="34" width="60" height="60" rx="4" fill="#1A1A1A" stroke="#F4EFE3" stroke-width="1.5"/>
+          <rect x="-4" y="42" width="8" height="44" rx="2" fill="#FFFFFF" transform="rotate(35 0 64)"/>
+          <g stroke="#4A5560" stroke-width="2" fill="none">
+            <line x1="-40" y1="118" x2="-10" y2="118"/>
+            <line x1="-10" y1="118" x2="40" y2="118" stroke="#D9D2C0" stroke-dasharray="3 3"/>
+            <path d="M -10 118 Q 8 118 22 106"/>
+          </g>
+          <text x="0" y="156" text-anchor="middle" fill="#1F4B3F" font-size="15" font-weight="700" letter-spacing="2.5">SET DIVERGING</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption><span class="fig">Fig. 3.2</span> The two states of a switch indicator, seen from the toe, with the switch it reports sketched beneath. The bar lies as the points lie: along the track for the straight route, leaning towards the diverging track for the diverging route.</figcaption>
+  </figure>
+
+  <p>Read it from wherever you are coming from. <strong>From the toe</strong> (a facing move) the bar tells you which route the switch will take you onto: straight into track 1, or leaning off into track 2. <strong>From a branch</strong> (a trailing move, as when you set back from the headshunt onto track 2 during a run-round) the same bar tells you whether the switch is set for the track you are on or against you: if the bar leans towards your track, or lies straight and your track is the straight one, the switch is for you; otherwise it is set against you, and the points would be forced open by your wheels if you went on. The cab's list of what lies ahead names the next switch and reads its indicator for you in the same words: <span class="mono">Switch WD B · set for you</span>, or <span class="mono">SET AGAINST YOU</span>.</p>
+
+  <div class="why"><p>A route's signal promises that the switches are set and locked, and the frame makes that promise hard to break. But a promise is worth more when it can be checked, and the driver is the one person who is actually at the switch. The indicator lets them confirm, in one glance, that the points lie as the signal said; on a trailing move it is the last check before the wheels reach the blades. Running through a switch set against the move bends the blades and their rodding, puts the switch out of use until the Engineer has been, and can derail the tail of the very move that did it. We would rather spend a lamp on every switch than a morning on any of that.</p></div>
+
+  <div class="rule" id="S22">
+    <span class="rule-num">Rule S 22</span><span class="rule-title">Switch indicators</span>
+    <p>Before moving over a switch, read its indicator. Never run through a switch that shows set against your move: stop and speak to the Box. Running through switches is an incident.</p>
+  </div>
+  <div class="note"><p>A switch indicator is not a signal. It carries no authority to move and none to stop: the signal governs the move, and Rule S 14 still applies in full. The indicator tells you how the switch lies, which is a different question, and one you should always be able to answer before your wheels reach the points.</p></div>
 </section>
 
 <!-- 4 BOARDS -->
@@ -479,7 +528,7 @@
   <ul>
     <li><strong>Odd numbers face Down</strong> (they govern trains moving towards increasing kilometrage). <strong>Even numbers face Up.</strong></li>
     <li><strong>Main signals take the lowest numbers</strong>, 1 and 2. Ground signals take the rest, 3 to 6.</li>
-    <li>Switches are named by station code and a letter: <span class="mono">AG A</span> is the outer switch on the single-line side, <span class="mono">AG B</span> the inner switch on the headshunt side. A switch is <span class="term">normal</span> when set for track 1 and <span class="term">reverse</span> when set for track 2.</li>
+    <li>Switches are named by station code and a letter: <span class="mono">AG A</span> is the outer switch on the single-line side, <span class="mono">AG B</span> the inner switch on the headshunt side. A switch is <span class="term">normal</span> when set for track 1 and <span class="term">reverse</span> when set for track 2. Every switch carries a switch indicator at its toe, which shows the way it lies (§ 3.3).</li>
   </ul>
   <p>So a driver who hears "AG 3" on the telephone knows at once that it is at Ashgrove, that it faces Down, and that it is a ground signal, before they have looked at a diagram.</p>
 
@@ -487,7 +536,7 @@
     <span><svg width="22" height="18" viewBox="0 0 22 18"><line x1="6" y1="18" x2="6" y2="8" stroke="#4A5560" stroke-width="2"/><circle cx="6" cy="6" r="5" fill="#1F4B3F"/><polygon points="13,3 19,6 13,9" fill="#1F4B3F"/></svg>main signal</span>
     <span><svg width="22" height="18" viewBox="0 0 22 18"><rect x="0" y="4" width="14" height="10" fill="#1A1A1A"/><circle cx="4" cy="9" r="1.7" fill="#fff"/><circle cx="10" cy="9" r="1.7" fill="#fff"/><polygon points="16,6 22,9 16,12" fill="#4A5560"/></svg>ground signal</span>
     <span><svg width="22" height="18" viewBox="0 0 22 18"><rect x="1" y="3" width="14" height="12" fill="#F4EFE3" stroke="#1A1A1A" stroke-width="1.5"/><polygon points="17,6 22,9 17,12" fill="#4A5560"/></svg>board</span>
-    <span><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="4" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="2"/></svg>switch</span>
+    <span><svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="4" fill="#F4EFE3" stroke="#1F4B3F" stroke-width="2"/></svg>switch (with its indicator at the toe)</span>
     <span>arrows point the way the signal or board faces</span>
   </div>
 
@@ -605,12 +654,12 @@
     <tbody>
       <tr><td>Buffer stop</td><td class="mono">0.000</td><td>—</td><td>headshunt</td><td>End of track; red lamp.</td></tr>
       <tr><td>AG 5</td><td class="mono">0.070</td><td>Down</td><td>headshunt</td><td>Shunt from the headshunt into the station.</td></tr>
-      <tr><td>Switch AG B</td><td class="mono">0.080</td><td>toe faces Up</td><td>—</td><td>Normal = track 1, reverse = track 2.</td></tr>
+      <tr><td>Switch AG B</td><td class="mono">0.080</td><td>toe faces Up</td><td>—</td><td>Normal = track 1, reverse = track 2. Switch indicator at the toe, read from the headshunt, track 1 and track 2 (§ 3.3).</td></tr>
       <tr><td>AG 4</td><td class="mono">0.115</td><td>Up</td><td>track 1</td><td>Shunt from track 1 into the headshunt.</td></tr>
       <tr><td>Stop board ASHGROVE</td><td class="mono">0.135</td><td>Up</td><td>track 1</td><td>Up trains stop here.</td></tr>
       <tr><td>AG 1</td><td class="mono">0.305</td><td>Down</td><td>track 1</td><td>Starting signal: track 1 onto the single line.</td></tr>
       <tr><td>AG 3</td><td class="mono">0.305</td><td>Down</td><td>track 2</td><td>Shunt from track 2 onto the stub.</td></tr>
-      <tr><td>Switch AG A</td><td class="mono">0.340</td><td>toe faces Down</td><td>—</td><td>Normal = track 1, reverse = track 2.</td></tr>
+      <tr><td>Switch AG A</td><td class="mono">0.340</td><td>toe faces Down</td><td>—</td><td>Normal = track 1, reverse = track 2. Switch indicator at the toe, read from the stub, track 1 and track 2 (§ 3.3).</td></tr>
       <tr><td>AG 6</td><td class="mono">0.350</td><td>Up</td><td>single line (stub)</td><td>Shunt from the stub into the station.</td></tr>
       <tr><td>Limit of Shunt</td><td class="mono">0.400</td><td>Down</td><td>single line</td><td>Shunting movements stop short.</td></tr>
       <tr><td>AG 2</td><td class="mono">0.420</td><td>Up</td><td>single line</td><td>Home signal: entry to Ashgrove.</td></tr>
@@ -738,12 +787,12 @@
       <tr><td>WD 1</td><td class="mono">2.880</td><td>Down</td><td>single line</td><td>Home signal: entry to Wending.</td></tr>
       <tr><td>Limit of Shunt</td><td class="mono">2.900</td><td>Up</td><td>single line</td><td>Shunting movements stop short.</td></tr>
       <tr><td>WD 5</td><td class="mono">2.950</td><td>Down</td><td>single line (stub)</td><td>Shunt from the stub into the station.</td></tr>
-      <tr><td>Switch WD A</td><td class="mono">2.960</td><td>toe faces Up</td><td>—</td><td>Normal = track 1, reverse = track 2.</td></tr>
+      <tr><td>Switch WD A</td><td class="mono">2.960</td><td>toe faces Up</td><td>—</td><td>Normal = track 1, reverse = track 2. Switch indicator at the toe, read from the stub, track 1 and track 2 (§ 3.3).</td></tr>
       <tr><td>WD 2</td><td class="mono">2.995</td><td>Up</td><td>track 1</td><td>Starting signal: track 1 onto the single line.</td></tr>
       <tr><td>WD 4</td><td class="mono">2.995</td><td>Up</td><td>track 2</td><td>Shunt from track 2 onto the stub.</td></tr>
       <tr><td>Stop board WENDING</td><td class="mono">3.165</td><td>Down</td><td>track 1</td><td>Down trains stop here.</td></tr>
       <tr><td>WD 3</td><td class="mono">3.185</td><td>Down</td><td>track 1</td><td>Shunt from track 1 into the headshunt.</td></tr>
-      <tr><td>Switch WD B</td><td class="mono">3.220</td><td>toe faces Down</td><td>—</td><td>Normal = track 1, reverse = track 2.</td></tr>
+      <tr><td>Switch WD B</td><td class="mono">3.220</td><td>toe faces Down</td><td>—</td><td>Normal = track 1, reverse = track 2. Switch indicator at the toe, read from the headshunt, track 1 and track 2 (§ 3.3).</td></tr>
       <tr><td>WD 6</td><td class="mono">3.230</td><td>Up</td><td>headshunt</td><td>Shunt from the headshunt into the station.</td></tr>
       <tr><td>Buffer stop</td><td class="mono">3.300</td><td>—</td><td>headshunt</td><td>End of track; red lamp.</td></tr>
     </tbody>
@@ -796,9 +845,9 @@
   <ol class="steps">
     <li><strong>Arrival.</strong> Having begun to brake at the advance speed board at km 2.650, the train passes the 25 speed board at km 2.850 already down to 25 km/h. WD 1 shows CAUTION: the platform is cleared for the train, and the track ends. The train passes WD 5 at SHUNT STOP without regard to it (§ 3.2), runs through WD A set normal onto track 1, and stops with its front level with the WENDING stop board at km 3.165. The locomotive now stands at the Down end of the coach, facing the headshunt.</li>
     <li><strong>Station work.</strong> Doors open, passengers alight. The driver secures the locomotive, walks to the coupling, disconnects the brake pipe (both parts' brakes apply of their own accord) and parts the coupler (<a href="book-d.html#D12">Rule D 12</a>), then returns to the cab facing the headshunt.</li>
-    <li><strong>Into the headshunt.</strong> Wending Box sets <span class="mono">1 → Headshunt</span>: WD B is already normal; WD 3 changes to SHUNT. The locomotive draws forward at shunting speed through WD B into the headshunt and stops clear of the switch, well short of the buffer stop. WD 3 returns to SHUNT STOP behind it.</li>
-    <li><strong>Round the loop.</strong> The driver changes ends. The box sets <span class="mono">Headshunt → 2 → Stub</span>: WD B reverse, WD A reverse, both locked; WD 6 and WD 4 change to SHUNT. The locomotive runs Up through WD B onto track 2, along track 2 past the standing coach, passes WD 4 at SHUNT, through WD A onto the stub, and stops short of the Limit of Shunt board at km 2.900 (Rule S 12). It is now clear of WD A. Both ground signals return to SHUNT STOP.</li>
-    <li><strong>Onto the train.</strong> The driver changes ends again. The box sets <span class="mono">Stub → 1</span> for coupling: WD A normal, locked; WD 5 changes to SHUNT although track 1 is occupied. The locomotive runs Down through WD A onto track 1 and approaches the coach at 5 km/h over the last 20 m, touching at 2 km/h or less. The coupler engages. The driver walks to the coupling, connects the brake pipe, returns to the cab and proves the brake through the train (<a href="book-d.html#D14">Rule D 14</a>). WD 5 returns to SHUNT STOP.</li>
+    <li><strong>Into the headshunt.</strong> Wending Box sets <span class="mono">1 → Headshunt</span>: WD B is already normal; WD 3 changes to SHUNT. The driver reads WD B's indicator from track 1: the bar lies straight, the switch is for them. The locomotive draws forward at shunting speed through WD B into the headshunt and stops clear of the switch, well short of the buffer stop. WD 3 returns to SHUNT STOP behind it.</li>
+    <li><strong>Round the loop.</strong> The driver changes ends. The box sets <span class="mono">Headshunt → 2 → Stub</span>: WD B reverse, WD A reverse, both locked; WD 6 and WD 4 change to SHUNT. Before setting back, the driver reads WD B's indicator from the headshunt: the bar leans towards track 2, which is where the move is going (Rule S 22). The locomotive runs Up through WD B onto track 2, along track 2 past the standing coach, passes WD 4 at SHUNT, reads WD A's indicator leaning towards track 2 as it trails through onto the stub, and stops short of the Limit of Shunt board at km 2.900 (Rule S 12). It is now clear of WD A. Both ground signals return to SHUNT STOP.</li>
+    <li><strong>Onto the train.</strong> The driver changes ends again. The box sets <span class="mono">Stub → 1</span> for coupling: WD A normal, locked; WD 5 changes to SHUNT although track 1 is occupied. The driver reads WD A's indicator from the toe: the bar lies straight, so the switch will take the locomotive onto track 1 and not back onto track 2. The locomotive runs Down through WD A onto track 1 and approaches the coach at 5 km/h over the last 20 m, touching at 2 km/h or less. The coupler engages. The driver walks to the coupling, connects the brake pipe, returns to the cab and proves the brake through the train (<a href="book-d.html#D14">Rule D 14</a>). WD 5 returns to SHUNT STOP.</li>
     <li><strong>Departure.</strong> Wending Box asks Ashgrove Box for the line. Ashgrove sets <span class="mono">Main → 1</span>, AG 2 shows CAUTION, and Ashgrove answers. Wending sets <span class="mono">1 → Main</span> and WD 2 shows CLEAR. At the booked time, doors closed, J. Pell shows the green baton from the platform. The driver sounds one short blast and takes the train away, Up, towards Ashgrove.</li>
   </ol>
 
@@ -869,6 +918,7 @@
     <dt>Block section</dt><dd>The single line between one station's starting signal and the next station's home signal. One train at a time.</dd>
     <dt>Box</dt><dd>The signal box: the room, the frame and the person working it. Ashgrove Box, Wending Box.</dd>
     <dt>Cleared</dt><dd>Of a signal: changed from STOP to a proceed aspect, or from SHUNT STOP to SHUNT. Of a route: set and its signal cleared.</dd>
+    <dt>Facing move</dt><dd>A movement over a switch from its toe, which the switch may send one way or the other. The indicator shows which.</dd>
     <dt>Down, Up</dt><dd>Down is towards increasing kilometrage (Ashgrove to Wending); Up is towards decreasing. Odd signals face Down, even face Up.</dd>
     <dt>Frame</dt><dd>The row of interlocked levers in the box that set switches and clear signals.</dd>
     <dt>Gradient post</dt><dd>A slate post with a small ivory disc and two black arms at every change of grade, each arm tilted with the grade on its side and lettered in per mille (L for level). The arm on the side you are travelling towards shows the grade ahead. Information only.</dd>
@@ -884,13 +934,16 @@
     <dt>Per mille</dt><dd>The Railway's unit of gradient, ‰: metres of rise or fall in each kilometre. The valley grade is 12‰, that is 12 m in every kilometre.</dd>
     <dt>Proceed aspect</dt><dd>CAUTION or CLEAR. Either gives the road as far as the next signal.</dd>
     <dt>Route</dt><dd>A path through a station with its switch positions, governed by one signal (or a pair of ground signals).</dd>
+    <dt>Run through</dt><dd>To pass over a switch from a branch when the switch is set for the other branch, forcing the blades open. Damages the switch, can derail the tail of the move, and is always recorded (Rule S 22).</dd>
     <dt>Shunting movement</dt><dd>A movement within station limits under ground signals, at up to 15 km/h, prepared to stop short of anything.</dd>
     <dt>Signal passed at danger</dt><dd>Passing a main signal at STOP or a ground signal at SHUNT STOP without authority. Always recorded.</dd>
     <dt>Starting signal</dt><dd>The main signal governing departure from a platform track onto the single line: AG 1, WD 2.</dd>
     <dt>Station limits</dt><dd>Everything between the speed boards at a station: the stub, the loop, the headshunt. Speed 25 km/h, shunting 15 km/h.</dd>
     <dt>Stop board</dt><dd>The ivory board with a black bar at the end of a platform, where the front of an arriving train stops.</dd>
     <dt>Stub</dt><dd>The short length of single line between a station's outer switch and its Limit of Shunt board.</dd>
+    <dt>Switch indicator</dt><dd>A black box on a short post at the toe of every switch, with a white bar on each face that lies the way the switch lies: along the track for the straight route, leaning towards the diverging track for the diverging route. Read from every leg. Not a signal.</dd>
     <dt>Track section</dt><dd>A length of track, or a switch, that reports to the frame whether a vehicle stands on it.</dd>
+    <dt>Trailing move</dt><dd>A movement over a switch from one of its branches towards the toe. The switch must be set for that branch; its indicator shows whether it is.</dd>
     <dt>Train movement</dt><dd>A movement made under main signals, from station to station.</dd>
     <dt>Warning distance</dt><dd>The distance between an advance speed board and the speed board it announces: 200 m where the approach is level or rising, 250 m where it falls at 10‰ or more. On the Ashgrove–Wending line, 250 m at Ashgrove and 200 m at Wending.</dd>
   </dl>
@@ -899,9 +952,9 @@
 <!-- COLOPHON -->
 <section class="page colophon" id="colophon" data-folio="Book S · Colophon">
   <img class="mark" src="../brand/mark-green.svg" alt="">
-  <p><strong>Book S — Signalling Manual.</strong> Third edition, September 2026. Issued by the Signal Engineer's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
-  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes the second edition of September 2026. What changed is listed in <a href="amendments/book-s-ed3.html">Amendment Slip S-3</a>; the second edition's changes from the first are in <a href="amendments/book-s-ed2.html">Amendment Slip S-2</a>.</p>
-  <p>Amendments are issued as numbered slips; paste them in at the page indicated. Rules S 10 to S 20 are cited by number in Books R and D and must not be renumbered without a general amendment.</p>
+  <p><strong>Book S — Signalling Manual.</strong> Fourth edition, September 2026. Issued by the Signal Engineer's Office of the Meridian Railway and printed at the Ashgrove Works press on ivory stock.</p>
+  <p>Set in Barlow Condensed, Source Serif and IBM Plex Mono. Page size A5. This edition supersedes the third edition of September 2026. What changed is listed in <a href="amendments/book-s-ed4.html">Amendment Slip S-4</a>; earlier changes are in <a href="amendments/book-s-ed3.html">Amendment Slip S-3</a> (second to third) and <a href="amendments/book-s-ed2.html">Amendment Slip S-2</a> (first to second).</p>
+  <p>Amendments are issued as numbered slips; paste them in at the page indicated. Rules S 10 to S 22 are cited by number in Books R and D and must not be renumbered without a general amendment.</p>
   <p>Companion volumes: <a href="book-i.html">Book I, Identity</a> · <a href="book-r.html">Book R, Rules of Operation</a> · <a href="book-d.html">Book D, Driving</a> · <a href="book-p.html">Book P, Permanent Way</a>.</p>
 </section>
 

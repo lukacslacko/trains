@@ -149,13 +149,13 @@ Ashgrove (headshunt at the Up/buffer end, main line at the Down end):
 |----|--------|-------|----|------|
 | 0.000 | buffer stop | – | headshunt | |
 | 0.070 | Ground signal **AG 5** | Down | headshunt | headshunt → station |
-| 0.080 | Switch **AG B** | toe faces Up (headshunt side) | – | normal = track 1, reverse = track 2 |
+| 0.080 | Switch **AG B** | toe faces Up (headshunt side) | – | normal = track 1, reverse = track 2; switch indicator at the toe |
 | 0.110–0.310 | track 1 and track 2 | – | | platform on track 1, km 0.130–0.290 |
 | 0.115 | Ground signal **AG 4** | Up | track 1 | track 1 → headshunt |
 | 0.135 | Stop board "ASHGROVE" | Up | track 1 | |
 | 0.305 | Starting signal **AG 1** | Down | track 1 | main signal |
 | 0.305 | Ground signal **AG 3** | Down | track 2 | track 2 → stub |
-| 0.340 | Switch **AG A** | toe faces Down (main line side) | – | normal = track 1, reverse = track 2 |
+| 0.340 | Switch **AG A** | toe faces Down (main line side) | – | normal = track 1, reverse = track 2; switch indicator at the toe |
 | 0.350 | Ground signal **AG 6** | Up | single line | stub → station |
 | 0.400 | Limit of Shunt board | Down | single line | shunting moves stop short of it |
 | 0.420 | Home signal **AG 2** | Up | single line | main signal, governs entry |
@@ -174,13 +174,13 @@ Wending (mirror; headshunt at the Down/buffer end):
 | 2.880 | Home signal **WD 1** | Down | single line | |
 | 2.900 | Limit of Shunt board | Up | single line | |
 | 2.950 | Ground signal **WD 5** | Down | single line | stub → station |
-| 2.960 | Switch **WD A** | toe faces Up (main line side) | – | normal = track 1, reverse = track 2 |
+| 2.960 | Switch **WD A** | toe faces Up (main line side) | – | normal = track 1, reverse = track 2; switch indicator at the toe |
 | 2.990–3.190 | track 1 and track 2 | | | platform on track 1, km 3.010–3.170 |
 | 2.995 | Starting signal **WD 2** | Up | track 1 | |
 | 2.995 | Ground signal **WD 4** | Up | track 2 | track 2 → stub |
 | 3.165 | Stop board "WENDING" | Down | track 1 | |
 | 3.185 | Ground signal **WD 3** | Down | track 1 | track 1 → headshunt |
-| 3.220 | Switch **WD B** | toe faces Down (headshunt side) | – | normal = track 1, reverse = track 2 |
+| 3.220 | Switch **WD B** | toe faces Down (headshunt side) | – | normal = track 1, reverse = track 2; switch indicator at the toe |
 | 3.230 | Ground signal **WD 6** | Up | headshunt | headshunt → station |
 | 3.300 | buffer stop | – | headshunt | |
 
@@ -230,6 +230,7 @@ obstruction. Ground signals govern shunting moves only.
 | Limit of Shunt | ivory board with a red diagonal band, "LIMIT OF SHUNT" | Shunting moves must not pass. |
 | Speed board | black numeral on an ivory disc with a black rim | Speed limit in km/h from the board onward. A lower limit applies to the front of the train as it passes; a higher limit applies only once the rear of the train has passed. |
 | Advance speed board | black numeral on an ivory triangle, point up, black rim | A lower limit lies ahead: the speed board with this numeral stands one warning distance beyond. Be at that speed when the front reaches the speed board. Higher limits are not announced. |
+| Switch indicator | black box on a short post at the toe of every switch, a white bar on each face | Shows which way the switch lies: the bar along the track means set for the straight route, the bar leaning towards the diverging track means set for the diverging route. Read from every leg. It carries no authority (the signal does) but a switch showing against your move is never run through: stop and speak to the Box. |
 | Gradient post | slate post with a small ivory disc and two black arms, one along the line each way, each tilted with the grade on its side and lettered with that grade in per mille, L for level | Stands at every change of grade. The arm on the side you are travelling towards shows the grade ahead: tilted up and away from you it rises, down and away it falls. Information only, no instruction. |
 
 **Warning distance.** 200 m where the approach to the speed board is level
@@ -299,8 +300,11 @@ authority.
 - **S 16 Dark or doubtful.** A signal that is dark or cannot be read is at
   STOP.
 - **S 18 Signal and baton.** To go, both must say go; either alone says stop.
-- **S 20 Posts.** Hectometre and kilometre posts are a position reference and
-  carry no instruction.
+- **S 20 Posts.** Hectometre, kilometre and gradient posts are a position and
+  profile reference and carry no instruction.
+- **S 22 Switch indicators.** Before moving over a switch, read its indicator.
+  Never run through a switch that shows set against your move: stop and
+  speak to the Box. Running through switches is an incident.
 - **D 10 Coupling.** Approach at 5 km/h or less over the last 20 m; make
   contact at 2 km/h or less. After mechanical coupling, connect the brake
   pipe at the coupling (walk to it).
@@ -390,7 +394,8 @@ and stabled (pantograph down, parking brake on) at Ashgrove before 08:00.
 Early departure · Moved with doors open · Doors opened away from platform ·
 Overspeed (with limit and speed) · Stop board overrun · Stopped short of
 board (> 3 m) · Incorrect lights on the main line · No horn before moving ·
-Signal passed at danger · Limit of Shunt passed · Rough coupling (speed) ·
+Signal passed at danger · Limit of Shunt passed · Ran through a switch set
+against the move (Rule S 22) · Rough coupling (speed) ·
 Brake not proved before departure · Buffer stop struck · Uncoupled with the
 brake not fully applied · Rolled back on the gradient · Ran away (moved with
 no direction set) · Moved with the parking brake applied · Emergency brake
