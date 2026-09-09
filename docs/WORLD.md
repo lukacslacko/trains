@@ -281,12 +281,17 @@ starter towards a block section is cleared only with the section's Line
 Warrant in hand.
 
 **Route locking (Rule S 32).** From the moment a route's signal is cleared
-its switches are held in position, and they stay held until the movement
-has passed clear of them: the signal replaced to STOP, the approach and the
+its switches are held in position and its track (the clear stretch and the
+destination) is held for it, and they stay held until the movement has
+passed clear of them: the signal replaced to STOP, the approach and the
 sections of the route empty, no vehicle within 12 m of the switch. Another
-route may share a switch only in the same position. A route into a platform
-releases once the train stands wholly in the platform; a departure route
-once the train has left the station's last switch behind.
+route may share a switch only in the same position, and no second route is
+set over track a live route holds, so two homes are never cleared into one
+platform from its two ends. A route into a platform releases once the train
+stands wholly in the platform; a departure route once the train has left
+the station's last switch behind. A call-on route excludes the platform
+from its clear stretch (the platform is occupied by design) but still needs
+it held by no other route.
 
 Ashgrove: `homeN→1` (AG 2 Caution), `1→N` (AG 1 Clear), run-round
 `1→hs` (AG 4), `hs→2→stub` (AG 5 and AG 3), `stub→1` (AG 6).
@@ -438,9 +443,14 @@ authority.
 - **S 30 Call-on.** A home signal's subsidiary lit for a train is a call-on:
   the platform ahead is occupied. Pass at shunting speed prepared to stop
   short of the vehicles, and couple to them only as the Box has instructed.
-- **S 32 Route locking.** A route holds its switches from the clearing of
-  its signal until the movement has passed clear of them; no switch is
-  moved under a route.
+- **S 32 Route locking.** A route holds its switches and its track from
+  the clearing of its signal until the movement has passed clear of them;
+  no switch is moved under a route, and no second route is set over track
+  a live route holds. Two trains are never signalled into one platform: a
+  main aspect is cleared only into clear track, and a call-on only onto a
+  track no route holds. The driver reads the platform from the aspect: a
+  main aspect promises clear track to the next signal or stop board; the
+  subsidiary promises nothing but a platform with vehicles on it.
 - **S 28 Block working.** A train enters a block section only with the
   section's **Line Warrant**. The box at the far end issues the warrant when
   the section is clear and no other warrant for it is out; the box at the

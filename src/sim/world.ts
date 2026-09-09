@@ -307,7 +307,19 @@ export class World {
     }
     return true;
   }
-  /** Set a route: its switches must be free to move, its sections clear; it then holds its switches until the train has passed. */
+  /** the track a route holds while it is live: its clear stretch and its destination */
+  routeEdges(r: Route): Edge[] { return r.dest && !r.clear.includes(r.dest) ? [...r.clear, r.dest] : r.clear; }
+  /** A live route holding track this route would need, or null. Two routes are never set over the same track. */
+  conflictingRoute(r: Route): { route: Route; edge: Edge } | null {
+    const mine = new Set(this.routeEdges(r));
+    for (const o of this.routes) {
+      if (o === r || !o.live) continue;
+      const shared = this.routeEdges(o).find((e) => mine.has(e));
+      if (shared) return { route: o, edge: shared };
+    }
+    return null;
+  }
+  /** Set a route: its switches must be free to move, its track clear and held by no other route; it then holds them until the train has passed. */
   setRoute(id: string): boolean {
     const r = this.routes.find((x) => x.id === id);
     if (!r) throw new Error(`no route ${id}`);
@@ -316,6 +328,7 @@ export class World {
       if (sw.state !== st && (sw.locks.size > 0 || !this.switchClear(sw))) return false;
     }
     if (r.clear.some((e) => this.isOccupied(e))) return false;
+    if (this.conflictingRoute(r)) return false;
     for (const [sw, st] of r.switches) { sw.state = st; sw.locks.add(r.id); sw.locked = true; }
     for (const [sig, asp] of r.signals) sig.aspect = asp;
     r.live = true;
@@ -374,6 +387,8 @@ export class World {
     }
     const occ = r.clear.find((e) => this.isOccupied(e));
     if (occ) return `${this.edgeName(occ)} is occupied`;
+    const c = this.conflictingRoute(r);
+    if (c) return `${c.route.signals[0][0].id} is already set over ${this.edgeName(c.edge)}`;
     return null;
   }
   /** a piece of track in words */
