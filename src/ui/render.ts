@@ -437,8 +437,9 @@ export class WorldRenderer {
     ctx.beginPath(); ctx.arc(p.x, y, 0.6, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
     if (d.kind === "walking") {
       ctx.strokeStyle = C.brass; ctx.lineWidth = 0.15; ctx.setLineDash([0.6, 0.6]);
+      // drawn from the target to the driver, so the dashes stay fixed at the target while the driver walks
       const to = world.anchorPoint(d.target);
-      ctx.beginPath(); ctx.moveTo(p.x, y); ctx.lineTo(to.x, to.y); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(to.x, to.y); ctx.lineTo(p.x, y); ctx.stroke();
       ctx.setLineDash([]);
     }
     if (s >= 2 && d.kind !== "cab") {
