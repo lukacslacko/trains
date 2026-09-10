@@ -8,13 +8,16 @@ import { fmtTime } from "../core/util";
 import { type BrakeStep } from "../stock/vehicles";
 import { lessonFor } from "../sim/incidents";
 import { type Incident } from "../sim/world";
+import { TimetableView } from "./timetable";
+import { valleyDay } from "../traffic/valleyday";
+import { valleyLayout } from "../track/layouts";
 
 const MARK = "/brand/mark-ivory.svg";
 
 export class App {
   root: HTMLElement;
   private raf = 0;
-  private running: { world: World; duty: DutyTracker | BoxDuty; scenario: Scenario; renderer: WorldRenderer; diagram: LineDiagram; panel: SidePanel; last: number; acc: number; seenIncidents: number; notices: Incident[] } | null = null;
+  private running: { world: World; duty: DutyTracker | BoxDuty; scenario: Scenario; renderer: WorldRenderer; diagram: LineDiagram; panel: SidePanel; last: number; acc: number; seenIncidents: number; notices: Incident[]; ttView: TimetableView | null; ttOverlay: HTMLElement | null } | null = null;
   private keyHandler = (e: KeyboardEvent) => this.onKey(e);
 
   constructor(root: HTMLElement) {
@@ -30,6 +33,7 @@ export class App {
     const h = location.hash.replace("#", "") || "home";
     this.stop();
     if (h === "library") return this.library();
+    if (h === "timetable") return this.timetable();
     const [id, role] = h.split("/");
     const sc = SCENARIOS.find((s) => s.id === id);
     if (sc) return this.play(sc, role);
@@ -43,9 +47,9 @@ export class App {
 
   private home() {
     const cards = SCENARIOS.map((s) => {
-      const roles = s.roles ? `<div class="roles">${s.roles.map((r) => `<a href="#${s.id}/${r.id}" title="${r.detail}">${r.label}</a>`).join("")}</div>` : "";
+      const roles = s.roles ? `<div class="roles">${s.roles.map((r) => `<a href="#${s.id}/${r.id}" title="${r.detail}" onclick="event.stopPropagation()">${r.label}</a>`).join("")}</div>` : "";
       return `
-      <div class="card ${s.roles ? "day" : ""}" ${s.roles ? "" : `onclick="location.hash='${s.id}'"`}>
+      <div class="card ${s.roles ? "day" : ""}" onclick="location.hash='${s.id}${s.roles ? "/" + s.roles[0].id : ""}'">
         <div class="num">DUTY ${s.number}</div>
         <h3>${s.title}</h3>
         <div class="sub">${s.subtitle}</div>
@@ -58,13 +62,23 @@ export class App {
         <p class="motto">On the line, on time.</p>
         <h2>Duties</h2>
         <div class="cards">${cards}</div>
-        <h2>The Library</h2>
+        <h2>The Library and the Traffic Office</h2>
         <div class="cards">
           <div class="card book" onclick="location.hash='library'"><span class="letter">I R S D</span><div class="num">The Company's Books</div><h3>Read the manuals</h3><div class="sub">Identity · Rules · Signalling · Driving</div><p>Booklets in the house style, printable on A5. Every rule the railway enforces is written in one of them.</p></div>
+          <div class="card tt" onclick="location.hash='timetable'"><span class="letter">T</span><div class="num">The Traffic Office</div><h3>The timetable</h3><div class="sub">Train graph · working timetable · crew diagrams · stock working</div><p>The whole weekday working as a train graph, every service with its calls, who drives what and when, and where each car is all day. During Duty 601 the same view shows the day as it is actually going.</p></div>
         </div>
         <h2>The plan</h2>
         <p>Milestones M0 to M2d of a long road: the shuttle, the run-round, gradients, the block, the junction, and now the signaller's chair. The development plan and the fiction bible live in <span class="mono">docs/PLAN.md</span> and <span class="mono">docs/WORLD.md</span>.</p>
       </div>`;
+  }
+
+  private timetable() {
+    this.root.innerHTML = `
+      <div class="library ttpage">
+        <div class="topbar"><img src="${MARK}" alt=""><span class="brand">Meridian Railway</span><span class="title">The Traffic Office · the weekday working</span><span class="spacer"></span><a href="#home">Duties</a></div>
+        <div class="ttroot" id="ttroot"></div>
+      </div>`;
+    new TimetableView(this.root.querySelector("#ttroot")!, valleyDay(), valleyLayout(), null);
   }
 
   private library() {
@@ -86,12 +100,14 @@ export class App {
           <span class="spacer"></span>
           <span class="clock" id="clock"></span>
           <span id="warp"></span>
+          ${scenario.timetable ? `<button id="ttbtn" class="link">Timetable</button>` : ""}
           <a href="#library" target="_self">Library</a>
           <a href="#home">Duties</a>
         </div>
         <div class="diagram"><canvas id="diagram"></canvas></div>
         <div class="view"><canvas id="view"></canvas><div class="hud" id="hud"></div><div id="notice"></div><div id="finish"></div></div>
         <div class="side" id="side"></div>
+        ${scenario.timetable ? `<div class="ttoverlay" id="ttoverlay" hidden><div class="ttroot" id="ttroot"></div></div>` : ""}
       </div>`;
     const renderer = new WorldRenderer(this.root.querySelector("#view")!);
     // the signaller sees the whole station from the box
@@ -114,7 +130,17 @@ export class App {
     hud.innerHTML = `<span id="hudtxt"></span><button id="recentre">Re-centre</button>`;
     hud.querySelector("#recentre")!.addEventListener("click", () => { renderer.cam.follow = true; });
 
-    this.running = { world, duty, scenario, renderer, diagram, panel, last: performance.now(), acc: 0, seenIncidents: world.incidents.length, notices: [] };
+    // the timetable view over the duty: the same graph, with the day as it is going
+    let ttView: TimetableView | null = null;
+    const ttOverlay = this.root.querySelector("#ttoverlay") as HTMLElement | null;
+    if (scenario.timetable && ttOverlay) {
+      ttView = new TimetableView(ttOverlay.querySelector("#ttroot")!, scenario.timetable(), world.layout, world);
+      const btn = this.root.querySelector("#ttbtn") as HTMLElement;
+      const toggle = () => { ttOverlay.hidden = !ttOverlay.hidden; btn.classList.toggle("on", !ttOverlay.hidden); if (!ttOverlay.hidden) ttView!.render(); };
+      btn.addEventListener("click", toggle);
+      window.addEventListener("keydown", (e) => { if (e.key === "Escape" && ttOverlay && !ttOverlay.hidden) toggle(); });
+    }
+    this.running = { world, duty, scenario, renderer, diagram, panel, last: performance.now(), acc: 0, seenIncidents: world.incidents.length, notices: [], ttView, ttOverlay };
     (window as unknown as { mr: unknown }).mr = { world, duty, panel, renderer };
     const noticeEl = this.root.querySelector("#notice") as HTMLElement;
     noticeEl.addEventListener("click", (e) => {
@@ -145,6 +171,7 @@ export class App {
       r.renderer.draw(r.world);
       r.diagram.draw(r.world);
       r.panel.update();
+      if (r.ttView && r.ttOverlay && !r.ttOverlay.hidden) r.ttView.draw();
       (this.root.querySelector("#clock") as HTMLElement).textContent = fmtTime(r.world.time, true);
       (this.root.querySelector("#hudtxt") as HTMLElement).textContent = `${r.world.layout.name} · scale ${r.renderer.cam.scale.toFixed(1)} px/m · drag to pan, wheel to zoom`;
       const fin = this.root.querySelector("#finish") as HTMLElement;

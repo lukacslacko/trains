@@ -98,6 +98,9 @@ export class World {
   isNpc(c: Consist): boolean { return c.vehicles.some((v) => this.npc.has(v)); }
   /** colleagues' incidents: not the player's book, but kept for the record */
   npcIncidents: string[] = [];
+  /** where every vehicle has been, sampled every five seconds, for the train graph */
+  trace = new Map<string, { t: number; line: string; km: number; track: string }[]>();
+  private lastTrace = -1e9;
   incident(code: string, text: string, note = false, c?: Consist) {
     if (c && this.isNpc(c)) { this.npcIncidents.push(`${fmtTime(this.time)} ${code}: ${text}`); return; } // a colleague's affair, not the player's
     // de-duplicate identical incidents within 10 s
@@ -775,6 +778,14 @@ export class World {
       v.lineVolts = !this.layout.neutral.some((n) => n.line === v.pos.edge.line && km >= n.kmFrom && km <= n.kmTo);
     }
     this.checkContinuous(dt);
+    if (this.time - this.lastTrace >= 5) {
+      this.lastTrace = this.time;
+      for (const v of this.vehicles) {
+        let arr = this.trace.get(v.number);
+        if (!arr) { arr = []; this.trace.set(v.number, arr); }
+        arr.push({ t: this.time, line: v.pos.edge.line, km: kmOf(v.pos), track: v.pos.edge.track });
+      }
+    }
     for (const h of this.hooks) h(this, dt);
   }
 

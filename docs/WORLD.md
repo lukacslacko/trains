@@ -91,8 +91,10 @@ gatherers and a chapel).
 - **Ashgrove Shed:** three stabling roads off the Ashgrove headshunt on
   the loop side, reached through the shed switch **AG S** on the headshunt
   40 m from the buffer stop and the ladder switches **AG T** and **AG U**;
-  roads 1, 2 and 3 are 70 m long each and end at buffer stops; the shed
-  building stands over their far ends. Ground signals **AG 7**, **AG 9** and
+  roads 1, 2 and 3 run 150, 120 and 90 m from their ladder switches to a
+  common far wall, where they end at buffer stops (shed km 0.181); the
+  shed building stands over their far 62 m, and the cars stable inside it,
+  well clear of the ladder. Ground signals **AG 7**, **AG 9** and
   **AG 11** at the road exits face out towards the station (the Down
   direction, hence odd numbers). Shed kilometres run from the shed switch
   into the shed (the "agshed" line, 15 km/h throughout, level); "out of the
@@ -170,7 +172,7 @@ north):
 | shed 0.030 | Switch **AG T** | | shed lead | normal = road 1, reverse = on to AG U |
 | shed 0.061 | Switch **AG U** | | shed lead | normal = road 2, reverse = road 3 |
 | shed 0.034 / 0.065 / 0.095 | Ground signals **AG 7**, **AG 9**, **AG 11** | Down (out) | roads 1, 2, 3 | 4 m inside each road |
-| shed 0.100 / 0.131 / 0.161 | buffer stops | – | roads 1, 2, 3 | the shed building over the far 40 m |
+| shed 0.181 | buffer stops | – | roads 1, 2, 3 | roads 150 / 120 / 90 m; the shed building over the far 62 m |
 | 0.070 | Ground signal **AG 5** | Down | headshunt | headshunt → station |
 | 0.080 | Switch **AG B** | toe faces Up | – | normal = track 1, reverse = track 2; switch indicator |
 | 0.110–0.310 | track 1 and track 2 | | | platform on track 1, km 0.130–0.290 |

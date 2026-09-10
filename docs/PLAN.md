@@ -176,10 +176,26 @@ manual that describes exactly what is playable.
   join by call-on, brake for speed boards, whistle at every crossing, and
   stable in the shed. Rule R 26 empty trains and shunts. Book T reissued
   with the working.
-- Still to come in M3: a timetable editor in the game (the data is ready
-  for it); freight: wagons with destinations, a marshalling puzzle, consist
-  rules (brake force, length, load); the player relieving a colleague
-  mid-diagram.
+- The timetable view (2026-09-10): the Traffic Office page from the home
+  screen and a Timetable overlay in Duty 601: a train graph of the whole
+  day (main line and branch panels, the shed row), the working timetable
+  as a table, crew diagrams and stock working as timelines; over a running
+  day it draws where every car has actually been, the clock, and the
+  actual times against the booked ones.
+- Still to come in M3: a timetable editor in the game (the data and the
+  view are ready for it); freight: wagons with destinations, a marshalling
+  puzzle, consist rules (brake force, length, load); the player relieving
+  a colleague mid-diagram.
+
+### M3b — Engine-hauled trains on the main line (requested, next)
+- Locomotive-hauled trains in the weekday working alongside the cars: the
+  Class 4 and coaches on booked services, running round at the termini.
+- For that, the main line becomes double track between Ashgrove and
+  Coldwater (or at least a second running loop where the working needs
+  it), with the block worked per line, and the termini gain a run-round
+  loop long enough for a locomotive to escape round its train while the
+  platform holds the next arrival; the shed gains a road for the loco and
+  coaches. Books P, S, T and D follow.
 
 ### M4 — Wear and tear (permanent way)
 - Track condition model: geometry, rail wear, ballast, fastenings. Traffic

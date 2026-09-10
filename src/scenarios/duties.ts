@@ -3,6 +3,7 @@ import { DutyTracker, Box, BoxDuty, type Leg } from "../sim/duty";
 import { NpcDriver } from "../sim/npc";
 import { buildDay, type DayRole } from "../traffic/day";
 import { valleyDay } from "../traffic/valleyday";
+import { type Timetable } from "../traffic/timetable";
 import { shuttleLayout, valleyLayout } from "../track/layouts";
 import { Vehicle, Consist, CLASS_1, CLASS_4, TYPE_C4 } from "../stock/vehicles";
 import { parseTime } from "../core/util";
@@ -17,6 +18,8 @@ export interface Scenario {
   legs: Leg[];
   /** the chairs on offer; a scenario without roles has one, the driver of its train */
   roles?: ScenarioRole[];
+  /** the working timetable the scenario runs, for the timetable view */
+  timetable?: () => Timetable;
   create(role?: string): { world: World; duty: DutyTracker | BoxDuty };
 }
 
@@ -327,6 +330,7 @@ export const DUTY_601: Scenario = {
   subtitle: "The weekday working from the timetable · four cars · Ashgrove Shed · any chair",
   blurb: "The whole day from Book T: the cars come out of Ashgrove Shed at dawn, 1003 runs empty to Coldwater, the pair divides at Wending, the main line crosses at Wending every hour, the branch shuttles, and at dusk everything goes back into the shed. Take any driver's turn or either box; the rest of the railway carries on around you.",
   legs: [],
+  timetable: valleyDay,
   roles: [
     { id: "farrow", label: "Drive 1002 (Ms Farrow)", detail: "The pair out of the shed at 05:35, train 1 at 06:00, the main line all day, home with 1001 behind you." },
     { id: "hale", label: "Drive 1003 (Mr Hale)", detail: "Out of the shed at 05:15, empty to Coldwater, the first Up train, the main line all day." },

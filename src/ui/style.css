@@ -140,6 +140,44 @@ button:disabled { opacity: .4; cursor: default; }
 .finish small { display: block; font-family: var(--text); font-style: italic; font-size: 14px; letter-spacing: 0; margin-top: 8px; opacity: .9; }
 .keys { grid-column: 1 / -1; font-family: var(--mono); font-size: 11px; color: var(--slate); padding: 6px 12px; border-top: 1px solid var(--chalk); }
 
+/* ---------- The timetable view ---------- */
+.card.tt .letter { font-family: var(--display); font-weight: 700; font-size: 56px; line-height: 1; float: right; margin: -6px 0 0 12px; color: var(--brass); }
+.topbar button.link { font-family: var(--display); letter-spacing: .1em; text-transform: uppercase; font-size: 13px; padding: 4px 8px; }
+.ttpage { grid-template-rows: 46px 1fr; }
+.ttroot { height: 100%; display: flex; flex-direction: column; min-height: 0; background: var(--paper); }
+.ttoverlay { position: absolute; top: 46px; left: 0; right: 0; bottom: 0; background: var(--paper); z-index: 5; display: flex; flex-direction: column; }
+.duty { position: relative; }
+.tttabs { display: flex; align-items: center; gap: 0; border-bottom: 1px solid var(--chalk); background: var(--ivory); }
+.tttabs button { border: 0; border-radius: 0; background: transparent; color: var(--slate); padding: 8px 14px; font-size: 13px; }
+.tttabs button.on { background: var(--paper); color: var(--green); box-shadow: inset 0 -2px 0 var(--green); }
+.tttabs .ttname { margin-left: auto; padding: 0 14px; font-family: var(--display); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--slate); }
+.ttbody { flex: 1; min-height: 0; overflow: auto; }
+.ttgraph { display: block; width: 100%; height: 100%; min-height: 420px; }
+.ttwork { padding: 10px 14px; }
+.ttwork table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.ttwork th { font-family: var(--display); letter-spacing: .12em; text-transform: uppercase; font-size: 11px; color: var(--green); text-align: left; border-bottom: 1px solid var(--green); padding: 4px 6px; }
+.ttwork th small { font-family: var(--text); text-transform: none; letter-spacing: 0; font-weight: normal; color: var(--slate); }
+.ttwork td { padding: 4px 6px; border-bottom: 1px dotted var(--chalk); vertical-align: top; }
+.ttwork td.num { font-family: var(--mono); font-weight: 600; }
+.ttwork td.calls { font-family: var(--mono); font-size: 12px; }
+.ttwork .call i { color: var(--brass); font-style: normal; margin-left: 3px; }
+.ttwork .call i::before { content: "("; } .ttwork .call i::after { content: ")"; }
+.ttwork .sep { color: var(--slate); margin: 0 6px; }
+.ttwork td.notes { color: var(--slate); font-style: italic; }
+.tttimeline { padding: 10px 14px; }
+.ttrow { display: grid; grid-template-columns: 150px 1fr; align-items: stretch; min-height: 34px; border-bottom: 1px dotted var(--chalk); }
+.ttrow.head { min-height: 20px; border-bottom: 1px solid var(--green); }
+.ttlabel { padding: 6px 8px 6px 0; font-size: 12.5px; }
+.ttlabel b { display: block; font-family: var(--display); letter-spacing: .06em; text-transform: uppercase; color: var(--green); }
+.ttlabel small { color: var(--slate); font-size: 11px; }
+.ttlane { position: relative; }
+.ttlane .hr { position: absolute; top: 2px; transform: translateX(-50%); font-family: var(--mono); font-size: 10.5px; color: var(--slate); }
+.ttlane .blk { position: absolute; top: 6px; height: 22px; line-height: 22px; overflow: hidden; white-space: nowrap; font-family: var(--mono); font-size: 11px; color: var(--ivory); text-align: center; background: var(--c); border-radius: 2px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); }
+.ttlane .blk.hatched { background: repeating-linear-gradient(135deg, var(--c) 0 4px, rgba(255,255,255,.55) 4px 8px); color: var(--ink); }
+.ttlane .mark { position: absolute; top: 4px; bottom: 4px; width: 2px; background: var(--ink); }
+.ttlane .now { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--brass); }
+.ttnote { font-size: 12px; color: var(--slate); font-style: italic; margin: 10px 0 0; }
+
 /* ---------- Library ---------- */
 .library { height: 100%; display: grid; grid-template-rows: 46px 1fr; }
 .library iframe { width: 100%; height: 100%; border: 0; background: var(--ivory); }

@@ -322,7 +322,8 @@ export function valleyLayout(): ValleyLayout {
   // Ashgrove Shed: three roads off the headshunt on the loop side, a ladder of switches, 70 m each to a buffer stop
   const SH = T2;
   const agT = g.node("AG-T", 10, SH), agU = g.node("AG-U", -20, 2 * SH), agSh3a = g.node("AG-sh3a", -50, 3 * SH);
-  const sh1b = g.node("AG-sh1b", -60, SH, { buffer: true }), sh2b = g.node("AG-sh2b", -90, 2 * SH, { buffer: true }), sh3b = g.node("AG-sh3b", -120, 3 * SH, { buffer: true });
+  const FAR = -140; // every road ends at the same far wall
+  const sh1b = g.node("AG-sh1b", FAR, SH, { buffer: true }), sh2b = g.node("AG-sh2b", FAR, 2 * SH, { buffer: true }), sh3b = g.node("AG-sh3b", FAR, 3 * SH, { buffer: true });
   const lead1 = g.edge("AG-lead1", agS, agT, { kmA: 0, kmDir: 1, track: "shl", line: "agshed", pts: sCurve({ x: 40, y: 0 }, { x: 10, y: SH }) });
   const road1 = g.edge("AG-sh1", agT, sh1b, { kmA: lead1.length / 1000, kmDir: 1, track: "sh1", line: "agshed" });
   const lead2 = g.edge("AG-lead2", agT, agU, { kmA: lead1.length / 1000, kmDir: 1, track: "shl", line: "agshed", pts: sCurve({ x: 10, y: SH }, { x: -20, y: 2 * SH }) });
@@ -353,7 +354,7 @@ export function valleyLayout(): ValleyLayout {
       { track: "sh2", edge: road2, exit: agShedSignals["9"], switches: [[agSwS, "reverse"], [agSwT, "reverse"], [agSwU, "normal"]], leads: [lead1, lead2] },
       { track: "sh3", edge: road3, exit: agShedSignals["11"], switches: [[agSwS, "reverse"], [agSwT, "reverse"], [agSwU, "reverse"]], leads: [lead1, lead2, lead3] },
     ],
-    building: { x: -125, y: 3 * SH - 3.2, w: 100, h: -3 * SH + 6.4, angle: 0 },
+    building: { x: FAR - 2, y: 3 * SH - 3.2, w: 62, h: -3 * SH + 6.4, angle: 0 },
   };
   st.AG = {
     code: "AG", kind: "terminus", mainSide: "N", switchS: agSwB, switchN: agSwA, switchShed: agSwS, shed: agShed,
